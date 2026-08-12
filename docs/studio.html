@@ -18,8 +18,7 @@
       <span class="brand-word">Write<span>Route</span></span>
     </a>
     <div class="top-actions">
-      <span class="privacy-chip">Local audit · BYOK rewrite</span>
-      <button class="icon-button" id="themeToggle" aria-label="Toggle light or dark mode" title="Toggle appearance">
+        <button class="icon-button" id="themeToggle" aria-label="Toggle light or dark mode" title="Toggle appearance">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.3 0-.6-.05-.9A7 7 0 0 1 12.9 3.05C12.6 3 12.3 3 12 3Z"/></svg>
       </button>
       <button class="button primary compact" id="newDoc">New document</button>
@@ -28,17 +27,12 @@
 
   <main>
     <section class="hero" id="hero">
-      <div class="hero-eyebrow">WRITE AS THE AUTHOR. EDIT LIKE A RUTHLESS HUMAN.</div>
-      <h1>Better prose.<br><span>Smarter routes.</span></h1>
-      <p>Find formulaic AI writing, weak claims, structural drag and formatting problems. Then repair only what deserves changing.</p>
+      <h1>Edit a document<br><span>without losing its facts</span></h1>
+      <p>Open a manuscript, report, brief or letter. WriteRoute lists what is wrong with it and suggests the narrowest fix for each one.</p>
       <div class="hero-actions">
         <label class="button primary file-button">Open a document<input id="fileInput" type="file" accept=".txt,.md,.markdown,.docx,.pdf,.rtf,.csv" hidden /></label>
         <button class="button secondary" id="startBlank">Start with blank page</button>
       </div>
-      <div class="hero-proof">
-        <div><strong>0</strong><span>authorship guesses</span></div>
-        <div><strong>3</strong><span>editorial layers</span></div>
-        <div><strong>1</strong><span>meaning-preservation gate</span></div>
       </div>
     </section>
 
@@ -103,10 +97,9 @@
 
       <aside class="inspector">
         <section class="panel active" id="panel-audit">
-          <div class="panel-head"><div><span class="kicker">DOCUMENT HEALTH</span><h2>Editorial audit</h2></div><button class="panel-close" title="Close inspector">×</button></div>
+          <div class="panel-head"><div><h2>Editorial audit</h2></div><button class="panel-close" title="Close inspector">×</button></div>
           <div class="score-card">
-            <div class="score-ring" id="scoreRing"><span id="scoreValue">—</span></div>
-            <div><strong id="scoreLabel">Not analysed</strong><p id="scoreSummary">Run an audit to inspect the current document.</p></div>
+            <div><strong id="scoreLabel">Not analysed</strong><p id="scoreSummary">Run an audit to see what is in the current document.</p></div>
           </div>
           <div class="severity-grid">
             <div><span class="dot hard"></span><strong id="hardCount">0</strong><small>Hard</small></div>
@@ -118,8 +111,8 @@
         </section>
 
         <section class="panel" id="panel-suggestions">
-          <div class="panel-head"><div><span class="kicker">REVISION ROUTE</span><h2>Suggested rewrite</h2></div><button class="panel-close">×</button></div>
-          <p class="panel-copy">Start with deterministic suggestions. Use your own model only when you want a generative rewrite.</p>
+          <div class="panel-head"><div><h2>Suggestions</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy">Rule-based suggestions need no API key. Add one only to generate rewrites with a language model.</p>
           <div class="route-actions">
             <button class="button secondary full" id="suggestButton">Generate local suggestions</button>
             <button class="button primary full" id="rewriteButton">Rewrite with BYOK</button>
@@ -133,22 +126,21 @@
         </section>
 
         <section class="panel" id="panel-format">
-          <div class="panel-head"><div><span class="kicker">DOCUMENT DESIGN</span><h2>Formatting route</h2></div><button class="panel-close">×</button></div>
-          <p class="panel-copy" id="formatIntro">Formatting advice adapts to the document's job, not a generic template.</p>
+          <div class="panel-head"><div><h2>Formatting</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy" id="formatIntro">Formatting advice for this document type.</p>
           <div class="format-metrics" id="formatMetrics"></div>
           <div class="advice-list" id="formatAdvice"><div class="advice"><span>01</span><p>Run an audit to generate formatting recommendations.</p></div></div>
         </section>
 
         <section class="panel" id="panel-provider">
-          <div class="panel-head"><div><span class="kicker">BRING YOUR OWN KEY</span><h2>Model connection</h2></div><button class="panel-close">×</button></div>
-          <div class="privacy-note"><span>◉</span><p>Your API key is held in this browser tab and sent only with the rewrite request. WriteRoute Studio does not persist it.</p></div>
-          <label>Provider<select id="providerSelect"><option value="openai">OpenAI</option><option value="anthropic">Anthropic</option><option value="deepseek">DeepSeek</option><option value="openrouter">OpenRouter</option><option value="openai-compatible">OpenAI-compatible / local</option></select></label>
-          <label>API key<div class="secret-field"><input id="apiKey" type="password" autocomplete="off" placeholder="sk-…" /><button id="keyVisibility" title="Show or hide API key">Show</button></div></label>
-          <label>Model<input id="modelName" type="text" placeholder="Enter provider model ID" /></label>
+          <div class="panel-head"><div><h2>Language model</h2></div><button class="panel-close">×</button></div>
+          <div class="privacy-note"><span>◉</span><p>Your key stays in this tab. The browser calls the provider directly, so the key never reaches a server we run, and it is not saved.</p></div>
+          <label>Provider<select id="providerSelect"><option value="chrome-nano">Chrome built-in (free, on this device)</option><option value="omniroute">OmniRoute (self-hosted, free tiers)</option><option value="openrouter">OpenRouter</option><option value="openai">OpenAI</option><option value="anthropic">Anthropic</option><option value="deepseek">DeepSeek</option><option value="openai-compatible">OpenAI-compatible / local</option></select></label>
+          <label id="apiKeyLabel">API key<div class="secret-field"><input id="apiKey" type="password" autocomplete="off" placeholder="sk-…" /><button id="keyVisibility" title="Show or hide API key">Show</button></div></label>
+          <label>Model<select id="modelSelect"><option value="">Load the model list first</option></select><button class="button secondary compact" id="loadModels" type="button" style="margin-top:8px">Load available models</button><input id="modelName" type="text" class="hidden" placeholder="Model ID" /><span class="microcopy" id="modelHint"></span></label>
           <label id="baseUrlLabel" class="hidden">Base URL<input id="baseUrl" type="url" placeholder="http://127.0.0.1:11434/v1" /></label>
           <div class="inline-fields"><label>Candidates<select id="candidateCount"><option>1</option><option selected>3</option><option>5</option></select></label><label>Temperature<input id="temperature" type="number" min="0" max="1.2" step="0.05" value="0.25" /></label></div>
-          <button class="button secondary full" id="testProvider">Use this provider</button>
-          <p class="microcopy" id="providerStatus">No provider configured. Local audits still work.</p>
+                    <p class="microcopy" id="providerStatus">Audits, suggestions and repairs work without a model.</p>
         </section>
       </aside>
     </section>
@@ -157,7 +149,7 @@
   <dialog id="exportDialog" class="modal">
     <form method="dialog">
       <button class="modal-close" value="cancel" aria-label="Close">×</button>
-      <span class="kicker">EXPORT</span><h2>Take the document with you.</h2>
+      <h2>Export</h2>
       <p>Export the current editor text. Rich formatting is preserved in HTML; DOCX export preserves paragraph text.</p>
       <div class="export-grid">
         <button value="cancel" data-export="docx"><strong>DOCX</strong><span>Word document</span></button>

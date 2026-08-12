@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#f5f5f7" />
-  <title>WriteRoute — editorial findings, not an AI score</title>
-  <meta name="description" content="A preservation-first writing and editing route. Names observable editorial defects, proposes exact edits, and refuses any rewrite that changes a number, a modal, a negation or an attribution. Runs entirely in your browser." />
+  <title>WriteRoute</title>
+  <meta name="description" content="An editing tool for documents where the facts matter. Lists specific problems with the sentence each one is in, suggests the narrowest fix, and blocks rewrites that alter numbers, modal verbs, negation or attribution. Runs in the browser." />
   <link rel="icon" href="assets/favicon.png" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="landing.css" />
@@ -19,7 +19,7 @@
     <span class="brand-word">Write<span>Route</span></span>
   </a>
   <div class="top-actions">
-    <span class="privacy-chip">Your document never leaves this tab</span>
+    <span class="privacy-chip">Runs in your browser</span>
     <button class="icon-button" id="themeToggle" aria-label="Toggle colour theme" title="Toggle light and dark">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"/></svg>
     </button>
@@ -30,43 +30,41 @@
 <main>
   <div class="lead wrap">
     <img class="mark" src="assets/logo-mark.png" alt="" aria-hidden="true" />
-    <h1>Named editorial findings, <em>not an AI score</em></h1>
+    <h1>WriteRoute</h1>
     <p class="standfirst">
-      WriteRoute reads a document, names what is actually wrong with it, and proposes the
-      smallest edit that fixes each thing. It will not tell you what percentage of your prose
-      was machine-written, because style does not identify authorship. And it will not accept a
-      rewrite that changes a number, a modal verb, a negation, or who said something.
+      An editing tool for documents where the facts matter. It lists specific problems in
+      your text, quotes the sentence each one is in, and suggests the narrowest fix. It
+      blocks any rewrite that alters a number, a modal verb, a negation, or who said
+      something. It does not estimate how much of your writing was produced by a machine.
     </p>
     <div class="actions">
       <a class="button primary" href="studio.html">Open the studio</a>
-      <a class="button secondary" href="#run-locally">Run it locally</a>
+      <a class="button secondary" href="#install">Install</a>
     </div>
   </div>
 
   <section id="what">
     <div class="wrap">
-      <span class="kicker">Three layers</span>
-      <h2>Fluent and unsupported is still wrong</h2>
+      <h2>What it checks</h2>
       <p class="intro">
-        Most tools that tidy prose only look at the surface, so a confident sentence with
-        nothing behind it sails through. WriteRoute separates the layers, and a clean result in
-        one does not excuse a finding in another.
+        Three sets of checks run over every document. They are reported separately, so a
+        polished sentence with no support behind it does not pass on fluency.
       </p>
       <div class="grid three">
         <div class="card">
           <span class="tag">Surface</span>
-          <h3>Assistant residue and scaffolding</h3>
-          <p>Meta prefaces, throat-clearing, formulaic contrasts, manufactured insight, importance puffery, stacked hedges, nominalisations, formatting debris.</p>
+          <h3>Wording</h3>
+          <p>Assistant prefaces, throat-clearing, formulaic contrasts, importance puffery, stacked hedges, nominalisations, leftover formatting.</p>
         </div>
         <div class="card">
           <span class="tag">Substance</span>
-          <h3>Claims the document has not earned</h3>
-          <p>Causal wording in an observational design, significance reported without an effect estimate, novelty claims with no bounded comparison, safety and efficacy claims with no stated condition.</p>
+          <h3>Claims</h3>
+          <p>Causal wording where the design is observational. Statistical significance reported with no effect estimate. Novelty claims with no stated comparison set. Safety and efficacy claims with no condition attached.</p>
         </div>
         <div class="card">
-          <span class="tag">Shape</span>
-          <h3>Document-level defects</h3>
-          <p>Repeated paragraph templates, uniform cadence, connective scaffolding carrying the argument in place of the claims, recap loops, a conclusion that restates an earlier paragraph.</p>
+          <span class="tag">Structure</span>
+          <h3>Document shape</h3>
+          <p>Repeated paragraph templates, uniform sentence length, connective scaffolding, recap loops, conclusions that restate an earlier paragraph.</p>
         </div>
       </div>
     </div>
@@ -74,54 +72,61 @@
 
   <section id="preservation">
     <div class="wrap">
-      <span class="kicker">Preservation</span>
-      <h2>A rewrite has to prove it changed nothing that mattered</h2>
+      <h2>What it will not change</h2>
       <p class="intro">
-        Every candidate edit — deterministic or model-generated — is compared against the
-        original and rejected outright if any of these moved. Nothing is applied on the strength
-        of reading better.
+        Every proposed edit is compared against the original before it can be applied,
+        whether a rule or a language model produced it. If any of the following differs,
+        the edit is rejected.
       </p>
       <ul class="gate-list">
-        <li><strong>Values</strong> — magnitudes, units, dates, statistical estimates</li>
-        <li><strong>Names</strong> — people, organisations, acronyms, defined terms</li>
-        <li><strong>Sources</strong> — citations, quotations, URLs, DOIs, cross-references</li>
-        <li><strong>Code</strong> — commands, API names, file paths, versions</li>
-        <li><strong>Negation</strong> — “did not improve” cannot become “improved”</li>
-        <li><strong>Scope</strong> — only, all, some, at least</li>
-        <li><strong>Modal force</strong> — must, shall, should, may, might</li>
-        <li><strong>Comparison direction</strong> — higher and lower cannot swap</li>
-        <li><strong>Causal strength</strong> — “was associated with” cannot become “caused”</li>
-        <li><strong>Attribution</strong> — who made the claim stays who made the claim</li>
+        <li><strong>Values:</strong> magnitudes, units, dates, statistical estimates</li>
+        <li><strong>Names:</strong> people, organisations, acronyms, defined terms</li>
+        <li><strong>Sources:</strong> citations, quotations, URLs, DOIs, cross-references</li>
+        <li><strong>Code:</strong> commands, API names, file paths, versions</li>
+        <li><strong>Negation:</strong> "did not improve" cannot become "improved"</li>
+        <li><strong>Scope:</strong> only, all, some, at least</li>
+        <li><strong>Modal force:</strong> must, shall, should, may, might</li>
+        <li><strong>Comparison direction:</strong> higher and lower cannot swap</li>
+        <li><strong>Causal strength:</strong> "was associated with" cannot become "caused"</li>
+        <li><strong>Attribution:</strong> who made the claim</li>
       </ul>
       <p class="intro" style="margin-top:28px">
-        Two further refusals. Official, legal, archival or externally authored text can be
-        audited in source-text mode, which returns the file byte for byte and marks every
-        proposed edit as not applicable. And when a document turns out to be mostly tables, code
-        or quotation, the audit says it could not read enough prose to judge — rather than
-        calling it clean.
+        Source-text mode handles official, legal, archival and third-party documents. It
+        runs the audit and shows the suggestions, returns the file byte for byte, and marks
+        every proposed edit as not applicable.
+      </p>
+      <p class="intro">
+        Documents that are mostly tables, code or quotation are reported as not assessable.
+        Too little prose remains for the result to mean anything, and the audit says so
+        instead of returning a clean verdict.
       </p>
     </div>
   </section>
 
   <section id="privacy">
     <div class="wrap">
-      <span class="kicker">Where your text goes</span>
-      <h2>The engine runs in your browser</h2>
+      <h2>Where your text goes</h2>
       <p class="intro">
-        This page ships the Python engine and runs it in the tab under Pyodide. Auditing,
-        suggesting, repairing and verifying need no account, no server and no API key. Your
-        document is never uploaded, because there is nowhere to upload it to.
+        Nowhere. The page loads the Python engine and runs it in your browser under
+        Pyodide. Auditing, suggestions, repairs and verification need no account, no server
+        and no API key. Rewriting with a language model is optional, and there are three
+        ways to do it at no cost.
       </p>
       <div class="grid two">
         <div class="card">
-          <h3>Bring your own key, and keep it</h3>
-          <p>Generative rewrite is optional. When you use it, your browser calls the provider directly with your key — OpenAI, Anthropic, DeepSeek, OpenRouter, or any OpenAI-compatible endpoint, with a model ID you type in yourself. No proxy of ours holds the key, and it is not written to storage.</p>
+          <h3>Three ways to rewrite for nothing</h3>
+          <p>Chrome 138 and later ship Gemini Nano, which runs on your machine with no key and no network. OmniRoute is a gateway you host yourself; start it and the studio finds it on <code>localhost:20128</code>. OpenRouter publishes its catalogue without a key, and its free models are listed first.</p>
         </div>
         <div class="card">
-          <h3>The model proposes, the engine decides</h3>
-          <p>A provider only produces candidate text. The tournament that ranks candidates, and every gate listed above, run in the same Python the test suite covers. A candidate also has to beat the deterministic repair to win, and when nothing clears the gates your original comes back unchanged.</p>
+          <h3>Or bring a key, and keep it</h3>
+          <p>OpenAI, Anthropic, DeepSeek and any OpenAI-compatible endpoint also work. The studio asks the provider which models it can run, so nothing is typed from memory and no list goes stale. Your browser calls the provider directly: the key never reaches a server we run, and it is not saved.</p>
         </div>
       </div>
+      <p class="intro" style="margin-top:22px">
+        Whichever you pick, the model only supplies candidate text. Ranking and the checks
+        above run in the Python engine in your browser, a model candidate must beat the
+        rule-based repair to be offered, and if nothing passes you get your original back.
+      </p>
       <div class="shot">
         <img class="light-only" src="assets/workspace.png" alt="The WriteRoute studio in light mode: a document in the editor with named findings listed in the inspector" />
         <img class="dark-only" src="assets/workspace-dark.png" alt="The WriteRoute studio in dark mode: a document in the editor with named findings listed in the inspector" />
@@ -131,19 +136,22 @@
 
   <section id="evidence">
     <div class="wrap">
-      <span class="kicker">Evidence</span>
-      <h2>Measured against 74 real documents, and reported either way</h2>
+      <h2>Benchmark</h2>
       <p class="intro">
-        The engine was benchmarked on 179,807 words from a working doctoral research archive:
-        24 third-party journal articles and supplements as a control, 25 submission-bound author
-        documents, and 25 machine-written working notes. Four defects turned up. Here is what
-        fixing them changed — including what it did not change.
+        The engine was tested on 179,807 words across 74 documents from a working doctoral
+        research archive: 24 third-party journal articles and supplements, 25
+        submission-bound documents by the archive's owner, and 25 sets of working notes
+        written by software agents.
+      </p>
+      <p class="intro">
+        The journal articles are the control. Other people wrote them and journals accepted
+        them, so anything flagged there is an error by the tool. Four defects were found in
+        the released version. The table shows what fixing them changed.
       </p>
       <table class="ledger">
         <caption>
-          The control class is published journal prose, so a “hard” finding there is the
-          engine being wrong. That row is a false-positive count, not a score. Full
-          aggregates: <a href="benchmark.json">benchmark.json</a>.
+          Full aggregates in <a href="benchmark.json">benchmark.json</a>. Document titles
+          are withheld; the corpus is a private research archive.
         </caption>
         <thead>
           <tr>
@@ -156,47 +164,43 @@
         <tbody>
           <tr><td>Documents the auditor could not finish</td><td class="num">1</td><td class="num delta-good">0</td><td class="num delta-good">0</td></tr>
           <tr><td>Audit of an 8&nbsp;KB markdown paste containing a code block</td><td class="num">21.4&nbsp;s</td><td class="num delta-good">0.20&nbsp;s</td><td class="num delta-good">0.20&nbsp;s</td></tr>
-          <tr><td>False positives on published prose</td><td class="num">43</td><td class="num">22</td><td class="num delta-good">6</td></tr>
-          <tr><td>False positives per 1,000 words of published prose</td><td class="num">0.97</td><td class="num">0.50</td><td class="num delta-good">0.14</td></tr>
-          <tr><td>Control documents carrying any false positive</td><td class="num">7 of 24</td><td class="num">7 of 24</td><td class="num delta-good">2 of 24</td></tr>
-          <tr><td>Published articles told to “rebuild”</td><td class="num">3</td><td class="num delta-good">1</td><td class="num delta-good">1</td></tr>
+          <tr><td>Errors on published prose</td><td class="num">43</td><td class="num">22</td><td class="num delta-good">6</td></tr>
+          <tr><td>Errors per 1,000 words of published prose</td><td class="num">0.97</td><td class="num">0.50</td><td class="num delta-good">0.14</td></tr>
+          <tr><td>Control documents carrying any error</td><td class="num">7 of 24</td><td class="num">7 of 24</td><td class="num delta-good">2 of 24</td></tr>
+          <tr><td>Published articles told to "rebuild"</td><td class="num">3</td><td class="num delta-good">1</td><td class="num delta-good">1</td></tr>
           <tr><td>Meaning-preservation failures, independently re-checked</td><td class="num">0</td><td class="num delta-flat">0</td><td class="num delta-flat">0</td></tr>
           <tr><td>Source-text mode byte-exact</td><td class="num">all</td><td class="num delta-flat">all</td><td class="num delta-flat">all</td></tr>
         </tbody>
       </table>
 
       <p class="intro" style="margin-top:30px">
-        The allow-list is the reason for the last column. Ten families of field-standard
-        wording were being read as claims — WHO/JMP service labels such as “improved water
-        source” and “safe drinking water”, PRISMA checklist wording, conditional treatment
-        instructions like “repeat bolus if improved”, and descriptive measurements. Each
-        entry is written against a sentence the benchmark actually produced, and each is
-        narrow enough that the same word still fires when it really is a claim: “improved
-        water sources” is excused, “improved survival” is not. Every suppression is
-        reported in the audit with its reason, so you can see what the tool decided not to
-        tell you.
+        The last column comes from an allow-list. Ten families of standard terminology were
+        being read as claims: WHO/JMP service labels such as "improved water source" and
+        "safe drinking water", PRISMA checklist wording, treatment instructions such as
+        "repeat bolus in second hour if improved", and descriptive measurements. Each entry
+        is written against a sentence the benchmark produced, and each is narrow enough
+        that the same word still fires when it carries a claim. "Improved water sources" is
+        excused; "improved survival" is not. Suppressions appear in the audit with a reason.
       </p>
 
       <div class="caveat">
         <h3>What is still wrong</h3>
         <p>
-          The allow-list fixed the control class, not the author class. Hard findings on
-          the author’s own documents went from 47 to 43, because they are a different
-          family: causal attribution inside prose, participial summary claims such as
-          “demonstrating feasibility and value”, and vague attribution. Those are mostly
-          the checks working as intended, but nine of the 25 author documents are still
-          graded as needing a rebuild, which is a heavier verdict than that evidence
-          supports.
+          The allow-list fixed the control class and had little effect on the author's own
+          documents, where findings went from 47 to 43. Those are a different group:
+          causal attribution inside prose, participial summary claims such as
+          "demonstrating feasibility and value", and vague attribution. Most look correct,
+          but nine of 25 documents are still graded as needing a rebuild, which overstates
+          what the findings support.
         </p>
         <p>
-          Genre inference is unreliable, so the studio asks which kind of document you are
-          writing rather than guessing. Choosing wrongly changes the severity thresholds.
+          Genre detection is unreliable, so the studio asks you which kind of document you
+          are writing. Picking the wrong one changes the severity thresholds.
         </p>
         <p>
-          None of this is a blinded, independently annotated comparison against other
-          tools. It is one corpus, in one domain — clinical nutrition and epidemiology —
-          measured honestly. The allow-list is tuned to that domain and will not help with
-          the field-standard vocabulary of another.
+          There is no blinded comparison against other tools. This is one corpus in one
+          field, clinical nutrition and epidemiology. The allow-list is written for that
+          field and will not cover another one's standard vocabulary.
         </p>
       </div>
     </div>
@@ -204,12 +208,11 @@
 
   <section id="genres">
     <div class="wrap">
-      <span class="kicker">Document jobs</span>
-      <h2>Ten profiles, each with its own protected conventions</h2>
+      <h2>Document types</h2>
       <p class="intro">
-        A genre decides which patterns are hard, which are advisory, and which are switched off
-        entirely — because passive voice in a methods section and hedging in a legal clause are
-        the register working correctly, not defects.
+        Ten profiles set which checks are strict, which are advisory, and which are
+        disabled. Passive voice in a methods section and hedging in a legal clause are
+        conventions of the form, so the profile switches those checks off.
       </p>
       <div class="genres">
         <span>Scientific journal</span>
@@ -226,14 +229,13 @@
     </div>
   </section>
 
-  <section id="run-locally">
+  <section id="install">
     <div class="wrap">
-      <span class="kicker">Run it yourself</span>
-      <h2>In the browser, on your machine, or from a terminal</h2>
+      <h2>Install</h2>
       <p class="intro">
-        The studio needs nothing installed. If you would rather run the engine locally — for a
-        long manuscript, for scripted use, or simply because you prefer it — the same package
-        works as a local service and as a command-line tool.
+        The studio needs nothing installed. To run the engine on your own machine, for a
+        long manuscript or for scripted use, the same package works as a local service and
+        as a command-line tool.
       </p>
       <div class="grid two">
         <div class="card">
@@ -256,8 +258,8 @@ python -m writeroute repair regulation.txt \
         </div>
       </div>
       <p class="intro" style="margin-top:26px">
-        The local service binds to <code>127.0.0.1</code> and is built for one person on one
-        machine. It has no authentication, so do not expose it to a network.
+        The local service binds to <code>127.0.0.1</code> and has no authentication. Do not
+        expose it to a network.
       </p>
     </div>
   </section>
@@ -266,13 +268,13 @@ python -m writeroute repair regulation.txt \
 <footer>
   <div class="wrap cols">
     <div>
-      <strong>WriteRoute</strong> · Clear. Precise. Human.<br />
+      <strong>WriteRoute</strong><br />
       Preservation-first writing and editing. MIT licensed.
     </div>
     <div>
       <a href="studio.html">Studio</a> ·
       <a href="#evidence">Benchmark</a> ·
-      <a href="#run-locally">Install</a>
+      <a href="#install">Install</a>
     </div>
   </div>
 </footer>

@@ -35,7 +35,8 @@ def test_health_and_ui():
     assert health.json()["byok"] is True
     landing = client.get("/")
     assert landing.status_code == 200
-    assert "Named editorial findings" in landing.text
+    assert "WriteRoute" in landing.text
+    assert 'href="studio.html"' in landing.text
     # The landing page must not claim an authorship verdict, which is the one thing the
     # engine refuses to produce.
     assert "AI-generated" not in landing.text

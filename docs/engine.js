@@ -139,17 +139,172 @@ _VERSION = writeroute.__version__
   /* ---------------------------------------------------------------- providers */
 
   const PROVIDERS = {
-    openai: { root: 'https://api.openai.com/v1', style: 'openai' },
-    deepseek: { root: 'https://api.deepseek.com', style: 'openai' },
-    openrouter: { root: 'https://openrouter.ai/api/v1', style: 'openai' },
-    anthropic: { root: 'https://api.anthropic.com', style: 'anthropic' },
-    'openai-compatible': { root: '', style: 'openai' },
+    openai: { label: 'OpenAI', root: 'https://api.openai.com/v1', style: 'openai' },
+    anthropic: { label: 'Anthropic', root: 'https://api.anthropic.com', style: 'anthropic' },
+    deepseek: { label: 'DeepSeek', root: 'https://api.deepseek.com', style: 'openai' },
+    openrouter: { label: 'OpenRouter', root: 'https://openrouter.ai/api/v1', style: 'openai',
+                  // OpenRouter's catalogue is public, so the list loads before a key is entered.
+                  publicModels: true },
+    // OmniRoute is a self-hosted OpenAI-compatible gateway that fronts many providers,
+    // including free tiers, from a container on the user's own machine. Its /v1/models
+    // endpoint needs no key by default (REQUIRE_API_KEY=false), so discovery works as
+    // soon as it is running. Listed as its own provider rather than buried under
+    // "OpenAI-compatible" because the whole point is that nothing needs configuring.
+    omniroute: { label: 'OmniRoute (self-hosted gateway)', root: 'http://localhost:20128/v1',
+                 style: 'openai', publicModels: true, keyOptional: true },
+    'openai-compatible': { label: 'OpenAI-compatible / local', root: '', style: 'openai',
+                           keyOptional: true },
+    // Chrome's built-in Gemini Nano. No key, no network, no cost: the model runs on the
+    // machine. Availability is a browser capability rather than an account, so it is
+    // detected at runtime and hidden where it does not exist.
+    'chrome-nano': { label: 'Chrome built-in (Gemini Nano)', root: '', style: 'chrome' },
   };
 
-  function providerRequest(provider, { apiKey, model, baseUrl, temperature, system, user }) {
+  /* ------------------------------------------------------- Chrome built-in model */
+
+  function chromeModelApi() {
+    // The Prompt API moved from self.ai.languageModel to self.LanguageModel; support both
+    // rather than pinning one Chrome version.
+    return (typeof self !== 'undefined' && self.LanguageModel)
+      || (typeof self !== 'undefined' && self.ai && self.ai.languageModel)
+      || null;
+  }
+
+  async function chromeAvailability() {
+    const api = chromeModelApi();
+    if (!api) return 'unsupported';
+    try {
+      if (typeof api.availability === 'function') return await api.availability();
+      if (typeof api.capabilities === 'function') {
+        const caps = await api.capabilities();
+        return caps.available === 'readily' ? 'available'
+          : caps.available === 'after-download' ? 'downloadable' : 'unavailable';
+      }
+    } catch (_) { return 'unavailable'; }
+    return 'unavailable';
+  }
+
+  async function chromeGenerate(contract, source, onProgress) {
+    const api = chromeModelApi();
+    if (!api) throw new Error('this browser has no built-in model; Chrome 138 or later is required');
+    const state = await chromeAvailability();
+    if (state === 'unavailable') {
+      throw new Error('Chrome reports the built-in model as unavailable on this device');
+    }
+    const session = await api.create({
+      initialPrompts: [{ role: 'system', content: SYSTEM }],
+      monitor(m) {
+        m.addEventListener('downloadprogress', e => {
+          if (onProgress) onProgress(Math.round((e.loaded || 0) * 100));
+        });
+      },
+    });
+    try {
+      const out = await session.prompt(`EDITORIAL CONTRACT\n${contract}\n\nSOURCE DOCUMENT\n${source}`);
+      return String(out || '').trim();
+    } finally {
+      if (session.destroy) session.destroy();
+    }
+  }
+
+  function providerRoot(provider, baseUrl) {
     const spec = PROVIDERS[provider] || PROVIDERS['openai-compatible'];
     const root = (baseUrl || '').trim().replace(/\/+$/, '') || spec.root;
     if (!root) throw new Error('a base URL is required for an OpenAI-compatible provider');
+    return { spec, root };
+  }
+
+  /* Ask the provider what it can run, rather than making anyone type a model ID from
+   * memory. Model names change constantly and a hard-coded list is wrong within weeks;
+   * a typo produces a 404 from the provider that reads like a bug in this app. Every
+   * supported provider exposes a models endpoint, so this uses the provider as the
+   * source of truth. The key goes straight from the tab to the provider, as with a
+   * rewrite. */
+  async function listModels(provider, { apiKey = '', baseUrl = '' } = {}) {
+    if (provider === 'chrome-nano') {
+      const availability = await chromeAvailability();
+      if (availability === 'unsupported') {
+        throw new Error('this browser has no built-in model; Chrome 138 or later is required');
+      }
+      return {
+        provider, label: PROVIDERS['chrome-nano'].label, availability,
+        models: [{ id: 'gemini-nano', label: 'Gemini Nano (on this device)', free: true }],
+      };
+    }
+    const { spec, root } = providerRoot(provider, baseUrl);
+    const anthropic = spec.style === 'anthropic';
+    if (!apiKey && !spec.publicModels && !spec.keyOptional) {
+      throw new Error('add your API key to load the model list');
+    }
+    const url = anthropic ? `${root}/v1/models?limit=100` : `${root}/models`;
+    const headers = anthropic
+      ? { 'x-api-key': apiKey, 'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true' }
+      : (apiKey ? { authorization: `Bearer ${apiKey}` } : {});
+
+    let response;
+    try {
+      response = await fetch(url, { headers });
+    } catch (exc) {
+      throw new Error(
+        spec.root && /localhost|127\.0\.0\.1/.test(root)
+          ? `could not reach ${spec.label} at ${root}. Is it running?`
+          : `could not reach ${spec.label} at ${root}: ${exc.message}`);
+    }
+    const body = await response.text();
+    if (!response.ok) {
+      throw new Error(`${spec.label} returned HTTP ${response.status}: ${body.slice(0, 180)}`);
+    }
+    let payload;
+    try { payload = JSON.parse(body); }
+    catch (_) { throw new Error(`${spec.label} did not return JSON from ${url}`); }
+
+    const rows = payload.data || payload.models || [];
+    const models = rows.map(row => {
+      // OpenRouter prices per token as decimal strings; "0" for both means free to run.
+      const pricing = row.pricing || {};
+      const id = row.id || row.name || row.model || '';
+      const free = /:free$/.test(id)
+        || /^auto\/best-free$/.test(id)
+        || row.free === true
+        || (pricing.prompt !== undefined && Number(pricing.prompt) === 0
+            && Number(pricing.completion || 0) === 0);
+      const arch = row.architecture || {};
+      return {
+        id,
+        label: row.display_name || row.name || id,
+        context: row.context_length || row.context_window || null,
+        free: Boolean(free),
+        outputs: arch.output_modalities || null,
+      };
+    }).filter(m => m.id);
+
+    if (!models.length) throw new Error(`${spec.label} listed no models`);
+
+    // Text-generation models only. Embedding, audio, image and moderation endpoints share
+    // the same catalogue and cannot rewrite a document. Declared output modalities decide
+    // it where the provider publishes them, because a name check is not enough: OpenRouter
+    // prices Lyria's audio per second, so both token prices are zero and it sorted to the
+    // top of the free list as though it were a free text model. Its declared output is
+    // text+audio. The name pattern is the fallback for providers that declare nothing.
+    const excluded = /(embed|whisper|tts|audio|speech|moderation|image|dall-e|vision-encoder|rerank|guard|lyria|imagen|veo|sora)/i;
+    const usable = models.filter(m => {
+      if (Array.isArray(m.outputs) && m.outputs.length) {
+        return m.outputs.includes('text')
+          && !m.outputs.some(o => o === 'audio' || o === 'image' || o === 'video');
+      }
+      return !excluded.test(m.id);
+    });
+    // Free models first, so a reader who has no budget sees what costs nothing without
+    // scrolling a list of several hundred entries.
+    const sorted = (usable.length ? usable : models)
+      .sort((a, b) => (Number(b.free) - Number(a.free)) || a.id.localeCompare(b.id));
+    return { provider, label: spec.label, models: sorted,
+             freeCount: sorted.filter(m => m.free).length };
+  }
+
+  function providerRequest(provider, { apiKey, model, baseUrl, temperature, system, user }) {
+    const { spec, root } = providerRoot(provider, baseUrl);
     if (spec.style === 'anthropic') {
       return {
         url: `${root}/v1/messages`,
@@ -187,6 +342,7 @@ _VERSION = writeroute.__version__
   const SYSTEM = "You are WriteRoute's revision engine. Follow the editorial contract exactly. Return only the revised document text.";
 
   async function generateCandidate(provider, opts, contract, source) {
+    if (provider === 'chrome-nano') return chromeGenerate(contract, source, opts.onProgress);
     const req = providerRequest(provider, { ...opts, system: SYSTEM, user: `EDITORIAL CONTRACT\n${contract}\n\nSOURCE DOCUMENT\n${source}` });
     const r = await fetch(req.url, { method: 'POST', headers: req.headers, body: JSON.stringify(req.body) });
     const text = await r.text();
@@ -200,9 +356,13 @@ _VERSION = writeroute.__version__
 
   /* Rewrite: contract from Python, candidates from the provider, adjudication in
    * Python. The gates never move to JavaScript. */
-  async function rewrite({ text, genre, provider, apiKey, model, baseUrl, candidates = 3, temperature = 0.25, sourceText = false }) {
-    if (!apiKey) throw new Error('add your API key to use generative rewrite');
-    if (!model) throw new Error('enter the provider model ID');
+  async function rewrite({ text, genre, provider, apiKey, model, baseUrl, candidates = 3, temperature = 0.25, sourceText = false, onProgress }) {
+    const spec = PROVIDERS[provider] || PROVIDERS['openai-compatible'];
+    const local = provider === 'chrome-nano';
+    if (!local && !apiKey && !spec.keyOptional) {
+      throw new Error('add your API key to use generative rewrite');
+    }
+    if (!local && !model) throw new Error('choose a model');
 
     const plan = await call('contract', { text, genre, candidates });
     if (!plan.eligible) {
@@ -210,7 +370,7 @@ _VERSION = writeroute.__version__
     }
 
     const settled = await Promise.allSettled(
-      plan.contracts.map(c => generateCandidate(provider, { apiKey, model, baseUrl, temperature }, c, text)),
+      plan.contracts.map(c => generateCandidate(provider, { apiKey, model, baseUrl, temperature, onProgress }, c, text)),
     );
     const generated = settled.filter(s => s.status === 'fulfilled').map(s => s.value);
     const failures = settled.filter(s => s.status === 'rejected').map(s => String(s.reason && s.reason.message || s.reason));
@@ -229,7 +389,8 @@ _VERSION = writeroute.__version__
     return result;
   }
 
-  return { call, ensure, onStatus, rewrite, providers: Object.keys(PROVIDERS), get mode() { return state.mode; } };
+  return { call, ensure, onStatus, rewrite, listModels, chromeAvailability,
+           providers: PROVIDERS, get mode() { return state.mode; } };
 })();
 
 export default WriteRoute;

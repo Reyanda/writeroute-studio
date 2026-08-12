@@ -49,10 +49,20 @@ Two further refusals:
 Auditing, suggesting, repairing and verifying are local. In the browser build the Python
 engine runs in the tab under Pyodide; there is no account and no server.
 
-Generative rewrite is optional and brings your own key. The browser calls the provider
-directly — OpenAI, Anthropic, DeepSeek, OpenRouter, or any OpenAI-compatible endpoint
-with a model ID you supply. The key is held in the page for the session, is not written
-to storage, and does not pass through any server of ours.
+Rewriting with a language model is optional. Three routes cost nothing:
+
+| Provider | Key | Notes |
+|---|---|---|
+| Chrome built-in (Gemini Nano) | none | Runs on the machine. Chrome 138+. Chrome downloads the model on first use. |
+| OmniRoute | none by default | Self-hosted gateway fronting many providers including free tiers. Start it with `npx omniroute`; the studio looks for `http://localhost:20128/v1`. |
+| OpenRouter | none to browse | Publishes its catalogue publicly; free models are listed first. A key is needed to run one. |
+
+OpenAI, Anthropic, DeepSeek and any OpenAI-compatible endpoint work with a key.
+
+Model IDs are discovered from the provider rather than typed. Names change constantly and
+a hard-coded list goes stale, so the studio calls the provider's models endpoint and
+offers what comes back, filtering out anything that cannot produce text. Your browser
+calls the provider directly, so the key never reaches a server we run and is not saved.
 
 The model only proposes. The tournament that ranks candidates and the gates above run in
 Python, and a model candidate must also beat the deterministic repair to win. When
@@ -151,9 +161,12 @@ is excused, "improved survival" is not. Every suppression appears in
 - **This is not a blinded comparison against other tools.** It is one corpus, in one
   domain, measured honestly. The frozen regression cases in `evals/` are authored
   alongside the engine they gate, which limits what they can establish.
-- **PDF decoding has no automated coverage.** `tests/js` covers the DOCX round trip and
-  the export layer, but the PDF path depends on pdf.js loading from a CDN and is exercised
-  by hand only.
+- **PDF decoding has no automated coverage.** `tests/js` covers the DOCX round trip, the
+  export layer and provider discovery, but the PDF path depends on pdf.js loading from a
+  CDN and is exercised by hand only.
+- **The Chrome built-in model is small.** Gemini Nano is useful for tightening a
+  paragraph and will not match a frontier model on a long manuscript. The preservation
+  gates apply to it exactly as they do to any other candidate.
 - **The logo is raster only.** `assets/logo-source.png` is a 1254×1254 PNG with the
   background, wordmark and tagline all baked in. `scripts/build_logo.py` derives a
   transparent mark, wordmark, lockup and favicon from it by knocking out the
@@ -166,8 +179,8 @@ is excused, "improved survival" is not. Every suppression appears in
 ```
 
 Runs everything: 71 Python tests (42 engine, 4 end-to-end through the local service, 17
-Gate 0 regressions, 8 allow-list regressions with 21 subtests), 12 JavaScript tests for the
-browser document layer, a rebuild of `docs/` with a checksum check, and a grep that fails
+Gate 0 regressions, 8 allow-list regressions with 21 subtests), 24 JavaScript tests for the
+browser document layer and provider discovery, a rebuild of `docs/` with a checksum check, and a grep that fails
 the build if the landing page ever claims an authorship verdict.
 
 The JavaScript suite needs jsdom once: `npm install --no-save jsdom`.
