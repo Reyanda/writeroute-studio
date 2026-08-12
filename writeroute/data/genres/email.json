@@ -1,0 +1,39 @@
+{
+  "id": "email",
+  "name": "Professional email or letter",
+  "aliases": [
+    "email",
+    "letter",
+    "message"
+  ],
+  "purpose": "Obtain a response, decision or action with minimal friction.",
+  "audience": "A named recipient or small group.",
+  "integrityPolicy": "email",
+  "hardPatterns": [],
+  "softPatterns": [
+    "throat_clearing",
+    "importance_meta",
+    "summary_recap"
+  ],
+  "disabledPatterns": [
+    "contraction_balance"
+  ],
+  "requiredMoves": [
+    "purpose",
+    "request_or_update",
+    "deadline_or_next_step"
+  ],
+  "protectedConventions": [
+    "names",
+    "dates",
+    "amounts",
+    "commitments",
+    "courtesy appropriate to relationship"
+  ],
+  "promptRules": [
+    "State why you are writing in the first two sentences.",
+    "Make the request and deadline explicit.",
+    "Keep courtesy, but remove ceremonial padding.",
+    "Do not add a closing offer that creates work the sender did not intend."
+  ]
+}

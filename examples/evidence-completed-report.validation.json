@@ -1,0 +1,53 @@
+{
+  "accepted": true,
+  "audit": {
+    "schemaVersion": "2.0",
+    "genre": "policy-brief",
+    "genreInference": {
+      "genre": "general",
+      "confidence": 0.0,
+      "alternatives": [],
+      "scoreShare": 0.0
+    },
+    "counts": {
+      "words": 68,
+      "sentences": 5,
+      "paragraphs": 2,
+      "findings": 0,
+      "hard": 0,
+      "review": 0,
+      "soft": 0
+    },
+    "editorialBurden": 0.0,
+    "status": "clean",
+    "clean": true,
+    "dimensionScores": {},
+    "metrics": {
+      "sentenceLengthMean": 13.6,
+      "sentenceLengthCv": 0.527,
+      "paragraphLengthMean": 34.0,
+      "paragraphLengthCv": 0.333,
+      "topSentenceOpener": "the",
+      "topSentenceOpenerShare": 0.6,
+      "connectiveOpenerCount": 0,
+      "connectiveOpenerShare": 0.0,
+      "emDashCount": 0,
+      "questionCount": 0,
+      "protectedSpanCount": 0,
+      "reportedVoiceSpanCount": 0
+    },
+    "findings": [],
+    "principles": [
+      "Score editorial defects, not presumed authorship.",
+      "Treat meaning preservation as a hard gate, not a style preference.",
+      "Do not rewrite source-reported language as if it were the current author's claim."
+    ],
+    "authorshipClaim": null
+  },
+  "evidenceBoundary": {
+    "passes": true,
+    "suppliedAnchorCount": 7,
+    "candidateAnchorCount": 6,
+    "violations": []
+  }
+}

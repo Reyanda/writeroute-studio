@@ -1,0 +1,1 @@
+Among 412 children enrolled between January 2022 and March 2024, 38 died by day 90. We estimated 90-day mortality with the Kaplan–Meier estimator and report risk differences with 95% confidence intervals. Because treatment was not randomised, the estimates describe adjusted associations and do not establish causation.

@@ -1,0 +1,50 @@
+{
+  "id": "systematic-review",
+  "name": "Systematic review or evidence synthesis",
+  "aliases": [
+    "systematic review",
+    "meta-analysis",
+    "scoping review",
+    "evidence synthesis"
+  ],
+  "purpose": "Synthesize a defined evidence base transparently and proportionately.",
+  "audience": "Researchers, guideline developers and decision-makers.",
+  "integrityPolicy": "systematic-review",
+  "hardPatterns": [
+    "causal_overreach_observational",
+    "vague_attribution",
+    "evidence_overstatement",
+    "unsupported_recommendation"
+  ],
+  "softPatterns": [
+    "passive_without_reason",
+    "summary_recap"
+  ],
+  "disabledPatterns": [
+    "title_case_heading"
+  ],
+  "requiredMoves": [
+    "question",
+    "eligibility",
+    "search",
+    "selection",
+    "appraisal",
+    "synthesis",
+    "certainty",
+    "limitations"
+  ],
+  "protectedConventions": [
+    "PRISMA flow language",
+    "GRADE certainty terms",
+    "protocol identifiers",
+    "database syntax",
+    "effect estimates and confidence intervals"
+  ],
+  "promptRules": [
+    "Keep the unit of evidence explicit.",
+    "Distinguish absence of evidence from evidence of absence.",
+    "Tie certainty language to the appraisal method.",
+    "Do not convert association into causation during synthesis.",
+    "Preserve all search strings, counts and study identifiers verbatim."
+  ]
+}

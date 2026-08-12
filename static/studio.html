@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f5f5f7" />
+  <title>WriteRoute Studio — Clear. Precise. Human.</title>
+  <meta name="description" content="A preservation-first writing studio for finding AI-slop patterns, improving prose, and rewriting documents without flattening meaning or voice." />
+  <link rel="icon" href="assets/favicon.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="landing.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="WriteRoute home">
+      <img class="brand-logo" src="assets/logo-mark.png" alt="" aria-hidden="true" />
+      <span class="brand-word">Write<span>Route</span></span>
+    </a>
+    <div class="top-actions">
+      <span class="privacy-chip">Local audit · BYOK rewrite</span>
+      <button class="icon-button" id="themeToggle" aria-label="Toggle light or dark mode" title="Toggle appearance">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9c0-.3 0-.6-.05-.9A7 7 0 0 1 12.9 3.05C12.6 3 12.3 3 12 3Z"/></svg>
+      </button>
+      <button class="button primary compact" id="newDoc">New document</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-eyebrow">WRITE AS THE AUTHOR. EDIT LIKE A RUTHLESS HUMAN.</div>
+      <h1>Better prose.<br><span>Smarter routes.</span></h1>
+      <p>Find formulaic AI writing, weak claims, structural drag and formatting problems. Then repair only what deserves changing.</p>
+      <div class="hero-actions">
+        <label class="button primary file-button">Open a document<input id="fileInput" type="file" accept=".txt,.md,.markdown,.docx,.pdf,.rtf,.csv" hidden /></label>
+        <button class="button secondary" id="startBlank">Start with blank page</button>
+      </div>
+      <div class="hero-proof">
+        <div><strong>0</strong><span>authorship guesses</span></div>
+        <div><strong>3</strong><span>editorial layers</span></div>
+        <div><strong>1</strong><span>meaning-preservation gate</span></div>
+      </div>
+    </section>
+
+    <section class="workspace hidden" id="workspace" aria-label="WriteRoute editor workspace">
+      <aside class="rail">
+        <button class="rail-button active" data-panel="audit"><span class="rail-icon">⌁</span><span>Audit</span></button>
+        <button class="rail-button" data-panel="suggestions"><span class="rail-icon">✦</span><span>Rewrite</span></button>
+        <button class="rail-button" data-panel="format"><span class="rail-icon">Aa</span><span>Format</span></button>
+        <button class="rail-button" data-panel="provider"><span class="rail-icon">⌘</span><span>BYOK</span></button>
+        <div class="rail-spacer"></div>
+        <button class="rail-button" id="exportOpen"><span class="rail-icon">⇩</span><span>Export</span></button>
+      </aside>
+
+      <section class="document-shell">
+        <div class="document-header">
+          <div>
+            <input id="docTitle" class="doc-title" value="Untitled document" aria-label="Document title" />
+            <div class="doc-meta"><span id="wordCount">0 words</span><span>·</span><span id="saveState">Ready</span><span>·</span><span id="engineStatus" class="engine-status" title="Engine status">Engine idle</span></div>
+          </div>
+          <div class="document-actions">
+            <select id="genreSelect" aria-label="Document genre">
+              <option value="" selected disabled>Choose the document job…</option>
+              <option value="scientific">Scientific journal</option>
+              <option value="systematic-review">Systematic review</option>
+              <option value="policy-brief">Policy brief</option>
+              <option value="professional-report">Professional report</option>
+              <option value="grant">Grant proposal</option>
+              <option value="legal">Legal</option>
+              <option value="technical">Technical documentation</option>
+              <option value="email">Professional correspondence</option>
+              <option value="essay">Essay / commentary</option>
+              <option value="general">General professional</option>
+              <option value="auto">Let the engine guess (unreliable)</option>
+            </select>
+            <button class="button secondary compact" id="auditButton">Run audit</button>
+          </div>
+        </div>
+
+        <div class="toolbar" role="toolbar" aria-label="Text formatting toolbar">
+          <select id="blockFormat" title="Text style" aria-label="Text style">
+            <option value="p">Body</option><option value="h1">Title</option><option value="h2">Heading</option><option value="h3">Subheading</option><option value="blockquote">Quote</option>
+          </select>
+          <span class="toolbar-divider"></span>
+          <button data-command="bold" title="Bold"><b>B</b></button>
+          <button data-command="italic" title="Italic"><i>I</i></button>
+          <button data-command="underline" title="Underline"><u>U</u></button>
+          <span class="toolbar-divider"></span>
+          <button data-command="insertUnorderedList" title="Bulleted list">•≡</button>
+          <button data-command="insertOrderedList" title="Numbered list">1≡</button>
+          <button id="linkButton" title="Insert link">↗</button>
+          <span class="toolbar-divider"></span>
+          <button data-command="undo" title="Undo">↶</button>
+          <button data-command="redo" title="Redo">↷</button>
+          <span class="toolbar-spacer"></span>
+          <button id="focusMode" title="Focus mode">Focus</button>
+        </div>
+
+        <div class="editor-wrap">
+          <article id="editor" class="editor" contenteditable="true" spellcheck="true" data-placeholder="Start writing, or upload a document…"></article>
+        </div>
+      </section>
+
+      <aside class="inspector">
+        <section class="panel active" id="panel-audit">
+          <div class="panel-head"><div><span class="kicker">DOCUMENT HEALTH</span><h2>Editorial audit</h2></div><button class="panel-close" title="Close inspector">×</button></div>
+          <div class="score-card">
+            <div class="score-ring" id="scoreRing"><span id="scoreValue">—</span></div>
+            <div><strong id="scoreLabel">Not analysed</strong><p id="scoreSummary">Run an audit to inspect the current document.</p></div>
+          </div>
+          <div class="severity-grid">
+            <div><span class="dot hard"></span><strong id="hardCount">0</strong><small>Hard</small></div>
+            <div><span class="dot review"></span><strong id="reviewCount">0</strong><small>Review</small></div>
+            <div><span class="dot soft"></span><strong id="softCount">0</strong><small>Soft</small></div>
+          </div>
+          <div class="section-title"><span>Findings</span><button class="text-button" id="repairSafe">Apply safe repairs</button></div>
+          <div class="finding-list empty-state" id="findingList"><p>No findings yet.</p></div>
+        </section>
+
+        <section class="panel" id="panel-suggestions">
+          <div class="panel-head"><div><span class="kicker">REVISION ROUTE</span><h2>Suggested rewrite</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy">Start with deterministic suggestions. Use your own model only when you want a generative rewrite.</p>
+          <div class="route-actions">
+            <button class="button secondary full" id="suggestButton">Generate local suggestions</button>
+            <button class="button primary full" id="rewriteButton">Rewrite with BYOK</button>
+          </div>
+          <div class="comparison hidden" id="comparison">
+            <div class="compare-head"><span>Candidate</span><span id="rewriteDelta"></span></div>
+            <div class="candidate-preview" id="candidatePreview"></div>
+            <div class="candidate-actions"><button class="button secondary compact" id="rejectRewrite">Keep original</button><button class="button primary compact" id="acceptRewrite">Accept rewrite</button></div>
+          </div>
+          <div id="suggestionList" class="suggestion-list"></div>
+        </section>
+
+        <section class="panel" id="panel-format">
+          <div class="panel-head"><div><span class="kicker">DOCUMENT DESIGN</span><h2>Formatting route</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy" id="formatIntro">Formatting advice adapts to the document's job, not a generic template.</p>
+          <div class="format-metrics" id="formatMetrics"></div>
+          <div class="advice-list" id="formatAdvice"><div class="advice"><span>01</span><p>Run an audit to generate formatting recommendations.</p></div></div>
+        </section>
+
+        <section class="panel" id="panel-provider">
+          <div class="panel-head"><div><span class="kicker">BRING YOUR OWN KEY</span><h2>Model connection</h2></div><button class="panel-close">×</button></div>
+          <div class="privacy-note"><span>◉</span><p>Your API key is held in this browser tab and sent only with the rewrite request. WriteRoute Studio does not persist it.</p></div>
+          <label>Provider<select id="providerSelect"><option value="openai">OpenAI</option><option value="anthropic">Anthropic</option><option value="deepseek">DeepSeek</option><option value="openrouter">OpenRouter</option><option value="openai-compatible">OpenAI-compatible / local</option></select></label>
+          <label>API key<div class="secret-field"><input id="apiKey" type="password" autocomplete="off" placeholder="sk-…" /><button id="keyVisibility" title="Show or hide API key">Show</button></div></label>
+          <label>Model<input id="modelName" type="text" placeholder="Enter provider model ID" /></label>
+          <label id="baseUrlLabel" class="hidden">Base URL<input id="baseUrl" type="url" placeholder="http://127.0.0.1:11434/v1" /></label>
+          <div class="inline-fields"><label>Candidates<select id="candidateCount"><option>1</option><option selected>3</option><option>5</option></select></label><label>Temperature<input id="temperature" type="number" min="0" max="1.2" step="0.05" value="0.25" /></label></div>
+          <button class="button secondary full" id="testProvider">Use this provider</button>
+          <p class="microcopy" id="providerStatus">No provider configured. Local audits still work.</p>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <dialog id="exportDialog" class="modal">
+    <form method="dialog">
+      <button class="modal-close" value="cancel" aria-label="Close">×</button>
+      <span class="kicker">EXPORT</span><h2>Take the document with you.</h2>
+      <p>Export the current editor text. Rich formatting is preserved in HTML; DOCX export preserves paragraph text.</p>
+      <div class="export-grid">
+        <button value="cancel" data-export="docx"><strong>DOCX</strong><span>Word document</span></button>
+        <button value="cancel" data-export="html"><strong>HTML</strong><span>Rich text</span></button>
+        <button value="cancel" data-export="md"><strong>MD</strong><span>Markdown text</span></button>
+        <button value="cancel" data-export="txt"><strong>TXT</strong><span>Plain text</span></button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

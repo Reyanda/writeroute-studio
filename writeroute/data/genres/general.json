@@ -1,0 +1,30 @@
+{
+  "id": "general",
+  "name": "General professional prose",
+  "aliases": [
+    "general",
+    "default"
+  ],
+  "purpose": "Communicate one defensible point to a defined reader.",
+  "audience": "An informed reader without assumed specialist knowledge.",
+  "integrityPolicy": "general",
+  "hardPatterns": [],
+  "softPatterns": [
+    "expletive_opening",
+    "passive_without_reason",
+    "second_person_coaching"
+  ],
+  "disabledPatterns": [],
+  "requiredMoves": [
+    "point",
+    "support",
+    "implication"
+  ],
+  "protectedConventions": [],
+  "promptRules": [
+    "Lead with the substantive point when setup adds no value.",
+    "Use concrete nouns and verbs.",
+    "Keep only caveats that change the claim.",
+    "End on the last useful fact, decision or action."
+  ]
+}

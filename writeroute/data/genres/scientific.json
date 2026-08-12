@@ -1,0 +1,48 @@
+{
+  "id": "scientific",
+  "name": "Scientific journal article",
+  "aliases": [
+    "journal",
+    "academic",
+    "research",
+    "scientific"
+  ],
+  "purpose": "Report a research question, methods, results and warranted interpretation.",
+  "audience": "Specialist researchers and peer reviewers.",
+  "integrityPolicy": "scientific",
+  "hardPatterns": [
+    "causal_overreach_observational",
+    "unsupported_safety_claim",
+    "statistical_significance_without_estimate",
+    "vague_attribution"
+  ],
+  "softPatterns": [
+    "passive_without_reason",
+    "hedge_stack",
+    "first_person_absence"
+  ],
+  "disabledPatterns": [
+    "title_case_heading"
+  ],
+  "requiredMoves": [
+    "research_gap",
+    "objective",
+    "methods",
+    "results",
+    "interpretation",
+    "limitations"
+  ],
+  "protectedConventions": [
+    "methodological hedging",
+    "passive voice where the actor is irrelevant",
+    "field-standard terminology",
+    "section-roadmap abstract where required"
+  ],
+  "promptRules": [
+    "Separate observation from interpretation.",
+    "Report effect size and uncertainty, not significance alone.",
+    "Use causal language only when the design and estimand support it.",
+    "Preserve necessary limitations and scope conditions.",
+    "Do not call methods robust, rigorous or comprehensive without naming the test or coverage."
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "accepted": false,
+  "audit": {
+    "schemaVersion": "2.0",
+    "genre": "policy-brief",
+    "genreInference": {
+      "genre": "general",
+      "confidence": 0.0,
+      "alternatives": [],
+      "scoreShare": 0.0
+    },
+    "counts": {
+      "words": 19,
+      "sentences": 3,
+      "paragraphs": 2,
+      "findings": 0,
+      "hard": 0,
+      "review": 0,
+      "soft": 0
+    },
+    "editorialBurden": 0.0,
+    "status": "clean",
+    "clean": true,
+    "dimensionScores": {},
+    "metrics": {
+      "sentenceLengthMean": 6.33,
+      "sentenceLengthCv": 0.182,
+      "paragraphLengthMean": 9.5,
+      "paragraphLengthCv": 0.67,
+      "topSentenceOpener": "the",
+      "topSentenceOpenerShare": 0.667,
+      "connectiveOpenerCount": 0,
+      "connectiveOpenerShare": 0.0,
+      "emDashCount": 0,
+      "questionCount": 0,
+      "protectedSpanCount": 0,
+      "reportedVoiceSpanCount": 0
+    },
+    "findings": [],
+    "principles": [
+      "Score editorial defects, not presumed authorship.",
+      "Treat meaning preservation as a hard gate, not a style preference.",
+      "Do not rewrite source-reported language as if it were the current author's claim."
+    ],
+    "authorshipClaim": null
+  },
+  "evidenceBoundary": {
+    "passes": false,
+    "suppliedAnchorCount": 7,
+    "candidateAnchorCount": 4,
+    "violations": [
+      {
+        "category": "number",
+        "value": "£2.4 million",
+        "message": "The draft introduced number '£2.4 million', which is absent from the supplied brief and evidence boundary."
+      },
+      {
+        "category": "number",
+        "value": "2027",
+        "message": "The draft introduced number '2027', which is absent from the supplied brief and evidence boundary."
+      },
+      {
+        "category": "number",
+        "value": "35",
+        "message": "The draft introduced number '35', which is absent from the supplied brief and evidence boundary."
+      }
+    ]
+  }
+}

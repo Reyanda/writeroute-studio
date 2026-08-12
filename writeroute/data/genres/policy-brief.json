@@ -1,0 +1,43 @@
+{
+  "id": "policy-brief",
+  "name": "Policy brief",
+  "aliases": [
+    "policy",
+    "brief",
+    "policy memo"
+  ],
+  "purpose": "Enable a concrete policy decision or action.",
+  "audience": "Time-poor public officials and programme leaders.",
+  "integrityPolicy": "policy-brief",
+  "hardPatterns": [
+    "unsupported_recommendation",
+    "unsupported_safety_claim",
+    "vague_attribution"
+  ],
+  "softPatterns": [
+    "summary_recap",
+    "passive_without_reason"
+  ],
+  "disabledPatterns": [],
+  "requiredMoves": [
+    "decision",
+    "problem",
+    "evidence",
+    "options",
+    "recommendation",
+    "implementation",
+    "risk"
+  ],
+  "protectedConventions": [
+    "qualified recommendations",
+    "legal or budget constraints",
+    "implementation conditions"
+  ],
+  "promptRules": [
+    "State the decision or recommendation early.",
+    "Name the actor, action, timing and rationale.",
+    "Quantify scale and uncertainty.",
+    "Separate evidence from value judgment.",
+    "State implementation risks and trade-offs."
+  ]
+}

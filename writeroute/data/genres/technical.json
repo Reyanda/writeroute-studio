@@ -1,0 +1,48 @@
+{
+  "id": "technical",
+  "name": "Technical documentation",
+  "aliases": [
+    "documentation",
+    "docs",
+    "technical",
+    "software"
+  ],
+  "purpose": "Enable a user to complete a task correctly and safely.",
+  "audience": "Practitioners using a system, API or procedure.",
+  "integrityPolicy": "technical",
+  "hardPatterns": [
+    "unsafe_instruction",
+    "identifier_change",
+    "unsupported_guarantee"
+  ],
+  "softPatterns": [
+    "bold_label_bullet",
+    "title_case_heading"
+  ],
+  "disabledPatterns": [
+    "second_person_coaching"
+  ],
+  "requiredMoves": [
+    "goal",
+    "prerequisites",
+    "steps",
+    "verification",
+    "failure_modes"
+  ],
+  "protectedConventions": [
+    "code",
+    "commands",
+    "identifiers",
+    "paths",
+    "flags",
+    "warnings",
+    "version constraints"
+  ],
+  "promptRules": [
+    "Put the task outcome first.",
+    "Use exact commands and identifiers.",
+    "Separate prerequisites, actions, expected output and recovery.",
+    "Do not claim safety, idempotence or compatibility without a condition or test.",
+    "Leave code and quoted output unchanged unless explicitly asked."
+  ]
+}

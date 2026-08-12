@@ -1,0 +1,665 @@
+{
+  "mode": "repair",
+  "genre": "professional-report",
+  "sourceTextMode": false,
+  "changed": true,
+  "originalText": "Certainly! Here is a polished version that ensures clarity.\n\nIn today’s fast-paced world, it is important to note that studies show the district programme drives meaningful impact. The team conducted an assessment of 17 facility reports in order to identify stock-outs. This comprehensive analysis provides a robust overview of the situation, highlighting the programme’s commitment to better outcomes.\n\nIn conclusion, the future isn’t coming. It’s already here.\n",
+  "finalText": "Certainly! Here is a polished version that ensures clarity.\n\nIt is important to note that studies show the district programme drives meaningful impact. The team assessed 17 facility reports to identify stock-outs. This comprehensive analysis provides a robust overview of the situation.\n\n",
+  "applied": [
+    {
+      "findingId": "F0003",
+      "patternId": "generic_world_opener",
+      "start": 61,
+      "end": 90,
+      "original": "In today’s fast-paced world, ",
+      "replacement": "",
+      "contextualOverride": false,
+      "contextualOverrideCategories": [],
+      "allowAggregateLength": true
+    },
+    {
+      "findingId": "F0007",
+      "patternId": "nominalised_verb",
+      "start": 190,
+      "end": 216,
+      "original": "conducted an assessment of",
+      "replacement": "assessed",
+      "contextualOverride": false,
+      "contextualOverrideCategories": [],
+      "allowAggregateLength": false
+    },
+    {
+      "findingId": "F0008",
+      "patternId": "filler_phrase",
+      "start": 237,
+      "end": 248,
+      "original": "in order to",
+      "replacement": "to",
+      "contextualOverride": false,
+      "contextualOverrideCategories": [],
+      "allowAggregateLength": false
+    },
+    {
+      "findingId": "F0012",
+      "patternId": "superficial_analysis",
+      "start": 341,
+      "end": 401,
+      "original": ", highlighting the programme’s commitment to better outcomes",
+      "replacement": "",
+      "contextualOverride": false,
+      "contextualOverrideCategories": [],
+      "allowAggregateLength": false
+    },
+    {
+      "findingId": "F0013",
+      "patternId": "summary_recap",
+      "start": 404,
+      "end": 419,
+      "original": "In conclusion, ",
+      "replacement": "",
+      "contextualOverride": false,
+      "contextualOverrideCategories": [],
+      "allowAggregateLength": true
+    },
+    {
+      "findingId": "F0014",
+      "patternId": "fake_profound_kicker",
+      "start": 419,
+      "end": 463,
+      "original": "the future isn’t coming. It’s already here.\n",
+      "replacement": "",
+      "contextualOverride": true,
+      "contextualOverrideCategories": [
+        "negation"
+      ],
+      "allowAggregateLength": true
+    }
+  ],
+  "skipped": [
+    {
+      "findingId": "F0002",
+      "reason": "no deterministic replacement cleared all gates"
+    },
+    {
+      "findingId": "F0005",
+      "reason": "no deterministic replacement cleared all gates"
+    },
+    {
+      "findingId": "F0006",
+      "reason": "no deterministic replacement cleared all gates"
+    },
+    {
+      "findingId": "F0009",
+      "reason": "source-reported or review-level finding requires author judgment"
+    },
+    {
+      "findingId": "F0010",
+      "reason": "no deterministic replacement cleared all gates"
+    },
+    {
+      "findingId": "F0011",
+      "reason": "no deterministic replacement cleared all gates"
+    },
+    {
+      "findingId": "F0004",
+      "reason": "combined edit failed the full-document acceptance gate"
+    },
+    {
+      "findingId": "F0001",
+      "reason": "combined edit failed the full-document acceptance gate"
+    }
+  ],
+  "auditBefore": {
+    "schemaVersion": "2.0",
+    "genre": "professional-report",
+    "genreInference": {
+      "genre": "general",
+      "confidence": 0.0,
+      "alternatives": [],
+      "scoreShare": 0.0
+    },
+    "counts": {
+      "words": 66,
+      "sentences": 7,
+      "paragraphs": 3,
+      "findings": 14,
+      "hard": 8,
+      "review": 1,
+      "soft": 5
+    },
+    "editorialBurden": 99.6,
+    "status": "rebuild_required",
+    "clean": false,
+    "dimensionScores": {
+      "directness": 90.4,
+      "claim_discipline": 99.1,
+      "specificity": 23.1,
+      "clarity": 24.6,
+      "structure": 66.7
+    },
+    "metrics": {
+      "sentenceLengthMean": 9.43,
+      "sentenceLengthCv": 0.711,
+      "paragraphLengthMean": 22.0,
+      "paragraphLengthCv": 1.023,
+      "topSentenceOpener": "in",
+      "topSentenceOpenerShare": 0.286,
+      "connectiveOpenerCount": 0,
+      "connectiveOpenerShare": 0.0,
+      "emDashCount": 0,
+      "questionCount": 0,
+      "protectedSpanCount": 0,
+      "reportedVoiceSpanCount": 0
+    },
+    "findings": [
+      {
+        "id": "F0001",
+        "patternId": "assistant_meta_preface",
+        "title": "Assistant-style preface",
+        "category": "meta_commentary",
+        "severity": "hard",
+        "confidence": 0.99,
+        "span": {
+          "start": 0,
+          "end": 61
+        },
+        "original": "Certainly! Here is a polished version that ensures clarity.\n\n",
+        "sentence": "Certainly! Here is a polished version that ensures clarity.\n\n",
+        "rationale": "The sentence describes the assistant's action instead of belonging to the document.",
+        "action": "Delete the preface and begin with the deliverable.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0002",
+        "patternId": "qc_assurance",
+        "title": "Unsupported quality assurance",
+        "category": "quality_claim",
+        "severity": "hard",
+        "confidence": 0.94,
+        "span": {
+          "start": 43,
+          "end": 58
+        },
+        "original": "ensures clarity",
+        "sentence": "Here is a polished version that ensures clarity.",
+        "rationale": "The sentence asserts quality without naming the procedure or evidence that produced it.",
+        "action": "Name the validation, coverage, comparison, or test; otherwise delete the assurance.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0003",
+        "patternId": "generic_world_opener",
+        "title": "Generic world-setting opener",
+        "category": "delay",
+        "severity": "hard",
+        "confidence": 0.95,
+        "span": {
+          "start": 61,
+          "end": 90
+        },
+        "original": "In today’s fast-paced world, ",
+        "sentence": "In today’s fast-paced world, it is important to note that studies show the district programme drives meaningful impact.",
+        "rationale": "The opener supplies generic context that could introduce almost any subject.",
+        "action": "Begin with the specific problem, event, or decision.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0004",
+        "patternId": "importance_meta",
+        "title": "Interpretive metadiscourse",
+        "category": "meta_commentary",
+        "severity": "soft",
+        "confidence": 0.91,
+        "span": {
+          "start": 90,
+          "end": 119
+        },
+        "original": "it is important to note that ",
+        "sentence": "In today’s fast-paced world, it is important to note that studies show the district programme drives meaningful impact.",
+        "rationale": "The author tells the reader how to weigh a point instead of showing the consequence or evidence. Ordinary explanatory glosses such as ‘in other words’ are not flagged without a semantic redundancy check.",
+        "action": "Delete it when the support is already clear; otherwise add the missing consequence or evidence.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0005",
+        "patternId": "vague_attribution",
+        "title": "Vague attribution",
+        "category": "evidence",
+        "severity": "hard",
+        "confidence": 0.96,
+        "span": {
+          "start": 119,
+          "end": 131
+        },
+        "original": "studies show",
+        "sentence": "In today’s fast-paced world, it is important to note that studies show the district programme drives meaningful impact.",
+        "rationale": "The source is too vague for the reader to verify or weigh.",
+        "action": "Name and cite the source, or remove the attribution and narrow the claim.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0006",
+        "patternId": "vague_impact",
+        "title": "Vague impact claim",
+        "category": "abstraction",
+        "severity": "soft",
+        "confidence": 0.82,
+        "span": {
+          "start": 155,
+          "end": 179
+        },
+        "original": "drives meaningful impact",
+        "sentence": "In today’s fast-paced world, it is important to note that studies show the district programme drives meaningful impact.",
+        "rationale": "The phrase asserts impact without naming what changed, for whom, or by how much.",
+        "action": "Replace it with the measured outcome, mechanism, beneficiary, and time frame.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0007",
+        "patternId": "nominalised_verb",
+        "title": "Weak verb plus nominalisation",
+        "category": "syntax",
+        "severity": "soft",
+        "confidence": 0.88,
+        "span": {
+          "start": 190,
+          "end": 216
+        },
+        "original": "conducted an assessment of",
+        "sentence": "The team conducted an assessment of 17 facility reports in order to identify stock-outs.",
+        "rationale": "A weak verb and abstract noun delay the action.",
+        "action": "Use the corresponding direct verb where grammar permits.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0008",
+        "patternId": "filler_phrase",
+        "title": "Wordy filler",
+        "category": "compression",
+        "severity": "soft",
+        "confidence": 0.96,
+        "span": {
+          "start": 237,
+          "end": 248
+        },
+        "original": "in order to",
+        "sentence": "The team conducted an assessment of 17 facility reports in order to identify stock-outs.",
+        "rationale": "The phrase uses more words than the idea requires.",
+        "action": "Replace it with the direct equivalent.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0009",
+        "patternId": "unsubstantiated_quality_claim",
+        "title": "Quality label without criterion",
+        "category": "claim_support",
+        "severity": "review",
+        "confidence": 0.78,
+        "span": {
+          "start": 275,
+          "end": 288
+        },
+        "original": "comprehensive",
+        "sentence": "This comprehensive analysis provides a robust overview of the situation, highlighting the programme’s commitment to better outcomes.",
+        "rationale": "The quality adjective is not tied to a named test, comparator, coverage rule or validation result.",
+        "action": "Replace the label with the procedure and result that support it.",
+        "source": "substance",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0010",
+        "patternId": "qc_assurance",
+        "title": "Unsupported quality assurance",
+        "category": "quality_claim",
+        "severity": "hard",
+        "confidence": 0.94,
+        "span": {
+          "start": 275,
+          "end": 297
+        },
+        "original": "comprehensive analysis",
+        "sentence": "This comprehensive analysis provides a robust overview of the situation, highlighting the programme’s commitment to better outcomes.",
+        "rationale": "The sentence asserts quality without naming the procedure or evidence that produced it.",
+        "action": "Name the validation, coverage, comparison, or test; otherwise delete the assurance.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0011",
+        "patternId": "qc_assurance",
+        "title": "Unsupported quality assurance",
+        "category": "quality_claim",
+        "severity": "hard",
+        "confidence": 0.94,
+        "span": {
+          "start": 307,
+          "end": 324
+        },
+        "original": "a robust overview",
+        "sentence": "This comprehensive analysis provides a robust overview of the situation, highlighting the programme’s commitment to better outcomes.",
+        "rationale": "The sentence asserts quality without naming the procedure or evidence that produced it.",
+        "action": "Name the validation, coverage, comparison, or test; otherwise delete the assurance.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0012",
+        "patternId": "superficial_analysis",
+        "title": "Superficial participial analysis",
+        "category": "unsupported_interpretation",
+        "severity": "hard",
+        "confidence": 0.91,
+        "span": {
+          "start": 341,
+          "end": 401
+        },
+        "original": ", highlighting the programme’s commitment to better outcomes",
+        "sentence": "This comprehensive analysis provides a robust overview of the situation, highlighting the programme’s commitment to better outcomes.",
+        "rationale": "The trailing clause often labels significance without establishing a mechanism or consequence.",
+        "action": "Replace it with the concrete consequence or delete it.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0013",
+        "patternId": "summary_recap",
+        "title": "Recap ending",
+        "category": "ending",
+        "severity": "soft",
+        "confidence": 0.91,
+        "span": {
+          "start": 404,
+          "end": 419
+        },
+        "original": "In conclusion, ",
+        "sentence": "In conclusion, the future isn’t coming.",
+        "rationale": "A generic recap often repeats what the reader has just read.",
+        "action": "Delete the label and end on the final concrete implication, decision, or action.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0014",
+        "patternId": "fake_profound_kicker",
+        "title": "Fake-profound ending",
+        "category": "ending",
+        "severity": "hard",
+        "confidence": 0.9,
+        "span": {
+          "start": 419,
+          "end": 463
+        },
+        "original": "the future isn’t coming. It’s already here.\n",
+        "sentence": "the future isn’t coming. It’s already here.\n",
+        "rationale": "The final line substitutes a generic aphorism for a concrete ending.",
+        "action": "Delete it and end on the last specific fact, implication, or next action.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      }
+    ],
+    "principles": [
+      "Score editorial defects, not presumed authorship.",
+      "Treat meaning preservation as a hard gate, not a style preference.",
+      "Do not rewrite source-reported language as if it were the current author's claim."
+    ],
+    "authorshipClaim": null
+  },
+  "auditAfter": {
+    "schemaVersion": "2.0",
+    "genre": "professional-report",
+    "genreInference": {
+      "genre": "general",
+      "confidence": 0.0,
+      "alternatives": [],
+      "scoreShare": 0.0
+    },
+    "counts": {
+      "words": 41,
+      "sentences": 5,
+      "paragraphs": 2,
+      "findings": 8,
+      "hard": 5,
+      "review": 1,
+      "soft": 2
+    },
+    "editorialBurden": 96.9,
+    "status": "rebuild_required",
+    "clean": false,
+    "dimensionScores": {
+      "directness": 69.3,
+      "claim_discipline": 98.0,
+      "specificity": 23.1
+    },
+    "metrics": {
+      "sentenceLengthMean": 8.2,
+      "sentenceLengthCv": 0.575,
+      "paragraphLengthMean": 20.5,
+      "paragraphLengthCv": 0.793,
+      "topSentenceOpener": "certainly",
+      "topSentenceOpenerShare": 0.2,
+      "connectiveOpenerCount": 0,
+      "connectiveOpenerShare": 0.0,
+      "emDashCount": 0,
+      "questionCount": 0,
+      "protectedSpanCount": 0,
+      "reportedVoiceSpanCount": 0
+    },
+    "findings": [
+      {
+        "id": "F0001",
+        "patternId": "assistant_meta_preface",
+        "title": "Assistant-style preface",
+        "category": "meta_commentary",
+        "severity": "hard",
+        "confidence": 0.99,
+        "span": {
+          "start": 0,
+          "end": 61
+        },
+        "original": "Certainly! Here is a polished version that ensures clarity.\n\n",
+        "sentence": "Certainly! Here is a polished version that ensures clarity.\n\n",
+        "rationale": "The sentence describes the assistant's action instead of belonging to the document.",
+        "action": "Delete the preface and begin with the deliverable.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0002",
+        "patternId": "qc_assurance",
+        "title": "Unsupported quality assurance",
+        "category": "quality_claim",
+        "severity": "hard",
+        "confidence": 0.94,
+        "span": {
+          "start": 43,
+          "end": 58
+        },
+        "original": "ensures clarity",
+        "sentence": "Here is a polished version that ensures clarity.",
+        "rationale": "The sentence asserts quality without naming the procedure or evidence that produced it.",
+        "action": "Name the validation, coverage, comparison, or test; otherwise delete the assurance.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0003",
+        "patternId": "importance_meta",
+        "title": "Interpretive metadiscourse",
+        "category": "meta_commentary",
+        "severity": "soft",
+        "confidence": 0.91,
+        "span": {
+          "start": 61,
+          "end": 90
+        },
+        "original": "It is important to note that ",
+        "sentence": "It is important to note that studies show the district programme drives meaningful impact.",
+        "rationale": "The author tells the reader how to weigh a point instead of showing the consequence or evidence. Ordinary explanatory glosses such as ‘in other words’ are not flagged without a semantic redundancy check.",
+        "action": "Delete it when the support is already clear; otherwise add the missing consequence or evidence.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0004",
+        "patternId": "vague_attribution",
+        "title": "Vague attribution",
+        "category": "evidence",
+        "severity": "hard",
+        "confidence": 0.96,
+        "span": {
+          "start": 90,
+          "end": 102
+        },
+        "original": "studies show",
+        "sentence": "It is important to note that studies show the district programme drives meaningful impact.",
+        "rationale": "The source is too vague for the reader to verify or weigh.",
+        "action": "Name and cite the source, or remove the attribution and narrow the claim.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0005",
+        "patternId": "vague_impact",
+        "title": "Vague impact claim",
+        "category": "abstraction",
+        "severity": "soft",
+        "confidence": 0.82,
+        "span": {
+          "start": 126,
+          "end": 150
+        },
+        "original": "drives meaningful impact",
+        "sentence": "It is important to note that studies show the district programme drives meaningful impact.",
+        "rationale": "The phrase asserts impact without naming what changed, for whom, or by how much.",
+        "action": "Replace it with the measured outcome, mechanism, beneficiary, and time frame.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0006",
+        "patternId": "unsubstantiated_quality_claim",
+        "title": "Quality label without criterion",
+        "category": "claim_support",
+        "severity": "review",
+        "confidence": 0.78,
+        "span": {
+          "start": 219,
+          "end": 232
+        },
+        "original": "comprehensive",
+        "sentence": "This comprehensive analysis provides a robust overview of the situation.",
+        "rationale": "The quality adjective is not tied to a named test, comparator, coverage rule or validation result.",
+        "action": "Replace the label with the procedure and result that support it.",
+        "source": "substance",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0007",
+        "patternId": "qc_assurance",
+        "title": "Unsupported quality assurance",
+        "category": "quality_claim",
+        "severity": "hard",
+        "confidence": 0.94,
+        "span": {
+          "start": 219,
+          "end": 241
+        },
+        "original": "comprehensive analysis",
+        "sentence": "This comprehensive analysis provides a robust overview of the situation.",
+        "rationale": "The sentence asserts quality without naming the procedure or evidence that produced it.",
+        "action": "Name the validation, coverage, comparison, or test; otherwise delete the assurance.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      },
+      {
+        "id": "F0008",
+        "patternId": "qc_assurance",
+        "title": "Unsupported quality assurance",
+        "category": "quality_claim",
+        "severity": "hard",
+        "confidence": 0.94,
+        "span": {
+          "start": 251,
+          "end": 268
+        },
+        "original": "a robust overview",
+        "sentence": "This comprehensive analysis provides a robust overview of the situation.",
+        "rationale": "The sentence asserts quality without naming the procedure or evidence that produced it.",
+        "action": "Name the validation, coverage, comparison, or test; otherwise delete the assurance.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      }
+    ],
+    "principles": [
+      "Score editorial defects, not presumed authorship.",
+      "Treat meaning preservation as a hard gate, not a style preference.",
+      "Do not rewrite source-reported language as if it were the current author's claim."
+    ],
+    "authorshipClaim": null
+  },
+  "integrity": {
+    "passes": false,
+    "policy": "professional-report",
+    "lengthRatio": 0.627,
+    "violations": [
+      {
+        "category": "negation",
+        "severity": "hard",
+        "message": "negation changed: removed or changed not",
+        "removed": [
+          "not"
+        ],
+        "added": []
+      }
+    ],
+    "anchorCountsBefore": {
+      "number": 1,
+      "modal_force": 0,
+      "negation": 1,
+      "scope": 0,
+      "direction": 0,
+      "causal_strength": 1
+    },
+    "anchorCountsAfter": {
+      "number": 1,
+      "modal_force": 0,
+      "negation": 0,
+      "scope": 0,
+      "direction": 0,
+      "causal_strength": 1
+    }
+  },
+  "integrityEffective": true,
+  "contextualExemption": true,
+  "byteExactNoOp": false
+}

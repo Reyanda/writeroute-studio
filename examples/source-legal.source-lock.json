@@ -1,0 +1,193 @@
+{
+  "mode": "repair",
+  "genre": "legal",
+  "sourceTextMode": true,
+  "changed": false,
+  "originalText": "It is important to note that Section 12 shall not apply unless the Supplier provides written notice within 30 days.\n",
+  "finalText": "It is important to note that Section 12 shall not apply unless the Supplier provides written notice within 30 days.\n",
+  "applied": [],
+  "skipped": [
+    {
+      "findingId": "F0001",
+      "reason": "source-text mode permits annotation but forbids mutation"
+    }
+  ],
+  "auditBefore": {
+    "schemaVersion": "2.0",
+    "genre": "legal",
+    "genreInference": {
+      "genre": "general",
+      "confidence": 0.25,
+      "alternatives": [
+        {
+          "genre": "legal",
+          "score": 1.0,
+          "evidence": [
+            "Section 1"
+          ]
+        }
+      ],
+      "scoreShare": 1.0
+    },
+    "counts": {
+      "words": 18,
+      "sentences": 1,
+      "paragraphs": 1,
+      "findings": 1,
+      "hard": 0,
+      "review": 0,
+      "soft": 1
+    },
+    "editorialBurden": 17.3,
+    "status": "line_edit",
+    "clean": false,
+    "dimensionScores": {
+      "directness": 25.3
+    },
+    "metrics": {
+      "sentenceLengthMean": 18.0,
+      "sentenceLengthCv": 0.0,
+      "paragraphLengthMean": 18.0,
+      "paragraphLengthCv": 0.0,
+      "topSentenceOpener": "it",
+      "topSentenceOpenerShare": 1.0,
+      "connectiveOpenerCount": 0,
+      "connectiveOpenerShare": 0.0,
+      "emDashCount": 0,
+      "questionCount": 0,
+      "protectedSpanCount": 0,
+      "reportedVoiceSpanCount": 0
+    },
+    "findings": [
+      {
+        "id": "F0001",
+        "patternId": "importance_meta",
+        "title": "Interpretive metadiscourse",
+        "category": "meta_commentary",
+        "severity": "soft",
+        "confidence": 0.91,
+        "span": {
+          "start": 0,
+          "end": 29
+        },
+        "original": "It is important to note that ",
+        "sentence": "It is important to note that Section 12 shall not apply unless the Supplier provides written notice within 30 days.",
+        "rationale": "The author tells the reader how to weigh a point instead of showing the consequence or evidence. Ordinary explanatory glosses such as ‘in other words’ are not flagged without a semantic redundancy check.",
+        "action": "Delete it when the support is already clear; otherwise add the missing consequence or evidence.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      }
+    ],
+    "principles": [
+      "Score editorial defects, not presumed authorship.",
+      "Treat meaning preservation as a hard gate, not a style preference.",
+      "Do not rewrite source-reported language as if it were the current author's claim."
+    ],
+    "authorshipClaim": null
+  },
+  "auditAfter": {
+    "schemaVersion": "2.0",
+    "genre": "legal",
+    "genreInference": {
+      "genre": "general",
+      "confidence": 0.25,
+      "alternatives": [
+        {
+          "genre": "legal",
+          "score": 1.0,
+          "evidence": [
+            "Section 1"
+          ]
+        }
+      ],
+      "scoreShare": 1.0
+    },
+    "counts": {
+      "words": 18,
+      "sentences": 1,
+      "paragraphs": 1,
+      "findings": 1,
+      "hard": 0,
+      "review": 0,
+      "soft": 1
+    },
+    "editorialBurden": 17.3,
+    "status": "line_edit",
+    "clean": false,
+    "dimensionScores": {
+      "directness": 25.3
+    },
+    "metrics": {
+      "sentenceLengthMean": 18.0,
+      "sentenceLengthCv": 0.0,
+      "paragraphLengthMean": 18.0,
+      "paragraphLengthCv": 0.0,
+      "topSentenceOpener": "it",
+      "topSentenceOpenerShare": 1.0,
+      "connectiveOpenerCount": 0,
+      "connectiveOpenerShare": 0.0,
+      "emDashCount": 0,
+      "questionCount": 0,
+      "protectedSpanCount": 0,
+      "reportedVoiceSpanCount": 0
+    },
+    "findings": [
+      {
+        "id": "F0001",
+        "patternId": "importance_meta",
+        "title": "Interpretive metadiscourse",
+        "category": "meta_commentary",
+        "severity": "soft",
+        "confidence": 0.91,
+        "span": {
+          "start": 0,
+          "end": 29
+        },
+        "original": "It is important to note that ",
+        "sentence": "It is important to note that Section 12 shall not apply unless the Supplier provides written notice within 30 days.",
+        "rationale": "The author tells the reader how to weigh a point instead of showing the consequence or evidence. Ordinary explanatory glosses such as ‘in other words’ are not flagged without a semantic redundancy check.",
+        "action": "Delete it when the support is already clear; otherwise add the missing consequence or evidence.",
+        "source": "surface",
+        "reportedVoice": false,
+        "candidates": []
+      }
+    ],
+    "principles": [
+      "Score editorial defects, not presumed authorship.",
+      "Treat meaning preservation as a hard gate, not a style preference.",
+      "Do not rewrite source-reported language as if it were the current author's claim."
+    ],
+    "authorshipClaim": null
+  },
+  "integrity": {
+    "passes": true,
+    "policy": "legal",
+    "lengthRatio": 1.0,
+    "violations": [],
+    "anchorCountsBefore": {
+      "cross_reference": 1,
+      "number": 2,
+      "modal_force": 1,
+      "negation": 2,
+      "scope": 0,
+      "direction": 0,
+      "causal_strength": 0,
+      "exact_modals": 1
+    },
+    "anchorCountsAfter": {
+      "cross_reference": 1,
+      "number": 2,
+      "modal_force": 1,
+      "negation": 2,
+      "scope": 0,
+      "direction": 0,
+      "causal_strength": 0,
+      "exact_modals": 1
+    }
+  },
+  "integrityEffective": true,
+  "contextualExemption": false,
+  "byteExactNoOp": true,
+  "reason": "source text returned byte-for-byte"
+}

@@ -1,0 +1,531 @@
+{
+  "version": "2.0.0",
+  "patterns": [
+    {
+      "id": "assistant_meta_preface",
+      "title": "Assistant-style preface",
+      "category": "meta_commentary",
+      "severity": "hard",
+      "confidence": 0.99,
+      "pattern": "(?im)^(?:(?:certainly|of course)[!,.]?\\s*)?(?:(?:here(?:'|’)s|here is) (?:a|the|an) (?:revised|polished|improved|refined|professional) (?:version|draft|rewrite)[^\\n.!?]*[.!?]\\s*|(?:certainly|of course)[!,.]?\\s*)",
+      "rationale": "The sentence describes the assistant's action instead of belonging to the document.",
+      "action": "Delete the preface and begin with the deliverable.",
+      "strategy": "delete_span"
+    },
+    {
+      "id": "assistant_meta_process",
+      "title": "Process narration",
+      "category": "meta_commentary",
+      "severity": "hard",
+      "confidence": 0.98,
+      "pattern": "(?i)\\b(?:I(?:'|’)ve|I have) (?:revised|rewritten|polished|refined|improved)|\\bthis (?:revision|version|rewrite) (?:improves|enhances|ensures|maintains|preserves)\\b",
+      "rationale": "The prose narrates editing rather than communicating the subject.",
+      "action": "Remove the process claim or replace it with the concrete content.",
+      "strategy": "review"
+    },
+    {
+      "id": "closing_offer",
+      "title": "Assistant closing offer",
+      "category": "meta_commentary",
+      "severity": "hard",
+      "confidence": 0.99,
+      "pattern": "(?im)^(?:let me know if you(?:'|’)d like|feel free to (?:ask|share|reach out)|I(?:'|’)m happy to (?:help|revise|expand)|hope this helps)[^\\n.!?]*[.!?]?\\s*$",
+      "rationale": "A closing offer is chatbot residue, not part of the requested document.",
+      "action": "Delete it unless the communication itself requires an invitation.",
+      "strategy": "delete_sentence",
+      "genreSoft": [
+        "email"
+      ]
+    },
+    {
+      "id": "qc_assurance",
+      "title": "Unsupported quality assurance",
+      "category": "quality_claim",
+      "severity": "hard",
+      "confidence": 0.94,
+      "pattern": "(?i)\\b(?:to ensure|ensuring|ensures) (?:accuracy|clarity|coherence|consistency|quality|rigou?r|reliability)(?: and (?:accuracy|clarity|coherence|consistency|quality|rigou?r|reliability))*\\b|\\b(?:a )?(?:comprehensive|robust|rigorous|high-quality) (?:overview|analysis|assessment|approach|framework)\\b",
+      "rationale": "The sentence asserts quality without naming the procedure or evidence that produced it.",
+      "action": "Name the validation, coverage, comparison, or test; otherwise delete the assurance.",
+      "strategy": "review",
+      "literalGuards": [
+        "(?i)robust standard errors?",
+        "(?i)robust regression",
+        "(?i)quality assurance protocol"
+      ]
+    },
+    {
+      "id": "throat_clearing",
+      "title": "Throat-clearing opener",
+      "category": "delay",
+      "severity": "hard",
+      "confidence": 0.96,
+      "pattern": "(?i)(?<!\\w)(?:here(?:'|’)s the thing|here(?:'|’)s what I mean|let me be clear|I(?:'|’)ll be honest|to be clear|the uncomfortable truth is|the reality is|the truth is|it turns out|let(?:'|’)s (?:dive in|unpack this|explore this))\\s*[:,]?\\s*",
+      "rationale": "The opener delays a claim that can usually stand on its own.",
+      "action": "Delete the opener and state the claim directly.",
+      "strategy": "delete_span",
+      "genreSoft": [
+        "op-ed"
+      ]
+    },
+    {
+      "id": "faux_insight",
+      "title": "Faux-insight setup",
+      "category": "reader_manipulation",
+      "severity": "hard",
+      "confidence": 0.96,
+      "pattern": "(?i)(?<!\\w)(?:what (?:most people|everyone|nobody) (?:miss(?:es)?|get(?:s)? wrong|tell(?:s)? you)|the (?:part|thing|detail) (?:most people|everyone) (?:miss(?:es)?|skip(?:s)?|overlook(?:s)?)|here(?:'|’)s what nobody tells you)\\s*[:,]?\\s*",
+      "rationale": "The setup flatters the writer as the lone holder of an insight instead of supporting the claim.",
+      "action": "Remove the setup and let the claim and evidence carry the force.",
+      "strategy": "delete_span",
+      "genreSoft": [
+        "op-ed"
+      ]
+    },
+    {
+      "id": "importance_meta",
+      "title": "Interpretive metadiscourse",
+      "category": "meta_commentary",
+      "severity": "soft",
+      "confidence": 0.91,
+      "pattern": "(?i)(?<!\\w)(?:it is (?:important|crucial|essential|worthwhile) to (?:note|remember|recognize|recognise|understand) that|the key (?:point|takeaway) is(?: that)?|this (?:point|distinction|finding|detail) matters|as you can see)\\s*[:,]?\\s*",
+      "rationale": "The author tells the reader how to weigh a point instead of showing the consequence or evidence. Ordinary explanatory glosses such as ‘in other words’ are not flagged without a semantic redundancy check.",
+      "action": "Delete it when the support is already clear; otherwise add the missing consequence or evidence.",
+      "strategy": "delete_span",
+      "genreSoft": [
+        "legal",
+        "technical"
+      ]
+    },
+    {
+      "id": "binary_contrast",
+      "title": "Formulaic binary contrast",
+      "category": "rhetorical_template",
+      "severity": "soft",
+      "confidence": 0.86,
+      "pattern": "(?is)\\b(?:this|it|the (?:issue|question|challenge|problem|goal|point)) (?:isn(?:'|’)t|is not) (?P<x>[^.!?;:\\n]{2,90})[,.;:]\\s*(?:it(?:'|’)s|it is|the (?:issue|question|challenge|problem|goal|point) is) (?P<y>[^.!?\\n]{2,120})(?=[.!?])",
+      "rationale": "The not-X-but-Y frame often adds theatrical opposition without adding meaning.",
+      "action": "State Y directly unless the correction itself is substantively necessary.",
+      "strategy": "keep_group_y",
+      "genreSoft": [
+        "op-ed"
+      ]
+    },
+    {
+      "id": "not_just_but",
+      "title": "Not-just-but template",
+      "category": "rhetorical_template",
+      "severity": "soft",
+      "confidence": 0.83,
+      "pattern": "(?is)\\b(?:it|this|that|[A-Z][A-Za-z0-9_-]*) (?:is|was|does|did|can|will) not (?:just|merely|simply) (?P<x>[^,.;:\\n]{2,80})(?:,?\\s+but(?:\\s+also)?\\s+)(?P<y>[^.!?\\n]{2,120})(?=[.!?])",
+      "rationale": "The construction is often used as a generic emphasis scaffold.",
+      "action": "State the stronger claim directly, or retain both clauses only when the distinction is real.",
+      "strategy": "review",
+      "genreSoft": [
+        "op-ed"
+      ]
+    },
+    {
+      "id": "colon_reveal",
+      "title": "Dramatic colon reveal",
+      "category": "rhetorical_template",
+      "severity": "soft",
+      "confidence": 0.82,
+      "pattern": "(?m)(?P<label>\\b(?:the )?(?:best|worst|hard|important|interesting|surprising|critical|simple|real) (?:part|thing|detail|point|reason|truth|problem)):\\s+(?P<reveal>[a-z][^\\n.!?]{3,160}[.!?]?)",
+      "rationale": "The label manufactures drama instead of integrating the claim into a sentence.",
+      "action": "Rewrite the reveal as a plain declarative sentence.",
+      "strategy": "keep_group_reveal",
+      "genreSoft": [
+        "op-ed",
+        "email"
+      ]
+    },
+    {
+      "id": "superficial_analysis",
+      "title": "Superficial participial analysis",
+      "category": "unsupported_interpretation",
+      "severity": "hard",
+      "confidence": 0.91,
+      "pattern": ",\\s*(?P<clause>(?:highlighting|underscoring|showcasing|reflecting|demonstrating|illustrating|signalling|signaling)\\s+[^.!?\\n]{8,180})(?=[.!?])",
+      "rationale": "The trailing clause often labels significance without establishing a mechanism or consequence.",
+      "action": "Replace it with the concrete consequence or delete it.",
+      "strategy": "delete_span"
+    },
+    {
+      "id": "importance_puffery",
+      "title": "Importance puffery",
+      "category": "inflation",
+      "severity": "hard",
+      "confidence": 0.97,
+      "pattern": "(?i)\\b(?:stands? as a testament to|marks? a pivotal moment|plays? a (?:vital|pivotal|crucial) role|solidif(?:y|ies|ied) (?:its|the) position|underscores? (?:its|the) significance|holds? great promise|serves? as a beacon|rich tapestry|cornerstone of)\\b",
+      "rationale": "The phrase labels importance rather than stating the event, mechanism, or consequence.",
+      "action": "State the specific fact and let the reader judge its importance.",
+      "strategy": "review",
+      "literalGuards": [
+        "(?i)structural cornerstone",
+        "(?i)masonry cornerstone"
+      ]
+    },
+    {
+      "id": "vague_attribution",
+      "title": "Vague attribution",
+      "category": "evidence",
+      "severity": "hard",
+      "confidence": 0.96,
+      "pattern": "(?i)(?<!\\w)(?:experts? (?:agree|argue|believe|say)|studies (?:show|suggest|indicate|demonstrate)|research (?:shows|suggests|indicates|demonstrates)|industry reports? (?:show|suggest|indicate)|many (?:argue|believe|say)|it is widely (?:believed|accepted|recognized|recognised|regarded))\\b",
+      "rationale": "The source is too vague for the reader to verify or weigh.",
+      "action": "Name and cite the source, or remove the attribution and narrow the claim.",
+      "strategy": "review"
+    },
+    {
+      "id": "fake_strong_verb",
+      "title": "Decorative strong verb",
+      "category": "abstraction",
+      "severity": "soft",
+      "confidence": 0.77,
+      "pattern": "(?i)\\b(?:serves? as|functions? as|acts? as) (?:a|an|the) (?:centralized|centralised|powerful|dynamic|comprehensive|key|vital|strategic)?\\s*(?:hub|platform|solution|framework|engine|catalyst|tool)\\b",
+      "rationale": "The phrase sounds active but usually hides what the subject actually does.",
+      "action": "Name the concrete actions, objects, or outcomes.",
+      "strategy": "review",
+      "literalGuards": [
+        "(?i)acts as a catalyst in",
+        "(?i)functions as an enzyme"
+      ]
+    },
+    {
+      "id": "nominalised_verb",
+      "title": "Weak verb plus nominalisation",
+      "category": "syntax",
+      "severity": "soft",
+      "confidence": 0.88,
+      "pattern": "(?i)\\b(?P<phrase>(?:conduct(?:ed|s|ing)?|perform(?:ed|s|ing)?|carry(?:ing)? out|undert(?:ake|ook|aken|aking)|make|made|provide(?:d|s|ing)?|give|gave)\\s+(?:an? |the )?(?:analysis|assessment|evaluation|investigation|examination|review|decision|recommendation|implementation|measurement|comparison|consideration|description|explanation|improvement|reduction|increase)\\s+(?:of|on|into|for|to)?)\\b",
+      "rationale": "A weak verb and abstract noun delay the action.",
+      "action": "Use the corresponding direct verb where grammar permits.",
+      "strategy": "nominalisation"
+    },
+    {
+      "id": "filler_phrase",
+      "title": "Wordy filler",
+      "category": "compression",
+      "severity": "soft",
+      "confidence": 0.96,
+      "pattern": "(?i)(?<!\\w)(?:in order to|due to the fact that|for the purpose of|in the event that|at this point in time|with regard to|in relation to|in terms of|on a (?:daily|weekly|monthly|annual) basis|has the ability to|is able to)\\b",
+      "rationale": "The phrase uses more words than the idea requires.",
+      "action": "Replace it with the direct equivalent.",
+      "strategy": "mapping",
+      "replacements": {
+        "in order to": "to",
+        "due to the fact that": "because",
+        "for the purpose of": "to",
+        "in the event that": "if",
+        "at this point in time": "now",
+        "with regard to": "about",
+        "in relation to": "about",
+        "has the ability to": "can",
+        "is able to": "can"
+      }
+    },
+    {
+      "id": "self_signposting",
+      "title": "Self-referential signposting",
+      "category": "meta_commentary",
+      "severity": "soft",
+      "confidence": 0.92,
+      "pattern": "(?i)(?<!\\w)(?:in this (?:article|report|paper|section|chapter|essay),? (?:we|I) (?:will|aim to|seek to)|the following (?:section|paragraph|discussion) (?:will|provides?|presents?|outlines?))\\b[^.!?\\n]*[.!?]",
+      "rationale": "The sentence announces nearby content instead of presenting it.",
+      "action": "Begin with the claim or retain only a roadmap required by the genre.",
+      "strategy": "review",
+      "genreSoft": [
+        "scientific",
+        "systematic-review",
+        "legal",
+        "technical"
+      ]
+    },
+    {
+      "id": "summary_recap",
+      "title": "Recap ending",
+      "category": "ending",
+      "severity": "soft",
+      "confidence": 0.91,
+      "pattern": "(?im)^(?:in conclusion|to conclude|in summary|to summarize|to summarise|overall|ultimately)[,;:]\\s*",
+      "rationale": "A generic recap often repeats what the reader has just read.",
+      "action": "Delete the label and end on the final concrete implication, decision, or action.",
+      "strategy": "delete_span",
+      "genreSoft": [
+        "scientific",
+        "legal"
+      ]
+    },
+    {
+      "id": "fake_profound_kicker",
+      "title": "Fake-profound ending",
+      "category": "ending",
+      "severity": "hard",
+      "confidence": 0.9,
+      "pattern": "(?i)(?:the future (?:isn(?:'|’)t|is not) coming[.;,]\\s*it(?:'|’)s already here|this is (?:where|how) the future begins|and that changes everything|the journey (?:has only just|is just) begun|the possibilities are endless|only time will tell)\\s*[.!]?\\s*$",
+      "rationale": "The final line substitutes a generic aphorism for a concrete ending.",
+      "action": "Delete it and end on the last specific fact, implication, or next action.",
+      "strategy": "delete_sentence",
+      "genreSoft": [
+        "op-ed"
+      ]
+    },
+    {
+      "id": "rhetorical_setup",
+      "title": "Rhetorical setup",
+      "category": "reader_manipulation",
+      "severity": "soft",
+      "confidence": 0.88,
+      "pattern": "(?i)(?<!\\w)(?:what if I told you|think about it|imagine this|picture this|plot twist|ask yourself)\\s*[:,]?\\s*",
+      "rationale": "The setup directs the reader's reaction before presenting the substance.",
+      "action": "State the substantive point directly.",
+      "strategy": "delete_span",
+      "genreSoft": [
+        "op-ed"
+      ]
+    },
+    {
+      "id": "self_answered_question",
+      "title": "Self-answered question",
+      "category": "rhetorical_template",
+      "severity": "soft",
+      "confidence": 0.81,
+      "pattern": "(?is)(?P<question>\\b(?:why|what|how|where|when|who)\\b[^?\\n]{3,100}\\?)\\s*(?P<answer>(?:because|the answer is|it means|this means|we)[^.!?\\n]{3,180}[.!?])",
+      "rationale": "Question-answer staging can sound templated when a declarative sentence is clearer.",
+      "action": "Use the answer as a direct claim unless the question serves a genuine teaching purpose.",
+      "strategy": "keep_group_answer",
+      "genreSoft": [
+        "technical",
+        "op-ed"
+      ]
+    },
+    {
+      "id": "dramatic_fragment",
+      "title": "Dramatic fragment chain",
+      "category": "rhythm",
+      "severity": "soft",
+      "confidence": 0.86,
+      "pattern": "(?is)(?<!\\w)(?:that(?:'|’)s it\\.\\s*that(?:'|’)s the whole thing\\.|[A-Z][^.!?\\n]{0,24}\\.\\s+(?:And|But) [A-Z][^.!?\\n]{0,30}\\.\\s+(?:And|But) [A-Z][^.!?\\n]{0,30}\\.)",
+      "rationale": "Stacked fragments manufacture punch rather than controlling rhythm around meaning.",
+      "action": "Combine the fragments into a complete sentence or keep only the substantive line.",
+      "strategy": "review",
+      "genreSoft": [
+        "op-ed",
+        "email"
+      ]
+    },
+    {
+      "id": "negative_listing",
+      "title": "Negative listing",
+      "category": "rhetorical_template",
+      "severity": "soft",
+      "confidence": 0.88,
+      "pattern": "(?is)(?P<neg>(?:Not|No) [^.!?\\n]{1,40}\\.\\s*(?:Not|No) [^.!?\\n]{1,40}\\.\\s*)(?P<positive>(?:It is |This is |A |An |The )?[^.!?\\n]{2,100}[.!?])",
+      "rationale": "The repeated negations delay the positive claim.",
+      "action": "State the positive claim directly unless each exclusion changes scope.",
+      "strategy": "keep_group_positive",
+      "genreSoft": [
+        "op-ed"
+      ]
+    },
+    {
+      "id": "expletive_opening",
+      "title": "Expletive opening",
+      "category": "syntax",
+      "severity": "soft",
+      "confidence": 0.7,
+      "pattern": "(?i)\\b(?:there (?:is|are|was|were|has been|have been)|it is (?:clear|evident|apparent) that)\\s+",
+      "rationale": "The sentence delays its grammatical subject.",
+      "action": "Move the real subject and action forward when the rewrite remains natural.",
+      "strategy": "review",
+      "genreSoft": [
+        "legal"
+      ]
+    },
+    {
+      "id": "hedge_stack",
+      "title": "Stacked hedges",
+      "category": "epistemic",
+      "severity": "hard",
+      "confidence": 0.91,
+      "pattern": "(?i)\\b(?:may potentially|might possibly|could possibly|would perhaps|appears to suggest|seems to indicate|generally tends to|arguably may|perhaps might)\\b",
+      "rationale": "Multiple hedges obscure the intended level of certainty.",
+      "action": "Keep the single hedge that accurately represents the evidence.",
+      "strategy": "mapping",
+      "replacements": {
+        "may potentially": "may",
+        "might possibly": "might",
+        "could possibly": "could",
+        "would perhaps": "might",
+        "appears to suggest": "suggests",
+        "seems to indicate": "indicates",
+        "generally tends to": "tends to",
+        "arguably may": "may",
+        "perhaps might": "might"
+      }
+    },
+    {
+      "id": "unsupported_superlative",
+      "title": "Unsupported superlative",
+      "category": "evidence",
+      "severity": "review",
+      "confidence": 0.88,
+      "pattern": "(?i)\\b(?:(?:one of the|the) (?:best|worst|fastest|strongest|leading|premier|foremost)|first-ever|unprecedented)\\b",
+      "rationale": "An evaluative superlative or novelty claim may need a defined comparison set. Ordinary grammatical uses of “most”, “first”, “largest” and “smallest” are not treated as defects.",
+      "action": "Name the comparison set and evidence when the phrase makes a substantive claim; otherwise retain the literal wording.",
+      "strategy": "review",
+      "literalGuards": [
+        "(?i)first-order",
+        "(?i)only if",
+        "(?i)only when",
+        "(?i)the only participant"
+      ]
+    },
+    {
+      "id": "vague_impact",
+      "title": "Vague impact claim",
+      "category": "abstraction",
+      "severity": "soft",
+      "confidence": 0.82,
+      "pattern": "(?i)\\b(?:drive|drives|driving|deliver|delivers|delivering|create|creates|creating|unlock|unlocks|unlocking) (?:meaningful|significant|substantial|lasting|real|positive|tangible) (?:impact|value|change|outcomes?|results?|benefits?)\\b",
+      "rationale": "The phrase asserts impact without naming what changed, for whom, or by how much.",
+      "action": "Replace it with the measured outcome, mechanism, beneficiary, and time frame.",
+      "strategy": "review"
+    },
+    {
+      "id": "adjective_tricolon",
+      "title": "Promotional adjective triad",
+      "category": "rhythm",
+      "severity": "soft",
+      "confidence": 0.74,
+      "pattern": "(?i)\\b(?:innovative|robust|comprehensive|seamless|scalable|dynamic|holistic|powerful|strategic|transformative|efficient|effective|flexible|intuitive|user-friendly|cutting-edge)\\s*,\\s*(?:innovative|robust|comprehensive|seamless|scalable|dynamic|holistic|powerful|strategic|transformative|efficient|effective|flexible|intuitive|user-friendly|cutting-edge)\\s*,?\\s+and\\s+(?:innovative|robust|comprehensive|seamless|scalable|dynamic|holistic|powerful|strategic|transformative|efficient|effective|flexible|intuitive|user-friendly|cutting-edge)\\b",
+      "rationale": "A symmetrical adjective triad often supplies promotional rhythm without information.",
+      "action": "Keep the one property the text can demonstrate, then provide the evidence.",
+      "strategy": "review"
+    },
+    {
+      "id": "sycophantic_opener",
+      "title": "Sycophantic opener",
+      "category": "chatbot_residue",
+      "severity": "hard",
+      "confidence": 0.99,
+      "pattern": "(?im)^(?:great|excellent|fantastic|wonderful|insightful|important|thought-provoking) (?:question|point|observation|idea)[!.,]?\\s*",
+      "rationale": "The opener flatters the prompt rather than answering it.",
+      "action": "Delete it and begin with the answer.",
+      "strategy": "delete_span",
+      "genreSoft": [
+        "email"
+      ]
+    },
+    {
+      "id": "reasoning_leak",
+      "title": "Reasoning-process leak",
+      "category": "chatbot_residue",
+      "severity": "hard",
+      "confidence": 0.99,
+      "pattern": "(?i)\\b(?:let me think (?:this through|step by step)|I(?:'|’)ll break (?:this|it) down|breaking (?:this|it) down|here(?:'|’)s my thought process|I need to reason through)\\b",
+      "rationale": "Internal process narration does not belong in the deliverable.",
+      "action": "Delete it and present the result or argument.",
+      "strategy": "delete_span"
+    },
+    {
+      "id": "em_dash_cluster",
+      "title": "Em-dash cluster",
+      "category": "punctuation",
+      "severity": "soft",
+      "confidence": 0.76,
+      "pattern": "(?m)^[^\\n]*—[^\\n]*—[^\\n]*$",
+      "rationale": "Multiple em dashes in one paragraph can become a default rhythm rather than a deliberate choice.",
+      "action": "Use a period, comma, colon, or parentheses where it clarifies the relation.",
+      "strategy": "review",
+      "genreSoft": [
+        "op-ed"
+      ]
+    },
+    {
+      "id": "emoji_heading",
+      "title": "Decorative emoji heading",
+      "category": "formatting",
+      "severity": "hard",
+      "confidence": 0.98,
+      "pattern": "(?m)^\\s*(?:#{1,6}\\s*)?[\\U0001F300-\\U0001FAFF\\u2600-\\u27BF]\\s+[^\\n]+$",
+      "rationale": "The emoji decorates hierarchy instead of expressing document structure.",
+      "action": "Use a descriptive heading without the decorative symbol.",
+      "strategy": "remove_emoji",
+      "genreSoft": [
+        "email",
+        "op-ed"
+      ]
+    },
+    {
+      "id": "title_case_heading",
+      "title": "Mechanical title-case heading",
+      "category": "formatting",
+      "severity": "soft",
+      "confidence": 0.68,
+      "pattern": "(?m)^#{1,6}\\s+(?P<head>(?:[A-Z][A-Za-z0-9'’/-]*\\s+){3,}[A-Z][A-Za-z0-9'’/-]*)\\s*$",
+      "rationale": "Title case across every heading can create a template-like visual rhythm.",
+      "action": "Use the publication's heading convention; otherwise prefer sentence case.",
+      "strategy": "sentence_case_heading",
+      "genreSoft": [
+        "legal"
+      ]
+    },
+    {
+      "id": "second_person_coaching",
+      "title": "Generic coaching language",
+      "category": "reader_address",
+      "severity": "soft",
+      "confidence": 0.72,
+      "pattern": "(?i)\\b(?:whether you(?:'|’)re a (?:beginner|seasoned|new|experienced)[^,]{0,60},|you(?:'|’)ll want to make sure|remember, you can always|the key is to)\\b",
+      "rationale": "Generic coaching addresses an imagined reader rather than the stated audience and task.",
+      "action": "Replace it with the direct instruction or audience-specific consequence.",
+      "strategy": "review",
+      "genreSoft": [
+        "technical",
+        "email"
+      ]
+    },
+    {
+      "id": "corporate_jargon",
+      "title": "Corporate jargon collocation",
+      "category": "jargon",
+      "severity": "soft",
+      "confidence": 0.91,
+      "pattern": "(?i)\\b(?:leverage synergies|move the needle|circle back|low-hanging fruit|deep dive|best-in-class|world-class|game[- ]changer|paradigm shift|end-to-end solution|navigate (?:the )?complexities|unlock (?:the )?potential|harness (?:the )?power)\\b",
+      "rationale": "The collocation is portable across organisations and usually hides the action or result.",
+      "action": "Name the action, constraint, mechanism, or measured result.",
+      "strategy": "review",
+      "literalGuards": [
+        "(?i)leverage ratio",
+        "(?i)operating leverage",
+        "(?i)wiring harness",
+        "(?i)safety harness",
+        "(?i)harnessed energy",
+        "(?i)deep-dive survey"
+      ]
+    },
+    {
+      "id": "generic_world_opener",
+      "title": "Generic world-setting opener",
+      "category": "delay",
+      "severity": "hard",
+      "confidence": 0.95,
+      "pattern": "(?i)(?<!\\w)(?:in today(?:'|’)s (?:fast-paced|rapidly changing|ever-evolving|digital) world|in an era of (?:rapid|unprecedented|constant) change|in the age of (?:AI|technology|digital transformation))[,;:]?\\s*",
+      "rationale": "The opener supplies generic context that could introduce almost any subject.",
+      "action": "Begin with the specific problem, event, or decision.",
+      "strategy": "delete_span"
+    },
+    {
+      "id": "portability_phrase",
+      "title": "Portable promotional phrase",
+      "category": "abstraction",
+      "severity": "soft",
+      "confidence": 0.84,
+      "pattern": "(?i)\\b(?:foster (?:innovation|collaboration|growth|engagement)|empower (?:users|teams|communities|individuals)|streamlines? (?:workflows|processes|operations)|facilitate (?:collaboration|communication|growth)|elevate (?:the|your) (?:experience|brand|work)|supercharge (?:your|the) (?:workflow|productivity|growth))\\b",
+      "rationale": "The phrase can be moved unchanged between products or organisations and says little about the mechanism.",
+      "action": "Replace it with the specific action, actor, object, and consequence.",
+      "strategy": "review"
+    }
+  ]
+}

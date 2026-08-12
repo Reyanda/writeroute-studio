@@ -1,0 +1,650 @@
+{
+  "id": "writeroute-ontology-v2",
+  "version": "2.0.0",
+  "purpose": "Represent the full route from writing brief to accepted prose without making authorship claims.",
+  "axioms": [
+    "A lower editorial-burden score is not sufficient for acceptance.",
+    "Every accepted revision must pass meaning-preservation gates.",
+    "A source-reported statement is not automatically the current author's assertion.",
+    "A missing fact must remain missing or be requested; it may not be invented for fluency.",
+    "Genre conventions can change the severity of a style pattern but cannot override factual integrity.",
+    "Clean text must be returned byte-for-byte when no edit clears a net-improvement gate.",
+    "When source-text mode is active, diagnosis and suggestions may be emitted but no candidate may mutate the source."
+  ],
+  "classes": [
+    {
+      "id": "WritingRoute",
+      "definition": "Ordered control process governing drafting, diagnosis, revision and acceptance."
+    },
+    {
+      "id": "WritingBrief",
+      "definition": "Purpose, audience, reader action, evidence boundary, constraints and length."
+    },
+    {
+      "id": "EvidenceSet",
+      "definition": "Facts, sources, quotations, data and constraints available to the writer."
+    },
+    {
+      "id": "GenreProfile",
+      "definition": "Purpose, audience, required rhetorical moves, protected conventions and integrity policy."
+    },
+    {
+      "id": "VoiceProfile",
+      "definition": "Approved, measurable habits derived from uncontaminated author samples."
+    },
+    {
+      "id": "Document",
+      "definition": "Text plus exact-offset paragraphs, sentences and tokens."
+    },
+    {
+      "id": "ProtectedSpan",
+      "definition": "Code, quotation or blockquote excluded from ordinary surface scanning."
+    },
+    {
+      "id": "SourceTextMode",
+      "definition": "Read-only route for official, archival, quoted or externally authored text; permits annotation but forbids mutation."
+    },
+    {
+      "id": "ReportedVoiceSpan",
+      "definition": "Text attributed to another source and therefore protected from silent authorial rewriting."
+    },
+    {
+      "id": "Finding",
+      "definition": "Observable editorial defect or substantive review risk with span, rationale and action."
+    },
+    {
+      "id": "SurfacePattern",
+      "definition": "Lexical, rhetorical, formatting or chatbot-residue pattern."
+    },
+    {
+      "id": "SubstanceRisk",
+      "definition": "Unsupported causal, safety, novelty, statistical or recommendation claim."
+    },
+    {
+      "id": "StructuralRisk",
+      "definition": "Document-shape defect such as uniform rhythm, repeated conclusion or overloaded sentence."
+    },
+    {
+      "id": "CandidateEdit",
+      "definition": "Exact span replacement with integrity, damage, burden and voice measurements."
+    },
+    {
+      "id": "RewriteFrame",
+      "definition": "Evidence-aware prose frame requiring author input; never auto-applied."
+    },
+    {
+      "id": "DraftEvidenceAnchor",
+      "definition": "Quantitative or identity-bearing content in a draft that must be licensed by the supplied brief."
+    },
+    {
+      "id": "IntegrityAnchor",
+      "definition": "Number, unit, date, citation, quotation, name, acronym, code identifier, path or cross-reference."
+    },
+    {
+      "id": "SemanticForce",
+      "definition": "Negation, quantifier scope, modal force, comparison direction or causal strength."
+    },
+    {
+      "id": "AcceptanceGate",
+      "definition": "Deterministic or model-assisted test that a candidate must pass."
+    },
+    {
+      "id": "AuditReport",
+      "definition": "Genre-resolved findings, burden, dimensions and document metrics without an authorship label."
+    },
+    {
+      "id": "RevisionContract",
+      "definition": "Bounded instructions containing only named defects, invariants and genre rules."
+    },
+    {
+      "id": "EvaluationCase",
+      "definition": "Frozen positive, clean protection or preservation test with expected outcomes."
+    }
+  ],
+  "relations": [
+    [
+      "WritingRoute",
+      "startsWith",
+      "WritingBrief"
+    ],
+    [
+      "WritingBrief",
+      "bounds",
+      "EvidenceSet"
+    ],
+    [
+      "WritingBrief",
+      "selects",
+      "GenreProfile"
+    ],
+    [
+      "EvidenceSet",
+      "licenses",
+      "DraftEvidenceAnchor"
+    ],
+    [
+      "DraftEvidenceAnchor",
+      "constrains",
+      "Document"
+    ],
+    [
+      "VoiceProfile",
+      "constrains",
+      "CandidateEdit"
+    ],
+    [
+      "Document",
+      "contains",
+      "ProtectedSpan"
+    ],
+    [
+      "Document",
+      "contains",
+      "ReportedVoiceSpan"
+    ],
+    [
+      "SurfacePattern",
+      "produces",
+      "Finding"
+    ],
+    [
+      "SubstanceRisk",
+      "produces",
+      "Finding"
+    ],
+    [
+      "StructuralRisk",
+      "produces",
+      "Finding"
+    ],
+    [
+      "Finding",
+      "licenses",
+      "CandidateEdit"
+    ],
+    [
+      "Finding",
+      "mayRequire",
+      "RewriteFrame"
+    ],
+    [
+      "CandidateEdit",
+      "mustPreserve",
+      "IntegrityAnchor"
+    ],
+    [
+      "CandidateEdit",
+      "mustPreserve",
+      "SemanticForce"
+    ],
+    [
+      "CandidateEdit",
+      "isAcceptedBy",
+      "AcceptanceGate"
+    ],
+    [
+      "AuditReport",
+      "compilesInto",
+      "RevisionContract"
+    ],
+    [
+      "EvaluationCase",
+      "tests",
+      "AcceptanceGate"
+    ],
+    [
+      "WritingRoute",
+      "mayActivate",
+      "SourceTextMode"
+    ],
+    [
+      "SourceTextMode",
+      "forbidsMutationOf",
+      "Document"
+    ]
+  ],
+  "routeStages": [
+    {
+      "order": 0,
+      "id": "brief",
+      "input": "user intent",
+      "output": "WritingBrief",
+      "failure": "purpose or audience remains undefined"
+    },
+    {
+      "order": 1,
+      "id": "evidence-boundary",
+      "input": "WritingBrief",
+      "output": "EvidenceSet",
+      "failure": "prose would require invented support"
+    },
+    {
+      "order": 2,
+      "id": "genre-and-rhetoric",
+      "input": "brief + text",
+      "output": "GenreProfile and required moves",
+      "failure": "wrong conventions or missing document job"
+    },
+    {
+      "order": 3,
+      "id": "author-mode-draft",
+      "input": "brief + evidence + genre",
+      "output": "draft",
+      "failure": "assistant commentary or template prose enters deliverable"
+    },
+    {
+      "order": 4,
+      "id": "draft-evidence-gate",
+      "input": "draft + EvidenceSet",
+      "output": "evidence-bound candidate or rejection",
+      "failure": "unsupported factual anchor or review-level claim enters the draft"
+    },
+    {
+      "order": 5,
+      "id": "three-layer-audit",
+      "input": "draft",
+      "output": "surface, substance and structure findings",
+      "failure": "authorship guess substitutes for observable evidence"
+    },
+    {
+      "order": 6,
+      "id": "candidate-generation",
+      "input": "findings",
+      "output": "exact edits and rewrite frames",
+      "failure": "single untested rewrite or invented detail"
+    },
+    {
+      "order": 7,
+      "id": "integrity-gate",
+      "input": "source + candidate",
+      "output": "preservation verdict",
+      "failure": "facts, force, scope, attribution or identifiers change"
+    },
+    {
+      "order": 8,
+      "id": "voice-genre-damage-gate",
+      "input": "surviving candidate",
+      "output": "ranked accepted candidates",
+      "failure": "voice flattening, new defects or genre mismatch"
+    },
+    {
+      "order": 9,
+      "id": "release",
+      "input": "best candidate",
+      "output": "final text + audit trail",
+      "failure": "candidate does not materially improve the source"
+    }
+  ],
+  "acceptanceGates": [
+    {
+      "id": "G0-source-text-no-mutation",
+      "hard": true,
+      "rule": "When source-text mode is active, return the source byte-for-byte and mark every proposed edit non-applicable."
+    },
+    {
+      "id": "G1-span-minimality",
+      "hard": false,
+      "rule": "Change only the defect and grammar exposed by the repair."
+    },
+    {
+      "id": "G2-anchor-preservation",
+      "hard": true,
+      "rule": "Preserve numbers, units, names, dates, citations, quotations, cross-references, code and paths."
+    },
+    {
+      "id": "G3-force-preservation",
+      "hard": true,
+      "rule": "Preserve modal force, negation, scope, direction and causal strength."
+    },
+    {
+      "id": "G4-attribution-preservation",
+      "hard": true,
+      "rule": "Do not convert source voice into author voice or vice versa."
+    },
+    {
+      "id": "G5-no-invention",
+      "hard": true,
+      "rule": "Do not add claims, examples, sources, statistics or judgments absent from the evidence set."
+    },
+    {
+      "id": "G6-no-new-defects",
+      "hard": true,
+      "rule": "Do not introduce a new hard or review-level finding."
+    },
+    {
+      "id": "G7-net-improvement",
+      "hard": true,
+      "rule": "Editorial burden must not worsen and the target defect must be removed."
+    },
+    {
+      "id": "G8-voice-distance",
+      "hard": false,
+      "rule": "Do not materially increase distance from an approved voice profile."
+    },
+    {
+      "id": "G9-clean-no-op",
+      "hard": true,
+      "rule": "Return clean text byte-for-byte when no accepted edit exists."
+    }
+  ],
+  "dimensions": {
+    "directness": [
+      "meta commentary",
+      "throat clearing",
+      "wordy filler"
+    ],
+    "clarity": [
+      "overloaded syntax",
+      "expletive openings",
+      "weak verbs"
+    ],
+    "specificity": [
+      "abstraction",
+      "portable claims",
+      "jargon"
+    ],
+    "claim_discipline": [
+      "vague attribution",
+      "unsupported causality",
+      "quality puffery",
+      "hedge stacks"
+    ],
+    "decision_quality": [
+      "recommendation without actor, evidence, timing or condition"
+    ],
+    "structure": [
+      "recap loops",
+      "uniform paragraphs",
+      "signpost scaffolds"
+    ],
+    "rhythm": [
+      "uniform sentence shape",
+      "staccato runs",
+      "dramatic fragments"
+    ],
+    "voice": [
+      "formulaic contrasts",
+      "faux insight",
+      "sycophancy",
+      "chatbot residue"
+    ],
+    "audience_fit": [
+      "generic coaching",
+      "wrong register",
+      "unnecessary explanation"
+    ],
+    "formatting": [
+      "emoji headings",
+      "decorative bold",
+      "mini-section listicles"
+    ]
+  },
+  "surfacePatterns": [
+    {
+      "id": "assistant_meta_preface",
+      "category": "meta_commentary",
+      "defaultSeverity": "hard",
+      "strategy": "delete_span",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "assistant_meta_process",
+      "category": "meta_commentary",
+      "defaultSeverity": "hard",
+      "strategy": "review",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "closing_offer",
+      "category": "meta_commentary",
+      "defaultSeverity": "hard",
+      "strategy": "delete_sentence",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "qc_assurance",
+      "category": "quality_claim",
+      "defaultSeverity": "hard",
+      "strategy": "review",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "throat_clearing",
+      "category": "delay",
+      "defaultSeverity": "hard",
+      "strategy": "delete_span",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "faux_insight",
+      "category": "reader_manipulation",
+      "defaultSeverity": "hard",
+      "strategy": "delete_span",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "importance_meta",
+      "category": "meta_commentary",
+      "defaultSeverity": "soft",
+      "strategy": "delete_span",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "binary_contrast",
+      "category": "rhetorical_template",
+      "defaultSeverity": "soft",
+      "strategy": "keep_group_y",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "not_just_but",
+      "category": "rhetorical_template",
+      "defaultSeverity": "soft",
+      "strategy": "review",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "colon_reveal",
+      "category": "rhetorical_template",
+      "defaultSeverity": "soft",
+      "strategy": "keep_group_reveal",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "superficial_analysis",
+      "category": "unsupported_interpretation",
+      "defaultSeverity": "hard",
+      "strategy": "delete_span",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "importance_puffery",
+      "category": "inflation",
+      "defaultSeverity": "hard",
+      "strategy": "review",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "vague_attribution",
+      "category": "evidence",
+      "defaultSeverity": "hard",
+      "strategy": "review",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "fake_strong_verb",
+      "category": "abstraction",
+      "defaultSeverity": "soft",
+      "strategy": "review",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "nominalised_verb",
+      "category": "syntax",
+      "defaultSeverity": "soft",
+      "strategy": "nominalisation",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "filler_phrase",
+      "category": "compression",
+      "defaultSeverity": "soft",
+      "strategy": "mapping",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "self_signposting",
+      "category": "meta_commentary",
+      "defaultSeverity": "soft",
+      "strategy": "review",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "summary_recap",
+      "category": "ending",
+      "defaultSeverity": "soft",
+      "strategy": "delete_span",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "fake_profound_kicker",
+      "category": "ending",
+      "defaultSeverity": "hard",
+      "strategy": "delete_sentence",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "rhetorical_setup",
+      "category": "reader_manipulation",
+      "defaultSeverity": "soft",
+      "strategy": "delete_span",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "self_answered_question",
+      "category": "rhetorical_template",
+      "defaultSeverity": "soft",
+      "strategy": "keep_group_answer",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "dramatic_fragment",
+      "category": "rhythm",
+      "defaultSeverity": "soft",
+      "strategy": "review",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "negative_listing",
+      "category": "rhetorical_template",
+      "defaultSeverity": "soft",
+      "strategy": "keep_group_positive",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "expletive_opening",
+      "category": "syntax",
+      "defaultSeverity": "soft",
+      "strategy": "review",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "hedge_stack",
+      "category": "epistemic",
+      "defaultSeverity": "hard",
+      "strategy": "mapping",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "unsupported_superlative",
+      "category": "evidence",
+      "defaultSeverity": "review",
+      "strategy": "review",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "vague_impact",
+      "category": "abstraction",
+      "defaultSeverity": "soft",
+      "strategy": "review",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "adjective_tricolon",
+      "category": "rhythm",
+      "defaultSeverity": "soft",
+      "strategy": "review",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "sycophantic_opener",
+      "category": "chatbot_residue",
+      "defaultSeverity": "hard",
+      "strategy": "delete_span",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "reasoning_leak",
+      "category": "chatbot_residue",
+      "defaultSeverity": "hard",
+      "strategy": "delete_span",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "em_dash_cluster",
+      "category": "punctuation",
+      "defaultSeverity": "soft",
+      "strategy": "review",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "emoji_heading",
+      "category": "formatting",
+      "defaultSeverity": "hard",
+      "strategy": "remove_emoji",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "title_case_heading",
+      "category": "formatting",
+      "defaultSeverity": "soft",
+      "strategy": "sentence_case_heading",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "second_person_coaching",
+      "category": "reader_address",
+      "defaultSeverity": "soft",
+      "strategy": "review",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "corporate_jargon",
+      "category": "jargon",
+      "defaultSeverity": "soft",
+      "strategy": "review",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "generic_world_opener",
+      "category": "delay",
+      "defaultSeverity": "hard",
+      "strategy": "delete_span",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "portability_phrase",
+      "category": "abstraction",
+      "defaultSeverity": "soft",
+      "strategy": "review",
+      "implementation": "declarative-regex"
+    },
+    {
+      "id": "empty_transition",
+      "category": "cohesion",
+      "defaultSeverity": "soft",
+      "strategy": "review",
+      "implementation": "document-level repeated-connective rule"
+    }
+  ]
+}

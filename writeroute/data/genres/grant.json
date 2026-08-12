@@ -1,0 +1,47 @@
+{
+  "id": "grant",
+  "name": "Grant or funding proposal",
+  "aliases": [
+    "proposal",
+    "grant",
+    "funding application"
+  ],
+  "purpose": "Make a credible case for funding a defined programme of work.",
+  "audience": "Technical reviewers, funders and selection panels.",
+  "integrityPolicy": "grant",
+  "hardPatterns": [
+    "unsupported_superlative",
+    "unsupported_impact_claim",
+    "vague_attribution"
+  ],
+  "softPatterns": [
+    "importance_puffery",
+    "summary_recap"
+  ],
+  "disabledPatterns": [],
+  "requiredMoves": [
+    "need",
+    "gap",
+    "objective",
+    "approach",
+    "deliverable",
+    "capacity",
+    "risk",
+    "measurement",
+    "value"
+  ],
+  "protectedConventions": [
+    "funder terminology",
+    "required headings",
+    "budget figures",
+    "milestones",
+    "risk statements"
+  ],
+  "promptRules": [
+    "Make the need specific and evidenced.",
+    "Convert ambition into deliverables and measures.",
+    "State why this team can execute.",
+    "Do not use world-class, transformative or innovative as substitutes for design detail.",
+    "Link each activity to an output, outcome and verification method."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "professional-report",
+  "name": "Professional or technical report",
+  "aliases": [
+    "report",
+    "consulting",
+    "business report",
+    "technical report"
+  ],
+  "purpose": "Provide an auditable basis for a decision, action or record.",
+  "audience": "Managers, technical leads and commissioners.",
+  "integrityPolicy": "professional-report",
+  "hardPatterns": [
+    "vague_attribution",
+    "unsupported_recommendation"
+  ],
+  "softPatterns": [
+    "passive_without_reason",
+    "title_case_heading",
+    "bold_label_bullet"
+  ],
+  "disabledPatterns": [],
+  "requiredMoves": [
+    "answer",
+    "evidence",
+    "analysis",
+    "implication",
+    "action",
+    "owner"
+  ],
+  "protectedConventions": [
+    "defined terms",
+    "audit language",
+    "contractual requirements",
+    "house-style headings"
+  ],
+  "promptRules": [
+    "Front-load the answer.",
+    "Trace every recommendation to evidence or a stated judgment.",
+    "Use tables only when comparison is the reader task.",
+    "Name owners, dates and dependencies.",
+    "Replace assurance words with the test, source or control that supports them."
+  ]
+}

@@ -1,0 +1,9 @@
+I broke the build on Tuesday. Not a small break either — the whole CI pipeline at Riverside Labs went red for three hours, and Priya's release to the Kansas City client slipped a day because of me.
+
+Here's what happened. We'd been migrating the payments service off the old Postgres 12 box since March. My job was the connection pooler. I'd tested it locally, saw 40ms latencies, shipped it. What I hadn't tested was what happens when the pool hits its cap of 200 connections during the 9am batch run. It deadlocked. Every worker sat there waiting, and the retry logic I wrote in 2024 made it worse by doubling the load.
+
+Dave found it. He'd seen the same pattern at his last job, some telecom in Austin, where a pooler with no jitter on retries took down billing for a weekend. He didn't gloat. He just pulled up the graph, pointed at the sawtooth, and said "that's your retry storm."
+
+The fix took eleven lines. Add jitter, cap retries at three, alert when the pool passes 80%. I also wrote a load test that replays the actual 9am batch traffic we captured, because my synthetic test data was garbage. Real traffic has that one customer who submits 4,000 invoices in a single request. Synthetic data never does.
+
+What did I learn? Test the ceiling, not the middle. And when someone older than you says "add jitter," don't nod politely and skip it because the code looks cleaner without it. I owe Dave a beer. Probably two.

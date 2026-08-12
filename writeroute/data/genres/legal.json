@@ -1,0 +1,50 @@
+{
+  "id": "legal",
+  "name": "Legal memorandum or contract prose",
+  "aliases": [
+    "legal",
+    "contract",
+    "memorandum",
+    "memo"
+  ],
+  "purpose": "State the issue, governing authority, analysis and consequence without changing legal force.",
+  "audience": "Lawyers, clients, courts or contracting parties.",
+  "integrityPolicy": "legal",
+  "hardPatterns": [
+    "modal_change",
+    "scope_change",
+    "citation_change",
+    "vague_attribution"
+  ],
+  "softPatterns": [
+    "passive_without_reason",
+    "nominalisation"
+  ],
+  "disabledPatterns": [
+    "hedge_stack",
+    "title_case_heading",
+    "summary_recap"
+  ],
+  "requiredMoves": [
+    "issue",
+    "rule",
+    "application",
+    "counterargument",
+    "conclusion"
+  ],
+  "protectedConventions": [
+    "shall and must distinctions",
+    "defined terms",
+    "and/or scope",
+    "exceptions",
+    "cross-references",
+    "authority quotations"
+  ],
+  "promptRules": [
+    "Preserve every defined term, exception, condition and cross-reference.",
+    "Do not replace shall, must, may or should.",
+    "Keep attribution to authorities explicit.",
+    "Prefer shorter sentences only when legal scope remains identical.",
+    "Treat any change to negation or quantification as substantive."
+  ]
+}

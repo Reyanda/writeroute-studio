@@ -1,0 +1,43 @@
+{
+  "id": "op-ed",
+  "name": "Essay, commentary or opinion",
+  "aliases": [
+    "essay",
+    "commentary",
+    "opinion",
+    "op-ed",
+    "blog"
+  ],
+  "purpose": "Advance a clear interpretation or judgment in a recognisable voice.",
+  "audience": "General or informed public readers.",
+  "integrityPolicy": "op-ed",
+  "hardPatterns": [
+    "vague_attribution"
+  ],
+  "softPatterns": [
+    "binary_contrast",
+    "rhetorical_setup",
+    "dramatic_fragment",
+    "fake_profound_kicker"
+  ],
+  "disabledPatterns": [],
+  "requiredMoves": [
+    "position",
+    "reason",
+    "example",
+    "counterpoint",
+    "ending"
+  ],
+  "protectedConventions": [
+    "voice",
+    "humour",
+    "controlled fragments",
+    "rhetorical emphasis when earned"
+  ],
+  "promptRules": [
+    "Keep the author's edge and judgment.",
+    "Use examples and consequences rather than generic moralising.",
+    "Let rhythm vary, but do not manufacture drama.",
+    "End on the strongest concrete implication, not a slogan."
+  ]
+}

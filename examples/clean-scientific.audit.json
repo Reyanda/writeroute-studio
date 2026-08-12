@@ -1,0 +1,193 @@
+{
+  "audit": {
+    "schemaVersion": "2.0",
+    "genre": "scientific",
+    "genreInference": {
+      "genre": "general",
+      "confidence": 0.25,
+      "alternatives": [
+        {
+          "genre": "scientific",
+          "score": 1.0,
+          "evidence": [
+            "randomised"
+          ]
+        }
+      ],
+      "scoreShare": 1.0
+    },
+    "counts": {
+      "words": 41,
+      "sentences": 3,
+      "paragraphs": 1,
+      "findings": 0,
+      "hard": 0,
+      "review": 0,
+      "soft": 0
+    },
+    "editorialBurden": 0.0,
+    "status": "clean",
+    "clean": true,
+    "dimensionScores": {},
+    "metrics": {
+      "sentenceLengthMean": 13.67,
+      "sentenceLengthCv": 0.235,
+      "paragraphLengthMean": 41.0,
+      "paragraphLengthCv": 0.0,
+      "topSentenceOpener": "among",
+      "topSentenceOpenerShare": 0.333,
+      "connectiveOpenerCount": 0,
+      "connectiveOpenerShare": 0.0,
+      "emDashCount": 0,
+      "questionCount": 0,
+      "protectedSpanCount": 0,
+      "reportedVoiceSpanCount": 0
+    },
+    "findings": [],
+    "principles": [
+      "Score editorial defects, not presumed authorship.",
+      "Treat meaning preservation as a hard gate, not a style preference.",
+      "Do not rewrite source-reported language as if it were the current author's claim."
+    ],
+    "authorshipClaim": null
+  },
+  "repair": {
+    "mode": "repair",
+    "genre": "scientific",
+    "sourceTextMode": false,
+    "changed": false,
+    "originalText": "Among 412 children enrolled between January 2022 and March 2024, 38 died by day 90. We estimated 90-day mortality with the Kaplan–Meier estimator and report risk differences with 95% confidence intervals. Because treatment was not randomised, the estimates describe adjusted associations and do not establish causation.\n",
+    "finalText": "Among 412 children enrolled between January 2022 and March 2024, 38 died by day 90. We estimated 90-day mortality with the Kaplan–Meier estimator and report risk differences with 95% confidence intervals. Because treatment was not randomised, the estimates describe adjusted associations and do not establish causation.\n",
+    "applied": [],
+    "skipped": [],
+    "auditBefore": {
+      "schemaVersion": "2.0",
+      "genre": "scientific",
+      "genreInference": {
+        "genre": "general",
+        "confidence": 0.25,
+        "alternatives": [
+          {
+            "genre": "scientific",
+            "score": 1.0,
+            "evidence": [
+              "randomised"
+            ]
+          }
+        ],
+        "scoreShare": 1.0
+      },
+      "counts": {
+        "words": 41,
+        "sentences": 3,
+        "paragraphs": 1,
+        "findings": 0,
+        "hard": 0,
+        "review": 0,
+        "soft": 0
+      },
+      "editorialBurden": 0.0,
+      "status": "clean",
+      "clean": true,
+      "dimensionScores": {},
+      "metrics": {
+        "sentenceLengthMean": 13.67,
+        "sentenceLengthCv": 0.235,
+        "paragraphLengthMean": 41.0,
+        "paragraphLengthCv": 0.0,
+        "topSentenceOpener": "among",
+        "topSentenceOpenerShare": 0.333,
+        "connectiveOpenerCount": 0,
+        "connectiveOpenerShare": 0.0,
+        "emDashCount": 0,
+        "questionCount": 0,
+        "protectedSpanCount": 0,
+        "reportedVoiceSpanCount": 0
+      },
+      "findings": [],
+      "principles": [
+        "Score editorial defects, not presumed authorship.",
+        "Treat meaning preservation as a hard gate, not a style preference.",
+        "Do not rewrite source-reported language as if it were the current author's claim."
+      ],
+      "authorshipClaim": null
+    },
+    "auditAfter": {
+      "schemaVersion": "2.0",
+      "genre": "scientific",
+      "genreInference": {
+        "genre": "general",
+        "confidence": 0.25,
+        "alternatives": [
+          {
+            "genre": "scientific",
+            "score": 1.0,
+            "evidence": [
+              "randomised"
+            ]
+          }
+        ],
+        "scoreShare": 1.0
+      },
+      "counts": {
+        "words": 41,
+        "sentences": 3,
+        "paragraphs": 1,
+        "findings": 0,
+        "hard": 0,
+        "review": 0,
+        "soft": 0
+      },
+      "editorialBurden": 0.0,
+      "status": "clean",
+      "clean": true,
+      "dimensionScores": {},
+      "metrics": {
+        "sentenceLengthMean": 13.67,
+        "sentenceLengthCv": 0.235,
+        "paragraphLengthMean": 41.0,
+        "paragraphLengthCv": 0.0,
+        "topSentenceOpener": "among",
+        "topSentenceOpenerShare": 0.333,
+        "connectiveOpenerCount": 0,
+        "connectiveOpenerShare": 0.0,
+        "emDashCount": 0,
+        "questionCount": 0,
+        "protectedSpanCount": 0,
+        "reportedVoiceSpanCount": 0
+      },
+      "findings": [],
+      "principles": [
+        "Score editorial defects, not presumed authorship.",
+        "Treat meaning preservation as a hard gate, not a style preference.",
+        "Do not rewrite source-reported language as if it were the current author's claim."
+      ],
+      "authorshipClaim": null
+    },
+    "integrity": {
+      "passes": true,
+      "policy": "scientific",
+      "lengthRatio": 1.0,
+      "violations": [],
+      "anchorCountsBefore": {
+        "number": 7,
+        "modal_force": 0,
+        "negation": 2,
+        "scope": 0,
+        "direction": 0,
+        "causal_strength": 0
+      },
+      "anchorCountsAfter": {
+        "number": 7,
+        "modal_force": 0,
+        "negation": 2,
+        "scope": 0,
+        "direction": 0,
+        "causal_strength": 0
+      }
+    },
+    "integrityEffective": true,
+    "contextualExemption": false,
+    "byteExactNoOp": true
+  }
+}
