@@ -56,16 +56,34 @@ function panel(name){ $$('.panel').forEach(p=>p.classList.toggle('active',p.id==
 $$('.rail-button[data-panel]').forEach(b=>b.onclick=()=>panel(b.dataset.panel));
 $$('.panel-close').forEach(b=>b.onclick=()=>$('.inspector').classList.add('closed'));
 
-function resetReports(){ state.lastAudit=null; state.lastFormatting=null; state.candidate=null; $('#scoreValue').textContent='—';$('#scoreLabel').textContent='Not analysed';$('#scoreSummary').textContent='Run an audit to inspect the current document.';$('#hardCount').textContent='0';$('#reviewCount').textContent='0';$('#softCount').textContent='0';$('#findingList').innerHTML='<p>No findings yet.</p>';$('#findingList').classList.add('empty-state');$('#formatMetrics').innerHTML='';$('#formatAdvice').innerHTML='<div class="advice"><span>01</span><p>Run an audit to generate formatting recommendations.</p></div>';$('#comparison').classList.add('hidden');$('#suggestionList').innerHTML=''; }
+function resetReports(){ state.lastAudit=null; state.lastFormatting=null; state.candidate=null; $('#scoreLabel').textContent='Not analysed';$('#scoreSummary').textContent='Run an audit to see what is in the current document.';$('#hardCount').textContent='0';$('#reviewCount').textContent='0';$('#softCount').textContent='0';$('#findingList').innerHTML='<p>No findings yet.</p>';$('#findingList').classList.add('empty-state');$('#formatMetrics').innerHTML='';$('#formatAdvice').innerHTML='<div class="advice"><span>01</span><p>Run an audit to generate formatting recommendations.</p></div>';$('#comparison').classList.add('hidden');$('#suggestionList').innerHTML=''; }
 
 async function runAudit(){ const t=text();if(!t){showToast('Add some text first');return}
  if(!$('#genreSelect').value){showToast('Choose the document job first — it sets the severity thresholds');$('#genreSelect').focus();return}
  const btn=$('#auditButton');btn.classList.add('loading');btn.textContent='Auditing…'; try{const d=await postJSON('/api/audit',{text:t,genre:$('#genreSelect').value});renderAudit(d.audit,d.formatting);showToast('Audit complete')}catch(e){showToast(e.message)}finally{btn.classList.remove('loading');btn.textContent='Run audit'} }
 $('#auditButton').onclick=runAudit; $('#genreSelect').onchange=()=>{if(text()&&$('#genreSelect').value)runAudit()};
 
-function renderAudit(audit, formatting){ state.lastAudit=audit;state.lastFormatting=formatting; const burden=Number(audit.editorialBurden||0), health=Math.max(0,Math.round(100-burden)); $('#scoreValue').textContent=health; $('#scoreLabel').textContent=audit.status==='clean'?'Clean route':audit.status==='review'?'Review recommended':'Revision needed'; $('#scoreSummary').textContent=`${audit.counts.findings} finding${audit.counts.findings===1?'':'s'} across ${audit.counts.words.toLocaleString()} words. No authorship inference.`; $('#hardCount').textContent=audit.counts.hard;$('#reviewCount').textContent=audit.counts.review;$('#softCount').textContent=audit.counts.soft; const deg=health*3.6; const color=health>=85?'var(--green)':health>=65?'var(--amber)':'var(--red)';$('#scoreRing').style.background=`conic-gradient(${color} 0deg,${color} ${deg}deg,var(--line) ${deg}deg)`;
- const list=$('#findingList'); list.classList.toggle('empty-state',!audit.findings.length); list.innerHTML=audit.findings.length?'': '<p>No editorial defect crossed the configured threshold.</p>';
- audit.findings.forEach((f,i)=>{ const el=document.createElement('div');el.className='finding';el.innerHTML=`<div class="finding-top"><h4>${escapeHTML(f.title)}</h4><span class="badge">${escapeHTML(f.severity)}</span></div><q>${escapeHTML(shorten(f.original,130))}</q><p>${escapeHTML(f.rationale)}</p>`;el.onclick=()=>showToast(`${f.layer || 'Editorial'} · ${f.action}`);list.appendChild(el)}); renderFormatting(formatting); }
+function renderAudit(audit, formatting){
+ state.lastAudit=audit;state.lastFormatting=formatting;
+ const c=audit.counts;
+ const label={clean:'No findings',line_edit:'Minor edits',substantive_edit:'Substantive edits',
+              rebuild_required:'Extensive edits',not_assessable:'Not assessable'}[audit.status]||'Reviewed';
+ $('#scoreLabel').textContent=label;
+ // Say what is in the document and what was excused. No composite score: one number
+ // standing for a document is exactly what this tool declines to report.
+ const excused=(audit.metrics&&audit.metrics.allowListExemptionCount)||0;
+ let summary = audit.status==='not_assessable'
+   ? `Mostly tables, code or quotation. Too little prose to judge.`
+   : `${c.findings} finding${c.findings===1?'':'s'} in ${c.words.toLocaleString()} words.`;
+ if(excused) summary += ` ${excused} field-standard term${excused===1?'':'s'} excused.`;
+ $('#scoreSummary').textContent=summary;
+ $('#hardCount').textContent=c.hard;$('#reviewCount').textContent=c.review;$('#softCount').textContent=c.soft;
+ const list=$('#findingList'); list.classList.toggle('empty-state',!audit.findings.length);
+ list.innerHTML=audit.findings.length?'':'<p>Nothing crossed the threshold for this document type.</p>';
+ audit.findings.forEach(f=>{ const el=document.createElement('div');el.className='finding';
+  el.innerHTML=`<div class="finding-top"><h4>${escapeHTML(f.title)}</h4><span class="badge">${escapeHTML(f.severity)}</span></div><q>${escapeHTML(shorten(f.original,130))}</q><p>${escapeHTML(f.rationale)}</p>`;
+  el.onclick=()=>showToast(f.action);list.appendChild(el)});
+ renderFormatting(formatting); }
 
 function renderFormatting(f){ if(!f)return; $('#formatIntro').textContent=`${f.label}. Advice is adapted to this document job.`; const m=f.metrics;$('#formatMetrics').innerHTML=`<div><strong>${m.paragraphs}</strong><span>Paragraphs</span></div><div><strong>${m.longSentences}</strong><span>Long sentences</span></div><div><strong>${m.headingsDetected}</strong><span>Headings</span></div>`; const advice=[...f.diagnostics,...f.recommendations];$('#formatAdvice').innerHTML=advice.map((x,i)=>`<div class="advice"><span>${String(i+1).padStart(2,'0')}</span><p>${escapeHTML(x)}</p></div>`).join(''); }
 
@@ -75,31 +93,91 @@ $('#suggestButton').onclick=async()=>{const t=text();if(!t){showToast('Add some 
 function renderSuggestions(d){const box=$('#suggestionList');box.innerHTML=''; if(!d.findings?.length){box.innerHTML='<div class="empty-state"><p>No local suggestion is needed.</p></div>';return} d.findings.forEach(f=>{const c=(f.candidates||[])[0];if(!c)return;const el=document.createElement('div');el.className='suggestion';el.innerHTML=`<h4>${escapeHTML(f.title)}</h4><div class="before">${escapeHTML(shorten(f.original,160))}</div><div class="arrow">↓</div><div class="after">${escapeHTML(c.preview||c.replacement||'Needs author input')}</div>${c.safeToApply?'<button class="button secondary compact">Apply this edit</button>':''}`;const btn=$('button',el);if(btn)btn.onclick=()=>applySpan(f.span,c.replacement||c.preview);box.appendChild(el)})}
 function applySpan(span,replacement){const t=text();if(!span||replacement==null)return; const next=t.slice(0,span.start)+replacement+t.slice(span.end);editor.textContent=next;updateCounts();showToast('Suggestion applied');runAudit()}
 
-$('#providerSelect').onchange=()=>{$('#baseUrlLabel').classList.toggle('hidden',$('#providerSelect').value!=='openai-compatible'); $('#modelName').placeholder='Enter provider model ID'};
+/* Provider panel. Model IDs are discovered from the provider rather than typed: they
+   change often, and a mistyped one returns a 404 that reads like a bug in this app. */
+
+function currentProvider(){ return $('#providerSelect').value }
+function isLocalModel(){ return currentProvider()==='chrome-nano' }
+
+function syncProviderFields(){
+ const p=currentProvider();
+ $('#baseUrlLabel').classList.toggle('hidden', p!=='openai-compatible');
+ $('#apiKeyLabel').classList.toggle('hidden', isLocalModel());
+ $('#modelSelect').innerHTML='<option value="">Load the model list first</option>';
+ $('#modelName').classList.add('hidden');
+ $('#modelHint').textContent = isLocalModel()
+  ? 'Runs on this device. No key, no network, no cost. Chrome 138 or later.'
+  : p==='openrouter' ? 'OpenRouter lists its catalogue without a key. Free models are listed first.'
+  : p==='omniroute' ? 'Expects OmniRoute on http://localhost:20128. Start it with: npx omniroute'
+  : '';
+ if(isLocalModel()) loadModels();
+}
+$('#providerSelect').onchange=syncProviderFields;
+
 $('#keyVisibility').onclick=()=>{const i=$('#apiKey');i.type=i.type==='password'?'text':'password';$('#keyVisibility').textContent=i.type==='password'?'Show':'Hide'};
-$('#testProvider').onclick=()=>{if(!$('#apiKey').value)return showToast('Enter your API key');if(!$('#modelName').value)return showToast('Enter a model ID');$('#providerStatus').textContent=`${$('#providerSelect option:checked').textContent} configured for this browser tab. Key is not persisted.`;showToast('Provider configuration is ready')};
+
+async function loadModels(){
+ const b=$('#loadModels'); const sel=$('#modelSelect');
+ b.classList.add('loading'); b.textContent='Loading…';
+ try{
+  const r=await WriteRoute.listModels(currentProvider(),{apiKey:$('#apiKey').value, baseUrl:$('#baseUrl').value});
+  sel.innerHTML='';
+  if(r.availability && r.availability!=='available'){
+   // Chrome downloads the model on first use; say so rather than appearing to hang.
+   $('#modelHint').textContent = r.availability==='downloadable'
+    ? 'Chrome will download the model the first time you rewrite. This takes a few minutes.'
+    : `Chrome reports the built-in model as ${r.availability}.`;
+  }
+  const free=r.models.filter(m=>m.free), paid=r.models.filter(m=>!m.free);
+  const add=(list,label)=>{ if(!list.length)return;
+   const g=document.createElement('optgroup'); g.label=label;
+   list.forEach(m=>{const o=document.createElement('option');o.value=m.id;
+    o.textContent=m.context?`${m.label} · ${Math.round(m.context/1000)}k`:m.label; g.appendChild(o)});
+   sel.appendChild(g)};
+  add(free, free.length && paid.length ? 'Free' : (free.length?'Available':''));
+  add(paid, free.length ? 'Paid' : 'Available');
+  if(!sel.options.length) sel.innerHTML='<option value="">No usable model was listed</option>';
+  sel.selectedIndex=0;
+  $('#providerStatus').textContent=`${r.models.length} model${r.models.length===1?'':'s'} from ${r.label}`
+   + (r.freeCount? `, ${r.freeCount} free.` : '.');
+  showToast(`${r.models.length} models loaded`);
+ }catch(e){
+  // Falling back to a text field beats a dead end: some local endpoints serve no list.
+  sel.innerHTML='<option value="">Could not load the list</option>';
+  $('#modelName').classList.remove('hidden');
+  $('#modelHint').textContent='Enter a model ID manually.';
+  $('#providerStatus').textContent=e.message;
+  showToast(e.message);
+ }finally{ b.classList.remove('loading'); b.textContent='Load available models' }
+}
+$('#loadModels').onclick=loadModels;
+function chosenModel(){ return $('#modelName').classList.contains('hidden') ? $('#modelSelect').value : $('#modelName').value }
+syncProviderFields();
 
 $('#rewriteButton').onclick=async()=>{
  const t=text(); if(!t)return showToast('Add some text first');
- if(!$('#apiKey').value){panel('provider');showToast('Add your API key to use generative rewrite');return}
- if(!$('#modelName').value){panel('provider');showToast('Enter the provider model ID');return}
- const b=$('#rewriteButton');b.classList.add('loading');b.textContent='Routing candidates…';
+ const local=isLocalModel();
+ if(!local && !$('#apiKey').value){panel('provider');showToast('Add your API key, or switch to the Chrome built-in model');return}
+ if(!local && !chosenModel()){panel('provider');showToast('Load the model list and choose a model');return}
+ if(!$('#genreSelect').value){showToast('Choose the document type first');return}
+ const b=$('#rewriteButton');b.classList.add('loading');b.textContent='Generating…';
  try{
   const d=await WriteRoute.rewrite({
    text:t, genre:$('#genreSelect').value,
-   provider:$('#providerSelect').value, apiKey:$('#apiKey').value,
-   model:$('#modelName').value, baseUrl:$('#baseUrl').value,
+   provider:currentProvider(), apiKey:$('#apiKey').value,
+   model:chosenModel(), baseUrl:$('#baseUrl').value,
    candidates:Number($('#candidateCount').value), temperature:Number($('#temperature').value),
+   onProgress:pct=>{b.textContent=`Downloading model ${pct}%`},
   });
-  if(d.providerErrors?.length) showToast(`Provider: ${d.providerErrors[0]}`);
+  if(d.providerErrors?.length) showToast(d.providerErrors[0]);
   if(!d.changed){
-   showToast(d.reason||'No candidate cleared the safety gates');
+   showToast(d.reason||'No candidate passed the checks');
    if(d.auditBefore)renderAudit(d.auditBefore,state.lastFormatting);
    return;
   }
   state.candidate=d.finalText;
   renderCandidate(d.finalText,d.auditBefore?.editorialBurden,d.auditAfter?.editorialBurden);
-  showToast('A rewrite cleared the preservation gates');
+  showToast('A rewrite passed the checks');
  }catch(e){showToast(e.message)}
  finally{b.classList.remove('loading');b.textContent='Rewrite with BYOK'}
 };
