@@ -43,7 +43,7 @@ async (sample) => {
   await WR.ensure();
   document.getElementById('auditButton').click();
   await new Promise(r => setTimeout(r, 2000));
-  return document.getElementById('scoreValue').textContent;
+  return document.getElementById('scoreLabel').textContent;
 }
 """
 
@@ -66,13 +66,14 @@ def capture(base: str, width: int, height: int) -> int:
                     f"localStorage.setItem('writeroute-theme', '{theme}');")
 
                 page.goto(f"{base}/studio.html", wait_until="networkidle")
-                score = page.evaluate(SETUP, SAMPLE)
-                if score == "—":
-                    print(f"warning: the audit did not render for the {theme} shot",
-                          file=sys.stderr)
+                verdict = page.evaluate(SETUP, SAMPLE)
+                if verdict in ("", "Not analysed"):
+                    # A screenshot of an un-run audit would show an empty panel and
+                    # misrepresent the product, so fail rather than ship it.
+                    raise SystemExit(f"the audit did not render for the {theme} shot")
                 suffix = "" if theme == "light" else "-dark"
                 page.screenshot(path=str(ASSETS / f"workspace{suffix}.png"))
-                print(f"workspace{suffix}.png  (health score {score})")
+                print(f"workspace{suffix}.png  ({verdict})")
 
                 page.goto(f"{base}/", wait_until="networkidle")
                 page.screenshot(path=str(ASSETS / f"hero{suffix}.png"))
