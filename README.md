@@ -22,6 +22,20 @@ Three layers, kept separate so that fluent-and-unsupported does not pass as clea
 | Substance | causal wording in an observational design, significance without an effect estimate, novelty claims with no bounded comparison, safety and efficacy claims with no stated condition |
 | Shape | repeated paragraph templates, uniform cadence, connective scaffolding carrying the argument, recap loops, a conclusion restating an earlier paragraph |
 
+### Languages
+
+Segmentation works across scripts. Sentence terminators include `。！？` (CJK), `।॥`
+(Devanagari), `۔؟؛` (Urdu and Arabic), `።፧` (Ethiopic), `·` (Greek) and `։` (Armenian),
+and words are matched by Unicode letter class rather than the Latin range. CJK is written
+without spaces, so each ideograph counts as one token — the usual approximation where no
+segmentation dictionary is available.
+
+Verified on English, French, Spanish, German, Chinese, Japanese, Arabic, Hindi, Russian,
+Greek, Swahili and Chichewa. Before this, a Chinese, Arabic, Hindi or Russian document
+tokenised to **zero words** and read as a single unbroken sentence, so every statistic the
+audit reports was meaningless. The pattern catalogue itself is still written in English
+and will not recognise, say, a Mandarin assistant preface.
+
 Ten genre profiles — scientific, systematic review, policy brief, professional report,
 grant, legal, technical, correspondence, essay/commentary, general — decide which
 patterns are hard, which are advisory, and which are switched off because they describe
@@ -67,6 +81,16 @@ calls the provider directly, so the key never reaches a server we run and is not
 The model only proposes. The tournament that ranks candidates and the gates above run in
 Python, and a model candidate must also beat the deterministic repair to win. When
 nothing clears the gates, your original comes back unchanged.
+
+## Opening documents
+
+A menu bar sits above the editor: **File** to open and export, **Review** to audit and
+repair, **View** for focus mode and theme. `⌘O` opens a file, and dropping one anywhere on
+the window works too.
+
+Reads TXT, Markdown, reStructuredText, CSV, log files, DOCX, PDF with a text layer, and
+RTF. Exports to DOCX, Markdown, plain text and HTML. All of it happens in the tab; nothing
+is uploaded.
 
 ## Install and run
 
@@ -178,9 +202,10 @@ is excused, "improved survival" is not. Every suppression appears in
 ./scripts/validate.sh
 ```
 
-Runs everything: 71 Python tests (42 engine, 4 end-to-end through the local service, 17
-Gate 0 regressions, 8 allow-list regressions with 21 subtests), 24 JavaScript tests for the
-browser document layer and provider discovery, a rebuild of `docs/` with a checksum check, and a grep that fails
+Runs everything: 81 Python tests (42 engine, 4 end-to-end through the local service, 17
+Gate 0 regressions, 8 allow-list regressions with 21 subtests, 10 structural-detector
+regressions), 28 JavaScript tests for the
+browser document layer, multilingual round trips and provider discovery, a rebuild of `docs/` with a checksum check, and a grep that fails
 the build if the landing page ever claims an authorship verdict.
 
 The JavaScript suite needs jsdom once: `npm install --no-save jsdom`.

@@ -79,6 +79,39 @@ the whole thing as a static site that runs in the browser.
 - **Screenshots regenerated from the running site** by `scripts/capture_screenshots.py`,
   showing the allow-list and the findings in one frame.
 
+### Structural detectors, multilingual segmentation and a menu bar
+
+- **Three detectors that measure structure rather than matching clichés.** The catalogue
+  named these patterns but implemented them as lists of literal phrases, so the project's
+  own landing page exhibited all three and audited near-clean. `negative_definition_habit`
+  catches the bare "A, not B" form the shipped `binary_contrast` missed for want of a verb.
+  `hollow_closer` catches a short closing line built from words the paragraph already used,
+  which a fixed kicker list cannot reach because the writer invents a new one each time.
+  `punctuated_tricolon` catches "Clear. Precise. Human." — three sentences, where the
+  comma-separated pattern needed one and `staccato_run` needs four.
+
+  All three are rate-based, and none changed the hard-finding count on the 74-document
+  benchmark in any class. On the control class of published journal prose they produce no
+  findings at all; `negative_definition_habit` fires ten times on machine-written notes and
+  twice on author documents, which is the discrimination it was built for.
+
+  Two false-positive families were found and removed during tuning: `rather than` is
+  ordinary academic comparison rather than a rhetorical tic, and journal-supplement table
+  fragments such as `ab - abstract` were reading as taglines.
+
+- **Multilingual segmentation.** `_WORD` was `[A-Za-zÀ-ɏ]`, Latin only, so Chinese,
+  Japanese, Arabic, Hindi, Russian, Greek, Hebrew and Thai documents tokenised to zero
+  words; the splitter knew only `.!?`, so they also read as one unbroken sentence. Both
+  now cover the scripts above. Verified across twelve languages, with English results on
+  the benchmark unchanged to the finding.
+
+- **A menu bar.** The only file input used to sit on the landing hero, so once a document
+  was open there was no way to open another without reloading. File, Review and View menus,
+  `⌘O`, and drag-and-drop anywhere on the window.
+
+- **The word count in the header was ASCII-only**, so a Chinese document showed "3 words"
+  beside an audit reporting 38. Both now agree.
+
 ### Not claimed
 
 No blinded or independent comparison against other tools. One corpus, one domain. The

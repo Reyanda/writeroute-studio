@@ -11,8 +11,40 @@ from dataclasses import dataclass, field
 _ABBREV = re.compile(
     r"\b(?:Dr|Mr|Mrs|Ms|Prof|Sr|Jr|St|vs|etc|Fig|No|al|approx|cf|Vol|pp|p|e\.g|i\.e)\.$"
 )
-_SENT_SPLIT = re.compile(r"(?<=[.!?])[\"'”’)\]]*\s+")
-_WORD = re.compile(r"[A-Za-zÀ-ɏ][A-Za-zÀ-ɏ'’-]*")
+
+# Sentence terminators across scripts. The Latin set alone left a Chinese, Japanese,
+# Hindi, Urdu, Arabic, Greek or Armenian document as a single unbroken sentence, which
+# makes every length, uniformity and rhythm statistic meaningless.
+#
+#   。！？   CJK ideographic full stop and full-width marks
+#   ।॥      Devanagari danda and double danda (Hindi, Marathi, Nepali, Sanskrit)
+#   ۔؟؛     Urdu full stop, Arabic question mark and semicolon
+#   ።፧፨     Ethiopic full stop, question mark and paragraph separator
+#   ·       Greek ano teleia
+#   ։       Armenian full stop
+_TERMINATORS = ".!?。！？｡．।॥۔؟؛።፧፨·։"
+_CLOSERS = "\"'”’）」』〉》】\\)\\]"
+# Two forms: a terminator followed by whitespace, and a full-width terminator followed by
+# anything. Chinese and Japanese do not put a space after 。 so a whitespace-only rule
+# never fires on them.
+_SENT_SPLIT = re.compile(
+    rf"(?<=[{re.escape(_TERMINATORS)}])[{_CLOSERS}]*\s+"
+    rf"|(?<=[。！？｡])[{_CLOSERS}]*"
+)
+
+# A word is any run of letters in any script, plus the marks that attach to them. Python's
+# `re` has no \p{L}, but `[^\W\d_]` is Unicode-aware on str and means exactly "letter".
+# The previous class was [A-Za-zÀ-ɏ], which is Latin only: Greek, Cyrillic, Arabic,
+# Hebrew, Devanagari, Thai and CJK all tokenised to nothing at all.
+#
+# CJK is handled separately because it is written without spaces. A run of ideographs
+# would otherwise count as one enormous token; each is counted as a token instead, which
+# is the usual approximation when no segmentation dictionary is available.
+_CJK = r"぀-ヿ㐀-䶿一-鿿豈-﫿ｦ-ﾟ"
+_WORD = re.compile(
+    rf"[{_CJK}]"                                    # one ideograph or kana = one token
+    rf"|[^\W\d_](?:[^\W\d_]|['’‍-])*"          # a letter run in any other script
+)
 
 
 @dataclass

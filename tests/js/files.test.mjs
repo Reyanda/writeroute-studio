@@ -233,3 +233,43 @@ describe('exportDocument', () => {
     assert.ok(!body.includes('a < b'));
   });
 });
+
+describe('multilingual documents', () => {
+  const SAMPLES = {
+    Chinese: '该队列纳入了240名儿童。\n\n随访持续了十二个月。死亡率为8.7%。',
+    Japanese: 'このコホートには240人の子供が含まれた。\n\n追跡は12か月続いた。',
+    Arabic: 'شملت المجموعة 240 طفلاً.\n\nاستمرت المتابعة اثني عشر شهراً. ما هي نسبة الوفيات؟',
+    Hindi: 'इस समूह में 240 बच्चे शामिल थे।\n\nअनुवर्ती बारह महीने तक चला।',
+    Russian: 'В когорту вошли 240 детей.\n\nНаблюдение длилось двенадцать месяцев.',
+    Greek: 'Η κοόρτη περιλάμβανε 240 παιδιά.\n\nΗ παρακολούθηση διήρκεσε δώδεκα μήνες.',
+    Chichewa: 'Gululi linali ndi ana 240.\n\nKutsatira kunapitilira miyezi khumi ndi iwiri.',
+  };
+
+  test('every script survives a DOCX round trip intact', async () => {
+    for (const [language, source] of Object.entries(SAMPLES)) {
+      const out = await files.exportDocument({ text: source, filename: language, format: 'docx' });
+      const back = await files.extract(new File([out.blob], `${language}.docx`));
+      assert.equal(back.text.trim(), source.trim(), `${language} was altered by the round trip`);
+    }
+  });
+
+  test('UTF-8 text files decode without mojibake', async () => {
+    for (const [language, source] of Object.entries(SAMPLES)) {
+      const { text } = await files.extract(new File([source], `${language}.txt`, { type: 'text/plain' }));
+      assert.equal(text, source, `${language} decoded incorrectly`);
+      assert.ok(!text.includes('�'), `${language} produced replacement characters`);
+    }
+  });
+
+  test('a UTF-8 BOM is not left in the text', async () => {
+    const { text } = await files.extract(
+      new File(['﻿Привет мир'], 'bom.txt', { type: 'text/plain' }));
+    assert.ok(!text.startsWith('﻿'), 'the byte-order mark leaked into the document');
+  });
+
+  test('a non-Latin filename is still exported safely', async () => {
+    const out = await files.exportDocument({ text: 'x', filename: '论文草稿', format: 'txt' });
+    assert.match(out.name, /\.txt$/);
+    assert.ok(out.name.length > 4, 'sanitising must not empty a non-Latin filename');
+  });
+});

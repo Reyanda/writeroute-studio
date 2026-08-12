@@ -213,6 +213,16 @@ def _find_bold_labels(text: str) -> list[_LabelHit]:
     return hits
 
 
+# Words a closing line leans on without introducing a subject. Kept separate from
+# `_token_set`'s stop list, which the duplicate-conclusion check also uses.
+_CLOSER_FUNCTION = frozenset({
+    "not", "only", "just", "merely", "simply", "all", "any", "every", "some", "more",
+    "less", "than", "but", "yet", "still", "so", "if", "when", "what", "its", "their",
+    "there", "here", "one", "own", "same", "such", "does", "did", "has", "had", "been",
+    "can", "will", "would", "must", "should", "may", "might",
+})
+
+
 def _structure_findings(document: Document, genre: GenreProfile) -> tuple[list[RawFinding], dict[str, Any]]:
     sample = document.sample
     findings: list[RawFinding] = []
@@ -330,6 +340,105 @@ def _structure_findings(document: Document, genre: GenreProfile) -> tuple[list[R
                     break
             else:
                 run = []
+
+    # The three checks below were added after the project's own landing page was audited
+    # and came back near-clean while plainly exhibiting the patterns this catalogue names.
+    # The cause in each case was the same: the shipped pattern was a list of literal
+    # clichés, so it could only catch a phrase someone had already written down. These are
+    # structural instead, and all three are rate-based — one negative definition or one
+    # short closing line is ordinary writing, and only a habit is worth reporting.
+
+    # Negative definition: "A, not B" used as emphasis rather than to draw a distinction
+    # the reader needs. The shipped binary_contrast pattern required a verb ("this is not
+    # X, it's Y"), so the bare noun-phrase form escaped it entirely.
+    negative_definitions = [
+        m for m in re.finditer(
+            # ", not X" and "rather than X". The line end counts as a terminator because a
+            # heading is the most common place for this construction and carries no full
+            # stop; an earlier version used `$` without MULTILINE and so never saw one.
+            r",\s+not\s+(?:just\s+|merely\s+|simply\s+)?[a-z][\w-]*(?:\s+[\w-]+){0,4}(?=[.;:,\n]|$)",
+            document.masked_text, re.IGNORECASE | re.MULTILINE)
+        if not document.is_protected(m.start(), m.end())
+    ]
+    if len(negative_definitions) >= 3:
+        findings.append(RawFinding(
+            pattern_id="negative_definition_habit", title="Repeated definition by contrast",
+            category="rhetorical_template", severity="soft",
+            confidence=min(0.9, 0.6 + 0.06 * len(negative_definitions)),
+            start=negative_definitions[0].start(), end=negative_definitions[-1].end(),
+            rationale=(
+                f"{len(negative_definitions)} passages define something by what it is not. "
+                "Used once this draws a needed distinction; repeated, it becomes a cadence "
+                "that lets the sentence sound decisive without adding a claim."
+            ),
+            action="Keep the contrast where a reader would otherwise assume the wrong thing; elsewhere state what the thing is and delete the negation.",
+            source="structure",
+        ))
+
+    # Hollow closer: a short final sentence that introduces no content word the paragraph
+    # has not already used. This is the structural form of the aphorism that a literal
+    # kicker list cannot reach, because the writer invents a new one each time.
+    hollow_closers = []
+    for paragraph in sample.paragraphs:
+        sentences = [s for s in sample.sentences
+                     if s.start >= paragraph.start and s.end <= paragraph.end]
+        if len(sentences) < 2 or paragraph.token_count < 25:
+            continue
+        closer = sentences[-1]
+        if not (2 <= len(closer.tokens) <= 11) or re.search(r"\d", closer.text):
+            continue
+        if "|" in closer.text or "\t" in closer.text or not closer.text.strip().endswith((".", "!", "?")):
+            continue
+        if document.is_protected(closer.start, closer.end):
+            continue
+        earlier = _token_set(" ".join(s.text for s in sentences[:-1])) - _CLOSER_FUNCTION
+        closing = _token_set(closer.text) - _CLOSER_FUNCTION
+        # Share of the closing line's content already used in the paragraph. A fraction
+        # rather than a count: "A finding is only a finding" reduces to one recycled word,
+        # which is the strongest case, and a minimum-length rule threw it away.
+        if closing and len(closing & earlier) / len(closing) >= 0.5:
+            hollow_closers.append(closer)
+    if len(hollow_closers) >= 3:
+        findings.append(RawFinding(
+            pattern_id="hollow_closer", title="Paragraphs closing on a restatement",
+            category="ending", severity="soft",
+            confidence=min(0.92, 0.62 + 0.07 * len(hollow_closers)),
+            start=hollow_closers[0].start, end=hollow_closers[-1].end,
+            rationale=(
+                f"{len(hollow_closers)} paragraphs end on a short sentence built entirely "
+                "from words already used in that paragraph. The line reads as a conclusion "
+                "while adding nothing to it."
+            ),
+            action="End on the consequence, the decision or the next step. Delete the closing line where it only restates the paragraph.",
+            source="structure",
+        ))
+
+    # Tricolon written as separate sentences. The shipped adjective_tricolon pattern
+    # required comma separation, so "Clear. Precise. Human." did not match, and the
+    # staccato run needs four sentences where a tricolon has three.
+    tricolons = []
+    for index in range(len(sample.sentences) - 2):
+        window = sample.sentences[index:index + 3]
+        if not all(1 <= len(s.tokens) <= 2 for s in window):
+            continue
+        if not all(re.fullmatch(r"[A-Za-z][\w'’-]*(?:\s+[A-Za-z][\w'’-]*)?\s*[.!?]", s.text.strip())
+                   for s in window):
+            continue
+        if not document.is_protected(window[0].start, window[-1].end):
+            tricolons.append(window)
+    if tricolons:
+        window = tricolons[0]
+        findings.append(RawFinding(
+            pattern_id="punctuated_tricolon", title="Three-word tagline",
+            category="rhythm", severity="soft", confidence=0.8,
+            start=window[0].start, end=window[-1].end,
+            rationale=(
+                "Three one- or two-word sentences in a row make a slogan. The full stops "
+                "supply emphasis that the words have not earned."
+            ),
+            action="Write the claim as a sentence, or cut it. Keep the form only where the document really is a tagline.",
+            source="structure",
+        ))
 
     # Repeated conclusion: compare the final paragraph to each earlier paragraph,
     # but require enough content words to avoid flagging short procedural endings.

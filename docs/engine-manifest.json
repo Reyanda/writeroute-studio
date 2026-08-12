@@ -5,8 +5,8 @@
     "aiwd"
   ],
   "files": 32,
-  "bytes": 85969,
-  "sha256": "9567b4eaeb60505c1ba02352e380250d8672f2235836a30c5783be1eb01ffbec",
+  "bytes": 88964,
+  "sha256": "c3db23cd212101d63fbc15c4b3643f39a3463be4e680faade6a0eb56bce6b948",
   "members": [
     "writeroute/__init__.py",
     "writeroute/__main__.py",

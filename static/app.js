@@ -8,7 +8,12 @@ const editor=$('#editor'), workspace=$('#workspace'), hero=$('#hero'), toast=$('
 
 function showToast(message){ toast.textContent=message; toast.classList.add('show'); clearTimeout(showToast.t); showToast.t=setTimeout(()=>toast.classList.remove('show'),2600); }
 function text(){ return editor.innerText.replace(/\u00a0/g,' ').trim(); }
-function updateCounts(){ const n=(text().match(/\b[\w’'-]+\b/g)||[]).length; $('#wordCount').textContent=`${n.toLocaleString()} words`; state.dirty=true; $('#saveState').textContent='Edited locally'; }
+function updateCounts(){
+ // Unicode-aware, and matching the Python tokeniser: \w is ASCII-only in JS without the
+ // u flag, so a Chinese or Hindi document reported a handful of words while the audit
+ // counted dozens. CJK is written without spaces, so each ideograph counts as one word.
+ const n=(text().match(/[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]|[\p{L}][\p{L}'\u2019-]*/gu)||[]).length;
+ $('#wordCount').textContent=`${n.toLocaleString()} words`; state.dirty=true; $('#saveState').textContent='Edited locally'; }
 function openWorkspace(){ hero.classList.add('hidden'); workspace.classList.remove('hidden'); setTimeout(()=>editor.focus(),50); WriteRoute.ensure().catch(e=>showToast(`Engine failed to start: ${e.message}`)); }
 function setDocument(content, name='Untitled document'){ openWorkspace(); state.sourceText=content; state.filename=name.replace(/\.[^.]+$/,'') || 'Untitled document'; $('#docTitle').value=state.filename; editor.textContent=content; state.dirty=false; $('#saveState').textContent='Loaded'; updateCounts(); state.dirty=false; $('#saveState').textContent='Ready'; }
 
@@ -33,18 +38,42 @@ WriteRoute.onStatus(({phase, detail, mode}) => {
  if(phase==='ready') el.title = mode==='server' ? 'Local WriteRoute service' : 'Engine running entirely in this browser';
 });
 
-$('#fileInput').onchange=async e=>{
- const file=e.target.files[0]; if(!file)return;
+async function openFile(file){
+ if(!file)return;
  showToast('Reading document…');
  try{
   const {text:content, sourceFormat}=await extract(file);
   setDocument(content, file.name);
+  // The audit needs a document type, and inference is unreliable enough that guessing
+  // one here would mis-grade the file the moment it loads.
+  if(!$('#genreSelect').value){
+   showToast(`${sourceFormat.toUpperCase()} loaded. Choose the document type to audit it.`);
+   $('#genreSelect').focus();
+   return;
+  }
   const d=await postJSON('audit',{text:content,genre:$('#genreSelect').value});
   renderAudit(d.audit,d.formatting);
   showToast(`${sourceFormat.toUpperCase()} loaded and audited`);
- }
- catch(err){showToast(err.message)} finally{e.target.value=''}
-};
+ }catch(err){showToast(err.message)}
+}
+['#fileInput','#fileInputWorkspace'].forEach(sel=>{
+ const el=$(sel); if(!el)return;
+ el.onchange=async e=>{ await openFile(e.target.files[0]); e.target.value='' };
+});
+
+// Drag a file anywhere onto the editor.
+['dragover','dragenter'].forEach(ev=>document.addEventListener(ev,e=>{
+ if(!e.dataTransfer?.types?.includes('Files'))return;
+ e.preventDefault(); document.body.classList.add('drop-target');
+}));
+['dragleave','drop'].forEach(ev=>document.addEventListener(ev,e=>{
+ if(ev==='dragleave' && e.relatedTarget)return;
+ document.body.classList.remove('drop-target');
+}));
+document.addEventListener('drop',async e=>{
+ const file=e.dataTransfer?.files?.[0]; if(!file)return;
+ e.preventDefault(); await openFile(file);
+});
 
 editor.addEventListener('input',updateCounts);
 $$('.toolbar button[data-command]').forEach(b=>b.onclick=()=>{document.execCommand(b.dataset.command,false,null);editor.focus()});
@@ -201,3 +230,36 @@ function escapeHTML(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;',
 
 // Initial keyboard shortcuts
 addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key==='Enter'){e.preventDefault();runAudit()}if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='e'&&e.shiftKey){e.preventDefault();$('#exportDialog').showModal()}});
+
+
+/* ------------------------------------------------------------------ menu bar */
+const MENUS=[['#menuFileBtn','#menuFile'],['#menuReviewBtn','#menuReview'],['#menuViewBtn','#menuView']];
+function closeMenus(){ $$('.menu').forEach(m=>{m.classList.remove('open');
+ const b=$('.menu-title',m); if(b)b.setAttribute('aria-expanded','false')}) }
+MENUS.forEach(([btnSel])=>{
+ const btn=$(btnSel); if(!btn)return;
+ btn.onclick=e=>{ e.stopPropagation();
+  const menu=btn.closest('.menu'), wasOpen=menu.classList.contains('open');
+  closeMenus();
+  if(!wasOpen){ menu.classList.add('open'); btn.setAttribute('aria-expanded','true') } };
+});
+document.addEventListener('click',closeMenus);
+addEventListener('keydown',e=>{ if(e.key==='Escape')closeMenus() });
+$$('.menu-list button').forEach(b=>b.addEventListener('click',()=>setTimeout(closeMenus,0)));
+
+$('#menuOpen').onclick=()=>$('#fileInputWorkspace').click();
+$('#menuNew').onclick=()=>$('#newDoc').click();
+$('#menuAudit').onclick=runAudit;
+$('#menuSuggest').onclick=()=>$('#suggestButton').click();
+$('#menuRepair').onclick=()=>$('#repairSafe').click();
+$('#menuModel').onclick=()=>panel('provider');
+$('#menuFocus').onclick=()=>$('#focusMode').click();
+$('#menuInspector').onclick=()=>$('.inspector').classList.toggle('closed');
+$('#menuTheme').onclick=()=>$('#themeToggle').click();
+
+addEventListener('keydown',e=>{
+ if(!(e.metaKey||e.ctrlKey))return;
+ const k=e.key.toLowerCase();
+ if(k==='o'){ e.preventDefault(); $('#fileInputWorkspace').click() }
+ if(k==='n'&&e.shiftKey){ e.preventDefault(); $('#newDoc').click() }
+});
