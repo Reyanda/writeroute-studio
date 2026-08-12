@@ -34,6 +34,17 @@ for required in ("index.html", "studio.html", "engine.js", "files.js", "app.js",
 print(f"   archive ok: {manifest['files']} files, {manifest['bytes']:,} bytes")
 PY
 
+echo "== site: rendered layout =="
+if python3 -c "import playwright" >/dev/null 2>&1; then
+  python3 -m http.server 8788 --directory docs >/dev/null 2>&1 &
+  SERVER=$!
+  sleep 1
+  python3 scripts/check_layout.py --base http://127.0.0.1:8788 || { kill $SERVER; exit 1; }
+  kill $SERVER
+else
+  echo "   playwright not installed; skipped" >&2
+fi
+
 echo "== site: no authorship claim on the landing page =="
 if grep -qiE "% (ai|AI)[- ]generated|AI-generated|likelihood this was written by" docs/index.html; then
   echo "   the landing page must not claim an authorship verdict" >&2
