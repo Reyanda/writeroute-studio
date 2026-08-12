@@ -4,8 +4,13 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
+# First, because it is the only failure here that cannot be undone after a push.
+echo "== publish safety =="
+python3 scripts/check_publishable.py
+
 echo "== python: compile =="
-python3 -m compileall -q writeroute aiwd app.py scripts
+python3 -m compileall -q writeroute aiwd app.py scripts \
+  $([ -d tracer ] && echo tracer) $([ -d pdfstudio ] && echo pdfstudio)
 
 echo "== python: tests =="
 PYTHONPATH=. python3 -m pytest tests -q

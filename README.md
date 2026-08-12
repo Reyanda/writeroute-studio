@@ -1,8 +1,27 @@
 # WriteRoute
 
-A preservation-first writing and editing route. It names observable editorial defects in
-a document, proposes the smallest edit that fixes each one, and refuses any rewrite that
-changes a number, a modal verb, a negation, a scope word or an attribution.
+Three engines for documents where the facts matter, behind one command.
+
+| Engine | Does | Extra |
+|---|---|---|
+| **Prose** | names editorial defects, proposes the smallest fix, refuses rewrites that change meaning | none |
+| **Tracer** | converts raster images to SVG with parity checks and background removal | `[tracer]` |
+| **PDF Studio** | detects form fields, fills them, exports annotations | `[pdf]` |
+
+Only the prose engine runs in a browser; the other two need native libraries. Nothing is
+installed that you have not asked for:
+
+```bash
+pip install writeroute            # prose only, no dependencies at all
+pip install 'writeroute[all]'     # everything
+writeroute engines                # what is installed here, and what the rest needs
+```
+
+## Prose
+
+It names observable editorial defects in a document, proposes the smallest edit that fixes
+each one, and refuses any rewrite that changes a number, a modal verb, a negation, a scope
+word or an attribution.
 
 It does not report a percentage of your prose as machine-written. Style does not identify
 authorship, and a tool that claims otherwise is guessing at something it cannot see.
@@ -81,6 +100,24 @@ calls the provider directly, so the key never reaches a server we run and is not
 The model only proposes. The tournament that ranks candidates and the gates above run in
 Python, and a model candidate must also beat the deterministic repair to win. When
 nothing clears the gates, your original comes back unchanged.
+
+## Images and PDFs
+
+```bash
+writeroute trace diagram.png -o diagram.svg      # raster to SVG
+writeroute trace diagram.png --mode wrapper      # embed the original at exact size
+writeroute trace --list-presets
+
+writeroute pdf detect form.pdf -o fields.json    # find the fields
+# add a "value" to each field you want filled, then:
+writeroute pdf fill form.pdf fields.json -o filled.pdf
+```
+
+`pdf fill` reports how many fields it actually drew and exits 4 if any value could not be
+placed. A form that looks filled and is not is worse than a visible failure.
+
+Neither engine uploads anything. Both refuse to run with a clear install instruction, not
+an ImportError, when their extra is missing.
 
 ## Opening documents
 
@@ -224,4 +261,11 @@ evals/             frozen regression cases
 examples/          worked audit, suggestion, repair and source-lock outputs
 ```
 
-MIT licensed.
+## A note on documents
+
+The PDF engine reads identity and financial paperwork. Nothing of that kind is in this
+repository: `.gitignore` blocks document formats and the engines' working directories, and
+`scripts/check_publishable.py` fails the build if any is tracked. A pre-commit hook runs
+the same check; enable it with `git config core.hooksPath .githooks`.
+
+MIT licensed. Tracer and PDF Studio were developed as separate projects and merged here.

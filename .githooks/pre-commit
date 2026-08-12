@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Blocks a commit that stages a document or a working directory. Enable with:
+#   git config core.hooksPath .githooks
+exec python3 "$(git rev-parse --show-toplevel)/scripts/check_publishable.py" --staged-only

@@ -141,11 +141,49 @@ def build_parser() -> argparse.ArgumentParser:
 
     benchmark = sub.add_parser("benchmark", help="run the included frozen regression benchmark")
     benchmark.add_argument("--json", action="store_true")
+
+    sub.add_parser("engines", help="show which engines are installed and what each needs")
+
+    trace = sub.add_parser("trace", help="convert a raster image to SVG [needs the tracer extra]")
+    trace.add_argument("image", help="PNG or JPG to convert")
+    trace.add_argument("-o", "--output", help="destination SVG (default: alongside the input)")
+    trace.add_argument("--mode", choices=("vector", "parity", "wrapper"), default="parity",
+                       help="pure vector, vector plus a raster residual where it differs, "
+                            "or the original embedded at exact dimensions")
+    trace.add_argument("--preset", help="named tracing preset; see --list-presets")
+    trace.add_argument("--remove-background", action="store_true")
+    trace.add_argument("--list-presets", action="store_true")
+    trace.add_argument("--json", action="store_true")
+
+    pdf = sub.add_parser("pdf", help="detect, fill and annotate PDF form fields [needs the pdf extra]")
+    pdf_sub = pdf.add_subparsers(dest="pdf_command", required=True)
+    pdf_detect = pdf_sub.add_parser("detect", help="find form fields and report them")
+    pdf_detect.add_argument("file")
+    pdf_detect.add_argument("-o", "--output", help="write the field map as JSON")
+    pdf_detect.add_argument("--json", action="store_true")
+    pdf_fill = pdf_sub.add_parser("fill", help="fill detected fields from a JSON value map")
+    pdf_fill.add_argument("file")
+    pdf_fill.add_argument("values", help="JSON file of field id to value")
+    pdf_fill.add_argument("-o", "--output", required=True)
+    pdf_unbundle = pdf_sub.add_parser("unbundle", help="dump raw page primitives as JSON")
+    pdf_unbundle.add_argument("file")
+    pdf_unbundle.add_argument("-o", "--output")
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+
+    # The optional engines are dispatched first and imported inside their handlers, so a
+    # prose-only install never loads a native dependency it does not have.
+    if args.command in {"engines", "trace", "pdf"}:
+        from .engines import run_engine_command
+        from .optional import MissingDependency
+        try:
+            return run_engine_command(args)
+        except MissingDependency as exc:
+            print(str(exc), file=sys.stderr)
+            return 3
 
     if args.command == "audit":
         report = audit_text(_read(args.file), args.genre, include_quoted=args.include_quoted)

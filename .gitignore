@@ -1,9 +1,47 @@
+# --- build and environment -------------------------------------------------
 __pycache__/
 *.py[cod]
 .pytest_cache/
 .venv/
 venv/
-.DS_Store
-*.bak.*
 node_modules/
 package-lock.json
+*.egg-info/
+build/
+.DS_Store
+*.bak.*
+
+# --- documents and data: blocked by default --------------------------------
+# This repository is public and two of its engines process identity and banking
+# documents. The folders those engines read and write are excluded wholesale, and
+# document formats are excluded everywhere, so a stray file cannot be committed by
+# a careless `git add -A`. Fixtures that genuinely belong in the repo are added
+# back by explicit exception below.
+*.pdf
+*.docx
+*.doc
+*.xlsx
+*.rtf
+*.eml
+uploads/
+outputs/
+backups/
+scratch/
+qc/
+samples/private/
+
+# Vendored third-party source. Stirling-PDF is copyleft and is a dependency, not
+# something to carry inside an MIT repository.
+stirling-pdf-repo/
+stirling_native/
+
+# --- explicit exceptions ---------------------------------------------------
+# Small, synthetic fixtures with no personal content. Add one only after checking
+# it contains nothing real.
+!tests/fixtures/**/*.pdf
+!tests/fixtures/**/*.docx
+
+# The inherited PDF suite asserts against private documents by filename. It is kept in the
+# source project and not published: the filenames alone identify which bank and immigration
+# forms they were.
+tests/engine_pdf/test_engine.py

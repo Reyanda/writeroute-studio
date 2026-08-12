@@ -1,0 +1,83 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "writeroute"
+version = "1.1.0"
+description = "Preservation-first editing for documents where the facts matter: prose auditing, raster-to-SVG tracing, and PDF form detection and filling."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Geoffrey Manda" }]
+keywords = ["editing", "writing", "pdf", "forms", "svg", "vector", "academic"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Text Processing :: Linguistic",
+]
+
+# The prose engine has no dependencies at all. That is deliberate: it is the engine that
+# runs in the browser under Pyodide, and anything added here would have to be available
+# there too.
+dependencies = []
+
+[project.optional-dependencies]
+# Raster to SVG. vtracer is a Rust extension and rembg pulls ONNX runtime with model
+# weights, so this is several hundred megabytes and is never installed by default.
+tracer = [
+  "vtracer>=0.6.15",
+  "pillow>=10.0.0",
+  "numpy>=1.24.0",
+  "scikit-image>=0.21.0",
+  "cairosvg>=2.7.0",
+  "resvg-py>=0.3.4",
+  "svglib>=1.5.0",
+]
+# Background removal is separated from the rest of the tracer extra because the model
+# weights dominate the download and most tracing work does not need them.
+tracer-bg = ["rembg>=2.0.50"]
+
+# PDF form detection, filling and annotation.
+pdf = [
+  "pymupdf>=1.24",
+  "opencv-python-headless>=4.9",
+  "numpy>=1.24.0",
+]
+
+# The local HTTP service that serves the studio and the engine APIs.
+service = [
+  "fastapi>=0.115.0",
+  "uvicorn[standard]>=0.30.0",
+  "python-multipart>=0.0.12",
+  "python-docx>=1.1",
+  "pypdf>=5.0",
+]
+
+all = ["writeroute[tracer,tracer-bg,pdf,service]"]
+
+dev = ["pytest>=8.0", "playwright>=1.44"]
+
+[project.scripts]
+writeroute = "writeroute.__main__:main"
+
+[project.urls]
+Homepage = "https://reyanda.github.io/writeroute-studio/"
+Source = "https://github.com/Reyanda/writeroute-studio"
+
+[tool.setuptools]
+packages = ["writeroute", "aiwd", "tracer", "pdfstudio"]
+
+[tool.setuptools.package-data]
+writeroute = ["data/**/*.json"]
+aiwd = ["data/**/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# The engine suites are skipped rather than failed when their extra is absent, so a
+# prose-only checkout still runs a green suite.
+filterwarnings = ["ignore::DeprecationWarning"]
