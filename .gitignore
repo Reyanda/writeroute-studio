@@ -45,3 +45,8 @@ stirling_native/
 # source project and not published: the filenames alone identify which bank and immigration
 # forms they were.
 tests/engine_pdf/test_engine.py
+
+# Tracer's Gradio UI was not merged; only its engine was. Its two UI test modules stay in
+# the source project, where the module they exercise still exists.
+tests/engine_tracer/test_app.py
+tests/engine_tracer/test_studio_controls.py

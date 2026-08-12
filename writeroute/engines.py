@@ -14,7 +14,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from .optional import engine_status
+from .optional import engine_status, install_command
 
 
 def _emit(payload: dict[str, Any], as_json: bool, human: str) -> None:
@@ -35,7 +35,7 @@ def cmd_engines(_args) -> int:
         if not info["available"]:
             needs = ", ".join(info["needs"]) or "its dependencies"
             print(f"{'':<{width}}  missing {needs}")
-            print(f"{'':<{width}}  pip install 'writeroute[{info['extra']}]'")
+            print(f"{'':<{width}}  {install_command(str(info['extra']))}")
     return 0
 
 

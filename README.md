@@ -11,11 +11,35 @@ Three engines for documents where the facts matter, behind one command.
 Only the prose engine runs in a browser; the other two need native libraries. Nothing is
 installed that you have not asked for:
 
+WriteRoute is not on PyPI; pip installs it straight from the repository:
+
 ```bash
-pip install writeroute            # prose only, no dependencies at all
-pip install 'writeroute[all]'     # everything
-writeroute engines                # what is installed here, and what the rest needs
+# prose only, no dependencies at all
+pip install "writeroute @ git+https://github.com/Reyanda/writeroute-studio"
+
+# with an engine, or everything
+pip install "writeroute[tracer] @ git+https://github.com/Reyanda/writeroute-studio"
+pip install "writeroute[pdf]    @ git+https://github.com/Reyanda/writeroute-studio"
+pip install "writeroute[all]    @ git+https://github.com/Reyanda/writeroute-studio"
+
+writeroute engines    # what is installed here, and what the rest needs
 ```
+
+From a checkout, use an editable install instead: `pip install -e '.[all]'`.
+
+`[tracer]` needs a system cairo for cairosvg: `brew install cairo` on macOS,
+`apt install libcairo2` on Debian. vtracer ships prebuilt wheels for common platforms and
+otherwise needs a Rust toolchain.
+
+On Apple Silicon, installing cairo is not enough on its own. Homebrew puts it in
+`/opt/homebrew/lib`, which is not on the dynamic loader's search path, so cairocffi still
+reports `cannot load library 'libcairo.2.dylib'`. Export the fallback path:
+
+```bash
+export DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib
+```
+
+`writeroute engines` names anything still missing.
 
 ## Prose
 
@@ -239,9 +263,8 @@ is excused, "improved survival" is not. Every suppression appears in
 ./scripts/validate.sh
 ```
 
-Runs everything: 81 Python tests (42 engine, 4 end-to-end through the local service, 17
-Gate 0 regressions, 8 allow-list regressions with 21 subtests, 10 structural-detector
-regressions), 28 JavaScript tests for the
+Runs everything: 181 Python tests across the three engines (prose, Tracer, PDF Studio),
+plus 25 subtests, 28 JavaScript tests for the
 browser document layer, multilingual round trips and provider discovery, a rebuild of `docs/` with a checksum check, and a grep that fails
 the build if the landing page ever claims an authorship verdict.
 
@@ -267,5 +290,15 @@ The PDF engine reads identity and financial paperwork. Nothing of that kind is i
 repository: `.gitignore` blocks document formats and the engines' working directories, and
 `scripts/check_publishable.py` fails the build if any is tracked. A pre-commit hook runs
 the same check; enable it with `git config core.hooksPath .githooks`.
+
+## Known failures
+
+Two Tracer lossless-parity tests are marked `xfail`: an alpha round-trip differs by a
+premultiplied delta of 1 across 3,826 pixels. This reproduces in the pre-merge source
+project, so it is an engine issue rather than something the merge introduced. It is marked
+non-strict, so pytest reports loudly if it ever starts passing.
+
+Tracer's Gradio UI was not merged, only its engine, so the two test modules covering that
+UI are not in this repository.
 
 MIT licensed. Tracer and PDF Studio were developed as separate projects and merged here.

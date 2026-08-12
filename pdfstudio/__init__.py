@@ -28,12 +28,12 @@ def __getattr__(name: str) -> Any:
     try:
         return getattr(importlib.import_module(f".{module}", __name__), name)
     except ImportError as exc:
-        from writeroute.optional import MissingDependency, DISTRIBUTION
+        from writeroute.optional import DISTRIBUTION, MissingDependency, install_command
         missing = getattr(exc, "name", "") or ""
         package = DISTRIBUTION.get(missing, missing or "a native dependency")
         raise MissingDependency(
             f"pdfstudio.{name} needs {package}, which is not installed.\n"
-            f"Install it with:  pip install 'writeroute[pdf]'"
+            f"Install it with:  {install_command('pdf')}"
         ) from exc
 
 

@@ -17,6 +17,7 @@ the install command.
 from __future__ import annotations
 
 import importlib
+from pathlib import Path
 from types import ModuleType
 
 # Which extra provides which import name, so the message can name the right one.
@@ -43,6 +44,23 @@ DISTRIBUTION: dict[str, str] = {
 }
 
 
+REPOSITORY = "git+https://github.com/Reyanda/writeroute-studio"
+
+
+def install_command(extra: str) -> str:
+    """The command that actually installs an extra here.
+
+    WriteRoute is not on PyPI, so `pip install 'writeroute[tracer]'` fails with "No
+    matching distribution found" — which reads like a broken environment rather than a
+    wrong instruction. pip installs from a repository directly, so that is what gets
+    printed; inside a checkout the editable form is offered instead, since that is what
+    someone editing the code wants.
+    """
+    if (Path(__file__).resolve().parents[1] / "pyproject.toml").is_file():
+        return f"pip install -e '.[{extra}]'"
+    return f'pip install "writeroute[{extra}] @ {REPOSITORY}"' 
+
+
 class MissingDependency(ImportError):
     """An optional engine was used without its extra installed."""
 
@@ -56,7 +74,7 @@ def require(name: str, *, extra: str | None = None, purpose: str = "") -> Module
         package = DISTRIBUTION.get(name, name)
         lines = [f"{package} is required{f' to {purpose}' if purpose else ''} and is not installed."]
         if group:
-            lines.append(f"Install it with:  pip install 'writeroute[{group}]'")
+            lines.append(f"Install it with:  {install_command(group)}")
         else:
             lines.append(f"Install it with:  pip install {package}")
         raise MissingDependency("\n".join(lines)) from exc
