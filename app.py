@@ -25,6 +25,7 @@ from writeroute.audit import audit_text  # noqa: E402
 from writeroute.route import suggest_text, repair_text, rewrite_with_callback, verify_text  # noqa: E402
 from writeroute.contracts import compile_revision_contract  # noqa: E402
 from writeroute.formatting import formatting_advice
+from writeroute.optional import engine_status as _engine_status
 from writeroute.genres import get_genre, load_genres  # noqa: E402
 
 MAX_CHARS = 300_000
@@ -70,6 +71,30 @@ def home() -> str:
     return (STATIC / "index.html").read_text(encoding="utf-8")
 
 
+# PDF Studio is mounted only when its extra is installed, so a prose-only install still
+# starts. Visiting /pdf without it gets an explanation rather than a 404.
+try:
+    from pdfservice import app as pdf_app
+
+    app.mount("/pdf", pdf_app)
+    PDF_STUDIO = True
+except Exception as _pdf_exc:  # missing extra, or a broken native library
+    PDF_STUDIO = False
+    _PDF_REASON = str(_pdf_exc)
+
+    @app.get("/pdf", response_class=HTMLResponse)
+    def pdf_unavailable() -> str:
+        from writeroute.optional import install_command
+        return (
+            "<!doctype html><meta charset='utf-8'><title>PDF Studio</title>"
+            "<body style=\"font-family:system-ui;max-width:40rem;margin:4rem auto\">"
+            "<h1>PDF Studio is not installed</h1>"
+            f"<p>{_PDF_REASON}</p>"
+            f"<pre>{install_command('pdf')}</pre>"
+            "<p><a href='/'>Back</a></p></body>"
+        )
+
+
 @app.get("/studio", response_class=HTMLResponse)
 @app.get("/studio.html", response_class=HTMLResponse)
 def studio() -> str:
@@ -85,6 +110,9 @@ def health() -> dict[str, Any]:
         "genres": list(load_genres().keys()),
         "byok": True,
         "persistence": "none",
+        "engines": {name: bool(info["available"])
+                    for name, info in _engine_status().items()},
+        "pdfStudio": PDF_STUDIO,
     }
 
 

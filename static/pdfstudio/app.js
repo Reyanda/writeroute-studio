@@ -262,7 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function loadDocuments(preferredName = "") {
     try {
-      const data = await api("/api/documents");
+      const data = await api("api/documents");
       const documents = data.documents || [];
       el.documentSelect.replaceChildren();
       documents.forEach((name) => {
@@ -302,7 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateHistoryButtons();
 
     try {
-      const data = await api("/api/unbundle", {
+      const data = await api("api/unbundle", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ filename })
@@ -351,7 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const data = await api("/api/upload", { method: "POST", body: formData });
+      const data = await api("api/upload", { method: "POST", body: formData });
       await loadDocuments(data.filename);
     } catch (error) {
       setLoading(false);
@@ -377,7 +377,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!page) return;
     el.canvasStage.style.width = `${page.width}px`;
     el.canvasStage.style.height = `${page.height}px`;
-    el.pdfPage.src = `/api/page-render/${encodeURIComponent(state.documentName)}/${state.currentPage}?dpi=150`;
+    el.pdfPage.src = `api/page-render/${encodeURIComponent(state.documentName)}/${state.currentPage}?dpi=150`;
     el.pdfPage.alt = `Page ${state.currentPage} of ${state.documentName}`;
     updatePageControls();
     renderFieldLayer();
@@ -910,7 +910,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!query || !state.documentName) return;
     setStatus(`Searching for “${query}”…`, "busy");
     try {
-      const data = await api("/api/search-document", {
+      const data = await api("api/search-document", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ filename: state.documentName, query, max_results: 300 })
@@ -1098,7 +1098,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const before = snapshot();
     setStatus("Inspecting local PDF geometry…", "busy");
     try {
-      const data = await api("/api/detect-region", {
+      const data = await api("api/detect-region", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ filename: state.documentName, page: state.currentPage, x, y, radius: 42 })
@@ -1228,7 +1228,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setLoading(true, "Autofilling recognised fields", "Matching the selected example profile to field labels…");
     setStatus("Autofilling recognised fields…", "busy");
     try {
-      const data = await api("/api/agentic-fill", {
+      const data = await api("api/agentic-fill", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ filename: state.documentName, profile_key: el.profileSelect.value })
@@ -1253,7 +1253,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setLoading(true, "Preparing your PDF", "Writing values at the original document coordinates…");
     setStatus("Exporting filled PDF…", "busy");
     try {
-      const data = await api("/api/fill-and-rebundle", {
+      const data = await api("api/fill-and-rebundle", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ filename: state.documentName, slots: state.slots, annotations: state.annotations })

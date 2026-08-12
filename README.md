@@ -156,9 +156,21 @@ is uploaded.
 ## Install and run
 
 ```bash
-pip install -r requirements.txt
-./run.sh          # http://127.0.0.1:8744
+pip install -e '.[all]'
+./run.sh
 ```
+
+Three surfaces on `http://127.0.0.1:8744`:
+
+| path | what |
+|---|---|
+| `/` | landing page |
+| `/studio` | prose editor |
+| `/pdf/` | PDF field studio: upload, detect, classify, fill, annotate, export |
+
+`/pdf/` appears only when the `pdf` extra is installed; without it the path explains what
+to install rather than returning a 404. Uploads and outputs go to `~/.writeroute/pdf`,
+overridable with `WRITEROUTE_DATA_DIR` — never into the source tree.
 
 Or with Docker:
 
@@ -263,7 +275,7 @@ is excused, "improved survival" is not. Every suppression appears in
 ./scripts/validate.sh
 ```
 
-Runs everything: 181 Python tests across the three engines (prose, Tracer, PDF Studio),
+Runs everything: 187 Python tests across the three engines (prose, Tracer, PDF Studio),
 plus 25 subtests, 28 JavaScript tests for the
 browser document layer, multilingual round trips and provider discovery, a rebuild of `docs/` with a checksum check, and a grep that fails
 the build if the landing page ever claims an authorship verdict.
