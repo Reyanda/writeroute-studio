@@ -10,6 +10,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
+from .allowlist import Exemption, find_exemption
 from .genres import GenreProfile
 from .model import Document
 
@@ -113,7 +114,25 @@ def _finding(
     end: int,
     rationale: str,
     action: str,
-) -> RawFinding:
+    exemptions: list[Exemption] | None = None,
+) -> RawFinding | None:
+    """Build the finding, or return None when a domain allow-list entry excuses it.
+
+    Returning None rather than lowering the severity is deliberate: "improved water
+    source" is not a weak claim, it is not a claim at all. Excused findings are recorded
+    in `exemptions` so the report can show what was suppressed and why.
+    """
+    flagged = document.text[start:end]
+    sentence = document.sentence_for_span(start, end)
+    if sentence is not None:
+        context, offset = sentence.text, start - sentence.start
+    else:
+        context, offset = flagged, 0
+    entry = find_exemption(pattern_id, genre.id, flagged, context, offset)
+    if entry is not None:
+        if exemptions is not None:
+            exemptions.append(Exemption(entry.id, pattern_id, entry.reason, flagged))
+        return None
     reported = document.is_reported_voice(start, end)
     severity = _severity(pattern_id, default_severity, genre)
     if reported and severity == "hard":
@@ -132,7 +151,8 @@ def _finding(
     )
 
 
-def scan_substance(document: Document, genre: GenreProfile) -> list[RawFinding]:
+def scan_substance(document: Document, genre: GenreProfile,
+                   exemptions: list[Exemption] | None = None) -> list[RawFinding]:
     text = document.text
     lower = text.casefold()
     findings: list[RawFinding] = []
@@ -144,34 +164,52 @@ def scan_substance(document: Document, genre: GenreProfile) -> list[RawFinding]:
         s = sentence.text
         nearby = _nearby(text, sentence.start, sentence.end)
 
-        causal = _CAUSAL.search(s)
-        if causal and genre.id in {"scientific", "systematic-review"}:
+        # Every candidate occurrence is examined, not just the first. `.search()` reported
+        # one match per sentence, which was survivable until the allow-list arrived: in
+        # "Improved water sources improved survival", the first "Improved" is a JMP label
+        # and gets excused, and with a single-match scan the real claim after it was never
+        # looked at. Iterate, and stop at the first occurrence that is not excused, so the
+        # one-finding-per-sentence behaviour is unchanged for everything else.
+        if genre.id in {"scientific", "systematic-review"}:
             has_support = bool(_CITATION.search(nearby) or _EFFECT.search(s))
             guarded = bool(_ASSOCIATIONAL_GUARD.search(s))
-            if observational_document and not guarded:
-                findings.append(_finding(
-                    document, genre, "causal_overreach_observational", "Causal wording in an observational context", "claim_support",
-                    "hard", 0.93, sentence.start + causal.start(), sentence.start + causal.end(),
-                    "The document describes observational evidence, but this sentence states a causal effect without an identification argument.",
-                    "State the identifying assumptions and causal method, or recast the result as an association.",
-                ))
-            elif not has_support and not guarded:
-                findings.append(_finding(
-                    document, genre, "unsupported_causal_claim", "Unsupported causal wording", "claim_support",
-                    "review", 0.82, sentence.start + causal.start(), sentence.start + causal.end(),
-                    "The sentence uses causal language without a visible design, estimate, source or qualification that warrants it.",
-                    "Name the causal design and estimand, cite the evidence, or use associational language that matches the study.",
-                ))
+            if not guarded and (observational_document or not has_support):
+                observational = observational_document
+                for causal in _CAUSAL.finditer(s):
+                    finding = _finding(
+                        document, genre,
+                        "causal_overreach_observational" if observational else "unsupported_causal_claim",
+                        "Causal wording in an observational context" if observational
+                        else "Unsupported causal wording",
+                        "claim_support",
+                        "hard" if observational else "review",
+                        0.93 if observational else 0.82,
+                        sentence.start + causal.start(), sentence.start + causal.end(),
+                        "The document describes observational evidence, but this sentence states a causal effect without an identification argument."
+                        if observational else
+                        "The sentence uses causal language without a visible design, estimate, source or qualification that warrants it.",
+                        "State the identifying assumptions and causal method, or recast the result as an association."
+                        if observational else
+                        "Name the causal design and estimand, cite the evidence, or use associational language that matches the study.",
+                        exemptions,
+                    )
+                    if finding is not None:
+                        findings.append(finding)
+                        break
 
-        safety = _SAFETY.search(s)
-        if safety and not (_CITATION.search(nearby) or _EFFECT.search(s)):
+        if not (_CITATION.search(nearby) or _EFFECT.search(s)):
             pattern_id = "unsupported_guarantee" if genre.id == "technical" else "unsupported_safety_claim"
-            findings.append(_finding(
-                document, genre, pattern_id, "Unsupported safety, effectiveness or guarantee claim", "claim_support",
-                "review", 0.88, sentence.start + safety.start(), sentence.start + safety.end(),
-                "The sentence makes a strong safety, effectiveness, stability or guarantee claim without a visible condition or supporting test.",
-                "Name the test, population, operating condition and limitation, or narrow the claim.",
-            ))
+            for safety in _SAFETY.finditer(s):
+                finding = _finding(
+                    document, genre, pattern_id, "Unsupported safety, effectiveness or guarantee claim", "claim_support",
+                    "review", 0.88, sentence.start + safety.start(), sentence.start + safety.end(),
+                    "The sentence makes a strong safety, effectiveness, stability or guarantee claim without a visible condition or supporting test.",
+                    "Name the test, population, operating condition and limitation, or narrow the claim.",
+                    exemptions,
+                )
+                if finding is not None:
+                    findings.append(finding)
+                    break
 
         novelty = _NOVELTY.search(s)
         if novelty and not _CITATION.search(nearby):
@@ -180,7 +218,8 @@ def scan_substance(document: Document, genre: GenreProfile) -> list[RawFinding]:
                 "review", 0.86, sentence.start + novelty.start(), sentence.start + novelty.end(),
                 "A first, only or unprecedented claim requires a defined search space and date.",
                 "State how the comparison set was searched and bounded, or replace the novelty claim with the specific contribution.",
-            ))
+            exemptions,
+        ))
 
         sig = _SIGNIFICANCE.search(s)
         if sig and not (_EFFECT.search(s) or re.search(r"\bp\s*[<=>]\s*0?\.\d+", s, re.IGNORECASE)):
@@ -190,7 +229,8 @@ def scan_substance(document: Document, genre: GenreProfile) -> list[RawFinding]:
                 sentence.start + sig.start(), sentence.start + sig.end(),
                 "Statistical significance alone does not show the magnitude or precision of the result.",
                 "Report the effect estimate and uncertainty interval; retain the p-value only if it serves the inferential framework.",
-            ))
+            exemptions,
+        ))
 
         quality = _QUALITY_WORD.search(s)
         literal_quality_use = bool(re.search(r"\b(?:robust standard errors?|robust regression|robust variance|quality assurance protocol)\b", s, re.IGNORECASE))
@@ -203,7 +243,8 @@ def scan_substance(document: Document, genre: GenreProfile) -> list[RawFinding]:
                     "review", 0.78, sentence.start + quality.start(), sentence.start + quality.end(),
                     "The quality adjective is not tied to a named test, comparator, coverage rule or validation result.",
                     "Replace the label with the procedure and result that support it.",
-                ))
+                exemptions,
+            ))
 
         rec = _RECOMMEND.search(s)
         if rec and genre.id in {"policy-brief", "professional-report", "grant", "systematic-review"}:
@@ -222,7 +263,8 @@ def scan_substance(document: Document, genre: GenreProfile) -> list[RawFinding]:
                     sentence.start + rec.start(), sentence.start + rec.end(),
                     "The recommendation lacks " + " and ".join(missing) + ".",
                     "Name who should do what, by when, under which condition, and why the evidence supports that action.",
-                ))
+                exemptions,
+            ))
 
     # Paragraph-level abstraction check. This never auto-edits because a precise
     # concrete example must come from the author or evidence base.
@@ -241,7 +283,11 @@ def scan_substance(document: Document, genre: GenreProfile) -> list[RawFinding]:
                 "soft", 0.72, paragraph.start, paragraph.end,
                 "The paragraph relies on abstract nouns and generic verbs without a named example, measure, actor or mechanism.",
                 "Add the specific actor, action, object, mechanism, example or number that the paragraph is meant to convey.",
-            ))
+            exemptions,
+        ))
+
+    # Findings the domain allow-list excused come back as None.
+    findings = [f for f in findings if f is not None]
 
     # De-duplicate overlapping substantive findings of the same category.
     findings.sort(key=lambda f: (f.start, f.end, f.pattern_id))

@@ -15,6 +15,7 @@ from typing import Any
 from .genres import GenreProfile, get_genre, infer_genre
 from .model import Document, build_document
 from .patterns import PatternHit, scan_patterns
+from .allowlist import Exemption, summarise
 from .substance import RawFinding, scan_substance
 
 
@@ -470,7 +471,10 @@ def audit_text(
     for hit in scan_patterns(document, selected):
         findings.append(_finding_from_pattern(index, document, hit))
         index += 1
-    for raw in scan_substance(document, selected):
+    # Excused findings are collected rather than dropped quietly: a reader is entitled to
+    # see what the allow-list decided not to tell them.
+    exemptions: list[Exemption] = []
+    for raw in scan_substance(document, selected, exemptions):
         findings.append(_finding_from_raw(index, document, raw))
         index += 1
     structural, metrics = _structure_findings(document, selected)
@@ -492,6 +496,8 @@ def audit_text(
     clean = status == "clean"
     metrics["protectedCoverage"] = round(coverage, 4)
     metrics["genreAssumed"] = assumed
+    metrics["allowListExemptions"] = summarise(exemptions)
+    metrics["allowListExemptionCount"] = len(exemptions)
     return AuditReport(
         genre=selected.id,
         genre_inference=inference,

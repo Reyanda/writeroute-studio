@@ -141,39 +141,62 @@
       </p>
       <table class="ledger">
         <caption>
-          The control class is published journal prose, so a “hard” finding there is the engine
-          being wrong. That row is a false-positive count, not a score.
+          The control class is published journal prose, so a “hard” finding there is the
+          engine being wrong. That row is a false-positive count, not a score. Full
+          aggregates: <a href="benchmark.json">benchmark.json</a>.
         </caption>
         <thead>
-          <tr><th>Measure</th><th class="num">Before</th><th class="num">After</th></tr>
+          <tr>
+            <th>Measure</th>
+            <th class="num">As released</th>
+            <th class="num">Defects fixed</th>
+            <th class="num">Allow-list</th>
+          </tr>
         </thead>
         <tbody>
-          <tr><td>Documents the auditor could not finish</td><td class="num">1</td><td class="num delta-good">0</td></tr>
-          <tr><td>Audit of an 8&nbsp;KB markdown paste containing a code block</td><td class="num">21.4&nbsp;s</td><td class="num delta-good">0.20&nbsp;s</td></tr>
-          <tr><td>False positives on published prose</td><td class="num">43</td><td class="num delta-good">22</td></tr>
-          <tr><td>Table cells audited as sentences</td><td class="num">16</td><td class="num delta-good">5</td></tr>
-          <tr><td>Published articles told to “rebuild”</td><td class="num">3</td><td class="num delta-good">1</td></tr>
-          <tr><td>Meaning-preservation failures, independently re-checked</td><td class="num">0</td><td class="num delta-flat">0</td></tr>
-          <tr><td>Source-text mode byte-exact</td><td class="num">all</td><td class="num delta-flat">all</td></tr>
+          <tr><td>Documents the auditor could not finish</td><td class="num">1</td><td class="num delta-good">0</td><td class="num delta-good">0</td></tr>
+          <tr><td>Audit of an 8&nbsp;KB markdown paste containing a code block</td><td class="num">21.4&nbsp;s</td><td class="num delta-good">0.20&nbsp;s</td><td class="num delta-good">0.20&nbsp;s</td></tr>
+          <tr><td>False positives on published prose</td><td class="num">43</td><td class="num">22</td><td class="num delta-good">6</td></tr>
+          <tr><td>False positives per 1,000 words of published prose</td><td class="num">0.97</td><td class="num">0.50</td><td class="num delta-good">0.14</td></tr>
+          <tr><td>Control documents carrying any false positive</td><td class="num">7 of 24</td><td class="num">7 of 24</td><td class="num delta-good">2 of 24</td></tr>
+          <tr><td>Published articles told to “rebuild”</td><td class="num">3</td><td class="num delta-good">1</td><td class="num delta-good">1</td></tr>
+          <tr><td>Meaning-preservation failures, independently re-checked</td><td class="num">0</td><td class="num delta-flat">0</td><td class="num delta-flat">0</td></tr>
+          <tr><td>Source-text mode byte-exact</td><td class="num">all</td><td class="num delta-flat">all</td><td class="num delta-flat">all</td></tr>
         </tbody>
       </table>
+
+      <p class="intro" style="margin-top:30px">
+        The allow-list is the reason for the last column. Ten families of field-standard
+        wording were being read as claims — WHO/JMP service labels such as “improved water
+        source” and “safe drinking water”, PRISMA checklist wording, conditional treatment
+        instructions like “repeat bolus if improved”, and descriptive measurements. Each
+        entry is written against a sentence the benchmark actually produced, and each is
+        narrow enough that the same word still fires when it really is a claim: “improved
+        water sources” is excused, “improved survival” is not. Every suppression is
+        reported in the audit with its reason, so you can see what the tool decided not to
+        tell you.
+      </p>
+
       <div class="caveat">
         <h3>What is still wrong</h3>
         <p>
-          The claim-support layer over-fires on clinical and epidemiological writing. It reads
-          “improved water source” and “safe drinking water” as causal and safety claims when
-          they are standard WHO/JMP category labels, and it treats reporting-checklist
-          boilerplate the same way. Nine of the 25 author documents are still graded as needing
-          a rebuild largely on that basis. A domain term allow-list is the next piece of work,
-          and it is not done.
+          The allow-list fixed the control class, not the author class. Hard findings on
+          the author’s own documents went from 47 to 43, because they are a different
+          family: causal attribution inside prose, participial summary claims such as
+          “demonstrating feasibility and value”, and vague attribution. Those are mostly
+          the checks working as intended, but nine of the 25 author documents are still
+          graded as needing a rebuild, which is a heavier verdict than that evidence
+          supports.
         </p>
         <p>
           Genre inference is unreliable, so the studio asks which kind of document you are
           writing rather than guessing. Choosing wrongly changes the severity thresholds.
         </p>
         <p>
-          None of this is a blinded, independently annotated comparison against other tools. It
-          is one corpus, in one domain, measured honestly.
+          None of this is a blinded, independently annotated comparison against other
+          tools. It is one corpus, in one domain — clinical nutrition and epidemiology —
+          measured honestly. The allow-list is tuned to that domain and will not help with
+          the field-standard vocabulary of another.
         </p>
       </div>
     </div>

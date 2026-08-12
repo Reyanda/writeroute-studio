@@ -13,6 +13,7 @@ const JSZIP_CDN = 'https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js';
 const PDFJS_CDN = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.min.mjs';
 const PDFJS_WORKER = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.worker.min.mjs';
 
+const DOCX_MIME = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 const MAX_UPLOAD = 15 * 1024 * 1024;
 const TEXT_SUFFIXES = new Set(['txt', 'md', 'markdown', 'rst', 'csv', 'log']);
 
@@ -189,10 +190,11 @@ async function docxBlob(text) {
   zip.file('[Content_Types].xml', CONTENT_TYPES);
   zip.folder('_rels').file('.rels', ROOT_RELS);
   zip.folder('word').file('document.xml', document);
-  return zip.generateAsync({
-    type: 'blob',
-    mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  });
+  const packed = await zip.generateAsync({ type: 'blob' });
+  // Set the media type here rather than relying on JSZip's mimeType option. A test
+  // caught a build where the blob came back as application/zip, which is the wrong type
+  // for a download and depends on a library detail this module should not lean on.
+  return new Blob([packed], { type: DOCX_MIME });
 }
 
 function htmlEscape(s) {

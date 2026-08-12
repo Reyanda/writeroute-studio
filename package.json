@@ -1,0 +1,13 @@
+{
+  "name": "writeroute-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browser-side document layer for WriteRoute. The engine itself is Python; this package exists only to run the JavaScript test suite.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test \"tests/js/*.test.mjs\""
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.0"
+  }
+}

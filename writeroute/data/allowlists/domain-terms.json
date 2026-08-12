@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "note": "Field-standard terms that the claim-support checks read as claims. Every entry below was written against a named false positive in the 74-document benchmark; the `evidence` field quotes the sentence that produced it. An entry must be narrow enough that the same word still fires when it really is a claim — 'improved water source' is excused, 'improved survival' is not.",
+  "entries": [
+    {
+      "id": "jmp-service-level-label",
+      "appliesTo": [
+        "causal_overreach_observational",
+        "unsupported_causal_claim",
+        "unsupported_safety_claim",
+        "unsupported_guarantee"
+      ],
+      "reason": "WHO/UNICEF Joint Monitoring Programme service-level labels. 'Improved', 'unimproved' and 'safe' are the published category names for water and sanitation facilities, not assertions that anything was improved or is safe.",
+      "flaggedTerm": "^(?:un)?improved$|^safe$|^unsafe$|^reduced$",
+      "contextPatterns": [
+        "\\b(?:un)?improved\\s+(?:water|drinking[- ]water|sanitation|wash|hygiene|latrine|toilet|source|sources|facilit\\w*|supply|spring|springs|well|wells|service\\w*)\\b",
+        "\\b(?:not\\s+|un)?improved\\s+(?:and|or|versus|vs\\.?)\\s+(?:not\\s+|un)?improved\\b",
+        "\\((?:not\\s+|un)?improved\\s*,\\s*(?:not\\s+|un)?improved\\)",
+        "\\b(?:water|sanitation|wash|hygiene|latrine|toilet|availabilit\\w*|source|sources|supply|facilit\\w*)\\b[^.()]{0,20}\\(\\s*(?:not\\s+|un)?improved\\s*\\)",
+        "\\bcategoris\\w+\\s+into\\s+(?:not\\s+|un)?improved\\b",
+        "\\b(?:un)?safe\\s+(?:drinking[- ]?water|water|sanitation|storage|disinfection)\\b",
+        "\\bsafely\\s+managed\\b",
+        "\\bventilated\\s+improved\\s+pit\\b",
+        "\\breduced\\s+air[- ]entry\\b"
+      ],
+      "evidence": [
+        "Improved water sources included piped water in the household, public tab, borehole, protected dug well, protected spring, rainwater collection and bottled water.",
+        "Water hygiene and sanitation (WASH) facilities present in the household were categorised into improved and unimproved.",
+        "Unsafe drinking water defined as no access to piped water, public taps, stand-pipes, tube wells, boreholes, protected dug wells and springs and rainwater."
+      ]
+    },
+    {
+      "id": "reporting-checklist-boilerplate",
+      "appliesTo": [
+        "causal_overreach_observational",
+        "unsupported_causal_claim",
+        "statistical_significance_without_estimate"
+      ],
+      "reason": "Text quoted from a reporting guideline checklist (PRISMA, STROBE, CONSORT, TRIPOD, MOOSE). The wording belongs to the guideline, and 'results in a synthesis' is a noun phrase rather than the verb 'results in'.",
+      "contextPatterns": [
+        "\\b(?:missing\\s+)?results\\s+in\\s+(?:a|the)\\s+(?:synthes\\w+|review|meta-analys\\w+|context)\\b",
+        "\\bresults\\s+in\\s+the\\s+context\\s+of\\b",
+        "\\b(?:PRISMA|STROBE|CONSORT|TRIPOD|MOOSE|PRISMA-S|PRESS|AMSTAR)\\b",
+        "\\b(?:item|checklist)\\s+\\d+[a-z]?\\b",
+        "\\brisk\\s+of\\s+bias\\s+due\\s+to\\s+missing\\s+results\\b"
+      ],
+      "evidence": [
+        "Reporting bias assessment | 14 | Describe any methods used to assess risk of bias due to missing results in a synthesis (arising from reporting biases).",
+        "Discussion | 23a | Provide a general interpretation of the results in the context of other evidence."
+      ]
+    },
+    {
+      "id": "clinical-protocol-condition",
+      "appliesTo": [
+        "causal_overreach_observational",
+        "unsupported_causal_claim"
+      ],
+      "reason": "A conditional clinical instruction. 'If improved' and 'if not improved' state the observation that selects the next step in a treatment algorithm; they assert no causal effect.",
+      "flaggedTerm": "^(?:not\\s+)?improved$|^(?:not\\s+)?resolved$",
+      "contextPatterns": [
+        "\\bif\\s+(?:\\w+\\s+){0,3}(?:not\\s+)?improved\\b",
+        "\\b(?:not\\s+)?improved\\s+after\\s+\\d",
+        "\\brepeat\\b[^.]{0,60}\\bif\\b[^.]{0,20}\\bimproved\\b",
+        "\\b(?:continue|discontinue|give|administer|escalate|stop)\\b[^.]{0,60}\\bif\\b[^.]{0,30}\\bimproved\\b"
+      ],
+      "evidence": [
+        "Repeat bolus in second hour if improved.",
+        "If shock not improved after 1 hour of IV fluid, give whole blood at 10 mL/kg slowly over at least 3 hours"
+      ]
+    },
+    {
+      "id": "descriptive-measurement",
+      "scope": "sentence",
+      "appliesTo": [
+        "causal_overreach_observational"
+      ],
+      "reason": "The sentence reports a measured quantity rather than attributing an effect. The observational branch of the causal check fires without consulting the evidence in the sentence, so a described magnitude is excused here instead.",
+      "flaggedTerm": "^(?:reduced|increased|improved)$",
+      "contextPatterns": [
+        "\\b\\d+(?:\\.\\d+)?\\s*(?:%|(?:μm|um|mm|cm|kg|g|mg|mL|L|mmol|μmol|IU|days?|weeks?|months?|years?)\\b)",
+        "\\b(?:mean|median|SD|IQR|range|n)\\s*[=:]?\\s*\\d",
+        "(?:90|95|99)\\s*%\\s*(?:CI|confidence\\s+interval)",
+        "\\b(?:OR|RR|HR|IRR|aOR|aRR|aHR)\\s*[=:]?\\s*\\d",
+        "\\b(?:is|was|are|were)\\s+(?:consistently\\s+)?(?:reduced|increased)\\s*:",
+        "\\b(?:compared\\s+with|relative\\s+to|versus|vs\\.?)\\b[^.]{0,40}\\b\\d"
+      ],
+      "evidence": [
+        "In severely malnourished children VH is consistently reduced: in Gabon4, mean VH was 218μm (SD 43) and CD was 154 (17) μm in 13 children with SAM."
+      ]
+    },
+    {
+      "id": "epidemiological-risk-phrasing",
+      "appliesTo": [
+        "causal_overreach_observational",
+        "unsupported_causal_claim"
+      ],
+      "reason": "Standard associational phrasing in epidemiology. 'At increased risk of' describes a rate difference between groups and is the conventional way to avoid claiming an effect.",
+      "flaggedTerm": "^(?:increased|reduced|decreased)$",
+      "contextPatterns": [
+        "\\bat\\s+(?:an?\\s+)?(?:increased|reduced|decreased|higher|lower)\\s+risk\\s+of\\b",
+        "\\b(?:increased|reduced|decreased)\\s+(?:risk|odds|hazard|likelihood|prevalence|incidence)\\s+of\\b",
+        "\\b(?:risk|odds|hazard)\\s+(?:was|were|is|are)\\s+(?:increased|reduced|decreased)\\b"
+      ],
+      "evidence": [
+        "There is evidence from a number of setting that children with disabilities are at increased risk of SAM and evidence from high income settings shows that early multidisciplinary interventions can improve functional outcomes."
+      ]
+    }
+  ]
+}

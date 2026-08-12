@@ -54,7 +54,34 @@ the whole thing as a static site that runs in the browser.
   fused two sentences, changing what the audit measured; and the genre validator rejected
   `essay`, an alias the engine understands and the studio offers.
 
+### Added after first publication
+
+- **Domain allow-list for the claim-support checks.** Ten families of field-standard
+  wording were being read as claims. Control-class false positives fell from 22 to 6, and
+  from 0.50 to 0.14 per 1,000 words; the documents carrying any false positive fell from 7
+  of 24 to 2 of 24. Every entry is written against a benchmark sentence and every
+  suppression is reported with its reason.
+- **The causal scan no longer stops at its first match.** It used `.search()`, one
+  occurrence per sentence, which was survivable until the allow-list arrived: in "Improved
+  water sources improved survival", the label was excused and the real claim after it was
+  never examined. It now continues to the first occurrence that is not excused.
+- **Allow-list matching is span-aware.** A context pattern must cover the flagged word,
+  unless the entry declares `scope: sentence` because its rule genuinely is about the whole
+  sentence. Sentence-wide matching excused a real claim that shared a sentence with a label.
+- **A JavaScript test suite for the browser document layer** — 12 tests over `node --test`,
+  no package installs beyond jsdom. It immediately caught a third bug: the exported DOCX
+  carried `application/zip` as its media type because it relied on a JSZip option.
+- **`scripts/validate.sh`** runs both suites, rebuilds the site, verifies the engine
+  archive against its manifest, and fails if the landing page ever claims an authorship
+  verdict — a rule a script enforces cannot be forgotten.
+- **`docs/benchmark.json`** publishes the aggregate results. Document titles are withheld:
+  the corpus is a private research archive.
+- **Screenshots regenerated from the running site** by `scripts/capture_screenshots.py`,
+  showing the allow-list and the findings in one frame.
+
 ### Not claimed
 
-No blinded or independent comparison against other tools. The claim-support layer still
-over-fires on clinical and epidemiological prose; see the known limitations in the README.
+No blinded or independent comparison against other tools. One corpus, one domain. The
+allow-list fixed the control class and barely moved the author class, whose findings are a
+different family; nine of 25 author documents are still graded as needing a rebuild. See
+the known limitations in the README.

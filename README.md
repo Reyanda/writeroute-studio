@@ -107,32 +107,53 @@ finding there is the tool being wrong.
 
 Four defects were found and fixed. Measured before and after, same corpus:
 
-| Measure | Before | After |
-|---|---:|---:|
-| Documents the auditor could not finish | 1 | 0 |
-| Audit of an 8 KB markdown paste with a code block | 21.4 s | 0.20 s |
-| False positives on published prose | 43 | 22 |
-| Table cells audited as sentences | 16 | 5 |
-| Published articles told to "rebuild" | 3 | 1 |
-| Meaning-preservation failures, independently re-checked | 0 | 0 |
-| Source-text mode byte-exact | all | all |
+| Measure | As released | Defects fixed | Allow-list |
+|---|---:|---:|---:|
+| Documents the auditor could not finish | 1 | 0 | 0 |
+| Audit of an 8 KB markdown paste with a code block | 21.4 s | 0.20 s | 0.20 s |
+| False positives on published prose | 43 | 22 | **6** |
+| False positives per 1,000 words of published prose | 0.97 | 0.50 | **0.14** |
+| Control documents carrying any false positive | 7 of 24 | 7 of 24 | **2 of 24** |
+| Table cells audited as sentences | 16 | 5 | 5 |
+| Published articles told to "rebuild" | 3 | 1 | 1 |
+| Meaning-preservation failures, independently re-checked | 0 | 0 | 0 |
+| Source-text mode byte-exact | all | all | all |
+
+Full aggregates, with document titles withheld because the corpus is a private research
+archive: [`docs/benchmark.json`](docs/benchmark.json).
+
+### The allow-list
+
+Ten families of field-standard wording were being read as claims: WHO/JMP service labels
+("improved water source", "safe drinking water"), PRISMA and reporting-checklist wording,
+conditional treatment instructions ("repeat bolus in second hour if improved"), descriptive
+measurements, and standard epidemiological risk phrasing. `writeroute/data/allowlists/`
+holds them as data. Two rules govern every entry: it is written against a sentence the
+benchmark actually produced, quoted in the entry's `evidence` field; and it is narrow
+enough that the same word still fires when it really is a claim — "improved water sources"
+is excused, "improved survival" is not. Every suppression appears in
+`metrics.allowListExemptions` with its reason.
 
 ### Known limitations
 
-- **The claim-support layer over-fires on clinical and epidemiological prose.** It reads
-  "improved water source" and "safe drinking water" as causal and safety claims when they
-  are standard WHO/JMP category labels, and it treats reporting-checklist boilerplate the
-  same way. Nine of the 25 author documents are still graded as needing a rebuild largely
-  on that basis. A domain term allow-list is the next piece of work and is not done.
+- **The allow-list fixed the control class, not the author class.** Hard findings on the
+  author's own documents moved from 47 to 43, because they are a different family: causal
+  attribution inside prose, participial summary claims such as "demonstrating feasibility
+  and value", and vague attribution. Those are largely the checks working as intended, but
+  nine of the 25 author documents are still graded as needing a rebuild, which is a heavier
+  verdict than that evidence supports.
+- **The allow-list is domain-specific.** It is tuned to clinical nutrition and
+  epidemiology and will not help with another field's standard vocabulary. Adding a domain
+  means adding entries under the same two rules.
 - **Genre inference is unreliable** — it agreed with the correct profile on none of the
   author-class documents. The studio therefore asks you to choose. `"auto"` still works
   and sets `metrics.genreAssumed` so a caller cannot mistake a guess for a choice.
 - **This is not a blinded comparison against other tools.** It is one corpus, in one
   domain, measured honestly. The frozen regression cases in `evals/` are authored
   alongside the engine they gate, which limits what they can establish.
-- **No JavaScript test harness.** `static/files.js` (client-side DOCX/PDF decoding and
-  export) is verified by hand in a browser, not by an automated suite. Two bugs were
-  found and fixed that way; a third would not be caught automatically.
+- **PDF decoding has no automated coverage.** `tests/js` covers the DOCX round trip and
+  the export layer, but the PDF path depends on pdf.js loading from a CDN and is exercised
+  by hand only.
 - **The logo is raster only.** `assets/logo-source.png` is a 1254×1254 PNG with the
   background, wordmark and tagline all baked in. `scripts/build_logo.py` derives a
   transparent mark, wordmark, lockup and favicon from it by knocking out the
@@ -141,17 +162,21 @@ Four defects were found and fixed. Measured before and after, same corpus:
 ## Tests
 
 ```bash
-python3 -m pytest tests -q
+./scripts/validate.sh
 ```
 
-63 tests: 42 engine, 4 end-to-end through the local service, 17 regressions that pin each
-measured defect above rather than a paraphrase of it.
+Runs everything: 71 Python tests (42 engine, 4 end-to-end through the local service, 17
+Gate 0 regressions, 8 allow-list regressions with 21 subtests), 12 JavaScript tests for the
+browser document layer, a rebuild of `docs/` with a checksum check, and a grep that fails
+the build if the landing page ever claims an authorship verdict.
+
+The JavaScript suite needs jsdom once: `npm install --no-save jsdom`.
 
 ## Layout
 
 ```
 writeroute/        the engine — audit, substance, structure, integrity, candidates,
-                   genres, voice, contracts, formatting, browser dispatch
+                   genres, voice, contracts, formatting, allow-list, browser dispatch
 aiwd/              textmodel and statistics only; see aiwd/__init__.py for why
 app.py             FastAPI service for local use
 static/            studio and landing sources
