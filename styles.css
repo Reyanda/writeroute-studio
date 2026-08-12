@@ -19,3 +19,45 @@
 .engine-status[data-phase="loading-runtime"],
 .engine-status[data-phase="loading-engine"],
 .engine-status[data-phase="starting-engine"] { color: var(--amber); }
+
+/* Menu bar. Added because the only file input used to live on the landing hero: once a
+   document was open there was no way to open another without reloading the page. */
+.document-shell.has-menubar { grid-template-rows: auto auto auto 1fr; }
+.menubar {
+  display: flex; align-items: center; gap: 2px; height: 34px; padding: 0 14px;
+  border-bottom: 1px solid var(--line); background: var(--bg2); font-size: 13px;
+}
+.menubar-spacer { flex: 1; }
+.menu { position: relative; }
+.menu-title {
+  border: 0; background: transparent; color: var(--text); cursor: pointer;
+  padding: 5px 10px; border-radius: 7px; font-weight: 520;
+}
+.menu-title:hover, .menu.open .menu-title { background: var(--surface-solid); box-shadow: var(--shadow-sm); }
+.menu-list {
+  display: none; position: absolute; top: 32px; left: 0; z-index: 60; min-width: 236px;
+  padding: 6px; border: 1px solid var(--line); border-radius: 13px;
+  background: var(--surface-solid); box-shadow: var(--shadow);
+}
+.menu.open .menu-list { display: block; }
+.menu-list button {
+  display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 18px;
+  border: 0; background: transparent; color: var(--text); text-align: left; cursor: pointer;
+  padding: 8px 10px; border-radius: 8px; font-size: 13px;
+}
+.menu-list button:hover { background: var(--bg); }
+.menu-list button[disabled] { opacity: .45; cursor: default; }
+.menu-list kbd {
+  font: inherit; font-size: 11px; color: var(--muted); background: transparent; border: 0;
+}
+.menu-sep { height: 1px; margin: 6px 4px; background: var(--line); }
+.menu-open-inline {
+  cursor: pointer; padding: 5px 12px; border-radius: 999px; font-size: 12px;
+  border: 1px solid var(--line); background: var(--surface-solid); color: var(--text);
+}
+.menu-open-inline:hover { border-color: var(--line2); }
+.drop-target { outline: 2px dashed var(--blue); outline-offset: -12px; }
+@media (max-width: 560px) {
+  .menu-open-inline { display: none; }
+  .menubar { overflow-x: auto; }
+}

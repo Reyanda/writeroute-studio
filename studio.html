@@ -46,7 +46,7 @@
         <button class="rail-button" id="exportOpen"><span class="rail-icon">⇩</span><span>Export</span></button>
       </aside>
 
-      <section class="document-shell">
+      <section class="document-shell has-menubar">
         <div class="document-header">
           <div>
             <input id="docTitle" class="doc-title" value="Untitled document" aria-label="Document title" />
@@ -71,6 +71,44 @@
           </div>
         </div>
 
+        <div class="menubar" role="menubar" aria-label="Main menu">
+          <div class="menu">
+            <button class="menu-title" id="menuFileBtn" aria-haspopup="true" aria-expanded="false">File</button>
+            <div class="menu-list" id="menuFile" role="menu">
+              <button role="menuitem" id="menuOpen">Open…<kbd>&#8984;O</kbd></button>
+              <button role="menuitem" id="menuNew">New document<kbd>&#8984;N</kbd></button>
+              <div class="menu-sep"></div>
+              <button role="menuitem" data-export="docx">Export as Word (.docx)</button>
+              <button role="menuitem" data-export="md">Export as Markdown</button>
+              <button role="menuitem" data-export="txt">Export as plain text</button>
+              <button role="menuitem" data-export="html">Export as HTML</button>
+            </div>
+          </div>
+          <div class="menu">
+            <button class="menu-title" id="menuReviewBtn" aria-haspopup="true" aria-expanded="false">Review</button>
+            <div class="menu-list" id="menuReview" role="menu">
+              <button role="menuitem" id="menuAudit">Run audit<kbd>&#8984;&#8629;</kbd></button>
+              <button role="menuitem" id="menuSuggest">Rule-based suggestions</button>
+              <button role="menuitem" id="menuRepair">Apply safe repairs</button>
+              <div class="menu-sep"></div>
+              <button role="menuitem" id="menuModel">Language model…</button>
+            </div>
+          </div>
+          <div class="menu">
+            <button class="menu-title" id="menuViewBtn" aria-haspopup="true" aria-expanded="false">View</button>
+            <div class="menu-list" id="menuView" role="menu">
+              <button role="menuitem" id="menuFocus">Focus mode</button>
+              <button role="menuitem" id="menuInspector">Show or hide the inspector</button>
+              <button role="menuitem" id="menuTheme">Light or dark</button>
+            </div>
+          </div>
+          <span class="menubar-spacer"></span>
+          <label class="menu-open-inline" title="Open a document">
+            Open a file
+            <input id="fileInputWorkspace" type="file" hidden
+                   accept=".txt,.md,.markdown,.rst,.log,.docx,.pdf,.rtf,.csv" />
+          </label>
+        </div>
         <div class="toolbar" role="toolbar" aria-label="Text formatting toolbar">
           <select id="blockFormat" title="Text style" aria-label="Text style">
             <option value="p">Body</option><option value="h1">Title</option><option value="h2">Heading</option><option value="h3">Subheading</option><option value="blockquote">Quote</option>
