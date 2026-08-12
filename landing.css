@@ -1,7 +1,8 @@
-/* Landing page only. The studio's own tokens and chrome come from styles.css; this
-   file adds the long-form page layout and nothing that the app depends on. */
+/* Landing page only. Every rule here is scoped under `.landing` on <body>: an earlier
+   version used bare element selectors, and linking this file into the studio gave
+   `section { padding: 74px 0 }` to .workspace, which pushed the rail and the inspector
+   out of the viewport. */
 
-.brand-logo { height: 30px; width: auto; display: block; }
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
 
 .lead { padding: 96px 0 72px; text-align: center; }
@@ -21,13 +22,13 @@
 }
 .lead .actions { display: flex; gap: 12px; justify-content: center; margin-top: 34px; flex-wrap: wrap; }
 
-section { padding: 74px 0; border-top: 1px solid var(--line); }
-section > .wrap > .kicker { display: block; margin-bottom: 14px; }
-section h2 {
+.landing section { padding: 74px 0; border-top: 1px solid var(--line); }
+.landing section > .wrap > .kicker { display: block; margin-bottom: 14px; }
+.landing section h2 {
   font-size: clamp(27px, 3.4vw, 40px); letter-spacing: -.045em; line-height: 1.08;
   margin: 0 0 18px; max-width: 30ch; font-weight: 720;
 }
-section p.intro { font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 68ch; margin: 0 0 36px; }
+.landing section p.intro { font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 68ch; margin: 0 0 36px; }
 
 .grid { display: grid; gap: 18px; }
 .grid.three { grid-template-columns: repeat(3, 1fr); }
@@ -98,18 +99,18 @@ pre.shell .c { color: var(--muted); }
 .caveat p { margin: 0 0 10px; font-size: 13px; line-height: 1.6; color: var(--muted); }
 .caveat p:last-child { margin-bottom: 0; }
 
-footer {
+.landing footer {
   border-top: 1px solid var(--line); padding: 40px 0 64px; color: var(--muted); font-size: 12.5px;
 }
-footer .cols { display: flex; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
-footer a { color: var(--muted); }
-footer a:hover { color: var(--text); }
+.landing footer .cols { display: flex; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+.landing footer a { color: var(--muted); }
+.landing footer a:hover { color: var(--text); }
 
 @media (max-width: 860px) {
   .grid.three, .grid.two { grid-template-columns: 1fr; }
   .gate-list { columns: 1; }
   .lead { padding: 60px 0 48px; }
-  section { padding: 54px 0; }
+  .landing section { padding: 54px 0; }
   .ledger { font-size: 12.5px; }
   .ledger th, .ledger td { padding: 9px 8px; }
 }

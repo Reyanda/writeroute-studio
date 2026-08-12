@@ -61,3 +61,16 @@
   .menu-open-inline { display: none; }
   .menubar { overflow-x: auto; }
 }
+
+/* Shared brand mark, used by both the landing page and the studio header. */
+.brand-logo { height: 30px; width: auto; display: block; }
+
+/* The workspace grid had no explicit row, so the single implicit row was `auto` and grew
+   to the tallest child. The editor reserves a min-height, so the shell was ~115px taller
+   than the viewport and the page scrolled as a whole instead of the editor scrolling
+   inside its pane. minmax(0, 1fr) constrains the row; min-height:0 lets the children
+   actually shrink, which a grid item will not do by default. */
+.workspace { grid-template-rows: minmax(0, 1fr); }
+.workspace > * { min-height: 0; }
+.rail, .inspector { overflow-y: auto; }
+.document-shell.has-menubar { grid-template-rows: auto auto auto minmax(0, 1fr); }
