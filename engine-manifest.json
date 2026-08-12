@@ -1,0 +1,42 @@
+{
+  "archive": "writeroute-engine.zip",
+  "packages": [
+    "writeroute",
+    "aiwd"
+  ],
+  "files": 30,
+  "bytes": 80132,
+  "sha256": "3961f29b7df1cdc9474cae5dee11360a3207eec0e0bdb140b1db11000786aa75",
+  "members": [
+    "writeroute/__init__.py",
+    "writeroute/__main__.py",
+    "writeroute/audit.py",
+    "writeroute/browser.py",
+    "writeroute/candidates.py",
+    "writeroute/contracts.py",
+    "writeroute/data/genres/email.json",
+    "writeroute/data/genres/general.json",
+    "writeroute/data/genres/grant.json",
+    "writeroute/data/genres/legal.json",
+    "writeroute/data/genres/op-ed.json",
+    "writeroute/data/genres/policy-brief.json",
+    "writeroute/data/genres/professional-report.json",
+    "writeroute/data/genres/scientific.json",
+    "writeroute/data/genres/systematic-review.json",
+    "writeroute/data/genres/technical.json",
+    "writeroute/data/ontology.json",
+    "writeroute/data/patterns/editorial.json",
+    "writeroute/evidence.py",
+    "writeroute/formatting.py",
+    "writeroute/genres.py",
+    "writeroute/integrity.py",
+    "writeroute/model.py",
+    "writeroute/patterns.py",
+    "writeroute/route.py",
+    "writeroute/substance.py",
+    "writeroute/voice.py",
+    "aiwd/__init__.py",
+    "aiwd/statistics.py",
+    "aiwd/textmodel.py"
+  ]
+}
