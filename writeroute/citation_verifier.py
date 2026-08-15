@@ -89,6 +89,58 @@ def _title_token_overlap(expected: str | None, got: str | None) -> bool:
     return (len(overlap) / len(exp_tokens)) >= 0.4
 
 
+def _normalize_name(name: str) -> str:
+    """Normalizes author name for surname matching."""
+    clean = re.sub(r"[^a-zA-Z\s-]", "", name).strip().lower()
+    parts = clean.split()
+    return parts[-1] if parts else clean
+
+
+def _authors_match(expected_authors: Any, registry_authors: list[str]) -> tuple[bool, str]:
+    """
+    Checks if expected first-author surname matches registry authors.
+    Permissive only when citation names no author.
+    """
+    if not expected_authors:
+        return True, "permissive (no author specified in citation)"
+
+    exp_surnames: list[str] = []
+    if isinstance(expected_authors, str):
+        # e.g. "Smith, John and Jones, Alice" or "Smith et al." or "Richard"
+        raw_list = re.split(r"\s+and\s+|;\s*|,\s*(?=[A-Z][a-z]+)", expected_authors)
+        for a in raw_list:
+            a_clean = re.sub(r"\bet\s+al\.?", "", a, flags=re.IGNORECASE).strip()
+            if "," in a_clean:
+                exp_surnames.append(a_clean.split(",")[0].strip().lower())
+            elif a_clean:
+                parts = a_clean.split()
+                exp_surnames.append(parts[-1].lower() if len(parts) > 1 else parts[0].lower())
+    elif isinstance(expected_authors, list):
+        for a in expected_authors:
+            if isinstance(a, dict):
+                fam = (a.get("family") or a.get("name") or "").strip().lower()
+                if fam:
+                    exp_surnames.append(fam)
+            elif isinstance(a, str):
+                exp_surnames.append(_normalize_name(a))
+
+    if not exp_surnames:
+        return True, "permissive (no extractable author surnames)"
+
+    first_author = exp_surnames[0]
+    reg_surnames_clean = [s.strip().lower() for s in registry_authors if s]
+
+    if not reg_surnames_clean:
+        return True, "permissive (registry returned no author list)"
+
+    # Check if first author surname appears anywhere in registry authors
+    matched = any(first_author in reg_s or reg_s in first_author for reg_s in reg_surnames_clean)
+    if matched:
+        return True, f"first author '{first_author}' matches registry"
+    
+    return False, f"author mismatch: expected '{first_author}', registry has {', '.join(reg_surnames_clean[:4])}"
+
+
 @dataclass
 class VerificationResult:
     key: str
@@ -127,12 +179,18 @@ class CitationVerifier:
     """High-assurance citation verification engine with live resolution & hard-gate enforcement."""
 
     @classmethod
-    def resolve_doi_live(cls, doi: str, expected_title: str = "", timeout: int = DEFAULT_TIMEOUT) -> tuple[bool, str, str | None]:
+    def resolve_doi_live(
+        cls,
+        doi: str,
+        expected_title: str = "",
+        expected_authors: Any = None,
+        timeout: int = DEFAULT_TIMEOUT,
+    ) -> tuple[bool, str, str | None]:
         doi_clean = norm_doi(doi)
         if not looks_like_doi(doi_clean):
             return False, "Missing or malformed DOI", None
 
-        # 1. Try Crossref
+        # 1. Try Crossref API directly (avoids publisher bot-blocking on doi.org redirects)
         try:
             req = urllib.request.Request(
                 f"{CROSSREF_API}{urllib.request.quote(doi_clean)}",
@@ -141,18 +199,34 @@ class CitationVerifier:
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 if resp.status == 200:
                     meta = json.loads(resp.read().decode("utf-8", "replace"))
-                    titles = meta.get("message", {}).get("title", [])
+                    msg = meta.get("message", {})
+                    titles = msg.get("title", [])
                     resolved_title = titles[0] if titles else ""
-                    if _title_token_overlap(expected_title, resolved_title):
+                    
+                    reg_authors: list[str] = []
+                    for a in msg.get("author", []):
+                        if isinstance(a, dict):
+                            fam = a.get("family") or a.get("name") or ""
+                            if fam:
+                                reg_authors.append(fam)
+
+                    title_ok = _title_token_overlap(expected_title, resolved_title)
+                    author_ok, auth_reason = _authors_match(expected_authors, reg_authors)
+
+                    if title_ok and author_ok:
                         return True, f"Resolved via Crossref ({resolved_title[:50]}...)", resolved_title
-                    return False, f"Metadata mismatch: expected '{expected_title[:40]}...', got '{resolved_title[:40]}...'", resolved_title
+                    
+                    if not author_ok:
+                        return False, f"DOI resolves to different paper: {auth_reason} ('{resolved_title[:45]}...')", resolved_title
+                    
+                    return False, f"Metadata mismatch (different paper): expected '{expected_title[:35]}...', got '{resolved_title[:35]}...'", resolved_title
         except urllib.error.HTTPError as e:
             if e.code != 404:
                 return False, f"Crossref error: HTTP {e.code}", None
         except Exception:
             pass
 
-        # 2. Try DataCite
+        # 2. Try DataCite API directly
         try:
             req = urllib.request.Request(
                 f"{DATACITE_API}{urllib.request.quote(doi_clean)}",
@@ -161,20 +235,36 @@ class CitationVerifier:
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 if resp.status == 200:
                     meta = json.loads(resp.read().decode("utf-8", "replace"))
-                    titles = meta.get("data", {}).get("attributes", {}).get("titles", [])
+                    attrs = meta.get("data", {}).get("attributes", {})
+                    titles = attrs.get("titles", [])
                     resolved_title = titles[0].get("title", "") if titles else ""
-                    if _title_token_overlap(expected_title, resolved_title):
+                    
+                    reg_authors = []
+                    for c in attrs.get("creators", []):
+                        if isinstance(c, dict):
+                            name = c.get("familyName") or c.get("name") or ""
+                            if name:
+                                reg_authors.append(name)
+
+                    title_ok = _title_token_overlap(expected_title, resolved_title)
+                    author_ok, auth_reason = _authors_match(expected_authors, reg_authors)
+
+                    if title_ok and author_ok:
                         return True, f"Resolved via DataCite ({resolved_title[:50]}...)", resolved_title
-                    return False, f"Metadata mismatch: expected '{expected_title[:40]}...', got '{resolved_title[:40]}...'", resolved_title
+                    
+                    if not author_ok:
+                        return False, f"DOI resolves to different paper: {auth_reason} ('{resolved_title[:45]}...')", resolved_title
+
+                    return False, f"Metadata mismatch (different paper): expected '{expected_title[:35]}...', got '{resolved_title[:35]}...'", resolved_title
         except urllib.error.HTTPError as e:
             if e.code == 404:
                 return False, "DOI not found in Crossref or DataCite (404)", None
             return False, f"DataCite error: HTTP {e.code}", None
         except Exception as e:
-            # If network is offline but DOI is syntactically valid and well-formed
             return False, f"Network resolution unavailable ({e})", None
 
-        return False, "DOI did not resolve in registry", None
+        return False, "DOI did not resolve in registry (404)", None
+
 
     @classmethod
     def verify_url_live(cls, url: str, timeout: int = DEFAULT_TIMEOUT) -> tuple[bool, str]:
@@ -211,6 +301,8 @@ class CitationVerifier:
         doi = norm_doi(cit.get("doi") or "")
         url = cit.get("url") or ""
 
+        authors = cit.get("authors") or cit.get("author")
+
         if c_type == "scientific":
             if not doi:
                 return VerificationResult(
@@ -232,7 +324,7 @@ class CitationVerifier:
                 )
             
             if live_network:
-                ok, reason, res_title = cls.resolve_doi_live(doi, expected_title=title)
+                ok, reason, res_title = cls.resolve_doi_live(doi, expected_title=title, expected_authors=authors)
                 return VerificationResult(
                     key=key,
                     citation_type=c_type,
@@ -242,6 +334,7 @@ class CitationVerifier:
                     url=url or None,
                     resolved_title=res_title,
                 )
+
             else:
                 return VerificationResult(
                     key=key,

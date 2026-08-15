@@ -75,6 +75,33 @@ def test_api_citation_verify_endpoint():
     assert len(data["verified"]) == 1
 
 
+def test_author_matching_and_discrimination():
+    from writeroute.citation_verifier import _authors_match
+
+    # Exact surname matches
+    ok, _ = _authors_match("Smith, John and Jones, Alice", ["Smith", "Jones"])
+    assert ok is True
+
+    # "Smith et al." matching single author
+    ok, _ = _authors_match("Smith et al.", ["Smith", "Williams"])
+    assert ok is True
+
+    # Dict format from reference items
+    ok, _ = _authors_match([{"family": "Richard", "given": "S"}], ["Richard", "Black"])
+    assert ok is True
+
+    # Disagreeing first author (wrong paper with valid DOI)
+    ok, reason = _authors_match("Richard, S", ["Geldsetzer", "Vaikath"])
+    assert ok is False
+    assert "author mismatch" in reason
+    assert "expected 'richard'" in reason
+
+    # Permissive only when citation names no author
+    ok, reason = _authors_match("", ["Geldsetzer"])
+    assert ok is True
+    assert "permissive" in reason
+
+
 def test_ooxml_citation_insertion():
     # Build a minimal docx package in memory
     buf = io.BytesIO()
@@ -102,3 +129,4 @@ def test_ooxml_citation_insertion():
         new_doc_xml = zin.read("word/document.xml").decode("utf-8")
         assert "CITATION smith2024" in new_doc_xml
         assert "10.1016/S0140-6736(24)00123-4" in new_doc_xml
+
