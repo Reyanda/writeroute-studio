@@ -57,17 +57,62 @@ function decodeText(buffer) {
 
 const W_NS = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
 
-function docxBlocks(xml) {
+function docxToRich(xml, commentsXml = '') {
   const doc = new DOMParser().parseFromString(xml, 'application/xml');
   if (doc.querySelector('parsererror')) throw new Error('the DOCX body XML did not parse');
   const body = doc.getElementsByTagNameNS(W_NS, 'body')[0];
   if (!body) throw new Error('the DOCX has no document body');
 
-  const out = [];
-  // In document order, not by element type. Collecting every <w:t> and then every
-  // <w:br> separately loses the break's position: a paragraph holding two sentences
-  // separated by a line break came back with them fused into one, which changed the
-  // sentence count and therefore every structural finding the audit produces.
+  const htmlBlocks = [];
+  const textBlocks = [];
+
+  const parseRunHtml = r => {
+    const rPr = r.getElementsByTagNameNS(W_NS, 'rPr')[0];
+    const isBold = rPr && rPr.getElementsByTagNameNS(W_NS, 'b').length > 0;
+    const isItalic = rPr && rPr.getElementsByTagNameNS(W_NS, 'i').length > 0;
+    const isStrike = rPr && rPr.getElementsByTagNameNS(W_NS, 'strike').length > 0;
+    const vertAlign = rPr && rPr.getElementsByTagNameNS(W_NS, 'vertAlign')[0]?.getAttributeNS(W_NS, 'val');
+    const isSub = vertAlign === 'subscript';
+    const isSup = vertAlign === 'superscript';
+
+    const tNodes = Array.from(r.getElementsByTagNameNS(W_NS, 't'));
+    const str = tNodes.map(t => t.textContent || '').join('');
+    if (!str) {
+      if (r.getElementsByTagNameNS(W_NS, 'br').length > 0 || r.getElementsByTagNameNS(W_NS, 'cr').length > 0) return '<br>';
+      return '';
+    }
+    let res = str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    if (isBold) res = `<strong>${res}</strong>`;
+    if (isItalic) res = `<em>${res}</em>`;
+    if (isStrike) res = `<s>${res}</s>`;
+    if (isSub) res = `<sub>${res}</sub>`;
+    if (isSup) res = `<sup>${res}</sup>`;
+    return res;
+  };
+
+  const parseParagraphHtml = p => {
+    let html = '';
+    for (const child of p.childNodes) {
+      if (child.nodeType !== 1) continue;
+      const name = child.localName;
+      if (name === 'r') {
+        html += parseRunHtml(child);
+      } else if (name === 'sdt') {
+        const sdtText = Array.from(child.getElementsByTagNameNS(W_NS, 't')).map(t => t.textContent || '').join('');
+        const tag = child.getElementsByTagNameNS(W_NS, 'tag')[0]?.getAttributeNS(W_NS, 'val') || '';
+        if (tag.includes('MENDELEY')) {
+          html += `<span class="citation-tag" data-sdt="mendeley">${sdtText || '[Citation]'}</span>`;
+        } else {
+          html += `<span class="sdt-field">${sdtText}</span>`;
+        }
+      } else if (name === 'hyperlink') {
+        const rNodes = Array.from(child.getElementsByTagNameNS(W_NS, 'r'));
+        html += `<a href="#">${rNodes.map(parseRunHtml).join('')}</a>`;
+      }
+    }
+    return html;
+  };
+
   const paragraphText = p => {
     let s = '';
     const walk = node => {
@@ -84,29 +129,108 @@ function docxBlocks(xml) {
     return s.trim();
   };
 
-  // Document order matters: a table between two paragraphs must stay between them.
   for (const child of body.children) {
     if (child.localName === 'p') {
-      const t = paragraphText(child);
-      if (t) out.push(t);
-    } else if (child.localName === 'tbl') {
-      for (const row of child.getElementsByTagNameNS(W_NS, 'tr')) {
-        const cells = [];
-        for (const cell of row.getElementsByTagNameNS(W_NS, 'tc')) {
-          const parts = [];
-          for (const p of cell.getElementsByTagNameNS(W_NS, 'p')) {
-            const t = paragraphText(p);
-            if (t) parts.push(t);
-          }
-          cells.push(parts.join(' '));
-        }
-        // Tab-delimited, as the server does, which is also what the tabular guard reads.
-        const line = cells.join('\t');
-        if (line.replace(/\t/g, '').trim()) out.push(line);
+      const pPr = child.getElementsByTagNameNS(W_NS, 'pPr')[0];
+      const pStyle = pPr?.getElementsByTagNameNS(W_NS, 'pStyle')[0]?.getAttributeNS(W_NS, 'val') || '';
+      const style = pStyle.toLowerCase();
+      const pHtml = parseParagraphHtml(child);
+      const pTxt = paragraphText(child);
+
+      if (!pTxt && !pHtml) continue;
+      textBlocks.push(pTxt);
+
+      if (style.includes('heading1') || style.includes('title')) {
+        htmlBlocks.push(`<h1>${pHtml}</h1>`);
+      } else if (style.includes('heading2')) {
+        htmlBlocks.push(`<h2>${pHtml}</h2>`);
+      } else if (style.includes('heading3')) {
+        htmlBlocks.push(`<h3>${pHtml}</h3>`);
+      } else if (style.includes('heading4')) {
+        htmlBlocks.push(`<h4>${pHtml}</h4>`);
+      } else if (style.includes('quote') || style.includes('blockquote')) {
+        htmlBlocks.push(`<blockquote>${pHtml}</blockquote>`);
+      } else if (style.includes('list') || pPr?.getElementsByTagNameNS(W_NS, 'numPr').length) {
+        htmlBlocks.push(`<li>${pHtml}</li>`);
+      } else {
+        htmlBlocks.push(`<p>${pHtml}</p>`);
       }
+    } else if (child.localName === 'tbl') {
+      let tblHtml = '<table class="scientific-table"><tbody>';
+      const tblTxt = [];
+      const rows = Array.from(child.getElementsByTagNameNS(W_NS, 'tr'));
+      rows.forEach((row, rIdx) => {
+        tblHtml += '<tr>';
+        const rowTxt = [];
+        const cells = Array.from(row.getElementsByTagNameNS(W_NS, 'tc'));
+        cells.forEach(cell => {
+          const ps = Array.from(cell.getElementsByTagNameNS(W_NS, 'p'));
+          const cellHtml = ps.map(parseParagraphHtml).join(' ');
+          const cellText = ps.map(paragraphText).join(' ');
+          rowTxt.push(cellText);
+          if (rIdx === 0) tblHtml += `<th>${cellHtml}</th>`;
+          else tblHtml += `<td>${cellHtml}</td>`;
+        });
+        tblHtml += '</tr>';
+        tblTxt.push(rowTxt.join('\t'));
+      });
+      tblHtml += '</tbody></table>';
+      htmlBlocks.push(tblHtml);
+      textBlocks.push(tblTxt.join('\n'));
     }
   }
-  return out;
+
+  return { html: htmlBlocks.join('\n'), text: textBlocks.join('\n\n') };
+}
+
+function markdownToRichHtml(md) {
+  const lines = md.split('\n');
+  const html = [];
+  let inCode = false;
+  let codeBuffer = [];
+
+  for (let line of lines) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith('```')) {
+      if (inCode) {
+        html.push(`<pre><code>${codeBuffer.join('\n')}</code></pre>`);
+        codeBuffer = [];
+        inCode = false;
+      } else {
+        inCode = true;
+      }
+      continue;
+    }
+    if (inCode) {
+      codeBuffer.push(line.replace(/&/g, '&amp;').replace(/</g, '&lt;'));
+      continue;
+    }
+
+    if (trimmed.startsWith('#### ')) {
+      html.push(`<h4>${trimmed.slice(5)}</h4>`);
+    } else if (trimmed.startsWith('### ')) {
+      html.push(`<h3>${trimmed.slice(4)}</h3>`);
+    } else if (trimmed.startsWith('## ')) {
+      html.push(`<h2>${trimmed.slice(3)}</h2>`);
+    } else if (trimmed.startsWith('# ')) {
+      html.push(`<h1>${trimmed.slice(2)}</h1>`);
+    } else if (trimmed.startsWith('> ')) {
+      html.push(`<blockquote>${trimmed.slice(2)}</blockquote>`);
+    } else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+      html.push(`<li>${trimmed.slice(2)}</li>`);
+    } else if (trimmed.startsWith('$$') && trimmed.endsWith('$$') && trimmed.length > 4) {
+      const eq = trimmed.slice(2, -2).trim();
+      html.push(`<div class="math-equation" data-tex="${eq}">$$ ${eq} $$</div>`);
+    } else if (trimmed) {
+      let p = line.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+      p = p.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      p = p.replace(/\*(.*?)\*/g, '<em>$1</em>');
+      p = p.replace(/`([^`]+)`/g, '<code>$1</code>');
+      p = p.replace(/\(([A-Z][a-z]+(?:\s+et\s+al\.)?,?\s*\d{4})\)/g, '<span class="citation-tag">$1</span>');
+      html.push(`<p>${p}</p>`);
+    }
+  }
+  return html.join('\n');
 }
 
 export async function extract(file) {
@@ -115,7 +239,9 @@ export async function extract(file) {
   const buffer = await file.arrayBuffer();
 
   if (TEXT_SUFFIXES.has(suffix)) {
-    return { text: decodeText(buffer), sourceFormat: 'plain-text' };
+    const raw = decodeText(buffer);
+    const html = suffix === 'md' || suffix === 'markdown' ? markdownToRichHtml(raw) : `<p>${raw.replace(/\n\n+/g, '</p><p>').replace(/\n/g, '<br>')}</p>`;
+    return { text: raw, html: html, sourceFormat: 'plain-text' };
   }
 
   if (suffix === 'docx') {
@@ -128,9 +254,12 @@ export async function extract(file) {
     }
     const entry = zip.file('word/document.xml');
     if (!entry) throw new Error('could not read DOCX: no word/document.xml');
-    const blocks = docxBlocks(await entry.async('string'));
-    if (!blocks.length) throw new Error('the DOCX contains no extractable text');
-    return { text: blocks.join('\n\n'), sourceFormat: 'docx' };
+    const docXml = await entry.async('string');
+    const commentsEntry = zip.file('word/comments.xml');
+    const commentsXml = commentsEntry ? await commentsEntry.async('string') : '';
+    const res = docxToRich(docXml, commentsXml);
+    if (!res.text.length && !res.html.length) throw new Error('the DOCX contains no extractable text');
+    return { text: res.text, html: res.html, sourceFormat: 'docx' };
   }
 
   if (suffix === 'pdf') {
@@ -143,7 +272,8 @@ export async function extract(file) {
     }
     const text = pages.filter(Boolean).join('\n\n');
     if (!text.trim()) throw new Error('the PDF has no text layer to extract');
-    return { text, sourceFormat: 'pdf' };
+    const html = pages.filter(Boolean).map(p => `<p>${p}</p>`).join('\n');
+    return { text, html, sourceFormat: 'pdf' };
   }
 
   if (suffix === 'rtf') {
@@ -151,11 +281,12 @@ export async function extract(file) {
     raw = raw.replace(/\\'[0-9a-fA-F]{2}/g, '');
     raw = raw.replace(/\\[a-zA-Z]+-?\d* ?/g, '');
     raw = raw.replace(/[{}]/g, '');
-    return { text: raw, sourceFormat: 'rtf' };
+    return { text: raw, html: `<p>${raw.replace(/\n\n+/g, '</p><p>')}</p>`, sourceFormat: 'rtf' };
   }
 
   throw new Error('supported uploads: TXT, Markdown, DOCX, PDF with a text layer, RTF, CSV');
 }
+
 
 /* ------------------------------------------------------------------- export */
 
@@ -209,6 +340,12 @@ export async function exportDocument({ text, html, filename, format }) {
     const type = fmt === 'md' ? 'text/markdown;charset=utf-8' : 'text/plain;charset=utf-8';
     return { blob: new Blob([text], { type }), name: `${safe}.${fmt}` };
   }
+  if (fmt === 'tex' || fmt === 'latex') {
+    // Generate basic clean LaTeX wrapper
+    const escaped = text.replace(/\\/g, '\\textbackslash{}').replace(/&/g, '\\&').replace(/%/g, '\\%').replace(/\$/g, '\\$').replace(/#/g, '\\#').replace(/_/g, '\\_');
+    const doc = `\\documentclass[11pt,a4paper]{article}\n\\usepackage[utf8]{inputenc}\n\\usepackage[margin=1in]{geometry}\n\\usepackage{amsmath,amssymb}\n\\title{${safe}}\n\\author{WriteRoute Author}\n\\date{\\today}\n\\begin{document}\n\\maketitle\n\n${escaped}\n\n\\end{document}`;
+    return { blob: new Blob([doc], { type: 'text/x-tex;charset=utf-8' }), name: `${safe}.tex` };
+  }
   if (fmt === 'html') {
     const content = html || `<p>${htmlEscape(text).replace(/\n/g, '<br>')}</p>`;
     const doc = `<!doctype html><meta charset='utf-8'><title>${xmlEscape(safe)}</title><body>${content}</body>`;
@@ -217,7 +354,7 @@ export async function exportDocument({ text, html, filename, format }) {
   if (fmt === 'docx') {
     return { blob: await docxBlob(text), name: `${safe}.docx` };
   }
-  throw new Error('format must be txt, md, html or docx');
+  throw new Error('format must be txt, md, html, docx, or tex');
 }
 
 export function download({ blob, name }) {

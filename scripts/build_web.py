@@ -24,7 +24,15 @@ ENGINE_ZIP = "writeroute-engine.zip"
 
 # Only what the browser needs. `app.py`, the FastAPI service and the test suite stay
 # out of the payload the visitor downloads.
-PACKAGES = ("writeroute", "aiwd")
+PACKAGES = (
+    "writeroute",
+    "aiwd",
+    "stats_brain",
+    "scientific_pattern_engine",
+    "lucid_sci",
+    "auctor_engine",
+    "pdfstudio",
+)
 SKIP_DIRS = {"__pycache__", ".pytest_cache"}
 
 
@@ -34,12 +42,14 @@ def engine_archive(destination: Path) -> dict[str, object]:
     with zipfile.ZipFile(destination, "w", zipfile.ZIP_DEFLATED) as zf:
         for package in PACKAGES:
             base = ROOT / package
+            if not base.exists():
+                continue
             for path in sorted(base.rglob("*")):
                 if not path.is_file():
                     continue
                 if any(part in SKIP_DIRS for part in path.parts):
                     continue
-                if path.suffix not in {".py", ".json"}:
+                if path.suffix not in {".py", ".json", ".yaml", ".yml", ".txt"}:
                     continue
                 arc = path.relative_to(ROOT).as_posix()
                 zf.write(path, arc)
@@ -60,19 +70,22 @@ def main() -> int:
 
     manifest = engine_archive(DOCS / ENGINE_ZIP)
 
-    for name in ("index.html", "studio.html", "app.js", "engine.js", "files.js",
-                 "styles.css", "landing.css"):
-        source = ROOT / "static" / name
-        if source.exists():
-            shutil.copy2(source, DOCS / name)
+    for path in (ROOT / "static").rglob("*"):
+        if path.is_file() and not any(p in SKIP_DIRS for p in path.parts):
+            rel = path.relative_to(ROOT / "static")
+            dest = DOCS / rel
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(path, dest)
 
-    assets = DOCS / "assets"
-    assets.mkdir(exist_ok=True)
-    for name in ("logo.png", "logo-mark.png", "logo-wordmark.png", "hero.png",
-                 "hero-dark.png", "workspace.png", "workspace-dark.png", "favicon.png"):
-        source = ROOT / "assets" / name
-        if source.exists():
-            shutil.copy2(source, assets / name)
+    assets_dir = DOCS / "assets"
+    assets_dir.mkdir(exist_ok=True)
+    if (ROOT / "assets").exists():
+        for path in (ROOT / "assets").rglob("*"):
+            if path.is_file() and not any(p in SKIP_DIRS for p in path.parts):
+                rel = path.relative_to(ROOT / "assets")
+                dest = assets_dir / rel
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(path, dest)
 
     # Pages would otherwise hand the tree to Jekyll, which drops files beginning with
     # an underscore and rewrites nothing we want rewritten.
@@ -83,6 +96,7 @@ def main() -> int:
         "packages": list(PACKAGES),
         **manifest,
     }, indent=2) + "\n")
+
 
     print(f"engine archive: {manifest['files']} files, {manifest['bytes']:,} bytes")
     print(f"sha256: {manifest['sha256']}")
