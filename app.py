@@ -816,6 +816,90 @@ def api_citations_export(body: CitationExportPayload) -> dict[str, Any]:
 
 
 
+# ------------------------------------------------------------------ Writing Master (AIWD) Engine
+
+class AiwdScanPayload(BaseModel):
+    text: str = Field(min_length=1, max_length=MAX_CHARS)
+    genre: str = "academic"
+
+
+@app.post("/api/aiwd/scan")
+def api_aiwd_scan(body: AiwdScanPayload) -> dict[str, Any]:
+    """Runs Writing-Master ontology detection and anti-slop feature extraction."""
+    from aiwd.skillengine import SkillRegistry
+    from aiwd.scoring import scan_text
+    from aiwd.textmodel import parse
+    from aiwd.rewrite import suggest
+
+    reg = SkillRegistry.load()
+    rep = scan_text(body.text, registry=reg, genre=body.genre)
+    sample = parse(body.text)
+    suggs = suggest(sample, reg)
+
+    return {
+        "detectionResult": rep.get("detectionResult", {}),
+        "tokenCount": rep.get("tokenCount", 0),
+        "sentenceCount": rep.get("sentenceCount", 0),
+        "paragraphCount": rep.get("paragraphCount", 0),
+        "features": rep.get("features", []),
+        "allowListExemptions": rep.get("allowListExemptions", []),
+        "reportedVoiceDiscounts": rep.get("reportedVoiceDiscounts", []),
+        "reportedVoiceFraction": rep.get("reportedVoiceFraction", 0.0),
+        "suggestions": [
+            {
+                "start": s.start,
+                "end": s.end,
+                "original": s.original,
+                "options": s.options,
+                "feature_id": s.feature_id,
+                "family": s.family,
+                "rationale": s.rationale,
+                "safe": s.safe,
+            }
+            for s in suggs
+        ],
+    }
+
+
+class AiwdCleanPayload(BaseModel):
+    text: str = Field(min_length=1, max_length=MAX_CHARS)
+
+
+@app.post("/api/aiwd/clean")
+def api_aiwd_clean(body: AiwdCleanPayload) -> dict[str, Any]:
+    """Applies safe de-slop replacements and verifies semantic preservation gate."""
+    from aiwd.skillengine import SkillRegistry
+    from aiwd.textmodel import parse
+    from aiwd.rewrite import suggest, apply_safe
+    from aiwd.revision import preservation_gate
+
+    reg = SkillRegistry.load()
+    sample = parse(body.text)
+    suggs = suggest(sample, reg)
+    cleaned_text, applied_count = apply_safe(body.text, suggs)
+    passes_gate, violations = preservation_gate(body.text, cleaned_text)
+
+    return {
+        "original_text": body.text,
+        "cleaned_text": cleaned_text,
+        "applied_count": applied_count,
+        "passes_preservation_gate": passes_gate,
+        "gate_violations": violations,
+    }
+
+
+@app.get("/api/aiwd/packs")
+def api_aiwd_packs() -> dict[str, Any]:
+    """Lists loaded skill packs and feature definitions."""
+    from aiwd.skillengine import SkillRegistry
+    reg = SkillRegistry.load()
+    return {
+        "packs": reg.packs,
+        "families": reg.families,
+        "feature_count": len(reg.features),
+    }
+
+
 @app.exception_handler(Exception)
 async def generic_error(_request, exc: Exception):
     if isinstance(exc, HTTPException):
@@ -824,4 +908,5 @@ async def generic_error(_request, exc: Exception):
 
 
 app.mount("/", StaticFiles(directory=STATIC, html=True), name="static_root")
+
 

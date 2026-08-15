@@ -206,7 +206,16 @@ with sync_playwright() as p:
     page.screenshot(path=str(ASSETS / "citation_manager_ui.png"))
     print("Saved assets/citation_manager_ui.png")
 
+    # Writing Master Panel
+    page.click('.rail-button[data-panel="writingmaster"]')
+    page.click('#runAiwdAuditBtn')
+    time.sleep(1.5)
+    page.screenshot(path=str(ASSETS / "writing_master_ui.png"))
+    print("Saved assets/writing_master_ui.png")
+
     browser.close()
+
+
 
 
 

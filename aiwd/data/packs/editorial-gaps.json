@@ -1,0 +1,167 @@
+{
+  "pack": "editorial-gaps",
+  "description": "Patterns the other packs do not reach. Each one was added because a coverage audit found no existing feature matching it, not because it sounded plausible. Generic world-setting openers are deliberately absent: the buzzword lexicon already carries them and a second feature would double-count the same span.",
+  "features": [
+    {
+      "id": "CorporateJargonRate",
+      "family": "LexicalPatterns",
+      "kind": "regex_rate",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 0.9,
+      "baseline": {
+        "mean": 0.2,
+        "sd": 0.5,
+        "source": "default_prior"
+      },
+      "pattern": "\\b(?:leverage synergies|move the needle|circle back|low[- ]hanging fruit|deep dive|best[- ]in[- ]class|world[- ]class|end[- ]to[- ]end solution|navigate (?:the )?complexities|unlock (?:the )?potential|harness (?:the )?power|drive value)\\b",
+      "flags": "i",
+      "explanation": "Collocations that move unchanged between organisations and usually hide the action or the result.",
+      "skillPattern": "Portable promotional phrase",
+      "skill": "no-ai-slop",
+      "notEvidenceIn": [],
+      "falsifiedBy": "A named mechanism, constraint or measured result in the same sentence."
+    },
+    {
+      "id": "PortabilityPhraseRate",
+      "family": "LexicalPatterns",
+      "kind": "regex_rate",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 0.85,
+      "baseline": {
+        "mean": 0.2,
+        "sd": 0.5,
+        "source": "default_prior"
+      },
+      "pattern": "\\b(?:foster(?:s|ing)? (?:innovation|collaboration|growth|engagement)|empower(?:s|ing)? (?:users|teams|communities|individuals|patients)|streamlin(?:e|es|ing) (?:workflows|processes|operations)|facilitat(?:e|es|ing) (?:collaboration|communication|growth)|elevat(?:e|es|ing) (?:the|your) (?:experience|brand|work))\\b",
+      "flags": "i",
+      "explanation": "Verb-object pairs that could move to another product or organisation unchanged; the portability test in prose form.",
+      "skillPattern": "Portable promotional phrase",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A named actor, object and consequence attached to the claim."
+    },
+    {
+      "id": "VagueImpactClaimRate",
+      "family": "PragmaticDepth",
+      "kind": "regex_rate",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 0.9,
+      "baseline": {
+        "mean": 0.15,
+        "sd": 0.4,
+        "source": "default_prior"
+      },
+      "pattern": "\\b(?:driv(?:e|es|ing)|deliver(?:s|ing)?|creat(?:e|es|ing)|unlock(?:s|ing)?|generat(?:e|es|ing)) (?:meaningful|significant|substantial|lasting|real|positive|tangible) (?:impact|value|change|outcomes?|results?|benefits?)\\b",
+      "flags": "i",
+      "explanation": "Asserts impact without naming what changed, for whom, or by how much.",
+      "skillPattern": "Protect the specific fact",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A measured outcome with a beneficiary and a time frame."
+    },
+    {
+      "id": "HedgeStackRate",
+      "family": "EpistemicStance",
+      "kind": "regex_rate",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 0.95,
+      "baseline": {
+        "mean": 0.1,
+        "sd": 0.3,
+        "source": "default_prior"
+      },
+      "pattern": "\\b(?:may potentially|might possibly|could possibly|would perhaps|appears? to suggest|seems? to indicate|generally tends? to|arguably may|perhaps might|may or may not)\\b",
+      "flags": "i",
+      "explanation": "Two hedges doing the work of one. Distinct from HedgingIntensity, which counts single hedges that legitimate uncertainty requires.",
+      "skillPattern": "Stacked hedges",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "Each hedge marking a separate source of uncertainty."
+    },
+    {
+      "id": "UnsupportedSuperlativeRate",
+      "family": "EpistemicStance",
+      "kind": "regex_rate",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 0.7,
+      "baseline": {
+        "mean": 0.9,
+        "sd": 0.9,
+        "source": "default_prior"
+      },
+      "pattern": "\\b(?:the|one of the) (?:most|best|worst|largest|fastest|strongest|leading|premier|foremost|only|first[- ]ever|unprecedented)\\b",
+      "flags": "i",
+      "explanation": "A comparative or novelty claim needs a defined comparison set. Conditional 'only' is allow-listed.",
+      "skillPattern": "Weasel attribution",
+      "skill": "no-ai-slop",
+      "notEvidenceIn": [
+        "clinical",
+        "submission"
+      ],
+      "falsifiedBy": "A stated comparison set with a source."
+    },
+    {
+      "id": "ReasoningLeakRate",
+      "family": "DiscoursePatterns",
+      "kind": "regex_rate",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 1.0,
+      "baseline": {
+        "mean": 0.02,
+        "sd": 0.15,
+        "source": "default_prior"
+      },
+      "pattern": "\\b(?:let me think (?:this through|step by step)|I(?:'|’)ll break (?:this|it) down|breaking (?:this|it) down|here(?:'|’)s my thought process|I need to reason through|first,? let me)\\b",
+      "flags": "i",
+      "explanation": "Internal process narration that belongs to the assistant, not the document.",
+      "skillPattern": "Assistant talk",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "Nothing. Process narration does not belong in a deliverable."
+    },
+    {
+      "id": "SelfAnsweredQuestionRate",
+      "family": "SyntacticPatterns",
+      "kind": "regex_rate",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 0.7,
+      "baseline": {
+        "mean": 0.3,
+        "sd": 0.6,
+        "source": "default_prior"
+      },
+      "pattern": "\\b(?:why|what|how|where|when|who)\\b[^?\\n]{3,100}\\?\\s+(?:Because|The answer is|It means|This means)\\b",
+      "flags": "i",
+      "explanation": "Question-answer staging where a declarative sentence would be clearer.",
+      "skillPattern": "Rhetorical setups",
+      "skill": "no-ai-slop",
+      "notEvidenceIn": [
+        "tutorial",
+        "documentation"
+      ],
+      "falsifiedBy": "A genuine teaching sequence where the question is the reader's."
+    },
+    {
+      "id": "EmojiHeadingRate",
+      "family": "FormattingPatterns",
+      "kind": "regex_rate",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 0.9,
+      "baseline": {
+        "mean": 0.0,
+        "sd": 0.2,
+        "source": "default_prior"
+      },
+      "pattern": "(?m)^\\s*#{1,6}\\s*[\\U0001F300-\\U0001FAFF\\u2600-\\u27BF]",
+      "flags": "",
+      "explanation": "An emoji decorating a heading rather than the heading expressing structure.",
+      "skillPattern": "Formatting slop",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A house style that specifies the symbol."
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "pack": "syntactic-patterns",
+  "version": "1.0.0",
+  "description": "Sentence-level structure: uniformity, complexity, templates, tricolons, binary contrasts.",
+  "features": [
+    {
+      "id": "SentenceLengthUniformity",
+      "family": "SyntacticPatterns",
+      "kind": "statistic",
+      "statistic": "sentence_length_iqr_ratio",
+      "unit": "iqr_over_median",
+      "direction": "low_is_ai",
+      "weight": 0.8,
+      "baseline": {
+        "mean": 0.75,
+        "sd": 0.25,
+        "source": "default_prior"
+      },
+      "explanation": "Tight clustering of sentence lengths around the median suggests templated prose.",
+      "skillPattern": "Robotic rhythm",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    },
+    {
+      "id": "TricolonListFrequency",
+      "family": "SyntacticPatterns",
+      "kind": "regex_rate",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 0.8,
+      "baseline": {
+        "mean": 0.8,
+        "sd": 0.8,
+        "source": "default_prior"
+      },
+      "pattern": "\\b\\w+(?:\\s\\w+)?,\\s+\\w+(?:\\s\\w+)?,\\s+and\\s+\\w+",
+      "flags": "i",
+      "explanation": "Exactly-three-item parallel lists ('speed, quality, and cost') at elevated frequency.",
+      "skillPattern": "Negative listing / dramatic fragmentation",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    },
+    {
+      "id": "BinaryContrastFrequency",
+      "family": "SyntacticPatterns",
+      "kind": "regex_rate",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 0.9,
+      "baseline": {
+        "mean": 0.2,
+        "sd": 0.4,
+        "source": "default_prior"
+      },
+      "pattern": "\\bnot\\s+(?:just|only|merely|about)\\b|\\b(?:is|are|was|were)n[’']t\\s+(?:just|only|merely|about)\\b|\\bit'?s\\s+not\\s+about\\b|\\b(?:is|are|was|were)\\s+not\\s+[^.;:!?]{1,60}[;,]\\s*(?:it|they|this|these)\\s+(?:is|are|was|were)\\b|\\bnot\\s+(?:a|an|the)\\s+[^.;:!?]{1,40}?\\s+but\\s+(?:a|an|the|rather)\\b",
+      "flags": "i",
+      "explanation": "'It's not X, it's Y' rhetorical schema, a hallmark LLM construction.",
+      "skillPattern": "Binary contrasts",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    },
+    {
+      "id": "ComplexSentenceRate",
+      "family": "SyntacticPatterns",
+      "kind": "statistic",
+      "statistic": "complex_sentence_rate",
+      "unit": "proportion_of_sentences",
+      "direction": "high_is_ai",
+      "weight": 0.4,
+      "baseline": {
+        "mean": 0.25,
+        "sd": 0.15,
+        "source": "default_prior"
+      },
+      "explanation": "High rate of multi-clause sentences with uniform subordination; weight low because genre-dependent.",
+      "skillPattern": "Untangle sentences without flattening the cadence",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    }
+  ]
+}

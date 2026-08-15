@@ -41,12 +41,25 @@ except ImportError:
     LucidSciEvaluator = None
 
 try:
+    from aiwd.skillengine import SkillRegistry as AiwdRegistry
+    from aiwd.scoring import scan_text as aiwd_scan_text
+    from aiwd.textmodel import parse as aiwd_parse
+    from aiwd.rewrite import suggest as aiwd_suggest, apply_safe as aiwd_apply_safe
+except ImportError:
+    AiwdRegistry = None
+    aiwd_scan_text = None
+    aiwd_parse = None
+    aiwd_suggest = None
+    aiwd_apply_safe = None
+
+try:
     from writeroute.audit import run_audit
     from writeroute.candidates import generate_repair_candidates
     from writeroute.model import AuditReport as ProseAuditReport
 except ImportError:
     run_audit = None
     generate_repair_candidates = None
+
 
 
 @dataclass
@@ -56,6 +69,7 @@ class SuperAuditSummary:
     style_burden_score: int
     prose_quality_score: int
     lucid_clarity_score: int
+    aiwd_score: int
     guidelines_score: int
     total_findings_count: int
     critical_findings_count: int
@@ -71,6 +85,7 @@ class SuperAuditResult:
     lucid_findings: list[dict[str, Any]]
     guideline_checks: dict[str, Any]
     repair_candidates: list[dict[str, Any]]
+    aiwd_findings: dict[str, Any] | None = None
     auctor_evidence_packet: dict[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:
@@ -82,6 +97,7 @@ class SuperAuditResult:
             "lucid_findings": self.lucid_findings,
             "guideline_checks": self.guideline_checks,
             "repair_candidates": self.repair_candidates,
+            "aiwd_findings": self.aiwd_findings,
             "auctor_evidence_packet": self.auctor_evidence_packet,
         }
 
@@ -89,8 +105,8 @@ class SuperAuditResult:
 class SuperEngine:
     """WriteRoute Unified Super Engine: Integrates Prose, STATS-BRAIN, Auctor,
 
-    Scientific Pattern Engine, and LUCID-SCI into one seamless scientific
-    document intelligence pipeline.
+    Scientific Pattern Engine, LUCID-SCI, and Writing-Master (aiwd) into one
+    seamless scientific document intelligence pipeline.
     """
 
     def __init__(self) -> None:
@@ -101,6 +117,8 @@ class SuperEngine:
         self.guideline_registry = ReportingGuidelineRegistry() if ReportingGuidelineRegistry else None
         self.docx_engine = ManuscriptDocxEngine() if ManuscriptDocxEngine else None
         self.auctor_pipeline = AcademicWritingEngine() if AcademicWritingEngine else None
+        self.aiwd_registry = AiwdRegistry.load() if AiwdRegistry else None
+
 
 
     def audit_text(
@@ -211,6 +229,39 @@ class SuperEngine:
             except Exception:
                 guideline_checks = {"guideline": target_guideline.upper(), "score": 100, "issues": []}
 
+        # 6. Writing-Master (aiwd) Detection & Anti-Slop Audit
+        aiwd_score = 100
+        aiwd_findings_dict = None
+        if self.aiwd_registry and aiwd_scan_text and aiwd_parse:
+            try:
+                aiwd_rep = aiwd_scan_text(text, registry=self.aiwd_registry, genre="academic")
+                det = aiwd_rep.get("detectionResult", {})
+                ai_prob = det.get("globalAiProbability", 0.0)
+                aiwd_score = int((1.0 - ai_prob) * 100)
+                sample = aiwd_parse(text)
+                suggs = aiwd_suggest(sample, self.aiwd_registry) if aiwd_suggest else []
+                aiwd_findings_dict = {
+                    "detection": det,
+                    "features": aiwd_rep.get("features", []),
+                    "allowListExemptions": aiwd_rep.get("allowListExemptions", []),
+                    "reportedVoiceDiscounts": aiwd_rep.get("reportedVoiceDiscounts", []),
+                    "reportedVoiceFraction": aiwd_rep.get("reportedVoiceFraction", 0.0),
+                    "suggestions": [
+                        {
+                            "start": s.start,
+                            "end": s.end,
+                            "original": s.original,
+                            "options": s.options,
+                            "feature_id": s.feature_id,
+                            "family": s.family,
+                            "rationale": s.rationale,
+                            "safe": s.safe,
+                        }
+                        for s in suggs
+                    ],
+                }
+            except Exception as e:
+                aiwd_findings_dict = {"error": str(e)}
 
         # Calculate Unified Overall Score & Severities
         total_findings = len(prose_findings) + len(stats_findings) + len(pattern_findings) + len(lucid_findings)
@@ -222,7 +273,7 @@ class SuperEngine:
         )
 
         overall_score = int(
-            stats_score * 0.35 + style_score * 0.20 + prose_score * 0.20 + lucid_score * 0.15 + (guidelines_score * 0.10 if target_guideline else 10)
+            stats_score * 0.30 + style_score * 0.15 + prose_score * 0.15 + lucid_score * 0.15 + aiwd_score * 0.15 + (guidelines_score * 0.10 if target_guideline else 10)
         )
         overall_score = max(0, min(100, overall_score))
 
@@ -232,6 +283,7 @@ class SuperEngine:
             style_burden_score=style_score,
             prose_quality_score=prose_score,
             lucid_clarity_score=lucid_score,
+            aiwd_score=aiwd_score,
             guidelines_score=guidelines_score,
             total_findings_count=total_findings,
             critical_findings_count=crit_count,
@@ -246,8 +298,10 @@ class SuperEngine:
             lucid_findings=lucid_findings,
             guideline_checks=guideline_checks,
             repair_candidates=repair_candidates,
+            aiwd_findings=aiwd_findings_dict,
             auctor_evidence_packet=auctor_packet_dict,
         )
+
 
     def process_docx(
         self,

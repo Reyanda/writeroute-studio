@@ -1,0 +1,133 @@
+{
+  "pack": "epistemic-stance",
+  "version": "1.0.0",
+  "description": "Defensive writing: hedging, depersonalised voice, importance meta-commentary.",
+  "features": [
+    {
+      "id": "HedgingIntensity",
+      "family": "EpistemicStance",
+      "kind": "lexicon_density",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 0.9,
+      "baseline": {
+        "mean": 6.0,
+        "sd": 4.0,
+        "source": "default_prior"
+      },
+      "lexicon": [
+        "might",
+        "may",
+        "could",
+        "often",
+        "typically",
+        "arguably",
+        "generally",
+        "usually",
+        "potentially",
+        "perhaps",
+        "somewhat",
+        "relatively",
+        "in many cases",
+        "to some extent",
+        "it could be argued",
+        "tend to",
+        "tends to"
+      ],
+      "explanation": "Routinised qualifier stacking; most suspicious when paired with low specificity (see PragmaticDepth).",
+      "skillPattern": "Make every sentence earn its place",
+      "skill": "no-ai-slop",
+      "notEvidenceIn": [
+        "clinical",
+        "submission"
+      ],
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    },
+    {
+      "id": "ImportanceMetaCommentaryRate",
+      "family": "EpistemicStance",
+      "kind": "lexicon_density",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 1.0,
+      "baseline": {
+        "mean": 0.5,
+        "sd": 0.7,
+        "source": "default_prior"
+      },
+      "lexicon": [
+        "it is important to note",
+        "it's important to note",
+        "this is crucial",
+        "it is essential to",
+        "it is critical to",
+        "it should be noted",
+        "crucially",
+        "key to understanding",
+        "it is vital",
+        "of paramount importance",
+        "this distinction matters",
+        "the key point is"
+      ],
+      "rewrites": {
+        "it is important to note that": [
+          ""
+        ],
+        "it should be noted that": [
+          ""
+        ]
+      },
+      "explanation": "Meta-commentary labelling points important instead of demonstrating why — defensive rhetorical padding.",
+      "skillPattern": "Importance puffery / interpretive metadiscourse",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    },
+    {
+      "id": "MultiPerspectiveFraming",
+      "family": "EpistemicStance",
+      "kind": "regex_rate",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 0.6,
+      "baseline": {
+        "mean": 0.1,
+        "sd": 0.25,
+        "source": "default_prior"
+      },
+      "pattern": "\\bon\\s+(?:the\\s+)?one\\s+hand\\b|\\bon\\s+the\\s+other\\s+hand\\b|\\bwhile\\s+some\\s+(?:argue|believe|contend)\\b",
+      "flags": "i",
+      "explanation": "Routinised both-sides framing even where the topic does not demand it.",
+      "skillPattern": "Always show, don't tell the reader what to think",
+      "skill": "no-ai-slop",
+      "notEvidenceIn": [
+        "clinical",
+        "submission"
+      ],
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    },
+    {
+      "id": "NeutralVoiceLevel",
+      "family": "EpistemicStance",
+      "kind": "statistic",
+      "statistic": "first_person_rate",
+      "unit": "hits_per_1000_tokens",
+      "direction": "low_is_ai",
+      "weight": 0.4,
+      "baseline": {
+        "mean": 10.0,
+        "sd": 8.0,
+        "source": "default_prior"
+      },
+      "explanation": "Absent first-person voice in genres where some is expected; weight low because formal genres legitimately suppress it.",
+      "skillPattern": "Preserve the writer's real voice",
+      "skill": "no-ai-slop",
+      "notEvidenceIn": [
+        "institutional",
+        "clinical",
+        "submission",
+        "technical"
+      ],
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    }
+  ]
+}

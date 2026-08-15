@@ -1,0 +1,86 @@
+{
+  "pack": "formatting-patterns",
+  "version": "1.0.0",
+  "description": "Typography and layout fingerprints: em dashes, curly quotes, markdown tics, contractions.",
+  "features": [
+    {
+      "id": "EmDashOveruse",
+      "family": "FormattingPatterns",
+      "kind": "regex_rate",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 1.0,
+      "baseline": {
+        "mean": 1.5,
+        "sd": 2.0,
+        "source": "default_prior"
+      },
+      "pattern": "\\u2014|\\s--\\s",
+      "flags": "",
+      "explanation": "Em-dash frequency, especially in rhetorical bridges ('— and this is critical —') where commas or parentheses would serve.",
+      "skillPattern": "Em dashes",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    },
+    {
+      "id": "CurlyQuoteRatio",
+      "family": "FormattingPatterns",
+      "kind": "statistic",
+      "statistic": "curly_quote_ratio",
+      "unit": "curly_over_all_quotes",
+      "direction": "high_is_ai",
+      "weight": 0.3,
+      "baseline": {
+        "mean": 0.1,
+        "sd": 0.3,
+        "source": "default_prior"
+      },
+      "explanation": "Curly vs straight quote ratio in plain text. Weight low: word processors auto-curl quotes, so this only matters for raw-text provenance.",
+      "skillPattern": "Formatting slop",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    },
+    {
+      "id": "MarkdownStructureIntensity",
+      "family": "FormattingPatterns",
+      "kind": "statistic",
+      "statistic": "markdown_intensity",
+      "unit": "structural_lines_per_100_lines",
+      "direction": "high_is_ai",
+      "weight": 0.7,
+      "baseline": {
+        "mean": 2.0,
+        "sd": 6.0,
+        "source": "default_prior"
+      },
+      "explanation": "Headers, bullets, bold and colon-before-list density where continuous prose would be natural — the 'markdown fingerprint'.",
+      "skillPattern": "Formatting slop",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    },
+    {
+      "id": "ContractionBalance",
+      "family": "FormattingPatterns",
+      "kind": "statistic",
+      "statistic": "contraction_rate",
+      "unit": "hits_per_1000_tokens",
+      "direction": "low_is_ai",
+      "weight": 0.4,
+      "baseline": {
+        "mean": 8.0,
+        "sd": 6.0,
+        "source": "default_prior"
+      },
+      "explanation": "Contraction-free prose is AI-leaning in informal genres; near-constant contractions in formal text can indicate stylised AI humanisation. Genre-dependent, weight low.",
+      "skillPattern": "Preserve the writer's real voice",
+      "skill": "no-ai-slop",
+      "notEvidenceIn": [
+        "institutional",
+        "clinical",
+        "submission",
+        "technical"
+      ],
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    }
+  ]
+}

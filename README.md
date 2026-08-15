@@ -62,7 +62,16 @@ High-performance PyMuPDF stream processing tools:
 
 ![Native Citation Manager](assets/citation_manager_ui.png)
 
-### 6. 🛡️ The Auctor Writing Doctrine (`writeroute.auctor_doctrine`)
+### 6. ⚔️ Writing Master — Ontology-Driven AI Detection & Anti-Slop Suite (`aiwd`)
+- **Machine-Readable Pattern Ontology**: 7 feature families (Lexical, Syntactic, Discourse, Epistemic Stance, Pragmatic Depth, Formatting, Probabilistic).
+- **Domain Allow-Lists**: Excuses field-standard vocabulary (e.g. *doubly robust*, *positivity*, *transportability*) from being flagged as slop.
+- **Reported Voice Isolation**: Automatically discounts quotations, citations, and attributed speech so authors are not penalised for citing sources.
+- **Conservative De-Slop Rewriter & Preservation Gate**: Automatically applies safe single-option replacements while strictly rejecting rewrites that mutate numbers, negations, or citations.
+
+![Writing Master UI](assets/writing_master_ui.png)
+
+### 7. 🛡️ The Auctor Writing Doctrine (`writeroute.auctor_doctrine`)
+
 - **Three Non-Leaking Channels**:
   - `Substantive`: 100% publication-ready prose.
   - `QC`: Rule codes, defect severities, diagnostic matrices, gate states.
@@ -97,12 +106,13 @@ Open **http://localhost:8000** in your browser.
 
 ## 🧪 Verification & Automated Test Suite
 
-Run the full automated test suite covering the Super Engine, PDF tools, Word review suite, LaTeX export, DocXML orchestration, Mendeley SDTs, and Native Citation Manager:
+Run the full automated test suite covering the Super Engine, Writing Master (AIWD), PDF tools, Word review suite, LaTeX export, DocXML orchestration, Mendeley SDTs, and Native Citation Manager:
 
 ```bash
-pytest tests/test_citation_manager.py tests/test_doctrine_and_docxml.py tests/test_pdf_and_word_suite.py tests/test_authoring.py tests/test_super_engine.py
+pytest tests/test_writing_master.py tests/test_citation_manager.py tests/test_doctrine_and_docxml.py tests/test_pdf_and_word_suite.py tests/test_authoring.py tests/test_super_engine.py
 ```
-> **Result**: `26 passed (100% pass rate)`.
+> **Result**: `31 passed (100% pass rate)`.
+
 
 ---
 

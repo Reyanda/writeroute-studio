@@ -1,0 +1,65 @@
+{
+  "pack": "pragmatic-depth",
+  "version": "1.0.0",
+  "description": "Content specificity: entities, numbers, examples vs generic abstract synthesis.",
+  "features": [
+    {
+      "id": "EntityDensity",
+      "family": "PragmaticDepth",
+      "kind": "statistic",
+      "statistic": "entity_density_proxy",
+      "unit": "hits_per_1000_tokens",
+      "direction": "low_is_ai",
+      "weight": 0.9,
+      "baseline": {
+        "mean": 25.0,
+        "sd": 15.0,
+        "source": "default_prior"
+      },
+      "explanation": "Proxy for named entities: mid-sentence capitalised words, numbers, dates, currency per 1000 tokens. Low density suggests generic synthesis.",
+      "skillPattern": "Be concrete and specific",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    },
+    {
+      "id": "ExampleCaseDensity",
+      "family": "PragmaticDepth",
+      "kind": "statistic",
+      "unit": "percent_of_sentences",
+      "direction": "low_is_ai",
+      "weight": 0.6,
+      "baseline": {
+        "mean": 42.0,
+        "sd": 18.0,
+        "source": "default_prior"
+      },
+      "explanation": "Share of sentences naming something checkable: a proper noun, a quantity, a date, a currency amount. Discourse markers count only when something checkable follows them, so 'for example, Nigeria' scores and a bare 'such as' does not.",
+      "skillPattern": "Use the portability test",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for reflective or theoretical genres where naming instances is not the convention.",
+      "statistic": "concrete_case_density"
+    },
+    {
+      "id": "AbstractNounDensity",
+      "family": "PragmaticDepth",
+      "kind": "regex_rate",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 0.5,
+      "baseline": {
+        "mean": 25.0,
+        "sd": 12.0,
+        "source": "default_prior"
+      },
+      "pattern": "\\b\\w{4,}(?:tion|ment|ness|ity|ance|ence|ship)s?\\b",
+      "flags": "i",
+      "explanation": "Nominalisation density; heavy abstract-noun prose without grounding facts is where writing goes to die.",
+      "skillPattern": "Be concrete and specific / protect the specific fact",
+      "skill": "no-ai-slop",
+      "notEvidenceIn": [
+        "technical"
+      ],
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    }
+  ]
+}

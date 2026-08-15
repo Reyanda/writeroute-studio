@@ -1,0 +1,164 @@
+{
+  "id": "statistics-epidemiology",
+  "description": "Field-standard terms in statistics, causal inference and clinical epidemiology that collide with generic slop lexicons. Each entry suppresses a feature hit inside the named span and is reported as an exemption, never dropped silently.",
+  "entries": [
+    {
+      "id": "doubly-robust",
+      "pattern": "\\bdoubly[ -]robust\\b",
+      "flags": "i",
+      "applies_to": [
+        "BuzzwordDensity"
+      ],
+      "reason": "Name of the augmented inverse-probability-weighted estimator. Field-standard, not a buzzword."
+    },
+    {
+      "id": "robust-variance",
+      "pattern": "\\brobust (standard error|standard errors|variance|covariance|sandwich)\\b",
+      "flags": "i",
+      "applies_to": [
+        "BuzzwordDensity"
+      ],
+      "reason": "Named variance estimator (Huber-White). Field-standard."
+    },
+    {
+      "id": "robust-to",
+      "pattern": "\\brobust to\\b",
+      "flags": "i",
+      "applies_to": [
+        "BuzzwordDensity"
+      ],
+      "reason": "States insensitivity to a named assumption; a testable claim, not padding."
+    },
+    {
+      "id": "pivotal-quantity",
+      "pattern": "\\bpivotal (quantity|quantities|statistic|statistics)\\b",
+      "flags": "i",
+      "applies_to": [
+        "BuzzwordDensity"
+      ],
+      "reason": "Standard inferential term; distinct from 'pivotal moment' puffery."
+    },
+    {
+      "id": "transportability",
+      "pattern": "\\btransportabilit(y|ies)\\b",
+      "flags": "i",
+      "applies_to": [
+        "AbstractNounDensity",
+        "NominalisationSuffixDensity"
+      ],
+      "reason": "Named methodological concept (Bareinboim and Pearl), not a nominalisation of convenience."
+    },
+    {
+      "id": "positivity-identifiability",
+      "pattern": "\\b(positivity|identifiability|exchangeability|consistency|generalisability|generalizability)\\b",
+      "flags": "i",
+      "applies_to": [
+        "AbstractNounDensity",
+        "NominalisationSuffixDensity"
+      ],
+      "reason": "Named causal-inference assumptions. The abstraction is the subject matter."
+    },
+    {
+      "id": "epidemiology-outcome-nouns",
+      "pattern": "\\b(prevalence|incidence|malnutrition|undernutrition|distribution|proportion|deprivation|intervention|randomisation|randomization|attribution|stratification|adjustment|allocation|ascertainment)\\b",
+      "flags": "i",
+      "applies_to": [
+        "AbstractNounDensity",
+        "NominalisationSuffixDensity"
+      ],
+      "reason": "Standard epidemiological outcome and design vocabulary; no plainer synonym exists."
+    },
+    {
+      "id": "proper-noun-suffix",
+      "pattern": "\\b(?:[A-Z][a-z]+ )?[A-Z][a-z]{3,}(?:tion|ment|ness|ity|ance|ence|ship)s?\\b",
+      "flags": "",
+      "applies_to": [
+        "AbstractNounDensity"
+      ],
+      "reason": "Capitalised proper nouns (University, Foundation, Commission) match the abstract-noun suffix regex but are names, not abstraction."
+    },
+    {
+      "id": "proper-noun-tricolon",
+      "pattern": "\\b[A-Z][\\w-]+(?:\\s[A-Z][\\w-]+)?,\\s+[A-Z][\\w-]+(?:\\s[A-Z][\\w-]+)?,\\s+and\\s+[A-Z][\\w-]+",
+      "flags": "",
+      "applies_to": [
+        "TricolonListFrequency",
+        "AdjectiveTricolonRate"
+      ],
+      "reason": "A list of named entities (countries, authors, sites) is data, not a rhetorical tricolon."
+    },
+    {
+      "id": "numeric-tricolon",
+      "pattern": "\\b[\\d.,%-]+,\\s+[\\d.,%-]+,\\s+and\\s+[\\d.,%-]+",
+      "flags": "",
+      "applies_to": [
+        "TricolonListFrequency"
+      ],
+      "reason": "Three reported values are results, not a rhetorical pattern."
+    },
+    {
+      "id": "robust-in-statistical-context",
+      "pattern": "\\brobust\\b",
+      "flags": "i",
+      "applies_to": [
+        "BuzzwordDensity"
+      ],
+      "guards": [
+        "robust standard errors?",
+        "robust regression",
+        "robust variance",
+        "sandwich estimator",
+        "Huber[- ]White"
+      ],
+      "reason": "Sentence carries a named robust estimator, so the adjective is technical usage."
+    },
+    {
+      "id": "leverage-quantitative",
+      "pattern": "\\bleverag(e|es|ing)\\b",
+      "flags": "i",
+      "applies_to": [
+        "BuzzwordDensity"
+      ],
+      "guards": [
+        "leverage ratio",
+        "operating leverage",
+        "financial leverage",
+        "leverage (point|score|statistic)",
+        "high[- ]leverage observation",
+        "hat value"
+      ],
+      "reason": "Leverage is a defined quantity in regression diagnostics and in finance."
+    },
+    {
+      "id": "harness-physical",
+      "pattern": "\\bharness(ing|ed|es)?\\b",
+      "flags": "i",
+      "applies_to": [
+        "BuzzwordDensity"
+      ],
+      "guards": [
+        "wiring harness",
+        "safety harness",
+        "harness (cable|strap|belt)"
+      ],
+      "reason": "A physical harness is an object, not a verb of aspiration."
+    },
+    {
+      "id": "only-conditional",
+      "pattern": "\\b(?:the|one of the) only\\b",
+      "flags": "i",
+      "applies_to": [
+        "UnsupportedSuperlativeRate",
+        "BuzzwordDensity"
+      ],
+      "guards": [
+        "only if",
+        "only when",
+        "if and only if",
+        "the only participant",
+        "the only site"
+      ],
+      "reason": "Conditional or enumerated 'only', not a novelty claim."
+    }
+  ]
+}

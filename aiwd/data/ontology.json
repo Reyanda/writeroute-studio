@@ -1,0 +1,68 @@
+{
+  "ontology": "ai-writing-patterns",
+  "version": "1.0.0",
+  "description": "Machine-readable ontology of AI-writing patterns. Isomorphic to the OWL model: WritingSample, TextUnit (Paragraph/Sentence/Token), FeatureFamily, FeatureType, FeatureMeasurement, FamilyScore, DetectionResult.",
+  "classes": {
+    "WritingSample": {
+      "properties": ["hasParagraph", "hasSentence", "hasToken", "hasFeatureMeasurement", "hasDetectionResult"]
+    },
+    "TextUnit": {"subclasses": ["Paragraph", "Sentence", "Token"]},
+    "FeatureFamily": {},
+    "FeatureType": {"objectProperties": {"belongsToFamily": "FeatureFamily"}},
+    "FeatureMeasurement": {
+      "dataProperties": {
+        "value": "xsd:double",
+        "zScoreAgainstHumanBaseline": "xsd:double",
+        "aiLikenessContribution": "xsd:double",
+        "measurementMethod": "xsd:string"
+      },
+      "objectProperties": {"ofFeatureType": "FeatureType", "onWritingSample": "WritingSample"}
+    },
+    "FamilyScore": {
+      "dataProperties": {"familyAiScore": "xsd:double"},
+      "objectProperties": {"forFamily": "FeatureFamily", "derivedFromMeasurement": "FeatureMeasurement"}
+    },
+    "DetectionResult": {
+      "dataProperties": {
+        "globalAiProbability": "xsd:double",
+        "globalConfidence": "xsd:double",
+        "decisionLabel": "xsd:string"
+      },
+      "objectProperties": {
+        "hasFamilyScore": "FamilyScore",
+        "explainedByFeatureMeasurement": "FeatureMeasurement"
+      }
+    }
+  },
+  "decisionLabels": ["AI_GENERATED", "HUMAN_GENERATED", "MIXED", "UNCERTAIN"],
+  "families": {
+    "ProbabilisticFeatures": {
+      "weight": 0.18,
+      "description": "Corpus-level predictability and uniformity: entropy, burstiness, lexical diversity, repetition."
+    },
+    "LexicalPatterns": {
+      "weight": 0.18,
+      "description": "Vocabulary choices: overindexed buzzwords, credibility-padding phrases, function-word behaviour."
+    },
+    "SyntacticPatterns": {
+      "weight": 0.12,
+      "description": "Sentence structure: length uniformity, complexity, structural templates, tricolon lists."
+    },
+    "DiscoursePatterns": {
+      "weight": 0.18,
+      "description": "Paragraph/document organisation: mechanical transitions, blocky symmetry, resolution closers."
+    },
+    "EpistemicStance": {
+      "weight": 0.12,
+      "description": "Claim positioning: hedging, depersonalised neutral voice, importance meta-commentary."
+    },
+    "FormattingPatterns": {
+      "weight": 0.10,
+      "description": "Typography and layout fingerprints: em dashes, curly quotes, markdown tics, contraction balance."
+    },
+    "PragmaticDepth": {
+      "weight": 0.12,
+      "description": "Content behaviour: entity/example specificity vs generic abstract synthesis."
+    }
+  }
+}

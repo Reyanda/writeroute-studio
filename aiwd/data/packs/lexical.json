@@ -1,0 +1,277 @@
+{
+  "pack": "lexical-patterns",
+  "version": "1.0.0",
+  "description": "Overindexed AI buzzwords, credibility-padding phrases, weasel attribution. Lexicons seeded from the no-ai-slop editing skill so detector and editor stay consistent.",
+  "features": [
+    {
+      "id": "BuzzwordDensity",
+      "family": "LexicalPatterns",
+      "kind": "lexicon_density",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 1.0,
+      "baseline": {
+        "mean": 1.0,
+        "sd": 1.2,
+        "source": "default_prior"
+      },
+      "lexicon": [
+        "delve",
+        "delves",
+        "delving",
+        "foster",
+        "fostering",
+        "leverage",
+        "leverages",
+        "leveraging",
+        "utilize",
+        "utilizes",
+        "utilizing",
+        "utilise",
+        "facilitate",
+        "empower",
+        "empowering",
+        "streamline",
+        "streamlining",
+        "robust",
+        "cutting-edge",
+        "paradigm shift",
+        "game changer",
+        "game-changer",
+        "tapestry",
+        "realm",
+        "beacon",
+        "multifaceted",
+        "meticulous",
+        "meticulously",
+        "intricate",
+        "paramount",
+        "transformative",
+        "elevate",
+        "embark",
+        "supercharge",
+        "harness",
+        "harnessing",
+        "ever-evolving",
+        "seamless",
+        "seamlessly",
+        "holistic",
+        "synergy",
+        "groundbreaking",
+        "pivotal",
+        "unlock the",
+        "unleash",
+        "landscape of",
+        "testament to",
+        "underscore",
+        "underscores",
+        "underscoring",
+        "underscored",
+        "commendable",
+        "commendably",
+        "navigate",
+        "navigates",
+        "navigating",
+        "navigated",
+        "novel"
+      ],
+      "rewrites": {
+        "leverage": [
+          "use"
+        ],
+        "leverages": [
+          "uses"
+        ],
+        "leveraging": [
+          "using"
+        ],
+        "utilize": [
+          "use"
+        ],
+        "utilizes": [
+          "uses"
+        ],
+        "utilizing": [
+          "using"
+        ],
+        "utilise": [
+          "use"
+        ],
+        "delve": [
+          "look"
+        ],
+        "delves": [
+          "looks"
+        ],
+        "delving": [
+          "looking"
+        ],
+        "facilitate": [
+          "help"
+        ],
+        "robust": [
+          "reliable"
+        ],
+        "seamless": [
+          "smooth"
+        ],
+        "seamlessly": [
+          "smoothly"
+        ],
+        "harness": [
+          "use"
+        ],
+        "harnessing": [
+          "using"
+        ],
+        "empower": [
+          "let"
+        ],
+        "streamline": [
+          "simplify"
+        ],
+        "streamlining": [
+          "simplifying"
+        ],
+        "meticulous": [
+          "careful"
+        ],
+        "meticulously": [
+          "carefully"
+        ],
+        "paramount": [
+          "essential"
+        ]
+      },
+      "safe_rewrites": [
+        "leverage",
+        "leverages",
+        "leveraging",
+        "utilize",
+        "utilizes",
+        "utilizing",
+        "utilise"
+      ],
+      "explanation": "Adjectives/verbs that appear disproportionately in LLM output; co-occurrence density is the signal.",
+      "skillPattern": "Words to cut — banned outright",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    },
+    {
+      "id": "CredibilityPaddingPhraseDensity",
+      "family": "LexicalPatterns",
+      "kind": "lexicon_density",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 1.0,
+      "baseline": {
+        "mean": 0.3,
+        "sd": 0.5,
+        "source": "default_prior"
+      },
+      "lexicon": [
+        "it is worth noting",
+        "it's worth noting",
+        "it is important to note",
+        "it's important to note",
+        "it is important to understand",
+        "in today's world",
+        "in today's rapidly evolving",
+        "in today's fast-paced",
+        "in the age of",
+        "in the world of",
+        "at its core",
+        "in essence",
+        "at the end of the day",
+        "the reality is",
+        "the truth is",
+        "when it comes to",
+        "in the realm of",
+        "serves as a",
+        "stands as a testament",
+        "marks a pivotal",
+        "plays a vital role",
+        "plays a crucial role",
+        "underscores the importance",
+        "in this article",
+        "let's dive in",
+        "going forward",
+        "in order to"
+      ],
+      "rewrites": {
+        "it is worth noting": [
+          ""
+        ],
+        "it's worth noting": [
+          ""
+        ],
+        "it is important to note": [
+          ""
+        ],
+        "it's important to note": [
+          ""
+        ],
+        "in order to": [
+          "to"
+        ],
+        "when it comes to": [
+          "for"
+        ]
+      },
+      "safe_rewrites": [
+        "in order to"
+      ],
+      "explanation": "Generic credibility-padding; especially AI-like when clustered in introductions and conclusions.",
+      "skillPattern": "Words to cut — often-empty phrases",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    },
+    {
+      "id": "WeaselAttributionDensity",
+      "family": "LexicalPatterns",
+      "kind": "lexicon_density",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 0.7,
+      "baseline": {
+        "mean": 0.2,
+        "sd": 0.4,
+        "source": "default_prior"
+      },
+      "lexicon": [
+        "experts agree",
+        "studies show",
+        "research shows",
+        "many argue",
+        "widely regarded as",
+        "industry reports suggest",
+        "it is well known",
+        "some would say",
+        "it has been said"
+      ],
+      "explanation": "Unattributed authority claims; AI pads credibility without naming sources.",
+      "skillPattern": "Weasel attribution",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    },
+    {
+      "id": "AmbiguousPronounUsage",
+      "family": "LexicalPatterns",
+      "kind": "regex_rate",
+      "unit": "hits_per_1000_tokens",
+      "direction": "high_is_ai",
+      "weight": 0.4,
+      "baseline": {
+        "mean": 3.0,
+        "sd": 2.5,
+        "source": "default_prior"
+      },
+      "pattern": "\\btheir\\b",
+      "flags": "i",
+      "explanation": "Coarse proxy for vague 'their' usage without clear antecedent (VERMILLION heuristic); weight kept low because the proxy cannot check antecedents.",
+      "skillPattern": "Be concrete and specific",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    }
+  ]
+}

@@ -43,7 +43,9 @@
         <button class="rail-button" data-panel="lucid"><span class="rail-icon">✦</span><span>Lucid</span></button>
         <button class="rail-button" data-panel="docx"><span class="rail-icon">📄</span><span>DOCX</span></button>
         <button class="rail-button" data-panel="doctrine"><span class="rail-icon">🛡</span><span>Doctrine</span></button>
+        <button class="rail-button" data-panel="writingmaster"><span class="rail-icon">⚔</span><span>Master</span></button>
         <button class="rail-button" data-panel="comments"><span class="rail-icon">💬</span><span>Review</span></button>
+
         <button class="rail-button" data-panel="latex"><span class="rail-icon">𝛀</span><span>LaTeX</span></button>
         <button class="rail-button" data-panel="pdfstudio"><span class="rail-icon">📑</span><span>PDF</span></button>
         <button class="rail-button" data-panel="outline"><span class="rail-icon">☷</span><span>Outline</span></button>
@@ -532,6 +534,52 @@
           </div>
         </section>
 
+
+        <!-- Writing Master / AIWD Toolkit Panel -->
+        <section class="panel" id="panel-writingmaster">
+          <div class="panel-head"><div><h2>Writing Master</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy">Ontology-driven AI writing detection, conservative de-slop rewriter, domain allow-lists & reported voice isolation.</p>
+          
+          <div class="route-actions" style="margin-bottom:14px;display:flex;gap:8px;flex-direction:column">
+            <button class="button primary full" id="runAiwdAuditBtn">⚔ Run Writing Master Scan</button>
+            <button class="button secondary full" id="applyAiwdCleanBtn">⚡ Apply Conservative De-Slop</button>
+          </div>
+
+          <div class="score-card" style="margin-bottom:12px">
+            <div>
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <strong id="aiwdScoreLabel">Not analysed</strong>
+                <span id="aiwdDecisionBadge" class="badge" style="display:none">HUMAN</span>
+              </div>
+              <p id="aiwdScoreSummary">Scan to measure feature Z-scores against human academic baselines.</p>
+            </div>
+          </div>
+
+          <div class="section-title"><span>Ontology Family Breakdown</span></div>
+          <div class="format-metrics" id="aiwdFamilyGrid">
+            <div><strong id="aiwdFamLex">-</strong><span>Lexical</span></div>
+            <div><strong id="aiwdFamSyn">-</strong><span>Syntactic</span></div>
+            <div><strong id="aiwdFamStruct">-</strong><span>Structural</span></div>
+            <div><strong id="aiwdFamEpist">-</strong><span>Epistemic</span></div>
+            <div><strong id="aiwdFamPrag">-</strong><span>Pragmatic</span></div>
+            <div><strong id="aiwdFamFormat">-</strong><span>Format</span></div>
+          </div>
+
+          <div class="section-title"><span>Domain Allow-List Exemptions</span><span id="aiwdExemptBadge" class="badge">0</span></div>
+          <div id="aiwdExemptList" class="empty-state" style="font-size:12px;margin-bottom:12px">
+            <p>Field-standard vocabulary excused from slop flags will appear here (e.g. <em>doubly robust</em>, <em>positivity</em>).</p>
+          </div>
+
+          <div class="section-title"><span>Reported Voice Isolation</span></div>
+          <div id="aiwdReportedVoiceInfo" class="empty-state" style="font-size:12px;margin-bottom:12px">
+            <p>Quoted text and attributed clauses are isolated and discounted from author metrics.</p>
+          </div>
+
+          <div class="section-title"><span>Anti-Slop Suggestions & Edits</span><span id="aiwdSuggBadge" class="badge">0</span></div>
+          <div class="finding-list empty-state" id="aiwdSuggList">
+            <p>No suggestions generated. Click 'Run Writing Master Scan' above.</p>
+          </div>
+        </section>
 
         <section class="panel" id="panel-audit">
           <div class="panel-head"><div><h2>Prose & Editorial audit</h2></div><button class="panel-close" title="Close inspector">×</button></div>

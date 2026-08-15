@@ -7,7 +7,9 @@ const state = { sourceText:'', lastAudit:null, lastFormatting:null, candidate:nu
 const editor=$('#editor'), workspace=$('#workspace'), hero=$('#hero'), toast=$('#toast');
 
 function showToast(message){ toast.textContent=message; toast.classList.add('show'); clearTimeout(showToast.t); showToast.t=setTimeout(()=>toast.classList.remove('show'),2600); }
+function escapeHtml(str){ return String(str ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 function text(){ return editor.innerText.replace(/\u00a0/g,' ').trim(); }
+
 function updateCounts(){
   const n=(text().match(/[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]|[\p{L}][\p{L}'\u2019-]*/gu)||[]).length;
   $('#wordCount').textContent=`${n.toLocaleString()} words`;
@@ -1736,13 +1738,168 @@ async function runDoctrineAudit() {
 
 $('#runDoctrineAuditBtn')?.addEventListener('click', runDoctrineAudit);
 
-// Initialize Comments
+// ------------------------------------------------------------------ Writing Master (AIWD) Controller
+async function runAiwdScan() {
+  const content = text();
+  if (!content) return;
+  showToast('Running Writing Master Scan...');
+  try {
+    const res = await fetch('/api/aiwd/scan', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: content, genre: 'academic' }),
+    });
+    if (!res.ok) throw new Error(await res.text());
+    const data = await res.json();
+    const det = data.detectionResult || {};
+    const prob = det.globalAiProbability ?? 0.5;
+    const humanScore = Math.round((1 - prob) * 100);
+    const label = det.decisionLabel || 'UNCERTAIN';
+
+    const scoreLabel = $('#aiwdScoreLabel');
+    const badge = $('#aiwdDecisionBadge');
+    const summary = $('#aiwdScoreSummary');
+
+    if (scoreLabel) scoreLabel.textContent = `${humanScore} / 100 (${label.replace('_', ' ')})`;
+    if (badge) {
+      badge.style.display = 'inline-block';
+      badge.textContent = label;
+      if (label === 'HUMAN_GENERATED') badge.className = 'badge badge-green';
+      else if (label === 'AI_GENERATED') badge.className = 'badge badge-red';
+      else badge.className = 'badge badge-yellow';
+    }
+    if (summary) {
+      summary.textContent = `Global AI Probability: ${(prob * 100).toFixed(1)}% | Confidence: ${((det.globalConfidence || 0) * 100).toFixed(0)}% across ${data.tokenCount || 0} tokens.`;
+    }
+
+    // Family breakdown
+    const famMap = {};
+    (det.familyScores || []).forEach(f => { famMap[f.family] = f.familyAiScore ?? f.score; });
+    const getFamScore = (keys) => {
+      for (const k of keys) {
+        if (famMap[k] !== undefined) return `${Math.round((1 - famMap[k]) * 100)}`;
+      }
+      return '-';
+    };
+
+    if ($('#aiwdFamLex')) $('#aiwdFamLex').textContent = getFamScore(['LexicalPatterns', 'Lexical']);
+    if ($('#aiwdFamSyn')) $('#aiwdFamSyn').textContent = getFamScore(['SyntacticPatterns', 'Syntactic']);
+    if ($('#aiwdFamStruct')) $('#aiwdFamStruct').textContent = getFamScore(['DiscoursePatterns', 'Structural', 'ProbabilisticFeatures']);
+    if ($('#aiwdFamEpist')) $('#aiwdFamEpist').textContent = getFamScore(['EpistemicStance', 'Epistemic']);
+    if ($('#aiwdFamPrag')) $('#aiwdFamPrag').textContent = getFamScore(['PragmaticDepth', 'Pragmatic']);
+    if ($('#aiwdFamFormat')) $('#aiwdFamFormat').textContent = getFamScore(['FormattingPatterns', 'Formatting']);
+
+
+    // Allow-list exemptions
+    const exList = $('#aiwdExemptList');
+    const exBadge = $('#aiwdExemptBadge');
+    if (data.allowListExemptions && data.allowListExemptions.length > 0) {
+      if (exBadge) exBadge.textContent = data.allowListExemptions.length;
+      if (exList) {
+        exList.className = 'finding-list';
+        exList.innerHTML = data.allowListExemptions.map(ex => `
+          <div class="finding-item" style="border-left:2px solid var(--accent, #4f8ff7);padding:6px 8px;margin-bottom:6px">
+            <div><strong>${escapeHtml(ex.allowListEntry || ex.featureType)}</strong> (Excused ${ex.count}×)</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px">${escapeHtml(ex.reason || '')}</div>
+            <div style="font-size:11px;font-style:italic;margin-top:2px">"${escapeHtml((ex.examples || []).join('", "'))}"</div>
+          </div>
+        `).join('');
+      }
+    } else {
+      if (exBadge) exBadge.textContent = '0';
+      if (exList) {
+        exList.className = 'empty-state';
+        exList.innerHTML = '<p>No domain allow-list exemptions needed for this document.</p>';
+      }
+    }
+
+    // Reported Voice
+    const voiceInfo = $('#aiwdReportedVoiceInfo');
+    const frac = (data.reportedVoiceFraction || 0) * 100;
+    if (voiceInfo) {
+      if (frac > 0 || (data.reportedVoiceDiscounts && data.reportedVoiceDiscounts.length > 0)) {
+        voiceInfo.className = 'finding-list';
+        voiceInfo.innerHTML = `
+          <div style="padding:6px 8px;margin-bottom:6px">
+            <strong>${frac.toFixed(1)}% of document</strong> isolated as reported speech or quotations.
+            ${(data.reportedVoiceDiscounts || []).map(d => `<div style="font-size:11px;margin-top:2px">Discounted: <em>"${escapeHtml((d.examples || []).join('", "'))}"</em></div>`).join('')}
+          </div>
+        `;
+      } else {
+        voiceInfo.className = 'empty-state';
+        voiceInfo.innerHTML = '<p>Zero external quotations detected. 100% evaluated as authorial voice.</p>';
+      }
+    }
+
+    // Anti-slop suggestions
+    const suggList = $('#aiwdSuggList');
+    const suggBadge = $('#aiwdSuggBadge');
+    if (data.suggestions && data.suggestions.length > 0) {
+      if (suggBadge) suggBadge.textContent = data.suggestions.length;
+      if (suggList) {
+        suggList.className = 'finding-list';
+        suggList.innerHTML = data.suggestions.map(s => `
+          <div class="finding-item" style="padding:8px;margin-bottom:6px;border-left:2px solid ${s.safe ? 'var(--green, #22c55e)' : 'var(--yellow, #eab308)'}">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <strong>${escapeHtml(s.original)}</strong>
+              <span class="badge ${s.safe ? 'badge-green' : 'badge-yellow'}">${s.safe ? 'Safe' : 'Review'}</span>
+            </div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px">${escapeHtml(s.rationale)}</div>
+            ${s.options && s.options.length ? `<div style="font-size:11px;margin-top:4px">Options: <strong>${escapeHtml(s.options.join(', '))}</strong></div>` : ''}
+          </div>
+        `).join('');
+      }
+    } else {
+      if (suggBadge) suggBadge.textContent = '0';
+      if (suggList) {
+        suggList.className = 'empty-state';
+        suggList.innerHTML = '<p>No stylistic slop or uncalibrated hedges detected. Prose is clean!</p>';
+      }
+    }
+
+    showToast('Writing Master Scan Complete');
+  } catch (err) {
+    console.error('Writing Master scan error:', err);
+    showToast('Error during Writing Master scan');
+  }
+}
+
+async function applyAiwdClean() {
+  const content = text();
+  if (!content) return;
+  showToast('Applying Conservative De-Slop...');
+  try {
+    const res = await fetch('/api/aiwd/clean', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: content }),
+    });
+    if (!res.ok) throw new Error(await res.text());
+    const data = await res.json();
+    if (data.passes_preservation_gate) {
+      setDocument(data.cleaned_text, currentFilename || 'Manuscript.txt');
+      showToast(`Applied ${data.applied_count} safe de-slop edits (Preservation Gate 100% Passed)`);
+      runAiwdScan();
+    } else {
+      showToast(`Preservation Gate Rejected: ${data.gate_violations.join(', ')}`);
+    }
+  } catch (err) {
+    console.error('De-slop error:', err);
+    showToast('Error applying de-slop');
+  }
+}
+
+$('#runAiwdAuditBtn')?.addEventListener('click', runAiwdScan);
+$('#applyAiwdCleanBtn')?.addEventListener('click', applyAiwdClean);
+
+// Initialize Components
 renderComments();
 renderCitations();
 renderHistory();
 setTimeout(updateOutline, 300);
 setTimeout(updateAnalytics, 300);
 setTimeout(updateGoalProgress, 300);
+
 
 
 

@@ -1,0 +1,51 @@
+{
+  "id": "superlative-usage",
+  "description": "Superlatives that are idiomatic, temporal, enumerative, or already sourced. UnsupportedSuperlativeRate matches any 'the most/best/only/leading' construction, which in clinical and epidemiological prose is more often a bounded factual statement than a promotional claim. Each entry suppresses the hit inside its span and is reported as an exemption, never dropped silently.",
+  "entries": [
+    {
+      "id": "best-idiom",
+      "pattern": "\\bthe best (?:chance|way|available|evidence|estimate|guess|interests?|practice|fit|predictor available)\\b",
+      "flags": "i",
+      "applies_to": [
+        "UnsupportedSuperlativeRate"
+      ],
+      "reason": "Idiomatic use. 'The best chance of surviving' ranks nothing against a defined comparison set."
+    },
+    {
+      "id": "temporal-superlative",
+      "pattern": "\\bthe (?:most recent|earliest)\\b",
+      "flags": "i",
+      "applies_to": [
+        "UnsupportedSuperlativeRate"
+      ],
+      "reason": "Temporal ordering, not a comparative claim. Which survey or estimate came last is a fact about time, not a boast about rank."
+    },
+    {
+      "id": "only-enumerative",
+      "pattern": "\\bthe only (?:if|when|difference|\\w*\\s?(?:child|children|participant|patient|case|site|country|study|trial|record|row|cluster|arm)s?)\\b",
+      "flags": "i",
+      "applies_to": [
+        "UnsupportedSuperlativeRate"
+      ],
+      "reason": "Enumerates the data or states a condition. 'The only child with oedema' counts rows; it does not claim pre-eminence."
+    },
+    {
+      "id": "sourced-superlative",
+      "pattern": "\\b(?:the|one of the) (?:most|best|worst|largest|fastest|strongest|leading|foremost|only)\\b",
+      "flags": "i",
+      "applies_to": [
+        "UnsupportedSuperlativeRate"
+      ],
+      "guards": [
+        "\\([A-Z][A-Za-z'-]+(?:\\s+(?:et al\\.?|and|&)\\s+[A-Z][A-Za-z'-]+)?[,\\s]+\\d{4}\\)",
+        "\\[\\d+(?:[,–-]\\d+)*\\]",
+        "\\b95%\\s*(?:CI|confidence)",
+        "\\b(?:RR|OR|HR|IRR|aOR|aHR)\\s*[=:]?\\s*\\d",
+        "\\bp\\s*[<=>]\\s*0?\\.\\d+",
+        "\\b\\d+(?:\\.\\d+)?%",
+        "\\bn\\s*=\\s*\\d+"
+      ],
+      "reason": "The feature's own falsifiedBy clause is 'a stated comparison set with a source'. This entry makes that executable: the superlative is excused when its sentence carries a citation, an interval, an effect estimate, a percentage or a denominator."
+    }
+  ]
+}

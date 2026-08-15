@@ -1,0 +1,100 @@
+{
+  "pack": "probabilistic-features",
+  "version": "1.0.0",
+  "description": "Statistical backbone: predictability and uniformity proxies. True LM perplexity requires an external model; register a plugin statistic named 'lm_perplexity' to enable it.",
+  "features": [
+    {
+      "id": "BurstinessSentenceLength",
+      "family": "ProbabilisticFeatures",
+      "kind": "statistic",
+      "statistic": "burstiness_cv",
+      "unit": "coefficient_of_variation",
+      "direction": "low_is_ai",
+      "weight": 1.0,
+      "baseline": {
+        "mean": 0.55,
+        "sd": 0.15,
+        "source": "default_prior"
+      },
+      "explanation": "Human writing mixes short and long sentences; uniform sentence length is AI-leaning.",
+      "skillPattern": "Robotic rhythm",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    },
+    {
+      "id": "LexicalDiversityMATTR",
+      "family": "ProbabilisticFeatures",
+      "kind": "statistic",
+      "statistic": "mattr",
+      "unit": "moving_average_ttr_w50",
+      "direction": "low_is_ai",
+      "weight": 0.8,
+      "baseline": {
+        "mean": 0.78,
+        "sd": 0.06,
+        "source": "default_prior"
+      },
+      "explanation": "Lower moving-average type-token ratio indicates repetitive vocabulary typical of LLM output.",
+      "skillPattern": "Synonym cycling",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    },
+    {
+      "id": "HapaxRate",
+      "family": "ProbabilisticFeatures",
+      "kind": "statistic",
+      "statistic": "hapax_rate",
+      "unit": "proportion_of_types",
+      "direction": "low_is_ai",
+      "weight": 0.5,
+      "baseline": {
+        "mean": 0.55,
+        "sd": 0.12,
+        "source": "default_prior"
+      },
+      "explanation": "Fewer once-used words suggests a compressed, high-frequency vocabulary.",
+      "skillPattern": "Be concrete and specific",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    },
+    {
+      "id": "TrigramRepetition",
+      "family": "ProbabilisticFeatures",
+      "kind": "statistic",
+      "statistic": "trigram_repetition",
+      "unit": "proportion_repeated_trigrams",
+      "direction": "high_is_ai",
+      "weight": 0.7,
+      "baseline": {
+        "mean": 0.02,
+        "sd": 0.02,
+        "source": "default_prior"
+      },
+      "explanation": "Repeated 3-gram frames indicate templated generation.",
+      "skillPattern": "Robotic rhythm",
+      "skill": "no-ai-slop",
+      "notEvidenceIn": [
+        "technical"
+      ],
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    },
+    {
+      "id": "WordEntropyProfile",
+      "family": "ProbabilisticFeatures",
+      "kind": "statistic",
+      "statistic": "normalized_word_entropy",
+      "unit": "shannon_entropy_normalized",
+      "direction": "low_is_ai",
+      "weight": 0.6,
+      "baseline": {
+        "mean": 0.87,
+        "sd": 0.05,
+        "source": "default_prior"
+      },
+      "explanation": "Low normalized entropy of the word distribution indicates predictable, compressed text.",
+      "skillPattern": "Robotic rhythm",
+      "skill": "no-ai-slop",
+      "falsifiedBy": "A calibrated baseline for this genre that places the observed value within one standard deviation of human reference prose."
+    }
+  ]
+}
