@@ -659,13 +659,20 @@ $('#insertCalloutConfirm')?.addEventListener('click', () => {
   const type = $('#calloutTypeSelect').value;
   const title = $('#calloutTitleInput').value.trim() || type.toUpperCase();
   const content = $('#calloutContentInput').value.trim() || 'Callout text here...';
-  const icon = { note: 'ℹ', method: '⚙', warning: '⚠', tip: '★' }[type] || 'ℹ';
+  const svgMap = {
+    note: '<svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+    method: '<svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
+    warning: '<svg class="svg-icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+    tip: '<svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
+  };
+  const iconSvg = svgMap[type] || svgMap.note;
 
-  const html = `<div class="callout-box ${type}"><div class="callout-title"><span>${icon}</span> <strong>${escapeHTML(title)}</strong></div><p>${escapeHTML(content)}</p></div><p><br></p>`;
+  const html = `<div class="callout-box ${type}"><div class="callout-title"><span>${iconSvg}</span> <strong>${escapeHTML(title)}</strong></div><p>${escapeHTML(content)}</p></div><p><br></p>`;
   insertHTMLAtCursor(html);
   $('#modalCallout')?.close();
   showToast('Callout box inserted');
 });
+
 
 // 4. Figure Inserter
 $('#toolbarFigBtn')?.addEventListener('click', () => $('#modalFigure')?.showModal());
@@ -1227,7 +1234,7 @@ $('#menuSaveSnapshot')?.addEventListener('click', () => takeSnapshot('Manual Sav
 addEventListener('keydown', e => {
   if (!(e.metaKey || e.ctrlKey)) return;
   const k = e.key.toLowerCase();
-  if (k === 's') { e.preventDefault(); takeSnapshot('Quick Save (⌘S)'); }
+  if (k === 's') { e.preventDefault(); takeSnapshot('Quick Save (Ctrl/Cmd+S)'); }
   if (k === 'f') { e.preventDefault(); toggleFindBar(); }
   if (k === 'h') { e.preventDefault(); toggleFindBar(true); $('#replaceInput')?.focus(); }
 });
@@ -1291,7 +1298,7 @@ function renderComments() {
   if (!list) return;
 
   if (!documentComments.length) {
-    list.innerHTML = '<div class="empty-state"><p>No comments yet. Select text in the editor and click "💬 Comment" to leave an editorial note.</p></div>';
+    list.innerHTML = '<div class="empty-state"><p>No comments yet. Select text in the editor and click Add Comment to leave an editorial note.</p></div>';
     return;
   }
 
@@ -1307,12 +1314,13 @@ function renderComments() {
       <div class="comment-card-quote">"${escapeHTML(c.quote)}"</div>
       <div class="comment-card-body">${escapeHTML(c.text)}</div>
       <div class="comment-card-actions">
-        <button class="button secondary compact" data-resolve-comment="${idx}">${c.resolved ? 'Reopen' : '✓ Resolve'}</button>
-        <button class="button secondary compact" data-delete-comment="${idx}">✕ Delete</button>
+        <button class="button secondary compact" data-resolve-comment="${idx}">${c.resolved ? 'Reopen' : 'Resolve'}</button>
+        <button class="button secondary compact" data-delete-comment="${idx}">Delete</button>
       </div>
     `;
     list.appendChild(card);
   });
+
 
   $$('[data-resolve-comment]', list).forEach(btn => {
     btn.onclick = () => {
@@ -1892,6 +1900,77 @@ async function applyAiwdClean() {
 $('#runAiwdAuditBtn')?.addEventListener('click', runAiwdScan);
 $('#applyAiwdCleanBtn')?.addEventListener('click', applyAiwdClean);
 
+// ===================================================================
+// SCIENTIFIC TABLES SUITE
+// ===================================================================
+
+let currentTableResult = null;
+
+async function buildScientificTable() {
+  const raw = $('#tableDataInput')?.value?.trim();
+  if (!raw) {
+    showToast('Please paste CSV or TSV tabular data first');
+    return;
+  }
+  const caption = $('#tableCaptionInput')?.value?.trim() || '';
+  const label = $('#tableLabelInput')?.value?.trim() || '';
+  const notes = $('#tableNotesInput')?.value?.trim() || '';
+
+  showToast('Building Three-Line Publication Table...');
+  try {
+    const res = await fetch('/api/toolkit/tables/format', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ raw_data: raw, caption, label, notes }),
+    });
+    if (!res.ok) throw new Error(await res.text());
+    currentTableResult = await res.json();
+
+    const container = $('#tablePreviewContainer');
+    if (container) {
+      container.innerHTML = currentTableResult.html;
+    }
+    showToast(`Built ${currentTableResult.row_count}×${currentTableResult.col_count} Publication Table`);
+  } catch (err) {
+    console.error('Table build error:', err);
+    showToast('Error formatting scientific table');
+  }
+}
+
+function insertTableIntoManuscript() {
+  if (!currentTableResult || !currentTableResult.html) {
+    showToast('Build a table first before inserting');
+    return;
+  }
+  document.execCommand('insertHTML', false, `\n${currentTableResult.html}\n`);
+  editor.focus();
+  updateCounts();
+  showToast('Inserted Three-Line Table into manuscript');
+}
+
+function copyLatexBooktabs() {
+  if (!currentTableResult || !currentTableResult.latex) {
+    showToast('Build a table first before copying LaTeX');
+    return;
+  }
+  navigator.clipboard.writeText(currentTableResult.latex);
+  showToast('Copied LaTeX booktabs code to clipboard');
+}
+
+function copyMarkdownTable() {
+  if (!currentTableResult || !currentTableResult.markdown) {
+    showToast('Build a table first before copying Markdown');
+    return;
+  }
+  navigator.clipboard.writeText(currentTableResult.markdown);
+  showToast('Copied Markdown table to clipboard');
+}
+
+$('#generateTableBtn')?.addEventListener('click', buildScientificTable);
+$('#insertTableToDocBtn')?.addEventListener('click', insertTableIntoManuscript);
+$('#copyLatexBooktabsBtn')?.addEventListener('click', copyLatexBooktabs);
+$('#copyMarkdownTableBtn')?.addEventListener('click', copyMarkdownTable);
+
 // Initialize Components
 renderComments();
 renderCitations();
@@ -1899,6 +1978,7 @@ renderHistory();
 setTimeout(updateOutline, 300);
 setTimeout(updateAnalytics, 300);
 setTimeout(updateGoalProgress, 300);
+
 
 
 

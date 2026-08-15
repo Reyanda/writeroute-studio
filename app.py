@@ -900,6 +900,69 @@ def api_aiwd_packs() -> dict[str, Any]:
     }
 
 
+# ------------------------------------------------------------------ Scientific Toolkit Suite
+
+class ToolkitTablePayload(BaseModel):
+    raw_data: str = Field(min_length=2, max_length=MAX_CHARS)
+    caption: str = ""
+    label: str = ""
+    notes: str = ""
+
+
+@app.post("/api/toolkit/tables/format")
+def api_toolkit_tables_format(body: ToolkitTablePayload) -> dict[str, Any]:
+    """Formats raw CSV/TSV/Markdown into Three-Line HTML and LaTeX booktabs tables."""
+    from writeroute.toolkit.table_engine import format_scientific_table
+    return format_scientific_table(
+        raw_data=body.raw_data,
+        caption=body.caption,
+        label=body.label,
+        notes=body.notes,
+    )
+
+
+class ToolkitSlopPayload(BaseModel):
+    text: str = Field(min_length=1, max_length=MAX_CHARS)
+    genre: str = "academic"
+
+
+@app.post("/api/toolkit/slop/audit")
+def api_toolkit_slop_audit(body: ToolkitSlopPayload) -> dict[str, Any]:
+    """Runs consolidated multi-ontology slop and anti-AI audit."""
+    from writeroute.toolkit.slop_engine import run_slop_audit
+    return run_slop_audit(text=body.text, genre=body.genre)
+
+
+class ToolkitGuidelinesPayload(BaseModel):
+    text: str = Field(min_length=1, max_length=MAX_CHARS)
+    guideline: str = "consort"  # consort, prisma, strobe
+
+
+@app.post("/api/toolkit/guidelines/audit")
+def api_toolkit_guidelines_audit(body: ToolkitGuidelinesPayload) -> dict[str, Any]:
+    """Audits manuscript text against international reporting checklists."""
+    from writeroute.toolkit.guidelines_engine import run_guideline_audit
+    return run_guideline_audit(text=body.text, guideline=body.guideline)
+
+
+@app.get("/api/toolkit/equations/templates")
+def api_toolkit_equations_templates() -> dict[str, Any]:
+    """Lists standard medical, epidemiological, and causal inference formula templates."""
+    from writeroute.toolkit.equations_engine import ScientificEquationEngine
+    return {"templates": ScientificEquationEngine.list_templates()}
+
+
+class ToolkitEquationValidatePayload(BaseModel):
+    latex: str = Field(min_length=1, max_length=10000)
+
+
+@app.post("/api/toolkit/equations/validate")
+def api_toolkit_equations_validate(body: ToolkitEquationValidatePayload) -> dict[str, Any]:
+    """Validates LaTeX math formula."""
+    from writeroute.toolkit.equations_engine import ScientificEquationEngine
+    return ScientificEquationEngine.validate_latex(body.latex).to_dict()
+
+
 @app.exception_handler(Exception)
 async def generic_error(_request, exc: Exception):
     if isinstance(exc, HTTPException):
@@ -908,5 +971,6 @@ async def generic_error(_request, exc: Exception):
 
 
 app.mount("/", StaticFiles(directory=STATIC, html=True), name="static_root")
+
 
 

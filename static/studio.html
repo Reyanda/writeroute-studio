@@ -36,28 +36,89 @@
 
     <section class="workspace hidden" id="workspace" aria-label="WriteRoute editor workspace">
       <aside class="rail">
-        <button class="rail-button active" data-panel="super"><span class="rail-icon">★</span><span>Super</span></button>
-        <button class="rail-button" data-panel="audit"><span class="rail-icon">⌁</span><span>Prose</span></button>
-        <button class="rail-button" data-panel="stats"><span class="rail-icon">∿</span><span>Stats</span></button>
-        <button class="rail-button" data-panel="pattern"><span class="rail-icon">⬡</span><span>Style</span></button>
-        <button class="rail-button" data-panel="lucid"><span class="rail-icon">✦</span><span>Lucid</span></button>
-        <button class="rail-button" data-panel="docx"><span class="rail-icon">📄</span><span>DOCX</span></button>
-        <button class="rail-button" data-panel="doctrine"><span class="rail-icon">🛡</span><span>Doctrine</span></button>
-        <button class="rail-button" data-panel="writingmaster"><span class="rail-icon">⚔</span><span>Master</span></button>
-        <button class="rail-button" data-panel="comments"><span class="rail-icon">💬</span><span>Review</span></button>
-
-        <button class="rail-button" data-panel="latex"><span class="rail-icon">𝛀</span><span>LaTeX</span></button>
-        <button class="rail-button" data-panel="pdfstudio"><span class="rail-icon">📑</span><span>PDF</span></button>
-        <button class="rail-button" data-panel="outline"><span class="rail-icon">☷</span><span>Outline</span></button>
-        <button class="rail-button" data-panel="citations"><span class="rail-icon">❝</span><span>Cites</span></button>
-        <button class="rail-button" data-panel="pagesetup"><span class="rail-icon">📐</span><span>Layout</span></button>
-        <button class="rail-button" data-panel="analytics"><span class="rail-icon">📊</span><span>Stats</span></button>
-        <button class="rail-button" data-panel="history"><span class="rail-icon">⏱</span><span>History</span></button>
-        <button class="rail-button" data-panel="suggestions"><span class="rail-icon">⚡</span><span>Rewrite</span></button>
-        <button class="rail-button" data-panel="provider"><span class="rail-icon">⌘</span><span>BYOK</span></button>
+        <button class="rail-button active" data-panel="super" title="Super Engine 5-in-1">
+          <svg class="rail-svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span>Super</span>
+        </button>
+        <button class="rail-button" data-panel="audit" title="Prose Quality Audit">
+          <svg class="rail-svg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span>Prose</span>
+        </button>
+        <button class="rail-button" data-panel="stats" title="STATS-BRAIN Causal Review">
+          <svg class="rail-svg" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg>
+          <span>Stats</span>
+        </button>
+        <button class="rail-button" data-panel="pattern" title="AI Style & Pattern Scanner">
+          <svg class="rail-svg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          <span>Style</span>
+        </button>
+        <button class="rail-button" data-panel="lucid" title="LUCID-SCI Scientific Clarity">
+          <svg class="rail-svg" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+          <span>Lucid</span>
+        </button>
+        <button class="rail-button" data-panel="tables" title="Scientific Three-Line Tables">
+          <svg class="rail-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
+          <span>Tables</span>
+        </button>
+        <button class="rail-button" data-panel="docx" title="Word DOCX & XML Orchestration">
+          <svg class="rail-svg" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M9 13v4"/><path d="M12 13v4"/><path d="M15 13v4"/></svg>
+          <span>DOCX</span>
+        </button>
+        <button class="rail-button" data-panel="doctrine" title="Auctor Writing Doctrine & Fact Ledger">
+          <svg class="rail-svg" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+          <span>Doctrine</span>
+        </button>
+        <button class="rail-button" data-panel="writingmaster" title="Writing Master Anti-Slop Suite">
+          <svg class="rail-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+          <span>Master</span>
+        </button>
+        <button class="rail-button" data-panel="comments" title="Review Comments & Track Changes">
+          <svg class="rail-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span>Review</span>
+        </button>
+        <button class="rail-button" data-panel="latex" title="Overleaf LaTeX IDE">
+          <svg class="rail-svg" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <span>LaTeX</span>
+        </button>
+        <button class="rail-button" data-panel="pdfstudio" title="Adobe PDF Studio">
+          <svg class="rail-svg" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          <span>PDF</span>
+        </button>
+        <button class="rail-button" data-panel="outline" title="Document Outline">
+          <svg class="rail-svg" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          <span>Outline</span>
+        </button>
+        <button class="rail-button" data-panel="citations" title="Native Citation Manager">
+          <svg class="rail-svg" viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          <span>Cites</span>
+        </button>
+        <button class="rail-button" data-panel="pagesetup" title="Page Setup & Layout">
+          <svg class="rail-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
+          <span>Layout</span>
+        </button>
+        <button class="rail-button" data-panel="analytics" title="Prose Analytics & Readability">
+          <svg class="rail-svg" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <span>Metrics</span>
+        </button>
+        <button class="rail-button" data-panel="history" title="Version Snapshots">
+          <svg class="rail-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>History</span>
+        </button>
+        <button class="rail-button" data-panel="suggestions" title="Suggestions & Repairs">
+          <svg class="rail-svg" viewBox="0 0 24 24"><path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8 19 13"/><path d="M15 9h0"/><path d="M17.8 6.2 19 5"/><path d="m3 21 9-9"/><path d="M12.2 6.2 11 5"/></svg>
+          <span>Repair</span>
+        </button>
+        <button class="rail-button" data-panel="provider" title="BYOK Language Models">
+          <svg class="rail-svg" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>
+          <span>BYOK</span>
+        </button>
         <div class="rail-spacer"></div>
-        <button class="rail-button" id="exportOpen"><span class="rail-icon">⇩</span><span>Export</span></button>
+        <button class="rail-button" id="exportOpen" title="Export Document">
+          <svg class="rail-svg" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Export</span>
+        </button>
       </aside>
+
 
 
 
@@ -99,9 +160,9 @@
           <div class="menu">
             <button class="menu-title" id="menuFileBtn" aria-haspopup="true" aria-expanded="false">File</button>
             <div class="menu-list" id="menuFile" role="menu">
-              <button role="menuitem" id="menuOpen">Open…<kbd>⌘O</kbd></button>
-              <button role="menuitem" id="menuNew">New document<kbd>⌘N</kbd></button>
-              <button role="menuitem" id="menuSaveSnapshot">Save snapshot<kbd>⌘S</kbd></button>
+              <button role="menuitem" id="menuOpen">Open…<kbd>Ctrl+O</kbd></button>
+              <button role="menuitem" id="menuNew">New document<kbd>Ctrl+N</kbd></button>
+              <button role="menuitem" id="menuSaveSnapshot">Save snapshot<kbd>Ctrl+S</kbd></button>
               <div class="menu-sep"></div>
               <button role="menuitem" data-export="docx">Export as Word (.docx)</button>
               <button role="menuitem" data-export="tex">Export as LaTeX (.tex)</button>
@@ -113,7 +174,7 @@
           <div class="menu">
             <button class="menu-title" id="menuEditBtn" aria-haspopup="true" aria-expanded="false">Edit</button>
             <div class="menu-list" id="menuEdit" role="menu">
-              <button role="menuitem" id="menuFind">Find & Replace<kbd>⌘F</kbd></button>
+              <button role="menuitem" id="menuFind">Find & Replace<kbd>Ctrl+F</kbd></button>
               <div class="menu-sep"></div>
               <button role="menuitem" id="menuInsertTable">Insert Table…</button>
               <button role="menuitem" id="menuInsertEq">Insert Equation…</button>
@@ -125,13 +186,14 @@
           <div class="menu">
             <button class="menu-title" id="menuReviewBtn" aria-haspopup="true" aria-expanded="false">Review</button>
             <div class="menu-list" id="menuReview" role="menu">
-              <button role="menuitem" id="menuAudit">Run audit<kbd>⌘↵</kbd></button>
+              <button role="menuitem" id="menuAudit">Run audit<kbd>Ctrl+Enter</kbd></button>
               <button role="menuitem" id="menuSuggest">Rule-based suggestions</button>
               <button role="menuitem" id="menuRepair">Apply safe repairs</button>
               <div class="menu-sep"></div>
               <button role="menuitem" id="menuModel">Language model…</button>
             </div>
           </div>
+
           <div class="menu">
             <button class="menu-title" id="menuViewBtn" aria-haspopup="true" aria-expanded="false">View</button>
             <div class="menu-list" id="menuView" role="menu">
@@ -153,34 +215,36 @@
             <option value="p">Body</option><option value="h1">Title (H1)</option><option value="h2">Section (H2)</option><option value="h3">Subsection (H3)</option><option value="blockquote">Quote</option><option value="pre">Code Block</option>
           </select>
           <span class="toolbar-divider"></span>
-          <button data-command="bold" title="Bold (⌘B)"><b>B</b></button>
-          <button data-command="italic" title="Italic (⌘I)"><i>I</i></button>
-          <button data-command="underline" title="Underline (⌘U)"><u>U</u></button>
+          <button data-command="bold" title="Bold (Ctrl+B)"><strong>B</strong></button>
+          <button data-command="italic" title="Italic (Ctrl+I)"><em>I</em></button>
+          <button data-command="underline" title="Underline (Ctrl+U)"><u>U</u></button>
           <button data-command="strikeThrough" title="Strikethrough"><s>S</s></button>
-          <button data-command="subscript" title="Subscript">x₂</button>
-          <button data-command="superscript" title="Superscript">x²</button>
-          <button id="inlineCodeBtn" title="Inline Code">`c`</button>
+          <button data-command="subscript" title="Subscript">x<sub>2</sub></button>
+          <button data-command="superscript" title="Superscript">x<sup>2</sup></button>
+          <button id="inlineCodeBtn" title="Inline Code">&lt;/&gt;</button>
           <span class="toolbar-divider"></span>
-          <button data-command="insertUnorderedList" title="Bulleted list">•≡</button>
-          <button data-command="insertOrderedList" title="Numbered list">1≡</button>
-          <button id="linkButton" title="Insert link">↗</button>
-          <button id="toolbarFootnoteBtn" title="Insert Footnote">¹ Note</button>
-          <button id="addCommentBtn" title="Add Review Comment (⌘M)">💬 Comment</button>
+          <button data-command="insertUnorderedList" title="Bulleted list"><svg class="toolbar-svg" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1.5" fill="currentColor"/><circle cx="4" cy="12" r="1.5" fill="currentColor"/><circle cx="4" cy="18" r="1.5" fill="currentColor"/></svg></button>
+          <button data-command="insertOrderedList" title="Numbered list"><svg class="toolbar-svg" viewBox="0 0 24 24"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h2v-4"/><path d="M4 14h2.5L4 18h3"/></svg></button>
+          <button id="linkButton" title="Insert link"><svg class="toolbar-svg" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
+          <button id="toolbarFootnoteBtn" title="Insert Footnote"><svg class="toolbar-svg" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Note</button>
+          <button id="addCommentBtn" title="Add Review Comment (Ctrl+M)"><svg class="toolbar-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Comment</button>
           <span class="toolbar-divider"></span>
-          <button id="toolbarTableBtn" title="Insert Table">▦ Table</button>
-          <button id="toolbarEqBtn" title="Insert LaTeX Equation">∑ Eq</button>
-          <button id="toolbarCiteBtn" title="Insert Citation">❝ Cite</button>
-          <button id="toolbarCalloutBtn" title="Insert Callout Box">ℹ Callout</button>
-          <button id="toolbarFigBtn" title="Insert Figure">🖼 Fig</button>
-          <button id="toolbarHrBtn" title="Horizontal Divider">―</button>
+          <button id="toolbarTableBtn" title="Insert Table"><svg class="toolbar-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="12" y1="3" x2="12" y2="21"/></svg> Table</button>
+          <button id="toolbarEqBtn" title="Insert LaTeX Equation"><svg class="toolbar-svg" viewBox="0 0 24 24"><path d="M18 4H6l6 8-6 8h12"/></svg> Eq</button>
+          <button id="toolbarCiteBtn" title="Insert Citation"><svg class="toolbar-svg" viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/></svg> Cite</button>
+          <button id="toolbarCalloutBtn" title="Insert Callout Box"><svg class="toolbar-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> Callout</button>
+          <button id="toolbarFigBtn" title="Insert Figure"><svg class="toolbar-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Fig</button>
+          <button id="toolbarHrBtn" title="Horizontal Divider"><svg class="toolbar-svg" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/></svg></button>
           <span class="toolbar-divider"></span>
-          <button id="latexSplitBtn" title="Overleaf Split-Screen LaTeX Source View">𝛀 Split TeX</button>
-          <button id="findToggleBtn" title="Find & Replace (⌘F)">🔍 Find</button>
+          <button id="latexSplitBtn" title="Overleaf Split-Screen LaTeX Source View"><svg class="toolbar-svg" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Split TeX</button>
+          <button id="findToggleBtn" title="Find & Replace (Ctrl+F)"><svg class="toolbar-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find</button>
           <span class="toolbar-spacer"></span>
-          <button data-command="undo" title="Undo">↶</button>
-          <button data-command="redo" title="Redo">↷</button>
+          <button data-command="undo" title="Undo"><svg class="toolbar-svg" viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg></button>
+          <button data-command="redo" title="Redo"><svg class="toolbar-svg" viewBox="0 0 24 24"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg></button>
           <button id="focusMode" title="Focus mode">Focus</button>
         </div>
+
+
 
         <!-- Slide-down Find & Replace Bar -->
         <div id="findReplaceBar" class="find-replace-bar hidden" role="search">
@@ -365,7 +429,7 @@
           <div class="panel-head"><div><h2>Review & Comments</h2></div><button class="panel-close">×</button></div>
           <p class="panel-copy">Manage margin annotations, author review threads, and track change revisions.</p>
           <div class="route-actions" style="margin-bottom:14px">
-            <button class="button primary full" id="openAddCommentModalBtn">+ Add Review Comment (⌘M)</button>
+            <button class="button primary full" id="openAddCommentModalBtn"><svg class="svg-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Review Comment (Ctrl+M)</button>
             <div class="inline-fields" style="margin-top:6px">
               <button class="button secondary compact" id="acceptAllChangesBtn">Accept All</button>
               <button class="button secondary compact" id="rejectAllChangesBtn">Reject All</button>
@@ -373,9 +437,10 @@
           </div>
           <div class="section-title"><span>Active Comment Threads</span><span id="commentCountBadge" class="badge">0</span></div>
           <div class="comment-list" id="commentList">
-            <div class="empty-state"><p>No comments yet. Select text in the editor and click "💬 Comment" to leave an editorial note.</p></div>
+            <div class="empty-state"><p>No comments yet. Select text in the editor and click Add Comment to leave an editorial note.</p></div>
           </div>
         </section>
+
 
         <!-- Page Setup & Layout Panel -->
         <section class="panel" id="panel-pagesetup">
@@ -428,10 +493,39 @@
           </div>
           <div class="section-title"><span>Preamble Packages</span></div>
           <div style="font-size:11.5px;color:var(--muted);line-height:1.6;background:var(--surface-solid);padding:10px;border-radius:var(--radius-cards);border:1px solid var(--line)">
-            ✔ amsmath, amssymb, amsfonts<br>
-            ✔ booktabs (three-line tables)<br>
-            ✔ graphicx, hyperref, microtype<br>
-            ✔ geometry (1-inch margins)
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> amsmath, amssymb, amsfonts<br>
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> booktabs (three-line tables)<br>
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> graphicx, hyperref, microtype<br>
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> geometry (1-inch margins)
+          </div>
+        </section>
+
+        <!-- Scientific Tables & Formatting Panel -->
+        <section class="panel" id="panel-tables">
+          <div class="panel-head"><div><h2>Scientific Tables Suite</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy">Publication-standard Three-Line Tables (Lancet, NEJM, APA, Nature), LaTeX booktabs, and decimal-aligned numeric columns.</p>
+          <div class="route-actions" style="margin-bottom:12px">
+            <textarea id="tableDataInput" class="editor" style="min-height:110px;height:120px;font-family:monospace;font-size:12px;padding:10px;width:100%;margin-bottom:8px" placeholder="Paste CSV or TSV tabular data here:
+Variable, Treated (n=120), Control (n=120), p-value
+Age (years), 64.2 ± 8.1, 63.8 ± 7.9, 0.68
+Mortality (%), 12 (10.0%), 28 (23.3%), 0.007
+Odds Ratio, 0.36 (0.17-0.76), Reference, 0.007"></textarea>
+            <div class="inline-fields" style="margin-bottom:8px">
+              <input id="tableCaptionInput" type="text" placeholder="Table Caption (e.g. Table 1: Baseline Characteristics)" style="flex:2" />
+              <input id="tableLabelInput" type="text" placeholder="LaTeX Label (tab:baseline)" style="flex:1" />
+            </div>
+            <input id="tableNotesInput" type="text" placeholder="Footnotes (e.g. Data presented as mean ± SD or n (%).)" style="width:100%;margin-bottom:8px" />
+            <div class="inline-fields" style="gap:6px">
+              <button class="button primary compact" id="generateTableBtn" style="flex:1"><svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="12" y1="3" x2="12" y2="21"/></svg> Build Table</button>
+              <button class="button secondary compact" id="insertTableToDocBtn" style="flex:1"><svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Insert into Doc</button>
+            </div>
+          </div>
+          <div id="tablePreviewContainer" style="margin-top:14px;overflow-x:auto;background:var(--surface-solid);padding:10px;border:1px solid var(--line);border-radius:var(--radius-cards)">
+            <div class="empty-state"><p>Paste CSV data above and click "Build Table" to render a publication-grade three-line table.</p></div>
+          </div>
+          <div class="inline-fields" style="margin-top:10px">
+            <button class="button secondary compact" id="copyLatexBooktabsBtn" style="flex:1">Copy LaTeX Booktabs</button>
+            <button class="button secondary compact" id="copyMarkdownTableBtn" style="flex:1">Copy Markdown</button>
           </div>
         </section>
 
@@ -440,18 +534,19 @@
           <div class="panel-head"><div><h2>Adobe PDF Studio</h2></div><button class="panel-close">×</button></div>
           <p class="panel-copy">Comprehensive PDF manipulation suite: merge, split, rotate, watermark, redact, and extract.</p>
           <div class="route-actions" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
-            <button class="button secondary compact" id="openPdfMergeModalBtn">⚡ Merge PDFs</button>
-            <button class="button secondary compact" id="openPdfSplitModalBtn">✂ Split Pages</button>
-            <button class="button secondary compact" id="openPdfRotateModalBtn">↻ Rotate Pages</button>
-            <button class="button secondary compact" id="openPdfWatermarkModalBtn">💧 Watermark</button>
-            <button class="button secondary compact" id="openPdfRedactModalBtn">⬛ Redact Text</button>
-            <button class="button secondary compact" id="openPdfExtractModalBtn">🔍 OCR Extract</button>
+            <button class="button secondary compact" id="openPdfMergeModalBtn"><svg class="svg-icon" viewBox="0 0 24 24"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg> Merge PDFs</button>
+            <button class="button secondary compact" id="openPdfSplitModalBtn"><svg class="svg-icon" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg> Split Pages</button>
+            <button class="button secondary compact" id="openPdfRotateModalBtn"><svg class="svg-icon" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Rotate Pages</button>
+            <button class="button secondary compact" id="openPdfWatermarkModalBtn"><svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg> Watermark</button>
+            <button class="button secondary compact" id="openPdfRedactModalBtn"><svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" fill="currentColor"/></svg> Redact Text</button>
+            <button class="button secondary compact" id="openPdfExtractModalBtn"><svg class="svg-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> OCR Extract</button>
           </div>
           <div class="score-card" id="pdfStudioStatusCard">
             <div><strong id="pdfStudioStatusLabel">PDF Studio Ready</strong><p id="pdfStudioStatusSummary">Select a PDF operation above to process document pages.</p></div>
           </div>
           <div id="pdfExtractResultBox" class="candidate-preview hidden" style="margin-top:14px;max-height:220px"></div>
         </section>
+
 
         <!-- Document Outline Panel -->
         <section class="panel" id="panel-outline">
@@ -470,8 +565,8 @@
           <div class="panel-head"><div><h2>Native Citation Manager</h2></div><button class="panel-close">×</button></div>
           <p class="panel-copy">Comprehensive BibTeX, RIS & CSL reference manager with SDT-wrapped in-text citation fields and automated multi-style bibliographies.</p>
           <div class="route-actions" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
-            <button class="button primary compact" id="openAddCiteModalBtn">+ Add Reference</button>
-            <button class="button secondary compact" id="syncDocCitationsBtn">⚡ Sync with Doc</button>
+            <button class="button primary compact" id="openAddCiteModalBtn"><svg class="svg-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Reference</button>
+            <button class="button secondary compact" id="syncDocCitationsBtn"><svg class="svg-icon" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Sync with Doc</button>
           </div>
           <div class="inline-fields" style="margin-bottom:10px">
             <select id="citationStyleSelect" aria-label="Citation Style">
@@ -487,12 +582,13 @@
             <button class="button secondary compact" id="exportBibtexBtn" style="flex:1">Export .bib</button>
             <button class="button secondary compact" id="exportRisBtn" style="flex:1">Export .ris</button>
           </div>
-          <input type="text" id="citationSearchInput" placeholder="🔍 Search library by author, title, year..." style="width:100%;margin-bottom:10px;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:var(--radius-inputs);padding:6px 10px;font-size:12px" />
+          <input type="text" id="citationSearchInput" placeholder="Search library by author, title, year..." style="width:100%;margin-bottom:10px;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:var(--radius-inputs);padding:6px 10px;font-size:12px" />
           <div class="section-title"><span>Library References</span><span id="citeCountBadge" class="badge">0</span></div>
           <div class="citation-list" id="citationList">
-            <div class="empty-state"><p>No citations in library. Click "+ Add Reference" to import BibTeX or RIS entries.</p></div>
+            <div class="empty-state"><p>No citations in library. Click "Add Reference" to import BibTeX or RIS entries.</p></div>
           </div>
         </section>
+
 
 
         <!-- Document Analytics & Readability Panel -->
@@ -541,8 +637,8 @@
           <p class="panel-copy">Ontology-driven AI writing detection, conservative de-slop rewriter, domain allow-lists & reported voice isolation.</p>
           
           <div class="route-actions" style="margin-bottom:14px;display:flex;gap:8px;flex-direction:column">
-            <button class="button primary full" id="runAiwdAuditBtn">⚔ Run Writing Master Scan</button>
-            <button class="button secondary full" id="applyAiwdCleanBtn">⚡ Apply Conservative De-Slop</button>
+            <button class="button primary full" id="runAiwdAuditBtn"><svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg> Run Writing Master Scan</button>
+            <button class="button secondary full" id="applyAiwdCleanBtn"><svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg> Apply Conservative De-Slop</button>
           </div>
 
           <div class="score-card" style="margin-bottom:12px">

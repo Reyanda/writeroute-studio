@@ -558,3 +558,85 @@
   padding: 64px 96px;
 }
 
+/* SVG Icons and Pure Vector Assets */
+.rail-svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.15s ease, stroke 0.15s ease;
+}
+.rail-button:hover .rail-svg,
+.rail-button.active .rail-svg {
+  stroke: var(--color-whiteout, #ffffff);
+  transform: scale(1.08);
+}
+.svg-icon {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: -2px;
+  display: inline-block;
+}
+.toolbar-svg {
+  width: 13px;
+  height: 13px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: middle;
+}
+.btn-svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  margin-right: 4px;
+}
+
+/* Three-Line Scientific Tables (Lancet, NEJM, APA, Nature) */
+.scientific-table.three-line-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-family: inherit;
+  font-size: 0.9em;
+  border-top: 1.5pt solid var(--text);
+  border-bottom: 1.5pt solid var(--text);
+  border-left: none;
+  border-right: none;
+}
+.scientific-table.three-line-table thead tr {
+  border-bottom: 0.75pt solid var(--text);
+}
+.scientific-table.three-line-table th {
+  padding: 8px 12px;
+  font-weight: 600;
+  border: none;
+  color: var(--text);
+}
+.scientific-table.three-line-table td {
+  padding: 6px 12px;
+  border: none;
+  color: var(--text);
+}
+.scientific-table.three-line-table tfoot td {
+  padding: 6px 12px;
+  border-top: 0.5pt solid var(--line);
+  font-size: 0.85em;
+  color: var(--muted);
+}
+
+

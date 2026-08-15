@@ -62,7 +62,16 @@ High-performance PyMuPDF stream processing tools:
 
 ![Native Citation Manager](assets/citation_manager_ui.png)
 
-### 6. ⚔️ Writing Master — Ontology-Driven AI Detection & Anti-Slop Suite (`aiwd`)
+### 6. 📊 Scientific Tables & Formalized Toolkit (`writeroute.toolkit`)
+- **Three-Line Publication Tables**: Full support for Lancet, NEJM, Nature, and APA 7th standards with thick top/bottom rules (`1.5pt`), mid header rules (`0.75pt`), and zero vertical borders.
+- **Automated Decimal Alignment**: Right-aligns numeric data, p-values, odds ratios, and 95% confidence intervals.
+- **Multi-Format Table Exporter**: 1-click conversion to HTML, LaTeX `booktabs` (`\toprule`, `\midrule`, `\bottomrule`), and GitHub Flavored Markdown.
+- **Reporting Guidelines Engine**: Automated compliance checks against **CONSORT 2010** (trials), **PRISMA 2020** (systematic reviews), and **STROBE** (observational cohorts).
+- **Scientific Equations Suite**: LaTeX math formula validator and formula templates (Odds Ratio, Risk Ratio, Cox Proportional Hazard, AIPW Estimator, Difference-in-Differences, Bayes' Theorem, Inverse-Variance Meta-Analysis).
+
+![Scientific Tables Suite](assets/scientific_tables_ui.png)
+
+### 7. ⚔️ Writing Master — Ontology-Driven AI Detection & Anti-Slop Suite (`aiwd`)
 - **Machine-Readable Pattern Ontology**: 7 feature families (Lexical, Syntactic, Discourse, Epistemic Stance, Pragmatic Depth, Formatting, Probabilistic).
 - **Domain Allow-Lists**: Excuses field-standard vocabulary (e.g. *doubly robust*, *positivity*, *transportability*) from being flagged as slop.
 - **Reported Voice Isolation**: Automatically discounts quotations, citations, and attributed speech so authors are not penalised for citing sources.
@@ -70,14 +79,14 @@ High-performance PyMuPDF stream processing tools:
 
 ![Writing Master UI](assets/writing_master_ui.png)
 
-### 7. 🛡️ The Auctor Writing Doctrine (`writeroute.auctor_doctrine`)
-
+### 8. 🛡️ The Auctor Writing Doctrine (`writeroute.auctor_doctrine`)
 - **Three Non-Leaking Channels**:
   - `Substantive`: 100% publication-ready prose.
   - `QC`: Rule codes, defect severities, diagnostic matrices, gate states.
   - `Commentary`: Margin review comments, editorial suggestions, author queries.
 - **Four Revision Authorities**: `mechanical` (formatting only), `copyedit` (meaning-preserving local fixes), `substantive` (fact-ledger invariant checked rewriting), `developmental` (critique only).
 - **Immutable Fact Ledger**: Freezes all numbers, percentages, CIs, p-values, directionality words (`increased`/`decreased`), negations (`no`/`not`/`never`), and identifiers before any edit pass.
+
 
 ![Auctor Writing Doctrine & Fact Ledger](assets/auctor_doctrine_ui.png)
 
@@ -106,12 +115,13 @@ Open **http://localhost:8000** in your browser.
 
 ## 🧪 Verification & Automated Test Suite
 
-Run the full automated test suite covering the Super Engine, Writing Master (AIWD), PDF tools, Word review suite, LaTeX export, DocXML orchestration, Mendeley SDTs, and Native Citation Manager:
+Run the full automated test suite covering the Super Engine, Scientific Tables & Toolkit, Writing Master (AIWD), PDF tools, Word review suite, LaTeX export, DocXML orchestration, Mendeley SDTs, and Native Citation Manager:
 
 ```bash
-pytest tests/test_writing_master.py tests/test_citation_manager.py tests/test_doctrine_and_docxml.py tests/test_pdf_and_word_suite.py tests/test_authoring.py tests/test_super_engine.py
+pytest tests/test_scientific_toolkit.py tests/test_writing_master.py tests/test_citation_manager.py tests/test_doctrine_and_docxml.py tests/test_pdf_and_word_suite.py tests/test_authoring.py tests/test_super_engine.py
 ```
-> **Result**: `31 passed (100% pass rate)`.
+> **Result**: `36 passed (100% pass rate)`.
+
 
 
 ---

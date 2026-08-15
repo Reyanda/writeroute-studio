@@ -206,6 +206,18 @@ with sync_playwright() as p:
     page.screenshot(path=str(ASSETS / "citation_manager_ui.png"))
     print("Saved assets/citation_manager_ui.png")
 
+    # Scientific Tables Panel
+    page.click('.rail-button[data-panel="tables"]')
+    sample_csv = "Variable, Treated (n=120), Control (n=120), p-value\nAge (years), 64.2 ± 8.1, 63.8 ± 7.9, 0.68\nMortality (%), 12 (10.0%), 28 (23.3%), 0.007\nOdds Ratio, 0.36 (0.17-0.76), Reference, 0.007"
+    page.fill('#tableDataInput', sample_csv)
+    page.fill('#tableCaptionInput', 'Table 1: Baseline Demographic and Clinical Characteristics')
+    page.fill('#tableNotesInput', 'Data presented as mean ± SD or n (%). Evaluated via Wald test.')
+    page.click('#generateTableBtn')
+    time.sleep(0.8)
+    page.screenshot(path=str(ASSETS / "scientific_tables_ui.png"))
+    print("Saved assets/scientific_tables_ui.png")
+
+
     # Writing Master Panel
     page.click('.rail-button[data-panel="writingmaster"]')
     page.click('#runAiwdAuditBtn')
@@ -214,6 +226,7 @@ with sync_playwright() as p:
     print("Saved assets/writing_master_ui.png")
 
     browser.close()
+
 
 
 
