@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Tracer Field Studio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="light">
+  <div class="app-shell" id="app-shell">
+    <nav class="desktop-menubar" aria-label="Application menu">
+      <strong>TRACER PDF</strong>
+      <button type="button" data-menu-command="file">File</button>
+      <button type="button" data-menu-command="edit">Edit</button>
+      <button type="button" data-menu-command="view">View</button>
+      <button type="button" data-menu-command="document">Document</button>
+      <button type="button" data-menu-command="tools">Tools</button>
+      <button type="button" data-menu-command="help">Help</button>
+    </nav>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Tracer Field Studio home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 28 28" role="img"><path d="M7 5.5h9.5a5 5 0 0 1 0 10H12l-5 7v-17Z"/><path d="M11 10h7M11 13.5h4"/></svg>
+        </span>
+        <span class="brand-copy"><strong>Tracer</strong><small>Field Studio</small></span>
+      </a>
+
+      <div class="document-switcher">
+        <button class="button button-primary" id="btn-upload" type="button">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 13V3m0 0L6.5 6.5M10 3l3.5 3.5M4 11.5v3A1.5 1.5 0 0 0 5.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-3"/></svg>
+          Add PDF
+        </button>
+        <input id="file-upload" type="file" accept="application/pdf,.pdf" hidden>
+        <label class="select-wrap document-select-wrap">
+          <span class="sr-only">Active document</span>
+          <select id="document-select" aria-label="Active document"></select>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg>
+        </label>
+      </div>
+
+      <div class="document-title" aria-live="polite">
+        <strong id="document-title">Preparing workspace…</strong>
+        <span id="document-meta">Local, private processing</span>
+      </div>
+
+      <div class="topbar-actions">
+        <div class="history-actions" role="group" aria-label="History">
+          <button class="icon-button" id="btn-undo" type="button" title="Undo (Ctrl/⌘ Z)" disabled>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 5 3 9.5 7.5 14M3.5 9.5h7a5 5 0 1 1 0 10"/></svg>
+          </button>
+          <button class="icon-button" id="btn-redo" type="button" title="Redo (Ctrl/⌘ Shift Z)" disabled>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12.5 5 4.5 4.5-4.5 4.5M16.5 9.5h-7a5 5 0 1 0 0 10"/></svg>
+          </button>
+        </div>
+        <button class="icon-button" id="btn-shortcuts" type="button" title="Keyboard shortcuts">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="4" width="15" height="12" rx="2"/><path d="M5.5 8h1m2.5 0h1m2.5 0h1M5.5 12h6"/></svg>
+        </button>
+        <button class="icon-button" id="btn-theme" type="button" title="Toggle appearance">
+          <svg class="theme-light-icon" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="3.25"/><path d="M10 1.75v2M10 16.25v2M1.75 10h2M16.25 10h2M4.17 4.17l1.42 1.42m8.82 8.82 1.42 1.42m0-11.66-1.42 1.42m-8.82 8.82-1.42 1.42"/></svg>
+          <svg class="theme-dark-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M16.8 12.2A7 7 0 0 1 7.8 3.2a7 7 0 1 0 9 9Z"/></svg>
+        </button>
+        <label class="select-wrap profile-select-wrap">
+          <span class="sr-only">Autofill profile</span>
+          <select id="profile-select" aria-label="Autofill profile">
+            <option value="individual_retail">Retail example</option>
+            <option value="diaspora_applicant">Diaspora example</option>
+          </select>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg>
+        </label>
+        <button class="button button-secondary" id="btn-autofill" type="button" title="Fill recognised fields with the selected example profile">
+          Autofill
+        </button>
+        <button class="button button-export" id="btn-export" type="button">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m0 0 3.5-3.5M10 12 6.5 8.5M4 14.5v1A1.5 1.5 0 0 0 5.5 17h9a1.5 1.5 0 0 0 1.5-1.5v-1"/></svg>
+          Export PDF
+        </button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="inventory-panel" aria-label="Detected field inventory">
+        <div class="reading-panel" id="reading-panel" hidden>
+          <div class="panel-header inventory-header">
+            <div><span class="eyebrow">Reading workspace</span><h1>Search & annotations</h1></div>
+          </div>
+          <form class="pdf-search-control" id="pdf-search-form">
+            <input id="pdf-search" type="search" placeholder="Find text in document" autocomplete="off">
+            <button class="button button-secondary" type="submit">Find</button>
+          </form>
+          <div class="reading-section-heading"><strong>Search results</strong><span id="pdf-search-count">0</span></div>
+          <div class="search-results" id="pdf-search-results"><p>Search the document text layer.</p></div>
+          <div class="reading-section-heading"><strong>Highlights</strong><span id="annotation-count">0</span></div>
+          <div class="annotation-list" id="annotation-list"><p>No highlights yet.</p></div>
+        </div>
+        <div class="editing-panel" id="editing-panel">
+        <div class="panel-header inventory-header">
+          <div>
+            <span class="eyebrow">Document intelligence</span>
+            <h1>Field map</h1>
+          </div>
+          <button class="icon-button subtle" id="btn-redetect" type="button" title="Run detection again">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M15.8 7A6.5 6.5 0 1 0 16 12m-.2-5V3m0 4h-4"/></svg>
+          </button>
+        </div>
+
+        <section class="health-card" aria-label="Detection summary">
+          <div class="health-score">
+            <span class="score-ring" id="score-ring"><strong id="health-score">—</strong></span>
+            <div><strong>Detection quality</strong><span id="health-copy">Scanning document structure</span></div>
+          </div>
+          <div class="health-metrics">
+            <div><strong id="metric-fields">0</strong><span>fields</span></div>
+            <div><strong id="metric-reviewed">0%</strong><span>reviewed</span></div>
+            <div><strong id="metric-filled">0%</strong><span>filled</span></div>
+          </div>
+        </section>
+
+        <div class="search-control">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5"/><path d="m12.2 12.2 4 4"/></svg>
+          <input id="field-search" type="search" placeholder="Search fields" autocomplete="off">
+          <kbd>⌘K</kbd>
+        </div>
+
+        <div class="filter-tabs" id="filter-tabs" role="tablist" aria-label="Field filters">
+          <button class="filter-tab active" data-filter="all" type="button" role="tab" aria-selected="true">All <span id="count-all">0</span></button>
+          <button class="filter-tab" data-filter="review" type="button" role="tab" aria-selected="false">Review <span id="count-review">0</span></button>
+          <button class="filter-tab" data-filter="filled" type="button" role="tab" aria-selected="false">Filled <span id="count-filled">0</span></button>
+        </div>
+
+        <div class="type-summary" id="type-summary" aria-label="Field type counts"></div>
+
+        <div class="field-list" id="field-list" aria-live="polite">
+          <div class="skeleton-list" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+
+        <div class="inventory-footer">
+          <button class="button button-quiet full-width" id="btn-review-next" type="button">
+            Review next uncertain field
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m8 5 5 5-5 5"/></svg>
+          </button>
+        </div>
+        </div>
+      </aside>
+
+      <section class="canvas-workspace" aria-label="PDF editor canvas">
+        <div class="canvas-toolbar" aria-label="Field tools">
+          <div class="mode-switch" role="group" aria-label="Workspace mode">
+            <button class="mode-button active" id="btn-mode-edit" type="button" aria-pressed="true">Edit</button>
+            <button class="mode-button" id="btn-mode-read" type="button" aria-pressed="false">Read</button>
+          </div>
+          <span class="toolbar-divider" aria-hidden="true"></span>
+          <div class="edit-tools toolbar-mode-tools" id="edit-tools">
+          <div class="tool-group" role="group" aria-label="Selection tool">
+            <button class="tool-button active" data-tool="select" type="button" title="Select and move fields (V)">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 3 9 8-5 .8L7.5 16 5 3Z"/></svg><span>Select</span><kbd>V</kbd>
+            </button>
+          </div>
+          <span class="toolbar-divider" aria-hidden="true"></span>
+          <div class="tool-group add-tools" role="group" aria-label="Add fields">
+            <button class="tool-button" data-tool="text" type="button" title="Add text field (T)"><span class="tool-symbol">T</span><span>Text</span></button>
+            <button class="tool-button" data-tool="checkbox" type="button" title="Add checkbox (C)"><span class="tool-symbol checkbox-symbol"></span><span>Check</span></button>
+            <button class="tool-button" data-tool="radio" type="button" title="Add radio choice (R)"><span class="tool-symbol radio-symbol"></span><span>Radio</span></button>
+            <button class="tool-button" data-tool="date" type="button" title="Add date field (D)">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="4.5" width="14" height="12" rx="2"/><path d="M6 2.5v4m8-4v4M3 8h14"/></svg><span>Date</span>
+            </button>
+            <button class="tool-button" data-tool="signature" type="button" title="Add signature field (S)">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 15.5c2-4 3-7 4.5-7 2.5 0-1 7 1 7 1.5 0 2.5-4 4-4 1 0 .5 2 .8 2.8.3.7 1.2.6 3.7-.3"/></svg><span>Sign</span>
+            </button>
+            <button class="tool-button" data-tool="cell" type="button" title="Add one atomic character cell">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="4" width="12" height="12"/><path d="M8 8h4v4H8z"/></svg><span>Cell</span>
+            </button>
+            <button class="tool-button" data-tool="cell_row" type="button" title="Add a row of eight independent cells">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="5" width="16" height="10"/><path d="M6 5v10M10 5v10M14 5v10"/></svg><span>Cells</span>
+            </button>
+            <button class="tool-button" data-tool="auto_detect" type="button" title="Detect the field or cell group under the pointer">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2v3m0 10v3M2 10h3m10 0h3"/><circle cx="10" cy="10" r="4"/></svg><span>Detect</span>
+            </button>
+            <button class="tool-button" data-tool="table_cell" type="button" title="Add a free rectangular field region">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="4" width="14" height="12"/><path d="M3 8h14"/></svg><span>Region</span>
+            </button>
+          </div>
+          <span class="toolbar-divider" aria-hidden="true"></span>
+          <button class="tool-button icon-only" id="btn-toggle-labels" type="button" title="Toggle field labels" aria-pressed="false">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2.5 10s2.8-5 7.5-5 7.5 5 7.5 5-2.8 5-7.5 5-7.5-5-7.5-5Z"/><circle cx="10" cy="10" r="2"/></svg>
+          </button>
+          </div>
+          <div class="read-tools toolbar-mode-tools" id="read-tools" hidden>
+            <div class="tool-group" role="group" aria-label="Reading tools">
+              <button class="tool-button active" data-read-tool="select" type="button" title="Select highlights"><span class="tool-symbol">↖</span><span>Select</span></button>
+              <button class="tool-button" data-read-tool="highlight" type="button" title="Drag to highlight a region (H)">
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 14 7-9 3 2-7 9H5v-2Z"/><path d="M3 17h14"/></svg><span>Highlight</span>
+              </button>
+            </div>
+            <span class="toolbar-divider" aria-hidden="true"></span>
+            <div class="highlight-palette" id="highlight-palette" aria-label="Highlight colour">
+              <button class="highlight-swatch active" data-highlight-color="yellow" type="button" title="Direct evidence"></button>
+              <button class="highlight-swatch" data-highlight-color="blue" type="button" title="Definition or method"></button>
+              <button class="highlight-swatch" data-highlight-color="green" type="button" title="Result or estimate"></button>
+              <button class="highlight-swatch" data-highlight-color="orange" type="button" title="Limitation or caveat"></button>
+              <button class="highlight-swatch" data-highlight-color="red" type="button" title="Conflict or review issue"></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-controls" aria-label="Page navigation">
+          <button class="icon-button subtle" id="btn-prev-page" type="button" title="Previous page">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 5-5 5 5 5"/></svg>
+          </button>
+          <span id="page-indicator">Page — of —</span>
+          <button class="icon-button subtle" id="btn-next-page" type="button" title="Next page">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m8 5 5 5-5 5"/></svg>
+          </button>
+        </div>
+
+        <div class="canvas-viewport" id="canvas-viewport">
+          <div class="canvas-stage-wrap" id="canvas-stage-wrap">
+            <div class="canvas-stage" id="canvas-stage" tabindex="0" aria-label="PDF page canvas">
+              <img id="pdf-page" class="pdf-page" alt="Current PDF page">
+              <svg id="vector-layer" class="canvas-layer vector-layer" aria-hidden="true"></svg>
+              <div id="annotation-layer" class="canvas-layer annotation-layer"></div>
+              <div id="field-layer" class="canvas-layer field-layer"></div>
+              <div id="value-layer" class="canvas-layer value-layer" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="canvas-empty" id="canvas-empty" hidden>
+            <span class="empty-illustration" aria-hidden="true">
+              <svg viewBox="0 0 64 64"><path d="M17 6h22l10 10v42H17z"/><path d="M39 6v12h10M25 30h16M25 38h16M25 46h10"/></svg>
+            </span>
+            <h2>Drop a PDF to begin</h2>
+            <p>Tracer identifies fields, classifies their purpose, and keeps every prediction editable.</p>
+            <button class="button button-primary" id="btn-empty-upload" type="button">Choose PDF</button>
+          </div>
+          <div class="loading-overlay" id="loading-overlay" aria-live="polite">
+            <span class="loader"></span>
+            <strong id="loading-title">Reading document structure</strong>
+            <span id="loading-detail">Finding lines, boxes, cells, and native fields…</span>
+          </div>
+        </div>
+
+        <footer class="canvas-statusbar">
+          <div class="status-copy"><span class="status-dot" id="status-dot"></span><span id="status-message">Ready</span></div>
+          <div class="canvas-view-actions">
+            <button class="icon-button compact" id="btn-zoom-out" type="button" title="Zoom out">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10"/></svg>
+            </button>
+            <button class="zoom-value" id="btn-zoom-fit" type="button" title="Fit page"><span id="zoom-indicator">100%</span></button>
+            <button class="icon-button compact" id="btn-zoom-in" type="button" title="Zoom in">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10M10 5v10"/></svg>
+            </button>
+          </div>
+        </footer>
+      </section>
+
+      <aside class="inspector-panel" aria-label="Field inspector">
+        <div class="panel-header inspector-header">
+          <div><span class="eyebrow">Properties</span><h2>Inspector</h2></div>
+          <button class="icon-button subtle mobile-inspector-close" id="btn-close-inspector" type="button" title="Close inspector">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg>
+          </button>
+        </div>
+
+        <div class="annotation-inspector" id="annotation-inspector" hidden>
+          <div class="annotation-empty" id="annotation-empty"><h3>Reading mode</h3><p>Select text search results or drag on the page to create a PDF highlight.</p></div>
+          <form id="annotation-form" hidden>
+            <section class="inspector-section">
+              <label class="form-field"><span>Highlight colour</span><select id="annotation-color"><option value="yellow">Yellow · evidence</option><option value="blue">Blue · method</option><option value="green">Green · result</option><option value="orange">Orange · limitation</option><option value="red">Red · issue</option></select></label>
+              <label class="form-field"><span>Selected text</span><textarea id="annotation-text" rows="4" readonly></textarea></label>
+              <label class="form-field"><span>Reviewer note</span><textarea id="annotation-note" rows="5" placeholder="Add a note or evidence link"></textarea></label>
+            </section>
+            <div class="inspector-actions"><button class="button button-danger-quiet" id="btn-delete-annotation" type="button">Delete highlight</button></div>
+          </form>
+        </div>
+        <div class="inspector-empty" id="inspector-empty">
+          <span class="inspector-empty-icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40"><rect x="7" y="8" width="26" height="24" rx="4"/><path d="M13 15h14M13 21h9M13 27h6"/></svg>
+          </span>
+          <h3>Select a field</h3>
+          <p>Click a detected region to classify it, correct its label, or enter a value.</p>
+          <span class="empty-tip"><kbd>V</kbd> activates the select tool</span>
+        </div>
+
+        <form class="inspector-form" id="inspector-form" hidden>
+          <div class="selection-summary">
+            <span class="field-kind-icon" id="selected-kind-icon">T</span>
+            <div><strong id="selected-field-name">Field</strong><span id="selected-field-id">Page 1 · Field 1</span></div>
+            <button class="icon-button subtle" id="btn-focus-field" type="button" title="Center field on canvas">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4M13 3h4v4M7 17H3v-4m10 4h4v-4"/></svg>
+            </button>
+          </div>
+
+          <section class="inspector-section confidence-section">
+            <div class="confidence-row"><span>Detection confidence</span><strong id="confidence-value">—</strong></div>
+            <div class="confidence-track"><span id="confidence-bar"></span></div>
+            <p id="confidence-copy">Review this automatic classification.</p>
+          </section>
+
+          <section class="inspector-section">
+            <label class="form-field">
+              <span>Field type</span>
+              <span class="select-wrap full-width">
+                <select id="field-kind">
+                  <option value="text">Text</option>
+                  <option value="multiline">Long text</option>
+                  <option value="number">Number</option>
+                  <option value="email">Email</option>
+                  <option value="phone">Phone</option>
+                  <option value="date">Date</option>
+                  <option value="checkbox">Checkbox</option>
+                  <option value="radio">Radio choice</option>
+                  <option value="select">Dropdown / choice</option>
+                  <option value="comb">Character cells</option>
+                  <option value="cell">Atomic character cell</option>
+                  <option value="table_cell">Table cell</option>
+                  <option value="signature">Signature</option>
+                </select>
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg>
+              </span>
+            </label>
+            <label class="form-field"><span>Field label</span><input id="field-label" type="text" autocomplete="off"></label>
+            <label class="form-field" id="value-field"><span>Value</span><input id="field-value" type="text" autocomplete="off" placeholder="Enter a value"></label>
+            <div class="boolean-field" id="boolean-field" hidden>
+              <span>Field state</span>
+              <button class="boolean-toggle" id="field-checked" type="button" role="switch" aria-checked="false"><span></span><strong>Unchecked</strong></button>
+            </div>
+            <div class="signature-field" id="signature-field" hidden>
+              <button class="button button-secondary full-width" id="btn-draw-signature" type="button">Draw signature</button>
+            </div>
+          </section>
+
+          <section class="inspector-section compact-section">
+            <div class="section-label">Field behaviour</div>
+            <label class="switch-row"><span><strong>Required</strong><small>Mark as mandatory</small></span><input id="field-required" type="checkbox" role="switch"></label>
+            <label class="switch-row"><span><strong>Reviewed</strong><small>Confirm this detection</small></span><input id="field-reviewed" type="checkbox" role="switch"></label>
+          </section>
+
+          <details class="inspector-details">
+            <summary>Position & appearance <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg></summary>
+            <div class="details-body">
+              <div class="geometry-grid">
+                <label><span>X</span><input id="field-x" type="number" step="0.5"></label>
+                <label><span>Y</span><input id="field-y" type="number" step="0.5"></label>
+                <label><span>W</span><input id="field-width" type="number" min="4" step="0.5"></label>
+                <label><span>H</span><input id="field-height" type="number" min="4" step="0.5"></label>
+              </div>
+              <div class="appearance-grid">
+                <label class="form-field"><span>Font size</span><input id="field-font-size" type="number" min="6" max="36" step="0.5"></label>
+                <label class="form-field"><span>Text colour</span><input id="field-color" type="color" value="#172554"></label>
+              </div>
+              <div class="source-row"><span>Source</span><code id="field-source">geometry</code></div>
+            </div>
+          </details>
+
+          <div class="inspector-actions">
+            <button class="button button-danger-quiet" id="btn-delete-field" type="button">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 6h12M8 3h4l1 3H7l1-3Zm-2 3 .7 11h6.6L14 6M8.5 9v5m3-5v5"/></svg>
+              Delete field
+            </button>
+          </div>
+        </form>
+      </aside>
+    </main>
+  </div>
+
+  <div class="drop-overlay" id="drop-overlay" hidden>
+    <div class="drop-card">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M18 8h20l10 10v38H18z"/><path d="M38 8v12h10M32 44V26m0 0-7 7m7-7 7 7"/></svg>
+      <h2>Drop your PDF here</h2>
+      <p>It stays in this local workspace.</p>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="signature-modal" hidden>
+    <section class="modal signature-modal" role="dialog" aria-modal="true" aria-labelledby="signature-title">
+      <header class="modal-header"><div><span class="eyebrow">Signature</span><h2 id="signature-title">Draw once, place precisely</h2></div><button class="icon-button" id="btn-close-signature" type="button" title="Close"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg></button></header>
+      <div class="signature-canvas-wrap"><canvas id="signature-canvas" width="720" height="260" aria-label="Signature drawing area"></canvas><span>Sign above the line</span></div>
+      <footer class="modal-footer"><button class="button button-quiet" id="btn-clear-signature" type="button">Clear</button><button class="button button-primary" id="btn-apply-signature" type="button">Use signature</button></footer>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="shortcuts-modal" hidden>
+    <section class="modal shortcuts-modal" role="dialog" aria-modal="true" aria-labelledby="shortcuts-title">
+      <header class="modal-header"><div><span class="eyebrow">Move faster</span><h2 id="shortcuts-title">Keyboard shortcuts</h2></div><button class="icon-button" id="btn-close-shortcuts" type="button" title="Close"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg></button></header>
+      <div class="shortcut-grid">
+        <span>Select tool</span><kbd>V</kbd><span>Add text</span><kbd>T</kbd><span>Add checkbox</span><kbd>C</kbd><span>Add radio choice</span><kbd>R</kbd><span>Add date</span><kbd>D</kbd><span>Add signature</span><kbd>S</kbd><span>Delete selected field</span><kbd>⌫</kbd><span>Undo</span><kbd>⌘ Z</kbd><span>Redo</span><kbd>⌘ ⇧ Z</kbd><span>Search fields</span><kbd>⌘ K</kbd>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast-stack" id="toast-stack" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
