@@ -218,6 +218,16 @@ with sync_playwright() as p:
     print("Saved assets/scientific_tables_ui.png")
 
 
+    # Document Zoom & Canvas Scaling
+    page.click('.rail-button[data-panel="pagesetup"]')
+    page.select_option('#zoomSelect', '1.25')
+    time.sleep(0.6)
+    page.screenshot(path=str(ASSETS / "document_zoom_scaling_ui.png"))
+    print("Saved assets/document_zoom_scaling_ui.png")
+
+    # Reset zoom to 1.0
+    page.select_option('#zoomSelect', '1.0')
+
     # Writing Master Panel
     page.click('.rail-button[data-panel="writingmaster"]')
     page.click('#runAiwdAuditBtn')
@@ -226,6 +236,7 @@ with sync_playwright() as p:
     print("Saved assets/writing_master_ui.png")
 
     browser.close()
+
 
 
 

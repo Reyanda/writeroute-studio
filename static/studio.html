@@ -197,6 +197,11 @@
           <div class="menu">
             <button class="menu-title" id="menuViewBtn" aria-haspopup="true" aria-expanded="false">View</button>
             <div class="menu-list" id="menuView" role="menu">
+              <button role="menuitem" id="menuZoomIn">Zoom In<kbd>Ctrl++</kbd></button>
+              <button role="menuitem" id="menuZoomOut">Zoom Out<kbd>Ctrl+-</kbd></button>
+              <button role="menuitem" id="menuZoomReset">Reset Zoom (100%)<kbd>Ctrl+0</kbd></button>
+              <button role="menuitem" id="menuFitWidth">Fit to Width</button>
+              <div class="menu-sep"></div>
               <button role="menuitem" id="menuFocus">Focus mode</button>
               <button role="menuitem" id="menuInspector">Show or hide the inspector</button>
               <button role="menuitem" id="menuTheme">Light or dark</button>
@@ -238,11 +243,31 @@
           <span class="toolbar-divider"></span>
           <button id="latexSplitBtn" title="Overleaf Split-Screen LaTeX Source View"><svg class="toolbar-svg" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Split TeX</button>
           <button id="findToggleBtn" title="Find & Replace (Ctrl+F)"><svg class="toolbar-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find</button>
+          <span class="toolbar-divider"></span>
+          <!-- Document Zoom Controls -->
+          <div class="zoom-controls" style="display:inline-flex;align-items:center;gap:2px">
+            <button id="zoomOutBtn" title="Zoom Out (Ctrl+-)"><svg class="toolbar-svg" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <select id="zoomSelect" title="Zoom Scale" style="height:26px;padding:1px 6px;font-size:11.5px">
+              <option value="0.5">50%</option>
+              <option value="0.75">75%</option>
+              <option value="0.9">90%</option>
+              <option value="1.0" selected>100%</option>
+              <option value="1.1">110%</option>
+              <option value="1.25">125%</option>
+              <option value="1.5">150%</option>
+              <option value="1.75">175%</option>
+              <option value="2.0">200%</option>
+              <option value="fit-width">Fit Width</option>
+            </select>
+            <button id="zoomInBtn" title="Zoom In (Ctrl++)"><svg class="toolbar-svg" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <button id="zoomResetBtn" class="zoom-chip" title="Reset Zoom (Ctrl+0)">100%</button>
+          </div>
           <span class="toolbar-spacer"></span>
           <button data-command="undo" title="Undo"><svg class="toolbar-svg" viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg></button>
           <button data-command="redo" title="Redo"><svg class="toolbar-svg" viewBox="0 0 24 24"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg></button>
           <button id="focusMode" title="Focus mode">Focus</button>
         </div>
+
 
 
 
@@ -284,18 +309,21 @@
               </div>
             </div>
 
-            <!-- WYSIWYG Manuscript Editor -->
+            <!-- WYSIWYG Manuscript Editor with Zoom Viewport -->
             <div class="manuscript-editor-wrapper" id="manuscriptEditorWrapper">
-              <article id="editor" class="editor" contenteditable="true" spellcheck="true" data-placeholder="Start writing, or upload a document…"></article>
-              <!-- Bottom Footnotes Section -->
-              <div id="footnotesArea" class="footnotes-area hidden">
-                <div class="footnotes-title">Footnotes</div>
-                <ol id="footnotesList" class="footnotes-list"></ol>
+              <div class="editor-viewport" id="editorViewport">
+                <article id="editor" class="editor" contenteditable="true" spellcheck="true" data-placeholder="Start writing, or upload a document…"></article>
+                <!-- Bottom Footnotes Section -->
+                <div id="footnotesArea" class="footnotes-area hidden">
+                  <div class="footnotes-title">Footnotes</div>
+                  <ol id="footnotesList" class="footnotes-list"></ol>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+
 
 
 
@@ -466,12 +494,34 @@
               <option value="wide">Wide (1.5 in / 38.1 mm)</option>
             </select>
           </label>
+          <div class="section-title"><span>Canvas Zoom & Scaling</span></div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+            <input type="range" id="panelZoomSlider" min="50" max="200" step="5" value="100" style="flex:1" />
+            <span id="panelZoomReadout" style="font-size:12px;font-weight:600;min-width:40px;text-align:right">100%</span>
+          </div>
+          <div class="route-actions" style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:14px">
+            <button class="button secondary compact" data-zoom-btn="0.75">75%</button>
+            <button class="button secondary compact" data-zoom-btn="1.0">100%</button>
+            <button class="button secondary compact" data-zoom-btn="1.25">125%</button>
+            <button class="button secondary compact" data-zoom-btn="1.5">150%</button>
+          </div>
+
+          <label>Display Width Mode
+            <select id="canvasWidthModeSelect">
+              <option value="canvas-page" selected>Page Layout (820px Standard)</option>
+              <option value="canvas-fluid">Fluid Full-Width (95% Canvas)</option>
+              <option value="canvas-wide">Wide Manuscript (1080px)</option>
+              <option value="canvas-compact">Compact Focus (680px)</option>
+            </select>
+          </label>
+
           <div class="section-title"><span>Submission Word Goal</span></div>
           <div class="inline-fields">
             <label>Target Words<input type="number" id="targetGoalInput" value="3000" min="100" max="50000" step="100" /></label>
             <button class="button secondary compact" id="setGoalBtn" style="align-self:flex-end;margin-bottom:14px">Set Goal</button>
           </div>
         </section>
+
 
         <!-- Overleaf LaTeX IDE Panel -->
         <section class="panel" id="panel-latex">

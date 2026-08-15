@@ -1230,14 +1230,18 @@ $('#restoreDiffConfirm')?.addEventListener('click', () => {
 $('#takeSnapshotBtn')?.addEventListener('click', () => takeSnapshot('Draft Milestone'));
 $('#menuSaveSnapshot')?.addEventListener('click', () => takeSnapshot('Manual Save'));
 
-// Global Hotkeys for Authoring
+// Global Hotkeys for Authoring & Zoom
 addEventListener('keydown', e => {
   if (!(e.metaKey || e.ctrlKey)) return;
   const k = e.key.toLowerCase();
   if (k === 's') { e.preventDefault(); takeSnapshot('Quick Save (Ctrl/Cmd+S)'); }
   if (k === 'f') { e.preventDefault(); toggleFindBar(); }
   if (k === 'h') { e.preventDefault(); toggleFindBar(true); $('#replaceInput')?.focus(); }
+  if (e.key === '=' || e.key === '+') { e.preventDefault(); setDocZoom(currentDocZoom + 0.1); }
+  if (e.key === '-' || e.key === '_') { e.preventDefault(); setDocZoom(currentDocZoom - 0.1); }
+  if (e.key === '0') { e.preventDefault(); setDocZoom(1.0); }
 });
+
 
 // Periodic auto-snapshot every 4 minutes if dirty
 setInterval(() => {
@@ -1436,6 +1440,111 @@ function updateGoalProgress() {
   const goalPct = $('#goalPct');
   if (goalPct) goalPct.textContent = `${pct}%`;
 }
+
+/* ------------------------------------------------------------------ Document Zoom & Scale Controller */
+let currentDocZoom = 1.0;
+
+function setDocZoom(val, announce = true) {
+  let scale = 1.0;
+  if (val === 'fit-width') {
+    const wrapper = $('#manuscriptEditorWrapper');
+    const ed = $('#editor');
+    if (wrapper && ed) {
+      const availWidth = wrapper.clientWidth - 48;
+      const edWidth = ed.offsetWidth || 820;
+      scale = Math.min(2.0, Math.max(0.5, Math.round((availWidth / edWidth) * 100) / 100));
+    }
+  } else if (val === 'fit-page') {
+    const wrapper = $('#manuscriptEditorWrapper');
+    const ed = $('#editor');
+    if (wrapper && ed) {
+      const availHeight = wrapper.clientHeight - 60;
+      const edHeight = ed.offsetHeight || 1100;
+      scale = Math.min(1.5, Math.max(0.4, Math.round((availHeight / edHeight) * 100) / 100));
+    }
+  } else {
+    scale = Math.max(0.4, Math.min(2.5, parseFloat(val) || 1.0));
+  }
+
+  currentDocZoom = Math.round(scale * 100) / 100;
+  const pctStr = `${Math.round(currentDocZoom * 100)}%`;
+  document.documentElement.style.setProperty('--doc-zoom', currentDocZoom.toString());
+
+  const zoomSelect = $('#zoomSelect');
+  if (zoomSelect) {
+    let found = false;
+    for (let opt of zoomSelect.options) {
+      if (Math.abs(parseFloat(opt.value) - currentDocZoom) < 0.02) {
+        zoomSelect.value = opt.value;
+        found = true;
+        break;
+      }
+    }
+    if (!found && typeof val === 'string' && (val === 'fit-width' || val === 'fit-page')) {
+      zoomSelect.value = val;
+    }
+  }
+
+  const zoomResetBtn = $('#zoomResetBtn');
+  if (zoomResetBtn) zoomResetBtn.textContent = pctStr;
+
+  const panelZoomSlider = $('#panelZoomSlider');
+  if (panelZoomSlider) panelZoomSlider.value = Math.round(currentDocZoom * 100);
+
+  const panelZoomReadout = $('#panelZoomReadout');
+  if (panelZoomReadout) panelZoomReadout.textContent = pctStr;
+
+  if (announce) showToast(`Document Zoom: ${pctStr}`);
+}
+
+$('#zoomSelect')?.addEventListener('change', e => {
+  setDocZoom(e.target.value);
+});
+
+$('#zoomInBtn')?.addEventListener('click', () => {
+  setDocZoom(currentDocZoom + 0.1);
+});
+
+$('#zoomOutBtn')?.addEventListener('click', () => {
+  setDocZoom(currentDocZoom - 0.1);
+});
+
+$('#zoomResetBtn')?.addEventListener('click', () => {
+  setDocZoom(1.0);
+});
+
+$('#panelZoomSlider')?.addEventListener('input', e => {
+  const v = parseInt(e.target.value) / 100;
+  setDocZoom(v, false);
+});
+
+$$('[data-zoom-btn]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const v = parseFloat(btn.getAttribute('data-zoom-btn')) || 1.0;
+    setDocZoom(v);
+  });
+});
+
+$('#canvasWidthModeSelect')?.addEventListener('change', e => {
+  editor.classList.remove('canvas-page', 'canvas-fluid', 'canvas-wide', 'canvas-compact');
+  editor.classList.add(e.target.value);
+  showToast(`Canvas layout: ${e.target.options[e.target.selectedIndex].text}`);
+});
+
+$('#menuZoomIn')?.addEventListener('click', () => setDocZoom(currentDocZoom + 0.1));
+$('#menuZoomOut')?.addEventListener('click', () => setDocZoom(currentDocZoom - 0.1));
+$('#menuZoomReset')?.addEventListener('click', () => setDocZoom(1.0));
+$('#menuFitWidth')?.addEventListener('click', () => setDocZoom('fit-width'));
+
+// Ctrl + Wheel / Trackpad pinch to Zoom
+$('#manuscriptEditorWrapper')?.addEventListener('wheel', e => {
+  if (e.ctrlKey || e.metaKey) {
+    e.preventDefault();
+    const delta = e.deltaY < 0 ? 0.05 : -0.05;
+    setDocZoom(currentDocZoom + delta, false);
+  }
+}, { passive: false });
+
 
 /* ------------------------------------------------------------------ Overleaf LaTeX Suite */
 let isLatexSplitOpen = false;
