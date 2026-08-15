@@ -1,0 +1,247 @@
+{
+  "benchmark": "WriteRoute PhD-corpus benchmark",
+  "generated": "2026-08-12",
+  "corpus": {
+    "totalDocuments": 74,
+    "totalWords": 179807,
+    "classes": {
+      "published": {
+        "documents": 24,
+        "words": 44347
+      },
+      "author": {
+        "documents": 25,
+        "words": 74554
+      },
+      "agent": {
+        "documents": 25,
+        "words": 60906
+      }
+    },
+    "provenance": {
+      "published": "third-party journal articles and journal supplements; the control class",
+      "author": "submission-bound documents by the corpus owner; not a clean human label",
+      "agent": "working notes written by coding agents in prior sessions"
+    },
+    "note": "Document titles and paths are withheld: the corpus is a private research archive. Only aggregates are published."
+  },
+  "runs": [
+    {
+      "label": "WriteRoute 2.0.0 as released",
+      "documentsScored": 73,
+      "failures": 1,
+      "classes": {
+        "published": {
+          "documents": 24,
+          "words": 44347,
+          "severityTotals": {
+            "soft": 63,
+            "hard": 43,
+            "review": 27
+          },
+          "statusCounts": {
+            "rebuild_required": 3,
+            "substantive_edit": 11,
+            "line_edit": 10
+          },
+          "hardPer1000Words": 0.97,
+          "findingsPer1000Words": 2.999,
+          "documentsWithHardFinding": 7,
+          "documentsChangedByRepair": 2,
+          "independentIntegrityFailures": 0,
+          "sourceTextByteExact": true
+        },
+        "author": {
+          "documents": 25,
+          "words": 74554,
+          "severityTotals": {
+            "soft": 110,
+            "hard": 47,
+            "review": 30
+          },
+          "statusCounts": {
+            "rebuild_required": 9,
+            "substantive_edit": 8,
+            "line_edit": 4,
+            "clean": 4
+          },
+          "hardPer1000Words": 0.63,
+          "findingsPer1000Words": 2.508,
+          "documentsWithHardFinding": 16,
+          "documentsChangedByRepair": 6,
+          "independentIntegrityFailures": 0,
+          "sourceTextByteExact": true
+        },
+        "agent": {
+          "documents": 24,
+          "words": 51907,
+          "severityTotals": {
+            "soft": 59,
+            "hard": 9,
+            "review": 7
+          },
+          "statusCounts": {
+            "substantive_edit": 8,
+            "line_edit": 11,
+            "clean": 4,
+            "rebuild_required": 1
+          },
+          "hardPer1000Words": 0.173,
+          "findingsPer1000Words": 1.445,
+          "documentsWithHardFinding": 7,
+          "documentsChangedByRepair": 2,
+          "independentIntegrityFailures": 0,
+          "sourceTextByteExact": true
+        }
+      }
+    },
+    {
+      "label": "after Gate 0 fixes",
+      "documentsScored": 74,
+      "failures": 0,
+      "classes": {
+        "published": {
+          "documents": 24,
+          "words": 44347,
+          "severityTotals": {
+            "soft": 55,
+            "hard": 22,
+            "review": 7
+          },
+          "statusCounts": {
+            "rebuild_required": 1,
+            "substantive_edit": 6,
+            "not_assessable": 13,
+            "line_edit": 4
+          },
+          "hardPer1000Words": 0.496,
+          "findingsPer1000Words": 1.894,
+          "documentsWithHardFinding": 7,
+          "documentsChangedByRepair": 2,
+          "independentIntegrityFailures": 0,
+          "sourceTextByteExact": true
+        },
+        "author": {
+          "documents": 25,
+          "words": 74554,
+          "severityTotals": {
+            "soft": 110,
+            "hard": 44,
+            "review": 29
+          },
+          "statusCounts": {
+            "rebuild_required": 9,
+            "substantive_edit": 8,
+            "line_edit": 4,
+            "clean": 4
+          },
+          "hardPer1000Words": 0.59,
+          "findingsPer1000Words": 2.455,
+          "documentsWithHardFinding": 16,
+          "documentsChangedByRepair": 6,
+          "independentIntegrityFailures": 0,
+          "sourceTextByteExact": true
+        },
+        "agent": {
+          "documents": 25,
+          "words": 60906,
+          "severityTotals": {
+            "soft": 56,
+            "hard": 9,
+            "review": 6
+          },
+          "statusCounts": {
+            "not_assessable": 1,
+            "substantive_edit": 8,
+            "line_edit": 11,
+            "clean": 4,
+            "rebuild_required": 1
+          },
+          "hardPer1000Words": 0.148,
+          "findingsPer1000Words": 1.166,
+          "documentsWithHardFinding": 7,
+          "documentsChangedByRepair": 2,
+          "independentIntegrityFailures": 0,
+          "sourceTextByteExact": true
+        }
+      }
+    },
+    {
+      "label": "after Gate 0 and the domain allow-list",
+      "documentsScored": 74,
+      "failures": 0,
+      "classes": {
+        "published": {
+          "documents": 24,
+          "words": 44347,
+          "severityTotals": {
+            "soft": 55,
+            "hard": 6,
+            "review": 7
+          },
+          "statusCounts": {
+            "rebuild_required": 1,
+            "substantive_edit": 3,
+            "not_assessable": 13,
+            "line_edit": 7
+          },
+          "hardPer1000Words": 0.135,
+          "findingsPer1000Words": 1.533,
+          "documentsWithHardFinding": 2,
+          "documentsChangedByRepair": 2,
+          "independentIntegrityFailures": 0,
+          "sourceTextByteExact": true
+        },
+        "author": {
+          "documents": 25,
+          "words": 74554,
+          "severityTotals": {
+            "soft": 110,
+            "hard": 43,
+            "review": 29
+          },
+          "statusCounts": {
+            "rebuild_required": 9,
+            "substantive_edit": 8,
+            "line_edit": 4,
+            "clean": 4
+          },
+          "hardPer1000Words": 0.577,
+          "findingsPer1000Words": 2.441,
+          "documentsWithHardFinding": 16,
+          "documentsChangedByRepair": 6,
+          "independentIntegrityFailures": 0,
+          "sourceTextByteExact": true
+        },
+        "agent": {
+          "documents": 25,
+          "words": 60906,
+          "severityTotals": {
+            "soft": 56,
+            "hard": 9,
+            "review": 6
+          },
+          "statusCounts": {
+            "not_assessable": 1,
+            "substantive_edit": 8,
+            "line_edit": 11,
+            "clean": 4,
+            "rebuild_required": 1
+          },
+          "hardPer1000Words": 0.148,
+          "findingsPer1000Words": 1.166,
+          "documentsWithHardFinding": 7,
+          "documentsChangedByRepair": 2,
+          "independentIntegrityFailures": 0,
+          "sourceTextByteExact": true
+        }
+      }
+    }
+  ],
+  "knownLimitations": [
+    "Not a blinded or independently annotated comparison against other tools.",
+    "One corpus, one domain (clinical nutrition and epidemiology).",
+    "The author class is not a clean human label; some of it was drafted with assistance.",
+    "Author-class hard findings are largely unchanged by the allow-list because they are a different family: causal attribution in prose, participial summary claims and vague attribution."
+  ]
+}
