@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://auctor.local/schemas/draft_response.schema.json",
+  "title": "Auctor Evidence-Bound Draft Response",
+  "type": "object",
+  "required": ["substantive", "evidence_map", "qc", "commentary"],
+  "properties": {
+    "substantive": {
+      "type": "string"
+    },
+    "evidence_map": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sentence_index", "evidence_ids", "claim_type"],
+        "properties": {
+          "sentence_index": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "evidence_ids": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "claim_type": {
+            "type": "string",
+            "enum": [
+              "descriptive",
+              "association",
+              "prediction",
+              "explanation",
+              "mechanism",
+              "mediation",
+              "causation",
+              "recommendation"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "qc": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "severity", "message", "action"],
+        "properties": {
+          "code": {"type": "string", "minLength": 1},
+          "severity": {
+            "type": "string",
+            "enum": ["info", "low", "medium", "high", "critical"]
+          },
+          "message": {"type": "string"},
+          "action": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "commentary": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,2756 @@
+version: 1.0.0
+families:
+  spatial_spatiotemporal_network_and_ecological:
+    task_classes: &id001
+    - description
+    - association
+    - prediction
+    - causal_effect
+    - discovery
+    minimum_review: &id002
+    - spatial_or_network_unit
+    - support
+    - dependence
+    - scale
+    - alignment
+    - boundary
+    - uncertainty
+    common_hazards: &id003
+    - modifiable_areal_unit_problem
+    - ecological_fallacy
+    - spatial_confounding
+    - preferential_sampling
+    - network_interference
+  evidence_synthesis_meta_analysis_and_decision:
+    task_classes: &id004
+    - description
+    - association
+    - prediction
+    - causal_effect
+    - decision
+    minimum_review: &id005
+    - review_question
+    - eligibility
+    - effect_measure
+    - dependency
+    - heterogeneity
+    - bias
+    - certainty
+    - transportability
+    common_hazards: &id006
+    - unit_of_analysis_error
+    - double_counting
+    - effect_scale_mismatch
+    - publication_bias_overclaim
+    - ecological_meta_regression
+  experimental_design_trials_and_monitoring:
+    task_classes: &id007
+    - causal_effect
+    - decision
+    - measurement
+    minimum_review: &id008
+    - experimental_unit
+    - randomization
+    - allocation_concealment
+    - estimand
+    - sample_size
+    - multiplicity
+    - analysis_population
+    - intercurrent_events
+    common_hazards: &id009
+    - unit_of_randomization_mismatch
+    - post_randomization_exclusion
+    - underpowered_noninferiority
+    - multiplicity
+    - estimand_analysis_mismatch
+  omics_mixtures_high_dimensional_and_precision_health:
+    task_classes: &id010
+    - discovery
+    - prediction
+    - causal_effect
+    - measurement
+    minimum_review: &id011
+    - feature_definition
+    - preprocessing
+    - batch_effect
+    - multiplicity
+    - validation
+    - biological_target
+    - replication
+    common_hazards: &id012
+    - batch_confounding
+    - double_dipping
+    - winner_curse
+    - feature_leakage
+    - pathway_overinterpretation
+  econometrics_policy_and_quasi_experiments:
+    task_classes: &id013
+    - association
+    - causal_effect
+    - prediction
+    - decision
+    minimum_review: &id014
+    - policy_assignment
+    - counterfactual
+    - estimand
+    - identification
+    - serial_or_cluster_dependence
+    - robustness
+    common_hazards: &id015
+    - bad_controls
+    - weak_instrument
+    - invalid_parallel_trends
+    - functional_form_at_cutoff
+    - few_clusters
+methods:
+  moran_i:
+    name: Moran I
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  geary_c:
+    name: Geary C
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  getis_ord_gi_star:
+    name: Getis Ord Gi star
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  local_indicators_spatial_association:
+    name: local indicators spatial association
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  spatial_scan_statistic:
+    name: spatial scan statistic
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  kulldorff_scan:
+    name: Kulldorff scan
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  kernel_density_spatial:
+    name: kernel density spatial
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  geographically_weighted_regression:
+    name: geographically weighted regression
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  multiscale_geographically_weighted_regression:
+    name: multiscale geographically weighted regression
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  spatial_lag_model:
+    name: spatial lag model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  spatial_error_model:
+    name: spatial error model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  spatial_durbin_model:
+    name: spatial Durbin model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  conditional_autoregressive_model_spatial:
+    name: conditional autoregressive model spatial
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  simultaneous_autoregressive_model:
+    name: simultaneous autoregressive model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  intrinsic_car:
+    name: intrinsic CAR
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  bym_model:
+    name: BYM model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  bym2_model:
+    name: BYM2 model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  gaussian_random_field:
+    name: Gaussian random field
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  spde_inla:
+    name: SPDE INLA
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+    estimands:
+    - latent_spatial_field
+    - area_or_point_prediction
+    key_checks:
+    - mesh_design
+    - prior
+    - projection_matrix
+    - spatial_scale
+    - posterior_diagnostics
+    - cross_validation
+    misuse:
+    - mesh_or_prior_sensitivity_ignored
+    - interpreting_smoothed_map_as_observed_truth
+  kriging:
+    name: kriging
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  ordinary_kriging:
+    name: ordinary kriging
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  universal_kriging:
+    name: universal kriging
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  co_kriging:
+    name: co kriging
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  bayesian_kriging:
+    name: Bayesian kriging
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  gaussian_process_spatial:
+    name: Gaussian process spatial
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  point_process_model:
+    name: point process model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  log_gaussian_cox_process:
+    name: log Gaussian Cox process
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  geostatistical_prevalence_mapping:
+    name: geostatistical prevalence mapping
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  disease_mapping:
+    name: disease mapping
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  space_time_car:
+    name: space time CAR
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  spatiotemporal_gaussian_process:
+    name: spatiotemporal Gaussian process
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  spatial_panel_model:
+    name: spatial panel model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  spatial_survival_model:
+    name: spatial survival model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  spatially_varying_coefficient_model:
+    name: spatially varying coefficient model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  areal_interpolation:
+    name: areal interpolation
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  change_of_support_model:
+    name: change of support model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  small_area_estimation_spatial:
+    name: small area estimation spatial
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  ecological_regression:
+    name: ecological regression
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  ecological_inference_king:
+    name: ecological inference King
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  multilevel_ecological_model:
+    name: multilevel ecological model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  spatial_econometric_did:
+    name: spatial econometric DiD
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  synthetic_control_spatial:
+    name: synthetic control spatial
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  spatial_regression_discontinuity:
+    name: spatial regression discontinuity
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  spatial_interference:
+    name: spatial interference
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  network_autocorrelation_model:
+    name: network autocorrelation model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  exponential_random_graph_model:
+    name: exponential random graph model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  stochastic_actor_oriented_model:
+    name: stochastic actor oriented model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  network_diffusion_model:
+    name: network diffusion model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  social_network_analysis:
+    name: social network analysis
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  centrality_analysis:
+    name: centrality analysis
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  community_detection:
+    name: community detection
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  blockmodel:
+    name: blockmodel
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  latent_space_network_model:
+    name: latent space network model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  network_mediation:
+    name: network mediation
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  network_instrumental_variable:
+    name: network instrumental variable
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  relational_event_model:
+    name: relational event model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  agent_based_model:
+    name: agent based model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  microsimulation:
+    name: microsimulation
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  system_dynamics_model:
+    name: system dynamics model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  compartmental_epidemic_model:
+    name: compartmental epidemic model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  sir_model:
+    name: SIR model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  seir_model:
+    name: SEIR model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  renewal_equation_epidemic_model:
+    name: renewal equation epidemic model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  nowcasting:
+    name: nowcasting
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  rt_estimation:
+    name: Rt estimation
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  phylodynamic_model:
+    name: phylodynamic model
+    family: spatial_spatiotemporal_network_and_ecological
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  fixed_effect_meta_analysis:
+    name: fixed effect meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  common_effect_meta_analysis:
+    name: common effect meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  random_effects_meta_analysis:
+    name: random effects meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  dersimonian_laird:
+    name: DerSimonian Laird
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  reml_meta_analysis:
+    name: REML meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  hartung_knapp_adjustment:
+    name: Hartung Knapp adjustment
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  paule_mandel_estimator:
+    name: Paule Mandel estimator
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  profile_likelihood_meta_analysis:
+    name: profile likelihood meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  bayesian_random_effects_meta_analysis:
+    name: Bayesian random effects meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  prediction_interval_meta_analysis:
+    name: prediction interval meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  meta_regression:
+    name: meta regression
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  multivariable_meta_regression:
+    name: multivariable meta regression
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  multilevel_meta_analysis:
+    name: multilevel meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  robust_variance_estimation_meta:
+    name: robust variance estimation meta
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  three_level_meta_analysis:
+    name: three level meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  multivariate_meta_analysis:
+    name: multivariate meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  individual_participant_data_meta_analysis:
+    name: individual participant data meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  one_stage_ipd_meta_analysis:
+    name: one stage IPD meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  two_stage_ipd_meta_analysis:
+    name: two stage IPD meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  network_meta_analysis:
+    name: network meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+    estimands:
+    - relative_treatment_effects
+    - treatment_ranking
+    key_checks:
+    - transitivity
+    - consistency
+    - network_geometry
+    - multiarm_correlation
+    - heterogeneity
+    - ranking_uncertainty
+    misuse:
+    - ranking_without_uncertainty
+    - assuming_consistency_from_nonsignificant_test
+  component_network_meta_analysis:
+    name: component network meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  dose_response_meta_analysis:
+    name: dose response meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  diagnostic_test_accuracy_meta_analysis:
+    name: diagnostic test accuracy meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  bivariate_random_effects_dta:
+    name: bivariate random effects DTA
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  hsroc_model:
+    name: HSROC model
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  prognostic_factor_meta_analysis:
+    name: prognostic factor meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  prediction_model_meta_analysis:
+    name: prediction model meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  genetic_meta_analysis:
+    name: genetic meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  ecological_meta_analysis:
+    name: ecological meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  prospective_meta_analysis:
+    name: prospective meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  sequential_meta_analysis:
+    name: sequential meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  trial_sequential_analysis:
+    name: trial sequential analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  living_systematic_review:
+    name: living systematic review
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  cumulative_meta_analysis:
+    name: cumulative meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  meta_analysis_of_rare_events:
+    name: meta analysis of rare events
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  peto_odds_ratio:
+    name: Peto odds ratio
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  mantel_haenszel_meta_analysis:
+    name: Mantel Haenszel meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  beta_binomial_meta_analysis:
+    name: beta binomial meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  arcsine_transformation_meta:
+    name: arcsine transformation meta
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  trim_and_fill:
+    name: trim and fill
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  egger_test:
+    name: Egger test
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  begg_test:
+    name: Begg test
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  selection_model_publication_bias:
+    name: selection model publication bias
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  p_curve:
+    name: p curve
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  p_uniform:
+    name: p uniform
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  pet_peese:
+    name: PET PEESE
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  excess_significance_test:
+    name: excess significance test
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  robust_bayesian_meta_analysis:
+    name: robust Bayesian meta analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  network_inconsistency_model:
+    name: network inconsistency model
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  node_splitting:
+    name: node splitting
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  design_by_treatment_interaction:
+    name: design by treatment interaction
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  grade_certainty:
+    name: GRADE certainty
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  rob2_assessment:
+    name: ROB2 assessment
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  robins_i_assessment:
+    name: ROBINS I assessment
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  robins_e_assessment:
+    name: ROBINS E assessment
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  amstar_2_assessment:
+    name: AMSTAR 2 assessment
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  quadas_2_assessment:
+    name: QUADAS 2 assessment
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  quips_assessment:
+    name: QUIPS assessment
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  probast_assessment:
+    name: PROBAST assessment
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  decision_analytic_model:
+    name: decision analytic model
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  decision_tree_health_economics:
+    name: decision tree health economics
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  markov_model_health_economics:
+    name: Markov model health economics
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  partitioned_survival_model:
+    name: partitioned survival model
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  discrete_event_simulation:
+    name: discrete event simulation
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  microsimulation_cost_effectiveness:
+    name: microsimulation cost effectiveness
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  cost_effectiveness_analysis:
+    name: cost effectiveness analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  cost_utility_analysis:
+    name: cost utility analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  cost_benefit_analysis:
+    name: cost benefit analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  budget_impact_analysis:
+    name: budget impact analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  value_of_information:
+    name: value of information
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  expected_value_perfect_information:
+    name: expected value perfect information
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  expected_value_partial_perfect_information:
+    name: expected value partial perfect information
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  expected_value_sample_information:
+    name: expected value sample information
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  probabilistic_sensitivity_analysis:
+    name: probabilistic sensitivity analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  deterministic_sensitivity_analysis:
+    name: deterministic sensitivity analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  cost_effectiveness_acceptability_curve:
+    name: cost effectiveness acceptability curve
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  net_monetary_benefit:
+    name: net monetary benefit
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  distributional_cost_effectiveness_analysis:
+    name: distributional cost effectiveness analysis
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  equity_informative_cost_effectiveness:
+    name: equity informative cost effectiveness
+    family: evidence_synthesis_meta_analysis_and_decision
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  parallel_group_randomized_trial:
+    name: parallel group randomized trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  cluster_randomized_trial:
+    name: cluster randomized trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  individually_randomized_group_treatment_trial:
+    name: individually randomized group treatment trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  factorial_design:
+    name: factorial design
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  fractional_factorial_design:
+    name: fractional factorial design
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  crossover_design:
+    name: crossover design
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  latin_square_design:
+    name: Latin square design
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  split_plot_design:
+    name: split plot design
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  blocked_randomization:
+    name: blocked randomization
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  stratified_randomization:
+    name: stratified randomization
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  minimization_randomization:
+    name: minimization randomization
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  response_adaptive_randomization:
+    name: response adaptive randomization
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  covariate_adaptive_randomization:
+    name: covariate adaptive randomization
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  stepped_wedge_cluster_trial:
+    name: stepped wedge cluster trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  smart_trial:
+    name: SMART trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  micro_randomized_trial:
+    name: micro randomized trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  n_of_1_trial:
+    name: N of 1 trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  platform_trial:
+    name: platform trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  umbrella_trial:
+    name: umbrella trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  basket_trial:
+    name: basket trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  adaptive_seamless_trial:
+    name: adaptive seamless trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  group_sequential_design:
+    name: group sequential design
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  alpha_spending:
+    name: alpha spending
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  obrien_fleming_boundary:
+    name: OBrien Fleming boundary
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  pocock_boundary:
+    name: Pocock boundary
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  sample_size_reestimation:
+    name: sample size reestimation
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  blinded_sample_size_reestimation:
+    name: blinded sample size reestimation
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  internal_pilot_design:
+    name: internal pilot design
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  adaptive_enrichment_design:
+    name: adaptive enrichment design
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_adaptive_randomization:
+    name: Bayesian adaptive randomization
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  noninferiority_trial:
+    name: noninferiority trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+    estimands:
+    - difference_or_ratio_relative_to_noninferiority_margin
+    key_checks:
+    - margin_justification
+    - assay_sensitivity
+    - constancy
+    - ITT_and_per_protocol
+    - intercurrent_events
+    misuse:
+    - claiming_equivalence_after_failed_superiority
+    - post_hoc_margin
+  equivalence_trial:
+    name: equivalence trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  superiority_trial:
+    name: superiority trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  pragmatic_trial:
+    name: pragmatic trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  explanatory_trial:
+    name: explanatory trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  hybrid_effectiveness_implementation_trial:
+    name: hybrid effectiveness implementation trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  randomized_encouragement_trial:
+    name: randomized encouragement trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  randomization_based_inference:
+    name: randomization based inference
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  permutation_randomization_inference:
+    name: permutation randomization inference
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  intention_to_treat_analysis:
+    name: intention to treat analysis
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  per_protocol_analysis:
+    name: per protocol analysis
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  as_treated_analysis:
+    name: as treated analysis
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  complier_average_causal_effect:
+    name: complier average causal effect
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  principal_stratum_estimand:
+    name: principal stratum estimand
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  treatment_policy_estimand:
+    name: treatment policy estimand
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  hypothetical_estimand:
+    name: hypothetical estimand
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  composite_strategy_estimand:
+    name: composite strategy estimand
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  while_on_treatment_estimand:
+    name: while on treatment estimand
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  monitoring_data_safety_board:
+    name: monitoring data safety board
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  adverse_event_signal_detection:
+    name: adverse event signal detection
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  sequential_probability_ratio_test:
+    name: sequential probability ratio test
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  multiple_endpoints_gatekeeping:
+    name: multiple endpoints gatekeeping
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  closed_testing_procedure:
+    name: closed testing procedure
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  holm_procedure:
+    name: Holm procedure
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  hochberg_procedure:
+    name: Hochberg procedure
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  benjamini_hochberg_fdr:
+    name: Benjamini Hochberg FDR
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  westfall_young_adjustment:
+    name: Westfall Young adjustment
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  sample_size_mean_difference:
+    name: sample size mean difference
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  sample_size_proportion_difference:
+    name: sample size proportion difference
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  sample_size_survival:
+    name: sample size survival
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  sample_size_cluster_trial:
+    name: sample size cluster trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  design_effect_cluster_trial:
+    name: design effect cluster trial
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  sample_size_noninferiority:
+    name: sample size noninferiority
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  assurance_bayesian_sample_size:
+    name: assurance Bayesian sample size
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  simulation_based_power:
+    name: simulation based power
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  precision_based_sample_size:
+    name: precision based sample size
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  pilot_feasibility_design:
+    name: pilot feasibility design
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  internal_validity_trial_audit:
+    name: internal validity trial audit
+    family: experimental_design_trials_and_monitoring
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  differential_expression_limma:
+    name: differential expression limma
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  deseq2:
+    name: DESeq2
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  edger:
+    name: edgeR
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  voom:
+    name: voom
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  single_cell_differential_expression:
+    name: single cell differential expression
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  single_cell_clustering:
+    name: single cell clustering
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  single_cell_trajectory:
+    name: single cell trajectory
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  pseudotime_analysis:
+    name: pseudotime analysis
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  cell_type_deconvolution:
+    name: cell type deconvolution
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  bulk_rnaseq_normalization:
+    name: bulk RNAseq normalization
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  microarray_normalization:
+    name: microarray normalization
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  proteomics_normalization:
+    name: proteomics normalization
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  metabolomics_normalization:
+    name: metabolomics normalization
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  microbiome_alpha_diversity:
+    name: microbiome alpha diversity
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  microbiome_beta_diversity:
+    name: microbiome beta diversity
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  permanova:
+    name: PERMANOVA
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  ancom_bc:
+    name: ANCOM BC
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  aldex2:
+    name: ALDEx2
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  deseq2_microbiome:
+    name: DESeq2 microbiome
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  compositional_data_analysis:
+    name: compositional data analysis
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  centered_log_ratio_transform:
+    name: centered log ratio transform
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  isometric_log_ratio_transform:
+    name: isometric log ratio transform
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  zero_replacement_compositional:
+    name: zero replacement compositional
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  differential_abundance_microbiome:
+    name: differential abundance microbiome
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  source_tracking_microbiome:
+    name: source tracking microbiome
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  microbiome_network_analysis:
+    name: microbiome network analysis
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  multi_omics_factor_analysis:
+    name: multi omics factor analysis
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  mofa:
+    name: MOFA
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  canonical_correlation_multiomics:
+    name: canonical correlation multiomics
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  sparse_pls_da:
+    name: sparse PLS DA
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  diablo_multiomics:
+    name: DIABLO multiomics
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  similarity_network_fusion:
+    name: similarity network fusion
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  pathway_enrichment_analysis:
+    name: pathway enrichment analysis
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  gene_set_enrichment_analysis:
+    name: gene set enrichment analysis
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  overrepresentation_analysis:
+    name: overrepresentation analysis
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  weighted_gene_coexpression_network:
+    name: weighted gene coexpression network
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  eqtl_analysis:
+    name: eQTL analysis
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  gwas:
+    name: GWAS
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  rare_variant_burden_test:
+    name: rare variant burden test
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  polygenic_risk_score:
+    name: polygenic risk score
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  mendelian_randomization_two_sample:
+    name: Mendelian randomization two sample
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+    estimands:
+    - causal_effect_under_IV_assumptions
+    key_checks:
+    - relevance
+    - independence
+    - exclusion_restriction
+    - sample_overlap
+    - population_alignment
+    - pleiotropy
+    - weak_instruments
+    misuse:
+    - treating_pleiotropy_robust_methods_as_proof
+    - ignoring_selection_and_population_structure
+  multivariable_mendelian_randomization:
+    name: multivariable Mendelian randomization
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  colocalization_analysis:
+    name: colocalization analysis
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  fine_mapping:
+    name: fine mapping
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  transcriptome_wide_association:
+    name: transcriptome wide association
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  phenome_wide_association:
+    name: phenome wide association
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  latent_factor_adjustment_omics:
+    name: latent factor adjustment omics
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  surrogate_variable_analysis:
+    name: surrogate variable analysis
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  combat_batch_correction:
+    name: ComBat batch correction
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  ruv_batch_adjustment:
+    name: RUV batch adjustment
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  negative_control_omics:
+    name: negative control omics
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  false_discovery_rate_omics:
+    name: false discovery rate omics
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  empirical_bayes_moderation:
+    name: empirical Bayes moderation
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  stability_selection:
+    name: stability selection
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  knockoff_filter:
+    name: knockoff filter
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  selective_inference:
+    name: selective inference
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  post_selection_inference:
+    name: post selection inference
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  high_dimensional_propensity_score:
+    name: high dimensional propensity score
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  targeted_learning_high_dimensional:
+    name: targeted learning high dimensional
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  superlearner_omics:
+    name: superlearner omics
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  causal_mediation_omics:
+    name: causal mediation omics
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  causal_network_discovery:
+    name: causal network discovery
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  pc_algorithm:
+    name: PC algorithm
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  fci_algorithm:
+    name: FCI algorithm
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  ges_algorithm:
+    name: GES algorithm
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  notears:
+    name: NOTEARS
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  invariant_causal_prediction:
+    name: invariant causal prediction
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  anchor_regression:
+    name: anchor regression
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  joint_exposure_mixture_model:
+    name: joint exposure mixture model
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  bayesian_kernel_machine_regression:
+    name: Bayesian kernel machine regression
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  weighted_quantile_sum_regression:
+    name: weighted quantile sum regression
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  quantile_g_computation_mixture:
+    name: quantile g computation mixture
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+    estimands:
+    - joint_mixture_intervention_contrast_under_quantization
+    key_checks:
+    - intervention_definition
+    - quantization
+    - joint_support
+    - nonlinearity
+    - interaction
+    - confounding
+    misuse:
+    - calling_a_mixture_index_an_undefined_real_world_intervention
+    - assuming_directional_homogeneity_without_check
+  environment_wide_association_study:
+    name: environment wide association study
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  exposome_wide_association:
+    name: exposome wide association
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  distributed_lag_mixture_model:
+    name: distributed lag mixture model
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  tensor_decomposition:
+    name: tensor decomposition
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  functional_principal_components:
+    name: functional principal components
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  matrix_completion:
+    name: matrix completion
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  multiple_testing_hierarchical:
+    name: multiple testing hierarchical
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  replication_bayes_factor:
+    name: replication bayes factor
+    family: omics_mixtures_high_dimensional_and_precision_health
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  ordinary_least_squares_econometrics:
+    name: ordinary least squares econometrics
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  fixed_effects_estimator:
+    name: fixed effects estimator
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  random_effects_estimator:
+    name: random effects estimator
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  hausman_test:
+    name: Hausman test
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  cluster_robust_standard_errors:
+    name: cluster robust standard errors
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  two_way_clustered_standard_errors:
+    name: two way clustered standard errors
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  heteroskedasticity_robust_standard_errors:
+    name: heteroskedasticity robust standard errors
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  newey_west_standard_errors:
+    name: Newey West standard errors
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  driscoll_kraay_standard_errors:
+    name: Driscoll Kraay standard errors
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  wild_cluster_bootstrap:
+    name: wild cluster bootstrap
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  randomization_inference_clustered:
+    name: randomization inference clustered
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  instrumental_variables_2sls:
+    name: instrumental variables 2SLS
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  limited_information_maximum_likelihood:
+    name: limited information maximum likelihood
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  fuller_estimator:
+    name: Fuller estimator
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  weak_instrument_robust_inference:
+    name: weak instrument robust inference
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  anderson_rubin_test:
+    name: Anderson Rubin test
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  kleibergen_paap_statistic:
+    name: Kleibergen Paap statistic
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  overidentification_test:
+    name: overidentification test
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  control_function_econometrics:
+    name: control function econometrics
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  regression_discontinuity_sharp:
+    name: regression discontinuity sharp
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  regression_discontinuity_fuzzy:
+    name: regression discontinuity fuzzy
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  regression_kink_design:
+    name: regression kink design
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  local_randomization_rd:
+    name: local randomization RD
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  donut_rd:
+    name: donut RD
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  density_test_rd:
+    name: density test RD
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  difference_in_differences_two_period:
+    name: difference in differences two period
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  staggered_adoption_did:
+    name: staggered adoption DiD
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+    estimands:
+    - group_time_ATT
+    - event_study_aggregation
+    key_checks:
+    - comparison_group
+    - not_yet_treated_use
+    - anticipation
+    - parallel_trends
+    - aggregation_weights
+    - clustered_uncertainty
+    misuse:
+    - naive_two_way_fixed_effects_under_heterogeneous_effects
+    - forbidden_comparisons
+  callaway_santanna_did:
+    name: Callaway SantAnna DiD
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  sun_abraham_event_study:
+    name: Sun Abraham event study
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  borusyak_jaravel_spiess_imputation:
+    name: Borusyak Jaravel Spiess imputation
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  synthetic_difference_in_differences:
+    name: synthetic difference in differences
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  triple_differences:
+    name: triple differences
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  comparative_interrupted_time_series:
+    name: comparative interrupted time series
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  synthetic_control_method:
+    name: synthetic control method
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  augmented_synthetic_control:
+    name: augmented synthetic control
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  generalized_synthetic_control:
+    name: generalized synthetic control
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  matrix_completion_panel:
+    name: matrix completion panel
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  interactive_fixed_effects:
+    name: interactive fixed effects
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  local_projections:
+    name: local projections
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  structural_vector_autoregression:
+    name: structural vector autoregression
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  granger_causality:
+    name: Granger causality
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  cointegration:
+    name: cointegration
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  error_correction_model:
+    name: error correction model
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  panel_cointegration:
+    name: panel cointegration
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  dynamic_stochastic_general_equilibrium:
+    name: dynamic stochastic general equilibrium
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  structural_microsimulation:
+    name: structural microsimulation
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  discrete_choice_logit:
+    name: discrete choice logit
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  conditional_logit:
+    name: conditional logit
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  mixed_logit:
+    name: mixed logit
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  multinomial_probit:
+    name: multinomial probit
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  random_utility_model:
+    name: random utility model
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  willingness_to_pay:
+    name: willingness to pay
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  contingent_valuation:
+    name: contingent valuation
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  discrete_choice_experiment:
+    name: discrete choice experiment
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  frontier_analysis:
+    name: frontier analysis
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  stochastic_frontier_analysis:
+    name: stochastic frontier analysis
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  data_envelopment_analysis:
+    name: data envelopment analysis
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  quantile_treatment_effects:
+    name: quantile treatment effects
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  unconditional_quantile_regression:
+    name: unconditional quantile regression
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  recentered_influence_function_regression:
+    name: recentered influence function regression
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  distributional_regression:
+    name: distributional regression
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  changes_in_changes:
+    name: changes in changes
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  rank_invariance_bounds:
+    name: rank invariance bounds
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  marginal_treatment_effect:
+    name: marginal treatment effect
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  local_average_treatment_effect:
+    name: local average treatment effect
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  policy_relevant_treatment_effect:
+    name: policy relevant treatment effect
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  control_regression_function:
+    name: control regression function
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  bunching_estimator:
+    name: bunching estimator
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  shift_share_instrument:
+    name: shift share instrument
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  bartik_instrument:
+    name: Bartik instrument
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  synthetic_instrument:
+    name: synthetic instrument
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  spatial_instrumental_variable:
+    name: spatial instrumental variable
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  mediation_policy_evaluation:
+    name: mediation policy evaluation
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  general_equilibrium_policy_effect:
+    name: general equilibrium policy effect
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered
+  agent_based_policy_simulation:
+    name: agent based policy simulation
+    family: econometrics_policy_and_quasi_experiments
+    task_classes: *id013
+    minimum_review: *id014
+    common_hazards: *id015
+    review_status: registered

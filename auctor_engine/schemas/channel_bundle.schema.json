@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://auctor.local/schemas/channel_bundle.schema.json",
+  "title": "Auctor Channel Bundle",
+  "type": "object",
+  "required": ["substantive", "qc", "commentary", "revisions", "fact_ledger", "metadata"],
+  "properties": {
+    "substantive": {"type": "string"},
+    "qc": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/issue"}
+    },
+    "commentary": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "revisions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/revision"}
+    },
+    "fact_ledger": {"$ref": "#/$defs/factLedger"},
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "anchor": {
+      "type": "object",
+      "required": ["paragraph_index", "start", "end", "section", "quote"],
+      "properties": {
+        "paragraph_index": {"type": ["integer", "null"]},
+        "start": {"type": ["integer", "null"]},
+        "end": {"type": ["integer", "null"]},
+        "section": {"type": "string"},
+        "quote": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "issue": {
+      "type": "object",
+      "required": [
+        "code",
+        "title",
+        "severity",
+        "channel",
+        "message",
+        "evidence",
+        "action",
+        "anchor",
+        "confidence",
+        "source",
+        "auto_fixable",
+        "metadata"
+      ],
+      "properties": {
+        "code": {"type": "string"},
+        "title": {"type": "string"},
+        "severity": {
+          "type": "string",
+          "enum": ["info", "low", "medium", "high", "critical"]
+        },
+        "channel": {"const": "qc"},
+        "message": {"type": "string"},
+        "evidence": {"type": "string"},
+        "action": {"type": "string"},
+        "anchor": {"$ref": "#/$defs/anchor"},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "source": {"type": "string"},
+        "auto_fixable": {"type": "boolean"},
+        "metadata": {"type": "object", "additionalProperties": true}
+      },
+      "additionalProperties": false
+    },
+    "revision": {
+      "type": "object",
+      "required": [
+        "target",
+        "replacement",
+        "reason",
+        "code",
+        "paragraph_index",
+        "section",
+        "change_class",
+        "confidence",
+        "fact_change_authorized",
+        "commentary",
+        "priority",
+        "metadata"
+      ],
+      "properties": {
+        "target": {"type": "string"},
+        "replacement": {"type": "string"},
+        "reason": {"type": "string"},
+        "code": {"type": "string"},
+        "paragraph_index": {"type": ["integer", "null"]},
+        "section": {"type": "string"},
+        "change_class": {"type": "string"},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "fact_change_authorized": {"type": "boolean"},
+        "commentary": {"type": "string"},
+        "priority": {"type": "integer"},
+        "metadata": {"type": "object", "additionalProperties": true}
+      },
+      "additionalProperties": false
+    },
+    "factLedger": {
+      "type": "object",
+      "required": [
+        "numbers",
+        "citations",
+        "years",
+        "percentages",
+        "effect_measures",
+        "statistical_expressions",
+        "units",
+        "registry_ids",
+        "cross_references",
+        "directionality",
+        "negation_markers",
+        "claim_force",
+        "abbreviations",
+        "named_terms",
+        "immutable_phrases",
+        "immutable_phrase_occurrences"
+      ],
+      "properties": {
+        "numbers": {"$ref": "#/$defs/stringArray"},
+        "citations": {"$ref": "#/$defs/stringArray"},
+        "years": {"$ref": "#/$defs/stringArray"},
+        "percentages": {"$ref": "#/$defs/stringArray"},
+        "effect_measures": {"$ref": "#/$defs/stringArray"},
+        "statistical_expressions": {"$ref": "#/$defs/stringArray"},
+        "units": {"$ref": "#/$defs/stringArray"},
+        "registry_ids": {"$ref": "#/$defs/stringArray"},
+        "cross_references": {"$ref": "#/$defs/stringArray"},
+        "directionality": {"$ref": "#/$defs/stringArray"},
+        "negation_markers": {"$ref": "#/$defs/stringArray"},
+        "claim_force": {"$ref": "#/$defs/stringArray"},
+        "abbreviations": {"$ref": "#/$defs/stringArray"},
+        "named_terms": {"$ref": "#/$defs/stringArray"},
+        "immutable_phrases": {"$ref": "#/$defs/stringArray"},
+        "immutable_phrase_occurrences": {
+          "type": "object",
+          "additionalProperties": {"type": "integer", "minimum": 0}
+        }
+      },
+      "additionalProperties": false
+    },
+    "stringArray": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}

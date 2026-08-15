@@ -1,0 +1,291 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/scientific-pattern-report.schema.json",
+  "title": "Scientific Pattern Audit Report",
+  "type": "object",
+  "required": [
+    "report_schema_version",
+    "engine",
+    "document",
+    "authorship",
+    "scores",
+    "summary",
+    "findings",
+    "semantic_checks_not_run",
+    "interpretation_notes"
+  ],
+  "properties": {
+    "report_schema_version": {
+      "type": "string"
+    },
+    "engine": {
+      "type": "object",
+      "required": [
+        "name",
+        "engine_version",
+        "lookup_schema_version",
+        "purpose"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "engine_version": {
+          "type": "string"
+        },
+        "lookup_schema_version": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        }
+      }
+    },
+    "document": {
+      "type": "object",
+      "required": [
+        "word_count",
+        "character_count",
+        "sections_detected",
+        "study_design_inference",
+        "confidence_band",
+        "short_text_factor"
+      ],
+      "properties": {
+        "word_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "character_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sections_detected": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "study_design_inference": {
+          "type": "object"
+        },
+        "confidence_band": {
+          "type": "string"
+        },
+        "short_text_factor": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "authorship": {
+      "type": "object",
+      "required": [
+        "status",
+        "statement"
+      ],
+      "properties": {
+        "status": {
+          "const": "not_inferred"
+        },
+        "statement": {
+          "type": "string"
+        }
+      }
+    },
+    "scores": {
+      "type": "object",
+      "required": [
+        "style_pattern_burden",
+        "scientific_quality_risk",
+        "integrity_risk"
+      ],
+      "additionalProperties": {
+        "$ref": "#/$defs/score"
+      }
+    },
+    "summary": {
+      "type": "object"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    },
+    "semantic_checks_not_run": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "interpretation_notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "score": {
+      "type": "object",
+      "required": [
+        "score",
+        "band",
+        "weighted_points",
+        "top_contributors",
+        "interpretation"
+      ],
+      "properties": {
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "band": {
+          "enum": [
+            "low",
+            "guarded",
+            "moderate",
+            "high",
+            "very_high"
+          ]
+        },
+        "weighted_points": {
+          "type": "number",
+          "minimum": 0
+        },
+        "top_contributors": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "interpretation": {
+          "const": "revision_priority_not_probability"
+        }
+      }
+    },
+    "finding": {
+      "type": "object",
+      "required": [
+        "rule_id",
+        "name",
+        "family",
+        "dimension",
+        "evidence_tier",
+        "association",
+        "severity",
+        "confidence",
+        "start",
+        "end",
+        "line",
+        "column",
+        "section",
+        "excerpt",
+        "why",
+        "revision",
+        "guards_applied",
+        "details"
+      ],
+      "properties": {
+        "rule_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "family": {
+          "type": "string"
+        },
+        "dimension": {
+          "enum": [
+            "style_pattern_burden",
+            "scientific_quality_risk",
+            "integrity_risk"
+          ]
+        },
+        "evidence_tier": {
+          "enum": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        "association": {
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "column": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "section": {
+          "type": "string"
+        },
+        "paragraph_index": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "sentence_index": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "excerpt": {
+          "type": "string"
+        },
+        "why": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "string"
+        },
+        "guards_applied": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "details": {
+          "type": "object"
+        },
+        "points_override": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

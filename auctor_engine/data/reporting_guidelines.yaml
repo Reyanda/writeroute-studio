@@ -1,0 +1,749 @@
+schema_version: 1.0.0
+currency_date: '2026-08-13'
+name: Auctor Reporting Guideline Registry
+scope_note: Coverage proxies are original Auctor checks. They do not reproduce an official checklist, do not establish compliance,
+  and must be confirmed against the current source guideline.
+profiles:
+  consort_2025:
+    title: CONSORT Statement
+    version: '2025'
+    manuscript_kind: completed_study
+    official_url: https://www.equator-network.org/reporting-guidelines/consort/
+    applies_to:
+    - completed randomised trials
+    aliases:
+    - randomized controlled trial
+    - randomised controlled trial
+    - randomized trial
+    - randomised trial
+    - clinical trial report
+    coverage_proxies:
+    - id: TITLE-DESIGN
+      section: title
+      concept_groups:
+      - - randomi[sz]ed
+      - - \btrial\b
+      requirement: Identify the report as a randomised trial in the title.
+      action: Confirm the exact design label in the title.
+      severity: medium
+      confidence: 0.72
+    - id: METHODS-RANDOM
+      section: methods
+      concept_groups:
+      - - random sequence|sequence generation|computer.generated|random number
+      - - allocation conceal|central randomi[sz]ation|sealed envelope
+      requirement: Describe sequence generation and allocation concealment.
+      action: Confirm who generated and concealed allocation, and how.
+      severity: medium
+      confidence: 0.64
+    - id: METHODS-OUTCOME
+      section: methods
+      concept_groups:
+      - - primary outcome|primary endpoint
+      - - sample size|power calculation|target difference
+      requirement: Define the primary outcome and justify sample size.
+      action: Confirm outcome timing, metric, analysis, and sample-size assumptions.
+      severity: medium
+      confidence: 0.62
+    - id: RESULTS-FLOW
+      section: results
+      concept_groups:
+      - - randomi[sz]ed|assigned|allocated
+      - - analysed|analyzed|included in the analysis|follow.up
+      requirement: Report participant flow from allocation to analysis.
+      action: Reconcile randomised, treated, followed, and analysed denominators.
+      severity: medium
+      confidence: 0.6
+    - id: RESULTS-ESTIMATE
+      section: results
+      concept_groups:
+      - - \d
+      - - 95\s*%?\s*(?:CI|confidence interval)|credible interval
+      requirement: Report effect magnitude with uncertainty.
+      action: Add the prespecified effect measure, estimate, and uncertainty interval.
+      severity: medium
+      confidence: 0.65
+    - id: WHOLE-REGISTRATION
+      section: whole
+      concept_groups:
+      - - NCT\d{8}|ISRCTN\d{8}|ACTRN\d{14}|trial registration|registration number
+      - - protocol|statistical analysis plan|SAP
+      requirement: Make registration and protocol access traceable.
+      action: Provide stable registration and protocol or analysis-plan identifiers.
+      severity: info
+      confidence: 0.55
+  spirit_2025:
+    title: SPIRIT Statement
+    version: '2025'
+    manuscript_kind: protocol
+    official_url: https://www.equator-network.org/reporting-guidelines/spirit-2013-statement-defining-standard-protocol-items-for-clinical-trials/
+    applies_to:
+    - clinical trial protocols
+    aliases:
+    - trial protocol
+    - randomized trial protocol
+    - randomised trial protocol
+    - clinical trial protocol
+    - study protocol
+    coverage_proxies:
+    - id: TITLE-PROTOCOL
+      section: title
+      concept_groups:
+      - - \bprotocol\b
+      - - \btrial\b
+      requirement: Identify the article as a trial protocol.
+      action: State that the manuscript is a protocol and name the trial design.
+      severity: medium
+      confidence: 0.72
+    - id: METHODS-OBJECTIVES
+      section: methods
+      concept_groups:
+      - - primary objective|primary aim|primary hypothesis
+      - - primary outcome|primary endpoint
+      requirement: Link objectives to prespecified outcomes.
+      action: State the primary objective, outcome definition, metric, and time point.
+      severity: medium
+      confidence: 0.64
+    - id: METHODS-ASSIGNMENT
+      section: methods
+      concept_groups:
+      - - random sequence|sequence generation
+      - - allocation conceal|implementation
+      - - blind|mask
+      requirement: Describe assignment and masking procedures.
+      action: Specify generation, concealment, implementation roles, and masking.
+      severity: medium
+      confidence: 0.6
+    - id: METHODS-DATA
+      section: methods
+      concept_groups:
+      - - data management|data collection
+      - - monitoring|data monitoring committee|harms|adverse event
+      requirement: Describe data handling, monitoring, and harms oversight.
+      action: Confirm data-management, monitoring, stopping, and harms procedures.
+      severity: info
+      confidence: 0.52
+    - id: WHOLE-GOVERNANCE
+      section: whole
+      concept_groups:
+      - - ethics|ethical approval|institutional review board
+      - - consent|informed consent
+      - - registration|NCT\d{8}|ISRCTN\d{8}
+      requirement: Make ethics, consent, and registration traceable.
+      action: Supply named approvals, consent procedures, and registration identifier.
+      severity: medium
+      confidence: 0.58
+  strobe:
+    title: STROBE Statement
+    version: current core checklist
+    manuscript_kind: completed_study
+    official_url: https://www.strobe-statement.org/checklists/
+    applies_to:
+    - cohort studies
+    - case-control studies
+    - cross-sectional studies
+    aliases:
+    - cohort study
+    - prospective cohort
+    - retrospective cohort
+    - case control
+    - case-control
+    - cross sectional
+    - cross-sectional
+    - observational study
+    coverage_proxies:
+    - id: TITLE-DESIGN
+      section: title
+      concept_groups:
+      - - cohort|case.control|cross.section|observational
+      requirement: Identify the observational design.
+      action: Name the design in the title or abstract.
+      severity: info
+      confidence: 0.64
+    - id: METHODS-SETTING
+      section: methods
+      concept_groups:
+      - - setting|site|hospital|community|country
+      - - \b20\d{2}\b|recruitment period|study period
+      requirement: Report setting, locations, and relevant dates.
+      action: Add sites, calendar period, recruitment, exposure, and follow-up dates.
+      severity: medium
+      confidence: 0.55
+    - id: METHODS-VARIABLES
+      section: methods
+      concept_groups:
+      - - exposure|predictor|risk factor
+      - - outcome
+      - - confound|covariate|adjust
+      requirement: Define variables and confounding control.
+      action: Define exposures, outcomes, effect modifiers, and confounder selection.
+      severity: medium
+      confidence: 0.58
+    - id: METHODS-BIAS
+      section: methods
+      concept_groups:
+      - - bias|misclassification|selection
+      - - missing data|multiple imputation|complete case
+      requirement: Describe bias controls and missing-data handling.
+      action: Name expected bias pathways and the missing-data strategy.
+      severity: medium
+      confidence: 0.58
+    - id: RESULTS-DENOM
+      section: results
+      concept_groups:
+      - - eligible|included|excluded|participant
+      - - \bn\s*=|among\s+\d+|\d+ participants|\d+ records
+      requirement: Reconcile participant or record denominators.
+      action: Report numbers at each stage and reasons for exclusion.
+      severity: medium
+      confidence: 0.58
+    - id: DISCUSSION-GENERAL
+      section: discussion
+      concept_groups:
+      - - generaliz|generalis|transportab|applicab
+      - - limitation|bias|precision|residual confounding
+      requirement: Bound interpretation and generalisability.
+      action: State how bias, precision, and setting affect the conclusion and target population.
+      severity: info
+      confidence: 0.52
+  prisma_2020:
+    title: PRISMA Statement
+    version: '2020'
+    manuscript_kind: completed_study
+    official_url: https://www.prisma-statement.org/prisma-2020-checklist
+    applies_to:
+    - systematic reviews
+    - meta-analyses
+    aliases:
+    - systematic review
+    - meta analysis
+    - meta-analysis
+    - evidence synthesis
+    coverage_proxies:
+    - id: TITLE-REVIEW
+      section: title
+      concept_groups:
+      - - systematic review|meta.analysis
+      requirement: Identify the work as a systematic review or meta-analysis.
+      action: Use the precise review type in the title.
+      severity: medium
+      confidence: 0.75
+    - id: METHODS-ELIGIBILITY
+      section: methods
+      concept_groups:
+      - - eligibility|inclusion criteria|exclusion criteria
+      - - information source|database|MEDLINE|Embase|Web of Science
+      requirement: State eligibility and information sources.
+      action: Specify review criteria, databases, platforms, and coverage dates.
+      severity: medium
+      confidence: 0.65
+    - id: METHODS-SEARCH
+      section: methods
+      concept_groups:
+      - - search strategy|search terms|search string
+      - - last search|searched on|search date|\b20\d{2}\b
+      requirement: Make the search reproducible and dated.
+      action: Provide complete strategies or a stable supplement and the final search date.
+      severity: medium
+      confidence: 0.62
+    - id: METHODS-PROCESS
+      section: methods
+      concept_groups:
+      - - screen|selection process
+      - - data extraction|data collection
+      - - risk of bias|quality appraisal
+      requirement: Describe selection, extraction, and appraisal.
+      action: State reviewer numbers, independence, resolution, and tools.
+      severity: medium
+      confidence: 0.6
+    - id: RESULTS-FLOW
+      section: results
+      concept_groups:
+      - - identified|records
+      - - screened
+      - - included
+      - - excluded
+      requirement: Report study flow and exclusions.
+      action: Reconcile counts and link to a flow diagram with full-text exclusion reasons.
+      severity: medium
+      confidence: 0.62
+    - id: WHOLE-REGISTRATION
+      section: whole
+      concept_groups:
+      - - PROSPERO|CRD420\d{6,}|registration|protocol
+      requirement: Report registration or explain its absence.
+      action: Give the registry identifier and protocol location, or a transparent explanation.
+      severity: info
+      confidence: 0.58
+  tripod_ai_2024:
+    title: TRIPOD+AI Statement
+    version: '2024'
+    manuscript_kind: completed_study
+    official_url: https://www.tripod-statement.org/
+    applies_to:
+    - diagnostic or prognostic prediction model development, validation, or updating
+    aliases:
+    - prediction model
+    - prognostic model
+    - diagnostic model
+    - machine learning prediction
+    - artificial intelligence model
+    - model validation
+    coverage_proxies:
+    - id: TITLE-MODEL
+      section: title
+      concept_groups:
+      - - predict|prognos|diagnos
+      - - develop|validat|updat|evaluat
+      requirement: Identify prediction purpose and model phase.
+      action: Name the target population, predicted outcome, and whether the model was developed, validated, or updated.
+      severity: medium
+      confidence: 0.65
+    - id: METHODS-DATA
+      section: methods
+      concept_groups:
+      - - data source|cohort|registry|electronic health record
+      - - eligib|participant|sample
+      - - outcome|target
+      requirement: Define data source, participants, and target outcome.
+      action: State data provenance, eligibility, setting, dates, and outcome assessment.
+      severity: medium
+      confidence: 0.58
+    - id: METHODS-MODEL
+      section: methods
+      concept_groups:
+      - - predictor|feature
+      - - missing data|imputation
+      - - model|algorithm
+      - - validation|resampling|bootstrap|cross.validation
+      requirement: Make model development and validation reproducible.
+      action: Describe predictor handling, missingness, modelling, tuning, and internal or external validation.
+      severity: medium
+      confidence: 0.61
+    - id: RESULTS-PERFORMANCE
+      section: results
+      concept_groups:
+      - - discrimination|AUC|c.statistic
+      - - calibration
+      - - confidence interval|95\s*%?\s*CI|uncertainty
+      requirement: Report performance across discrimination, calibration, and uncertainty.
+      action: Report all prespecified performance measures with intervals and evaluation sample size.
+      severity: medium
+      confidence: 0.64
+    - id: WHOLE-AVAILABILITY
+      section: whole
+      concept_groups:
+      - - model equation|code|repository|GitHub|weights|intercept|calculator
+      - - data availab|access
+      requirement: State how the model and data can be accessed or why access is restricted.
+      action: Record executable model details, code, and data-access conditions.
+      severity: info
+      confidence: 0.5
+  stard_2015:
+    title: STARD Statement
+    version: '2015'
+    manuscript_kind: completed_study
+    official_url: https://www.equator-network.org/reporting-guidelines/stard2015/
+    applies_to:
+    - diagnostic accuracy studies
+    aliases:
+    - diagnostic accuracy
+    - sensitivity specificity
+    - index test
+    - reference standard
+    coverage_proxies:
+    - id: TITLE-ACCURACY
+      section: title
+      concept_groups:
+      - - diagnostic accuracy|sensitivity|specificity|index test
+      requirement: Identify the study as diagnostic accuracy research.
+      action: Name the index test, target condition, and accuracy purpose.
+      severity: info
+      confidence: 0.62
+    - id: METHODS-TESTS
+      section: methods
+      concept_groups:
+      - - index test
+      - - reference standard
+      - - threshold|cut.off
+      requirement: Define tests, reference standard, and thresholds.
+      action: State prespecification, execution, interpretation, and threshold rationale.
+      severity: medium
+      confidence: 0.63
+    - id: METHODS-BLIND
+      section: methods
+      concept_groups:
+      - - blind|mask|without knowledge
+      - - indeterminate|missing|uninterpretable
+      requirement: Describe interpretation independence and handling of indeterminate results.
+      action: Clarify blinding and all exclusions or missing test results.
+      severity: medium
+      confidence: 0.56
+    - id: RESULTS-ACCURACY
+      section: results
+      concept_groups:
+      - - sensitivity
+      - - specificity
+      - - 95\s*%?\s*CI|confidence interval
+      requirement: Report core accuracy estimates with uncertainty.
+      action: Give the analysis denominator, two-by-two counts where possible, and uncertainty.
+      severity: medium
+      confidence: 0.66
+  cheers_2022:
+    title: CHEERS Statement
+    version: '2022'
+    manuscript_kind: completed_study
+    official_url: https://www.equator-network.org/reporting-guidelines/cheers/
+    applies_to:
+    - health economic evaluations
+    aliases:
+    - economic evaluation
+    - cost effectiveness
+    - cost-effectiveness
+    - cost utility
+    - cost-utility
+    - budget impact
+    coverage_proxies:
+    - id: METHODS-PERSPECTIVE
+      section: methods
+      concept_groups:
+      - - perspective
+      - - time horizon
+      - - discount
+      requirement: State perspective, time horizon, and discounting.
+      action: Define whose costs and outcomes count, over what period, and at what discount rates.
+      severity: medium
+      confidence: 0.66
+    - id: METHODS-RESOURCES
+      section: methods
+      concept_groups:
+      - - resource use|cost
+      - - health outcome|QALY|DALY|utility
+      - - currency|price year|valuation
+      requirement: Define resource, outcome, and valuation methods.
+      action: Report quantities, unit costs, outcome valuation, currency, price date, and conversion.
+      severity: medium
+      confidence: 0.6
+    - id: METHODS-MODEL
+      section: methods
+      concept_groups:
+      - - model|decision tree|Markov|microsimulation
+      - - assumption
+      - - uncertainty|sensitivity analysis
+      requirement: Expose model structure, assumptions, and uncertainty analysis.
+      action: Provide model rationale, structural assumptions, parameters, and sensitivity methods.
+      severity: medium
+      confidence: 0.58
+    - id: RESULTS-INCREMENT
+      section: results
+      concept_groups:
+      - - incremental
+      - - cost
+      - - effect|QALY|DALY
+      - - uncertainty|confidence|credible|probabilistic
+      requirement: Report incremental costs, outcomes, and uncertainty.
+      action: Give disaggregated and incremental results, uncertainty, and scenario findings.
+      severity: medium
+      confidence: 0.62
+  arrive_2_0:
+    title: ARRIVE Guidelines
+    version: '2.0'
+    manuscript_kind: completed_study
+    official_url: https://arriveguidelines.org/arrive-guidelines
+    applies_to:
+    - in vivo animal experiments
+    aliases:
+    - animal experiment
+    - in vivo experiment
+    - preclinical animal
+    - laboratory animal
+    coverage_proxies:
+    - id: METHODS-DESIGN
+      section: methods
+      concept_groups:
+      - - experimental unit
+      - - sample size|power
+      - - randomi[sz]
+      - - blind|mask
+      requirement: Report the core design controls for animal experiments.
+      action: Define experimental unit, sample-size rationale, allocation, and blinding.
+      severity: medium
+      confidence: 0.68
+    - id: METHODS-ANIMALS
+      section: methods
+      concept_groups:
+      - - species
+      - - strain|stock
+      - - sex
+      - - age|weight
+      - - housing|husbandry
+      requirement: Characterise animals and husbandry.
+      action: Report biological characteristics, provenance, housing, acclimatisation, and care.
+      severity: medium
+      confidence: 0.6
+    - id: METHODS-ETHICS
+      section: methods
+      concept_groups:
+      - - ethics|ethical
+      - - licen[cs]e|approval
+      - - humane endpoint|euthan
+      requirement: Make ethics and welfare safeguards traceable.
+      action: Name approvals, regulations, welfare monitoring, and humane endpoints.
+      severity: medium
+      confidence: 0.62
+    - id: RESULTS-N
+      section: results
+      concept_groups:
+      - - \bn\s*=|number of animals|experimental units
+      - - exclud|attrition|adverse event
+      requirement: Report exact group sizes and exclusions.
+      action: Reconcile allocated, analysed, excluded, and harmed animals by group.
+      severity: medium
+      confidence: 0.58
+  coreq_2007:
+    title: COREQ
+    version: '2007'
+    manuscript_kind: completed_study
+    official_url: https://www.equator-network.org/reporting-guidelines/coreq/
+    applies_to:
+    - qualitative interviews and focus groups
+    aliases:
+    - qualitative interview
+    - focus group
+    - focus groups
+    - thematic analysis interview
+    coverage_proxies:
+    - id: METHODS-TEAM
+      section: methods
+      concept_groups:
+      - - interviewer|facilitator|moderator
+      - - reflexiv|relationship|positionality
+      requirement: Describe the research team and reflexive position.
+      action: State who collected data, their background, relationship to participants, and reflexive stance.
+      severity: medium
+      confidence: 0.56
+    - id: METHODS-SAMPLING
+      section: methods
+      concept_groups:
+      - - sampling|recruit
+      - - setting|location
+      - - saturation|information power
+      requirement: Describe participant selection, setting, and sampling sufficiency.
+      action: Report sampling logic, recruitment, non-participation, setting, and stopping rationale.
+      severity: medium
+      confidence: 0.58
+    - id: METHODS-COLLECTION
+      section: methods
+      concept_groups:
+      - - topic guide|interview guide|question guide
+      - - record|audio|video|field notes
+      - - duration|repeat interview
+      requirement: Make data collection inspectable.
+      action: Describe the guide, recording, field notes, duration, repetitions, and data returned to participants.
+      severity: info
+      confidence: 0.53
+    - id: RESULTS-QUOTES
+      section: results
+      concept_groups:
+      - - participant|respondent
+      - - quote|quotation|said|reported
+      requirement: Connect interpretations to participant evidence.
+      action: Use traceable quotations or other data extracts and distinguish themes from interpretation.
+      severity: info
+      confidence: 0.5
+  srqr_2014:
+    title: Standards for Reporting Qualitative Research
+    version: '2014'
+    manuscript_kind: completed_study
+    official_url: https://www.equator-network.org/reporting-guidelines/srqr/
+    applies_to:
+    - qualitative research
+    aliases:
+    - qualitative study
+    - ethnography
+    - grounded theory
+    - phenomenology
+    - framework analysis
+    coverage_proxies:
+    - id: INTRO-PARADIGM
+      section: introduction
+      concept_groups:
+      - - qualitative approach|paradigm|theoretical framework|conceptual framework
+      requirement: State the qualitative approach or paradigm when it shapes the inquiry.
+      action: Name the approach and explain how it fits the question.
+      severity: info
+      confidence: 0.48
+    - id: METHODS-REFLEXIVITY
+      section: methods
+      concept_groups:
+      - - reflexiv|positionality|researcher role
+      - - sampling
+      - - analysis|coding
+      requirement: Expose researcher role, sampling logic, and analytic process.
+      action: Describe researcher influence, case selection, coding, interpretation, and trustworthiness procedures.
+      severity: medium
+      confidence: 0.56
+    - id: METHODS-ETHICS
+      section: methods
+      concept_groups:
+      - - ethics|ethical approval
+      - - consent
+      - - confidential|anonym
+      requirement: Report ethical safeguards.
+      action: State approval, consent, confidentiality, and management of sensitive data.
+      severity: medium
+      confidence: 0.58
+    - id: DISCUSSION-TRANSFER
+      section: discussion
+      concept_groups:
+      - - transferab|applicab|context
+      - - limitation|reflexiv|credib
+      requirement: Bound transferability and trustworthiness.
+      action: Explain which contexts the interpretation may transfer to and how study limitations affect it.
+      severity: info
+      confidence: 0.5
+  care_2013:
+    title: CARE Guidelines
+    version: '2013'
+    manuscript_kind: completed_study
+    official_url: https://www.care-statement.org/checklist
+    applies_to:
+    - case reports
+    aliases:
+    - case report
+    - clinical case
+    - case series
+    coverage_proxies:
+    - id: TITLE-CASE
+      section: title
+      concept_groups:
+      - - case report|case series
+      requirement: Identify the article as a case report or case series.
+      action: State the report type in the title.
+      severity: info
+      confidence: 0.68
+    - id: RESULTS-TIMELINE
+      section: results
+      concept_groups:
+      - - timeline|day\s+\d+|week\s+\d+|month\s+\d+
+      - - diagnos
+      - - intervention|treatment
+      - - outcome|follow.up
+      requirement: Present a coherent clinical timeline.
+      action: Align presentation, diagnostics, interventions, outcomes, and follow-up chronologically.
+      severity: medium
+      confidence: 0.52
+    - id: METHODS-CONSENT
+      section: methods
+      concept_groups:
+      - - consent|permission to publish
+      requirement: Report consent for publication.
+      action: State how informed consent for publication was obtained.
+      severity: medium
+      confidence: 0.62
+  record_2015:
+    title: RECORD Statement
+    version: '2015'
+    manuscript_kind: completed_study
+    official_url: https://www.equator-network.org/reporting-guidelines/record/
+    applies_to:
+    - observational studies using routinely collected health data
+    aliases:
+    - routinely collected data
+    - electronic health records
+    - administrative data
+    - registry data
+    - claims data
+    coverage_proxies:
+    - id: METHODS-DATA
+      section: methods
+      concept_groups:
+      - - data source|database|registry|electronic health record|claims
+      - - linkage|linked
+      - - code|algorithm|phenotype
+      requirement: Make routinely collected data provenance and derivation reproducible.
+      action: Name databases, linkage, access dates, cleaning, codes, and case definitions.
+      severity: medium
+      confidence: 0.6
+    - id: METHODS-SELECTION
+      section: methods
+      concept_groups:
+      - - selection|eligible|inclusion
+      - - flow|excluded|attrition
+      - - missing|incomplete
+      requirement: Explain selection and data completeness.
+      action: Provide a record-flow account and assess selection, misclassification, and missingness.
+      severity: medium
+      confidence: 0.56
+    - id: WHOLE-ACCESS
+      section: whole
+      concept_groups:
+      - - code list|algorithm|repository|supplement
+      - - data access|governance|permission|licen[cs]e
+      requirement: State access to data and analytic code.
+      action: Provide code lists and algorithms, plus access and governance conditions.
+      severity: info
+      confidence: 0.48
+  tidier_2014:
+    title: TIDieR Checklist
+    version: '2014'
+    manuscript_kind: cross_cutting
+    official_url: https://www.equator-network.org/reporting-guidelines/tidier/
+    applies_to:
+    - reports or protocols that describe interventions
+    aliases:
+    - intervention description
+    - complex intervention
+    - implementation intervention
+    coverage_proxies:
+    - id: METHODS-INTERVENTION
+      section: methods
+      concept_groups:
+      - - intervention
+      - - material|manual|curriculum|device
+      - - procedure|session|dose|frequency|duration
+      - - provider|delivered by
+      - - setting|where
+      requirement: Describe what was delivered, by whom, where, when, and at what dose.
+      action: Supply enough operational detail for replication.
+      severity: medium
+      confidence: 0.6
+    - id: RESULTS-FIDELITY
+      section: results
+      concept_groups:
+      - - fidelity|adherence|delivered as planned|implementation
+      - - modify|adapt|deviation
+      requirement: Report intervention fidelity and modifications.
+      action: State planned and actual delivery, deviations, adaptations, and adherence.
+      severity: info
+      confidence: 0.5
+  sager_2016:
+    title: SAGER Guidelines
+    version: '2016'
+    manuscript_kind: cross_cutting
+    official_url: https://www.equator-network.org/reporting-guidelines/sager-guidelines/
+    applies_to:
+    - research in which sex or gender is relevant
+    aliases:
+    - sex and gender
+    - sex differences
+    - gender differences
+    coverage_proxies:
+    - id: METHODS-DEFINITION
+      section: methods
+      concept_groups:
+      - - \bsex\b|\bgender\b
+      - - measure|recorded|self.report|assigned at birth
+      requirement: Define and measure sex or gender variables precisely.
+      action: State terminology, measurement, categories, and rationale.
+      severity: medium
+      confidence: 0.55
+    - id: RESULTS-DISAGG
+      section: results
+      concept_groups:
+      - - women|men|female|male|gender
+      - - stratif|interaction|subgroup|disaggregat
+      requirement: Report sex or gender distributions and relevant analyses.
+      action: Explain whether analyses were stratified, adjusted, or tested for interaction.
+      severity: info
+      confidence: 0.48

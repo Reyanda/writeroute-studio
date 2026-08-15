@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://auctor.local/schemas/revision_response.schema.json",
+  "title": "Auctor Substantive Revision Response",
+  "type": "object",
+  "required": ["substantive", "qc", "commentary"],
+  "properties": {
+    "substantive": {"type": "string"},
+    "qc": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "severity", "message", "action"],
+        "properties": {
+          "code": {"type": "string", "minLength": 1},
+          "severity": {
+            "type": "string",
+            "enum": ["info", "low", "medium", "high", "critical"]
+          },
+          "message": {"type": "string"},
+          "action": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "commentary": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  },
+  "additionalProperties": false
+}

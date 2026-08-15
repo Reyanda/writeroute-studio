@@ -27,6 +27,15 @@ classifiers = [
 dependencies = []
 
 [project.optional-dependencies]
+# Super Engine dependencies (Auctor, STATS-BRAIN, Scientific Pattern Engine, LUCID-SCI)
+super = [
+  "pydantic>=2.0",
+  "pyyaml>=6.0",
+  "jsonschema>=4.20",
+  "python-docx>=1.1",
+  "lxml>=5.0",
+]
+
 # Raster to SVG. vtracer is a Rust extension and rembg pulls ONNX runtime with model
 # weights, so this is several hundred megabytes and is never installed by default.
 tracer = [
@@ -56,9 +65,12 @@ service = [
   "python-multipart>=0.0.12",
   "python-docx>=1.1",
   "pypdf>=5.0",
+  "pydantic>=2.0",
+  "pyyaml>=6.0",
+  "jsonschema>=4.20",
 ]
 
-all = ["writeroute[tracer,tracer-bg,pdf,service]"]
+all = ["writeroute[super,tracer,tracer-bg,pdf,service]"]
 
 dev = ["pytest>=8.0", "playwright>=1.44"]
 
@@ -70,14 +82,26 @@ Homepage = "https://reyanda.github.io/writeroute-studio/"
 Source = "https://github.com/Reyanda/writeroute-studio"
 
 [tool.setuptools]
-packages = ["writeroute", "aiwd", "tracer", "pdfstudio"]
+packages = [
+  "writeroute",
+  "aiwd",
+  "tracer",
+  "pdfstudio",
+  "auctor_engine",
+  "stats_brain",
+  "scientific_pattern_engine",
+  "lucid_sci",
+]
 
 [tool.setuptools.package-data]
 writeroute = ["data/**/*.json"]
 aiwd = ["data/**/*.json"]
+auctor_engine = ["data/**/*.yaml", "schemas/**/*.json"]
+stats_brain = ["data/**/*.yaml", "schemas/**/*.json"]
+scientific_pattern_engine = ["*.yaml", "*.json", "*.csv"]
+lucid_sci = ["*.yaml", "*.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-# The engine suites are skipped rather than failed when their extra is absent, so a
-# prose-only checkout still runs a green suite.
 filterwarnings = ["ignore::DeprecationWarning"]
+

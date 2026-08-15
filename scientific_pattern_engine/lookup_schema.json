@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/scientific-pattern-lookup.schema.json",
+  "title": "Scientific Pattern Lookup",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "name",
+    "purpose",
+    "output_contract",
+    "evidence_tiers",
+    "scoring",
+    "lexicons",
+    "rules",
+    "interactions"
+  ],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "name": {"type": "string", "minLength": 1},
+    "short_name": {"type": "string"},
+    "purpose": {"type": "string", "minLength": 1},
+    "non_goals": {"type": "array", "items": {"type": "string"}},
+    "output_contract": {"type": "object"},
+    "evidence_tiers": {
+      "type": "object",
+      "required": ["A", "B", "C"],
+      "properties": {
+        "A": {"type": "string"},
+        "B": {"type": "string"},
+        "C": {"type": "string"}
+      }
+    },
+    "scoring": {"type": "object"},
+    "section_model": {"type": "object"},
+    "global_false_positive_controls": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "lexicons": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/rule"}
+    },
+    "interactions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/interaction"}
+    },
+    "sources": {"type": "array", "items": {"type": "object"}}
+  },
+  "$defs": {
+    "rule": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "family",
+        "dimension",
+        "evidence_tier",
+        "association",
+        "severity",
+        "status",
+        "sections",
+        "detector",
+        "rationale",
+        "revision"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^SCI-[A-Z]+-[0-9]{3}$"},
+        "name": {"type": "string", "minLength": 1},
+        "family": {"type": "string", "minLength": 1},
+        "dimension": {
+          "enum": ["style_pattern_burden", "scientific_quality_risk", "integrity_risk"]
+        },
+        "evidence_tier": {"enum": ["A", "B", "C"]},
+        "association": {"type": "string"},
+        "severity": {"enum": ["info", "low", "medium", "high", "critical"]},
+        "status": {"enum": ["implemented", "semantic"]},
+        "sections": {"type": "array", "items": {"type": "string"}},
+        "detector": {
+          "type": "object",
+          "required": ["kind"],
+          "properties": {"kind": {"type": "string"}}
+        },
+        "rationale": {"type": "string", "minLength": 1},
+        "false_positive_guards": {"type": "array", "items": {"type": "string"}},
+        "revision": {"type": "string", "minLength": 1},
+        "examples": {"type": "object"}
+      }
+    },
+    "interaction": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "requires_any",
+        "bonus_points",
+        "dimension",
+        "severity",
+        "message",
+        "revision"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^SCI-X-[0-9]{3}$"},
+        "name": {"type": "string"},
+        "requires_any": {
+          "type": "array",
+          "items": {"type": "array", "items": {"type": "string"}}
+        },
+        "same_sentence_or_paragraph": {"type": "boolean"},
+        "bonus_points": {"type": "number", "minimum": 0},
+        "dimension": {
+          "enum": ["style_pattern_burden", "scientific_quality_risk", "integrity_risk"]
+        },
+        "severity": {"enum": ["info", "low", "medium", "high", "critical"]},
+        "message": {"type": "string"},
+        "revision": {"type": "string"}
+      }
+    }
+  }
+}

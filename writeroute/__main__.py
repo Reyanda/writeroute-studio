@@ -155,6 +155,38 @@ def build_parser() -> argparse.ArgumentParser:
     trace.add_argument("--list-presets", action="store_true")
     trace.add_argument("--json", action="store_true")
 
+    # Super Engine Commands
+    super_audit = sub.add_parser("super-audit", help="run unified multi-engine audit (Prose + Stats + Style + Lucid + Guidelines)")
+    super_audit.add_argument("file", help="input text, markdown, or docx")
+    super_audit.add_argument("--section", default="general", help="manuscript section (abstract, methods, results, discussion, etc.)")
+    super_audit.add_argument("--design", default=None, help="study design hint for STATS-BRAIN (e.g. observational_cohort, target_trial, randomized_trial)")
+    super_audit.add_argument("--guideline", default=None, help="reporting guideline (CONSORT, PRISMA, STROBE, TRIPOD, STARD)")
+    super_audit.add_argument("--json", action="store_true")
+
+    stats_cmd = sub.add_parser("stats", help="run STATS-BRAIN estimand-first statistical and causal review")
+    stats_cmd.add_argument("file")
+    stats_cmd.add_argument("--design", default="observational_cohort")
+    stats_cmd.add_argument("--section", default="general")
+    stats_cmd.add_argument("--packet-out", default=None, help="output Auctor evidence packet JSON")
+    stats_cmd.add_argument("--json", action="store_true")
+
+    pattern_cmd = sub.add_parser("pattern", help="run Scientific AI Pattern Engine v2 audit")
+    pattern_cmd.add_argument("file")
+    pattern_cmd.add_argument("--section", default="general")
+    pattern_cmd.add_argument("--json", action="store_true")
+
+    lucid_cmd = sub.add_parser("lucid", help="run LUCID-SCI clarity and anti-slop evaluation")
+    lucid_cmd.add_argument("file")
+    lucid_cmd.add_argument("--json", action="store_true")
+
+    docx_cmd = sub.add_parser("docx-process", help="process DOCX with tracked changes and comments using Auctor OOXML engine")
+    docx_cmd.add_argument("file", help="input .docx file")
+    docx_cmd.add_argument("-o", "--output", required=True, help="output .docx file")
+    docx_cmd.add_argument("--author", default="WriteRoute SuperEngine")
+    docx_cmd.add_argument("--no-tracked", action="store_true")
+    docx_cmd.add_argument("--no-comments", action="store_true")
+    docx_cmd.add_argument("--json", action="store_true")
+
     pdf = sub.add_parser("pdf", help="detect, fill and annotate PDF form fields [needs the pdf extra]")
     pdf_sub = pdf.add_subparsers(dest="pdf_command", required=True)
     pdf_detect = pdf_sub.add_parser("detect", help="find form fields and report them")
@@ -169,6 +201,7 @@ def build_parser() -> argparse.ArgumentParser:
     pdf_unbundle.add_argument("file")
     pdf_unbundle.add_argument("-o", "--output")
     return parser
+
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -345,7 +378,97 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"{key}: {value}")
         return 0 if payload["shipGate"] else 4
 
+    if args.command == "super-audit":
+        from .super_engine import SuperEngine
+        engine = SuperEngine()
+        text = _read(args.file)
+        result = engine.audit_text(
+            text=text,
+            section=args.section,
+            study_design=args.design,
+            target_guideline=args.guideline,
+        )
+        if args.json:
+            _write_json(result.to_dict())
+        else:
+            s = result.summary
+            print(f"WriteRoute Super-Audit | Overall Integrity: {s.overall_score}/100")
+            print(f"- Statistical Score: {s.statistical_score}/100 ({len(result.statistical_findings)} findings)")
+            print(f"- Style Burden Score: {s.style_burden_score}/100 ({len(result.pattern_findings)} findings)")
+            print(f"- Prose Quality Score: {s.prose_quality_score}/100 ({len(result.prose_findings)} findings)")
+            print(f"- Lucid Clarity Score: {s.lucid_clarity_score}/100 ({len(result.lucid_findings)} findings)")
+            if result.guideline_checks:
+                print(f"- Guideline ({result.guideline_checks.get('guideline')}): {s.guidelines_score}% compliant")
+            print(f"\nTotal Findings: {s.total_findings_count} (Critical: {s.critical_findings_count}, Fatal: {s.fatal_findings_count})")
+            if result.repair_candidates:
+                print(f"\nRepair Candidates Available: {len(result.repair_candidates)}")
+        return 0
+
+    if args.command == "stats":
+        from stats_brain import ReviewContext, StatsBrainReviewer, AuctorBridge
+        from dataclasses import asdict
+        reviewer = StatsBrainReviewer()
+        ctx = ReviewContext(manuscript_text=_read(args.file), study_design=args.design, section_hint=args.section)
+        report = reviewer.review(ctx)
+        if args.packet_out:
+            bridge = AuctorBridge()
+            packet = bridge.build_packet(report, ctx)
+            Path(args.packet_out).write_text(json.dumps(asdict(packet), indent=2))
+            print(f"Saved Auctor evidence packet to {args.packet_out}")
+        if args.json:
+            _write_json(asdict(report))
+        else:
+            print(f"STATS-BRAIN Review | Score: {report.score}/100 | Release: {report.release_decision}")
+            print(f"Findings: {len(report.findings)}")
+            for f in report.findings[:10]:
+                print(f"- [{f.severity.upper()}] {f.rule_id}: {f.summary}")
+        return 0
+
+    if args.command == "pattern":
+        from scientific_pattern_engine import PatternEngine, default_lookup_path
+        from dataclasses import asdict
+        engine = PatternEngine.from_yaml(default_lookup_path())
+        res = engine.audit(_read(args.file), section=args.section)
+        if args.json:
+            _write_json(asdict(res))
+        else:
+            print(f"Scientific Pattern Engine | Style Burden Index: {res.style_burden_index:.2f} | Purity: {res.defect_purity_score:.2f}")
+            print(f"Findings: {len(res.findings)}")
+            for f in res.findings[:10]:
+                print(f"- [{f.severity.upper()}] {f.rule_id} ({f.category}): {f.message}")
+        return 0
+
+    if args.command == "lucid":
+        from lucid_sci import LucidSciEvaluator
+        evaluator = LucidSciEvaluator()
+        res = evaluator.evaluate(_read(args.file))
+        if args.json:
+            _write_json(res)
+        else:
+            print(f"LUCID-SCI Evaluation | Clarity Score: {res['score']}/100 | Findings: {res['findings_count']}")
+            for f in res["findings"][:10]:
+                print(f"- [{f['severity'].upper()}] {f['id']}: {f['message']}")
+        return 0
+
+    if args.command == "docx-process":
+        from .super_engine import SuperEngine
+        engine = SuperEngine()
+        out = engine.process_docx(
+            docx_path=args.file,
+            output_path=args.output,
+            author=args.author,
+            track_changes=not args.no_tracked,
+            add_comments=not args.no_comments,
+        )
+        if args.json:
+            _write_json(out)
+        else:
+            print(f"Processed DOCX written to: {args.output}")
+            print(f"Changes Applied: {len(out.get('applied_edits', []))}; Comments Added: {out.get('editorial_comments_count', 0)}")
+        return 0
+
     return 1
+
 
 
 if __name__ == "__main__":

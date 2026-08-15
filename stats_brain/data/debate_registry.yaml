@@ -1,0 +1,1141 @@
+version: 1.0.0
+status_definitions:
+  resolved_error: The disputed shortcut is invalid under standard definitions or algebra.
+  consensus_requirement: There is a broad minimum standard even though implementation
+    varies.
+  consensus_with_context: A broad principle is settled, but the preferred method depends
+    on context.
+  context_dependent: Multiple methods are valid for different targets or losses.
+  active_debate: Foundational or practical disagreement remains among methodologists.
+  foundational_pluralism: Different coherent inferential frameworks coexist.
+  identification_limit: The data cannot identify the requested decomposition without
+    extra restrictions.
+debates:
+  p_value_as_evidence_threshold:
+    title: P values and bright-line thresholds
+    status: consensus_with_context
+    domain: statistical_inference
+    question: What evidential role should a p value play?
+    consensus_floor: A p value is not the probability that the null hypothesis is
+      true, does not measure effect size, and should not alone determine scientific
+      importance.
+    legitimate_positions:
+    - Use p values as one calibrated compatibility measure alongside estimates and
+      uncertainty.
+    - Use decision thresholds when a prespecified decision problem and error costs
+      justify them.
+    - Use Bayesian or likelihood summaries instead, with their own assumptions.
+    invalid_shortcuts:
+    - p_less_than_0_05_proves_effect
+    - p_greater_than_0_05_proves_no_effect
+    - ranking_findings_only_by_p_value
+    decision_questions:
+    - Was the threshold prespecified?
+    - Is the task scientific learning, decision control, or screening?
+    - Are effect magnitude and uncertainty reported?
+    source_ids:
+    - ASA_PVALUES_2016
+    - ASA_PVALUES_2019
+  frequentist_vs_bayesian:
+    title: Frequentist and Bayesian inference
+    status: foundational_pluralism
+    domain: statistical_inference
+    question: Which probability interpretation and inferential target should govern
+      the analysis?
+    consensus_floor: Both paradigms can be coherent when their targets, assumptions,
+      calibration, and decision rules are explicit.
+    legitimate_positions:
+    - Frequentist repeated-sampling operating characteristics.
+    - Bayesian posterior inference under explicit priors.
+    - Likelihood-based evidence without full decision interpretation.
+    invalid_shortcuts:
+    - calling_posterior_probability_a_frequentist_confidence
+    - calling_confidence_interval_probability_about_fixed_parameter
+    - claiming_one_paradigm_is_assumption_free
+    decision_questions:
+    - What uncertainty statement is needed?
+    - Are informative priors scientifically defensible?
+    - Are repeated-sampling guarantees or posterior decisions primary?
+    source_ids: []
+  confidence_interval_interpretation:
+    title: Confidence interval interpretation
+    status: resolved_error
+    domain: statistical_inference
+    question: What does a 95 percent confidence interval mean?
+    consensus_floor: Under the stated procedure and assumptions, 95 percent of intervals
+      from repeated samples cover the target parameter. The realized interval is not
+      automatically a 95 percent probability statement about a fixed parameter.
+    legitimate_positions:
+    - Compatibility interpretation.
+    - Procedure-based coverage interpretation.
+    invalid_shortcuts:
+    - there_is_95_percent_probability_true_value_lies_in_this_realized_frequentist_interval
+    decision_questions:
+    - Was the interval procedure valid under the design?
+    - Does the interval include model selection and clustering uncertainty?
+    source_ids: []
+  null_result_vs_absence:
+    title: Absence of evidence and evidence of absence
+    status: resolved_error
+    domain: statistical_inference
+    question: Can a non-significant result establish no meaningful effect?
+    consensus_floor: Failure to reject a point null does not establish equivalence
+      or absence of a clinically important effect.
+    legitimate_positions:
+    - Report the estimate and interval relative to meaningful effect bounds.
+    - Use equivalence or noninferiority methods when that is the scientific target.
+    invalid_shortcuts:
+    - nonsignificant_equals_no_effect
+    - wide_interval_proves_equivalence
+    decision_questions:
+    - What effect sizes remain compatible with the data?
+    - Were equivalence margins prespecified?
+    source_ids: []
+  multiplicity_control:
+    title: Multiplicity control
+    status: context_dependent
+    domain: statistical_inference
+    question: When and how should multiplicity be controlled?
+    consensus_floor: The analysis must distinguish confirmatory families from exploratory
+      analyses and control an error criterion appropriate to the decision problem.
+    legitimate_positions:
+    - Family-wise error control for confirmatory claims.
+    - False discovery rate for large discovery families.
+    - Hierarchical or gatekeeping strategies.
+    - Transparent estimation without dichotomous claims in exploratory work.
+    invalid_shortcuts:
+    - ignoring_outcome_or_subgroup_multiplicity
+    - retroactive_primary_outcome_selection
+    decision_questions:
+    - What is the family of claims?
+    - What cost is attached to false positives and false negatives?
+    - Was the strategy prespecified?
+    source_ids: []
+  stepwise_selection:
+    title: Stepwise variable selection
+    status: consensus_with_context
+    domain: regression_modeling
+    question: Is automated stepwise selection acceptable?
+    consensus_floor: Naive stepwise selection produces unstable models and invalid
+      ordinary inferential summaries unless selection uncertainty is addressed.
+    legitimate_positions:
+    - Avoid it for etiologic confounder selection.
+    - Use penalization or prespecified reduction for prediction.
+    - Use selective inference or resampling for limited exploratory purposes.
+    invalid_shortcuts:
+    - p_value_driven_confounder_selection
+    - naive_standard_errors_after_stepwise_selection
+    decision_questions:
+    - Is the task prediction or explanation?
+    - Is selection uncertainty included?
+    - Are key variables forced by design knowledge?
+    source_ids: []
+  events_per_variable:
+    title: Events per variable rules
+    status: active_debate
+    domain: prediction_modeling
+    question: Can a fixed events-per-variable rule determine sample size?
+    consensus_floor: A universal threshold is inadequate. Sample size depends on outcome
+      frequency, predictor parameters, anticipated performance, shrinkage, prevalence,
+      and validation strategy.
+    legitimate_positions:
+    - Simulation or formula-based prediction-model sample size.
+    - Penalization with optimism correction.
+    invalid_shortcuts:
+    - ten_events_per_variable_as_universal_proof_of_adequacy
+    decision_questions:
+    - What shrinkage and optimism are tolerable?
+    - How many effective predictor parameters are estimated?
+    - Is external validation planned?
+    source_ids:
+    - TRIPOD_AI_2024
+    - PROBAST_AI_2025
+  causal_framework_pluralism:
+    title: Potential outcomes and structural causal models
+    status: foundational_pluralism
+    domain: causal_inference
+    question: Which formal causal framework should be used?
+    consensus_floor: Both frameworks require explicit causal targets and assumptions.
+      They are often complementary rather than mutually exclusive.
+    legitimate_positions:
+    - Potential outcomes for intervention contrasts and estimands.
+    - Structural causal models and DAGs for graphical identification.
+    - Decision-theoretic regimes for policy choice.
+    invalid_shortcuts:
+    - DAG_alone_estimates_effect
+    - potential_outcome_notation_eliminates_need_for_causal_graph
+    decision_questions:
+    - Which framework makes the intervention and assumptions clearest?
+    - Is identification derived rather than asserted?
+    source_ids:
+    - RUBIN_CAUSAL_MODEL
+    - PEARL_CAUSALITY
+    - HERNAN_ROBINS_BOOK
+  well_defined_interventions:
+    title: Well-defined interventions and consistency
+    status: active_debate
+    domain: causal_inference
+    question: Must every causal exposure correspond to a single manipulable intervention?
+    consensus_floor: The treatment versions and counterfactual contrast must be sufficiently
+      defined for consistency and policy interpretation. Some etiologic questions
+      can be framed without a directly deployable intervention, but interpretation
+      must remain bounded.
+    legitimate_positions:
+    - Strict interventionist causal estimands.
+    - Etiologic effects under exposure versions and structural assumptions.
+    - Disparity measures that do not label social identity itself as a treatment.
+    invalid_shortcuts:
+    - treating_race_sex_or_social_identity_as_simple_drug_like_intervention
+    - undefined_exposure_versions
+    decision_questions:
+    - What changes between counterfactual worlds?
+    - Could different versions produce different outcomes?
+    - Is the target etiologic, explanatory, or policy oriented?
+    source_ids: []
+  confounder_selection:
+    title: Confounder selection
+    status: consensus_with_context
+    domain: causal_inference
+    question: How should adjustment variables be selected?
+    consensus_floor: Selection must be based primarily on the causal structure and
+      target estimand, not exposure or outcome associations alone.
+    legitimate_positions:
+    - Minimal sufficient adjustment set from a DAG.
+    - Outcome-adaptive or high-dimensional methods under stated conditions.
+    - Design-based balancing of prespecified pretreatment variables.
+    invalid_shortcuts:
+    - adjust_for_every_available_variable
+    - adjust_only_if_p_less_than_0_05
+    - include_post_treatment_variables_as_confounders
+    decision_questions:
+    - Is each variable measured before treatment?
+    - Could it be a collider, mediator, proxy, or instrument?
+    - What bias-amplification risks exist?
+    source_ids: []
+  double_robustness:
+    title: Double robustness
+    status: consensus_with_context
+    domain: causal_inference
+    question: What does double robustness guarantee?
+    consensus_floor: Consistency may hold if one of two nuisance components is correctly
+      specified under regularity, positivity, and identification assumptions. It does
+      not protect against unmeasured confounding, severe positivity failure, or arbitrary
+      machine-learning bias.
+    legitimate_positions:
+    - AIPW or TMLE with parametric nuisance models.
+    - Cross-fitted flexible nuisance learning.
+    invalid_shortcuts:
+    - double_robust_means_any_two_models_make_analysis_correct
+    - double_robustness_solves_unmeasured_confounding
+    decision_questions:
+    - Which nuisance components are involved?
+    - Are empirical process conditions handled by cross-fitting?
+    - Is positivity adequate?
+    source_ids: []
+  positivity:
+    title: Positivity, overlap, and extrapolation
+    status: consensus_with_context
+    domain: causal_inference
+    question: How should limited overlap be handled?
+    consensus_floor: The target estimand must be supported by treatment variation
+      in relevant covariate strata. Severe violations are identification problems,
+      not merely unstable standard errors.
+    legitimate_positions:
+    - Restrict the target population.
+    - Use overlap or matching-weight estimands.
+    - Use feasible stochastic or modified treatment policies.
+    - Model-based extrapolation with explicit sensitivity.
+    invalid_shortcuts:
+    - trimming_without_redefining_estimand
+    - claiming_weights_fix_structural_positivity
+    - hiding_extreme_weights
+    decision_questions:
+    - Is the violation structural or sample-limited?
+    - What population remains after restriction?
+    - Would a different intervention be more feasible?
+    source_ids: []
+  time_zero_alignment:
+    title: Time-zero alignment in longitudinal causal studies
+    status: resolved_error
+    domain: target_trial_emulation
+    question: Must eligibility, assignment, and follow-up begin together?
+    consensus_floor: Eligibility assessment, treatment assignment, and start of outcome
+      follow-up must be aligned to avoid immortal time and selection bias, except
+      where a clearly defined design emulates a different protocol.
+    legitimate_positions:
+    - Single baseline assignment.
+    - Sequential nested trials at repeated eligible times.
+    - Grace-period strategies handled by cloning, censoring, and weighting or an equivalent
+      valid method.
+    invalid_shortcuts:
+    - classifying_exposure_using_future_survival
+    - starting_follow_up_before_treatment_eligibility
+    decision_questions:
+    - What exact instant is time zero?
+    - What information is used to assign strategy?
+    - Can each participant be assigned to every eligible strategy at time zero?
+    source_ids:
+    - TARGET_2025
+    - HERNAN_ROBINS_BOOK
+  target_trial_label:
+    title: What qualifies as target trial emulation
+    status: consensus_requirement
+    domain: target_trial_emulation
+    question: Can any adjusted observational comparison be called a target trial emulation?
+    consensus_floor: A target trial emulation should specify the causal trial protocol
+      and map each component to the observational emulation.
+    legitimate_positions:
+    - Explicit protocol plus emulation table.
+    - Sequential target trial emulation for repeated eligibility.
+    invalid_shortcuts:
+    - calling_standard_cohort_regression_a_target_trial_without_protocol
+    decision_questions:
+    - Are all protocol components stated?
+    - Is the causal contrast aligned with the analysis?
+    - Are deviations from the target trial explained?
+    source_ids:
+    - TARGET_2025
+  hazard_ratio_interpretation:
+    title: Hazard ratio interpretation
+    status: consensus_requirement
+    domain: survival_analysis
+    question: What does a hazard ratio estimate?
+    consensus_floor: A hazard ratio compares instantaneous event rates among survivors
+      in the relevant risk sets. It is not generally a risk ratio, time ratio, or
+      constant individual effect.
+    legitimate_positions:
+    - Report hazard ratios with absolute risks or survival curves.
+    - Use RMST or risk contrasts for marginal public-health interpretation.
+    - Use time-varying coefficients when proportional hazards fail.
+    invalid_shortcuts:
+    - hazard_ratio_equals_risk_ratio
+    - one_minus_hazard_ratio_equals_percent_risk_reduction
+    decision_questions:
+    - Is proportional hazards plausible?
+    - Would absolute risk or RMST answer the question better?
+    source_ids: []
+  competing_risk_model_choice:
+    title: Cause-specific and subdistribution hazard models
+    status: context_dependent
+    domain: survival_analysis
+    question: Which competing-risk regression target is appropriate?
+    consensus_floor: Cause-specific hazards and subdistribution hazards answer different
+      questions. Model choice must follow the estimand.
+    legitimate_positions:
+    - Cause-specific hazards for etiologic rate processes.
+    - Cumulative incidence or Fine-Gray for prediction and incidence comparison.
+    - Causal risk contrasts under explicit interventions on treatment and competing
+      events.
+    invalid_shortcuts:
+    - selecting_Fine_Gray_as_universal_default
+    - interpreting_subdistribution_hazard_as_biological_rate
+    decision_questions:
+    - Is the target etiology, prediction, prognosis, or intervention effect?
+    - How are competing events handled in the estimand?
+    source_ids: []
+  natural_vs_interventional_mediation:
+    title: Natural and interventional mediation effects
+    status: active_debate
+    domain: mediation
+    question: Which mediation estimand is scientifically and causally defensible?
+    consensus_floor: The estimand must match the causal question and assumptions.
+      Natural effects require strong cross-world conditions; interventional effects
+      alter mediator distributions and may be better aligned with feasible policies.
+    legitimate_positions:
+    - Natural direct and indirect effects.
+    - Interventional direct and indirect effects.
+    - Controlled direct effects.
+    - Separable or path-specific effects when structure supports them.
+    invalid_shortcuts:
+    - mediation_percentage_without_scale_or_total_effect
+    - ignoring_exposure_mediator_interaction
+    - cross_sectional_mediation_as_temporal_mechanism
+    decision_questions:
+    - Is the mediator manipulable or distributionally intervenable?
+    - Are mediator-outcome confounders affected by exposure?
+    - What scale is used?
+    source_ids: []
+  additive_vs_multiplicative_interaction:
+    title: Additive and multiplicative interaction
+    status: context_dependent
+    domain: effect_modification
+    question: Which scale should define interaction?
+    consensus_floor: Interaction is scale dependent. Additive interaction often aligns
+      with excess cases and public-health impact; multiplicative interaction aligns
+      with ratio models. Neither is universally primary.
+    legitimate_positions:
+    - Risk-difference interaction and RERI.
+    - Risk-ratio or odds-ratio interaction.
+    - Policy-value heterogeneity.
+    invalid_shortcuts:
+    - claiming_no_interaction_without_naming_scale
+    - interpreting_product_term_as_universal_biologic_interaction
+    decision_questions:
+    - Which decision or mechanism motivates the scale?
+    - Are stratum-specific absolute risks available?
+    source_ids: []
+  MAIHDA_causal_status:
+    title: MAIHDA and causal interpretation
+    status: consensus_with_context
+    domain: intersectionality
+    question: Does MAIHDA estimate causal intersectional effects?
+    consensus_floor: MAIHDA estimates multilevel descriptive patterns and shrinkage-based
+      stratum summaries unless embedded in an explicit causal design with interventions,
+      identification assumptions, and estimands.
+    legitimate_positions:
+    - Descriptive intersectional mapping.
+    - Prediction or discriminatory accuracy.
+    - Causal policy analysis layered on separately defined modifiable interventions.
+    invalid_shortcuts:
+    - calling_random_intersection_residual_a_causal_effect
+    - identity_category_as_unqualified_treatment
+    decision_questions:
+    - Is the target descriptive disparity or intervention effect?
+    - Which social processes are modifiable?
+    - What scale and reference structure are used?
+    source_ids:
+    - MAIHDA_TUTORIAL_2024
+    - INTERSECTIONAL_OUTCOMES
+  intersectional_reference_and_scale:
+    title: Intersectional scale and reference dependence
+    status: active_debate
+    domain: intersectionality
+    question: How should intersectional inequality be parameterized?
+    consensus_floor: Results depend on reference group, additive or multiplicative
+      scale, coding, and the population distribution. These choices must be substantive,
+      not merely convenient.
+    legitimate_positions:
+    - Stratum-specific estimates with uncertainty.
+    - Additive interaction contrasts.
+    - Multilevel shrinkage with discriminatory accuracy.
+    - Counterfactual disparity decompositions.
+    invalid_shortcuts:
+    - single_reference_group_as_complete_intersectional_story
+    - ranking_sparse_strata_without_uncertainty
+    decision_questions:
+    - Which contrast is socially and policy relevant?
+    - Are sparse groups protected by partial pooling?
+    - Does the scale answer the intended question?
+    source_ids: []
+  continuous_treatment_estimand:
+    title: Continuous treatment interventions
+    status: consensus_with_context
+    domain: continuous_exposure
+    question: What causal effect is meant by a one-unit increase?
+    consensus_floor: A continuous causal analysis must define the intervention, support,
+      and target. Static dose assignment, derivative effects, shifts, modified treatment
+      policies, and stochastic interventions are different estimands.
+    legitimate_positions:
+    - Dose-response curve.
+    - Feasible shift intervention.
+    - Modified treatment policy.
+    - Stochastic intervention.
+    invalid_shortcuts:
+    - one_unit_regression_coefficient_as_automatic_causal_effect
+    - extrapolation_to_unsupported_doses
+    decision_questions:
+    - Can every unit receive the proposed dose?
+    - Is measurement error material?
+    - Is the target local, marginal, or policy based?
+    source_ids:
+    - IMAI_VANDYK_CONTINUOUS
+    - HIRANO_IMBENS_GPS
+  mixture_causal_intervention:
+    title: Causal effects of exposure mixtures
+    status: active_debate
+    domain: mixtures
+    question: What intervention does a mixture index represent?
+    consensus_floor: A causal mixture effect requires a well-defined joint intervention
+      and support. A weighted index can be useful descriptively or predictively but
+      is not automatically an intervention.
+    legitimate_positions:
+    - Joint component intervention.
+    - Quantile-based mixture shift.
+    - Stochastic policy over the joint exposure distribution.
+    - Component-specific intervention with the remainder specified.
+    invalid_shortcuts:
+    - calling_black_box_mixture_importance_a_causal_effect
+    - ignoring_joint_positivity
+    decision_questions:
+    - What exactly changes for each component?
+    - Is the joint intervention observed or feasible?
+    - How are interactions and nonlinearities represented?
+    source_ids: []
+  survey_weights_in_regression:
+    title: Survey weights in regression
+    status: active_debate
+    domain: complex_surveys
+    question: When should sampling weights enter regression models?
+    consensus_floor: The answer depends on the estimand, informativeness of sampling,
+      model specification, and whether design-based or model-based inference is intended.
+      Clustering and stratification remain relevant even when coefficients are model
+      based.
+    legitimate_positions:
+    - Design-based pseudo-likelihood using weights.
+    - Model-based regression including design variables.
+    - Doubly robust or calibrated approaches.
+    - Unweighted analysis under defensible noninformative sampling and correct models.
+    invalid_shortcuts:
+    - always_drop_weights_for_regression
+    - always_use_weights_without_defining_population_target
+    - use_weights_but_naive_variance
+    decision_questions:
+    - Is sampling informative conditional on model covariates?
+    - Is the target finite population or superpopulation?
+    - How is variance estimated?
+    source_ids: []
+  finite_vs_superpopulation_causal:
+    title: Finite-population and superpopulation causal estimands
+    status: active_debate
+    domain: complex_surveys
+    question: What population does a survey causal effect target?
+    consensus_floor: The estimand must specify whether it averages over sampled units,
+      a finite survey population, or a superpopulation. Treatment and sampling weights
+      solve different problems.
+    legitimate_positions:
+    - Finite population design-based effect.
+    - Superpopulation model-based effect.
+    - Transported effect to a named population.
+    invalid_shortcuts:
+    - multiplying_survey_and_treatment_weights_without_target_definition
+    - calling_sample_ATE_national_effect
+    decision_questions:
+    - What randomness defines uncertainty?
+    - What role does the sampling weight play?
+    - Is sampling informative for potential outcomes?
+    source_ids:
+    - COMPLEX_SURVEY_CAUSAL_2025
+    - DUGOFF_2014
+  DHS_pooled_weights:
+    title: Pooling DHS survey weights
+    status: context_dependent
+    domain: DHS
+    question: How should weights be scaled across repeated DHS surveys?
+    consensus_floor: DHS weights identify each survey population under that survey
+      design. Pooling requires an explicit target across countries or waves and corresponding
+      rescaling or population weighting.
+    legitimate_positions:
+    - Equal contribution of survey waves.
+    - Population-size weighting for a combined population target.
+    - Separate-wave estimation followed by meta-analysis or standardization.
+    invalid_shortcuts:
+    - concatenate_surveys_and_use_raw_v005_as_if_single_design
+    - duplicate_PSU_identifiers_across_surveys
+    decision_questions:
+    - Is the target an average survey, person, country, or period?
+    - Are variables and strata harmonized?
+    - Are PSU and strata identifiers unique across waves?
+    source_ids:
+    - DHS_GUIDE_8
+  domain_analysis_surveys:
+    title: Survey domain analysis
+    status: resolved_error
+    domain: complex_surveys
+    question: Should non-domain observations be deleted before variance estimation?
+    consensus_floor: For design-based subpopulation inference, domain indicators should
+      generally preserve the full design information rather than physically deleting
+      non-domain units before variance estimation.
+    legitimate_positions:
+    - Domain or subpopulation estimator in survey software.
+    - Replicate-weight domain estimation.
+    invalid_shortcuts:
+    - naive_row_filter_then_treat_as_original_design_without_check
+    decision_questions:
+    - Does the software retain PSU and strata contributions?
+    - Are empty strata or lonely PSUs handled transparently?
+    source_ids: []
+  DHS_spatial_displacement:
+    title: DHS GPS coordinate displacement
+    status: consensus_requirement
+    domain: DHS_spatial
+    question: Can released DHS cluster coordinates be treated as exact locations?
+    consensus_floor: Released coordinates are displaced for confidentiality. Fine-scale
+      distances and point-level exposure assignment require displacement-aware sensitivity
+      or coarser spatial linkage.
+    legitimate_positions:
+    - Buffer-based exposure summaries.
+    - Administrative-area linkage with boundary sensitivity.
+    - Probabilistic displacement models.
+    invalid_shortcuts:
+    - exact_household_or_cluster_location_claims
+    - fine_distance_threshold_without_sensitivity
+    decision_questions:
+    - What is the spatial resolution of exposure?
+    - Could displacement cross boundaries or gradients?
+    - Are urban and rural displacement rules considered?
+    source_ids: []
+  prediction_vs_causation:
+    title: Prediction and causation
+    status: resolved_error
+    domain: machine_learning
+    question: Can high predictive performance establish causal importance?
+    consensus_floor: Prediction identifies patterns useful for forecasting under the
+      observed data distribution. Causal effects require intervention targets and
+      identification assumptions.
+    legitimate_positions:
+    - Use prediction for risk stratification.
+    - Use causal inference for intervention effects.
+    - Use both in a decision model when roles are explicit.
+    invalid_shortcuts:
+    - feature_importance_equals_causal_effect
+    - high_AUROC_proves_mechanism
+    decision_questions:
+    - Is the intended use forecasting or intervention?
+    - Are predictors manipulable?
+    - Could dataset shift alter relationships?
+    source_ids: []
+  SHAP_causal_interpretation:
+    title: SHAP and causal interpretation
+    status: resolved_error
+    domain: machine_learning
+    question: Do SHAP values estimate effects of changing a feature?
+    consensus_floor: SHAP values attribute a model prediction under a chosen feature
+      distribution. They are not causal effects unless embedded in a valid causal
+      model with appropriate interventions.
+    legitimate_positions:
+    - Model explanation under explicit conditional or interventional SHAP conventions.
+    - Causal attribution only with separate identification.
+    invalid_shortcuts:
+    - SHAP_value_as_intervention_effect
+    - SHAP_direction_as_mechanism
+    decision_questions:
+    - What background distribution was used?
+    - Are features dependent?
+    - Is the question about the model or the world?
+    source_ids: []
+  calibration_vs_discrimination:
+    title: Calibration and discrimination
+    status: consensus_requirement
+    domain: prediction
+    question: Is discrimination alone sufficient to validate a prediction model?
+    consensus_floor: A model can discriminate well while being badly calibrated. Performance
+      evaluation should match the intended use and include calibration, discrimination,
+      and decision utility where relevant.
+    legitimate_positions:
+    - Calibration plots and slopes.
+    - Discrimination measures.
+    - Decision curves or utility analysis.
+    invalid_shortcuts:
+    - AUROC_only_as_complete_validation
+    - accuracy_only_in_imbalanced_data
+    decision_questions:
+    - Will probabilities guide decisions?
+    - What threshold range matters?
+    - Is recalibration allowed?
+    source_ids:
+    - TRIPOD_AI_2024
+    - PROBAST_AI_2025
+  data_split_unit:
+    title: Unit of resampling and validation
+    status: resolved_error
+    domain: prediction
+    question: At what level should train-test splitting occur?
+    consensus_floor: All correlated records from the same independent unit, cluster,
+      site, person, or time origin must be kept together according to the intended
+      deployment setting.
+    legitimate_positions:
+    - Person-level split for repeated records.
+    - Site-level split for new-site transport.
+    - Temporal split for future deployment.
+    invalid_shortcuts:
+    - row_level_split_with_repeated_persons
+    - preprocessing_before_split
+    - test_set_used_for_tuning
+    decision_questions:
+    - 'What will be new at deployment: records, patients, sites, or future time?'
+    - Was every preprocessing step nested inside resampling?
+    source_ids: []
+  algorithmic_fairness_impossibility:
+    title: Incompatible fairness criteria
+    status: active_debate
+    domain: algorithmic_fairness
+    question: Can all group fairness criteria be satisfied simultaneously?
+    consensus_floor: When base rates differ, several calibration and error-rate parity
+      criteria cannot generally all hold at once except under special conditions.
+      Fairness requires a normative choice tied to harms and use.
+    legitimate_positions:
+    - Calibration within groups.
+    - Equalized odds.
+    - Equal opportunity.
+    - Decision-specific welfare or causal fairness criteria.
+    invalid_shortcuts:
+    - single_fairness_metric_as_universal_fairness
+    - fairness_without_groupwise_uncertainty
+    decision_questions:
+    - Who bears false-positive and false-negative harms?
+    - Are base rates themselves products of injustice?
+    - What intervention follows the model?
+    source_ids: []
+  Bayesian_prior_choice:
+    title: Bayesian prior choice
+    status: active_debate
+    domain: Bayesian_statistics
+    question: How informative should priors be?
+    consensus_floor: Priors are part of the model and must be justified, checked through
+      prior predictive simulation, and subjected to sensitivity analysis when influential.
+    legitimate_positions:
+    - Weakly informative regularizing priors.
+    - Domain-informed priors.
+    - Reference or objective priors for limited goals.
+    - Robust mixture priors.
+    invalid_shortcuts:
+    - default_flat_prior_is_assumption_free
+    - posterior_without_convergence_or_prior_sensitivity
+    decision_questions:
+    - What scale makes the prior interpretable?
+    - How much prior information is defensible?
+    - Does the posterior change materially across plausible priors?
+    source_ids: []
+  MAR_MNAR:
+    title: Missing at random and missing not at random
+    status: consensus_requirement
+    domain: missing_data
+    question: Can observed data determine whether missingness is MAR or MNAR?
+    consensus_floor: MAR versus MNAR is generally not testable from observed data
+      alone. The primary analysis and sensitivity analysis must state assumptions
+      and plausible departures.
+    legitimate_positions:
+    - Multiple imputation or likelihood under MAR.
+    - Pattern-mixture or selection-model sensitivity.
+    - Delta adjustment or tipping-point analysis.
+    invalid_shortcuts:
+    - test_proves_MAR
+    - complete_case_without_missingness_argument
+    decision_questions:
+    - Which variables predict missingness and missing values?
+    - What departures are scientifically plausible?
+    - Would conclusions change?
+    source_ids:
+    - TARMOS
+  complete_case_analysis:
+    title: Complete-case analysis
+    status: context_dependent
+    domain: missing_data
+    question: When is complete-case analysis unbiased or acceptable?
+    consensus_floor: Validity depends on the target, missingness mechanisms, and model.
+      Complete cases are not automatically representative, but complete-case analysis
+      can be valid under specific conditions.
+    legitimate_positions:
+    - Complete-case under justified independent missingness conditions.
+    - Multiple imputation.
+    - Inverse probability weighting.
+    - Doubly robust methods.
+    invalid_shortcuts:
+    - complete_case_as_default
+    - percent_missing_alone_determines_bias
+    decision_questions:
+    - What causes missingness?
+    - Are outcomes, exposures, and covariates missing?
+    - Does analysis condition on predictors of missingness?
+    source_ids: []
+  random_vs_fixed_effects_meta:
+    title: Common-effect and random-effects meta-analysis
+    status: context_dependent
+    domain: meta_analysis
+    question: Which distribution of study effects is being targeted?
+    consensus_floor: Model choice should follow whether studies share one common effect
+      or represent a distribution of effects. A random-effects model is not a cure
+      for unexplained heterogeneity.
+    legitimate_positions:
+    - Common-effect model for one shared estimand.
+    - Random-effects distribution with prediction interval.
+    - Hierarchical or meta-regression model.
+    invalid_shortcuts:
+    - choose_random_effects_only_because_I2_high
+    - interpret_random_effects_mean_as_every_setting_effect
+    decision_questions:
+    - What population of studies is represented?
+    - Is a prediction interval needed?
+    - Are effect modifiers measured?
+    source_ids: []
+  I2_interpretation:
+    title: I-squared interpretation
+    status: consensus_requirement
+    domain: meta_analysis
+    question: Does I-squared measure the magnitude of clinical heterogeneity?
+    consensus_floor: I-squared is a relative proportion of observed variance attributed
+      to heterogeneity and depends on study precision. It does not state the absolute
+      spread of true effects.
+    legitimate_positions:
+    - Report tau-squared and prediction intervals.
+    - Use substantive comparison of effect estimates.
+    invalid_shortcuts:
+    - I2_low_proves_homogeneity
+    - I2_high_alone_selects_model
+    decision_questions:
+    - What is the absolute heterogeneity?
+    - Could effects differ in decision-relevant directions?
+    source_ids: []
+  publication_bias_tests:
+    title: Small-study effects and publication bias
+    status: consensus_with_context
+    domain: meta_analysis
+    question: Can funnel plots or Egger tests diagnose publication bias?
+    consensus_floor: These methods detect asymmetry or small-study effects under assumptions.
+      They do not uniquely identify publication bias and have low power with few studies.
+    legitimate_positions:
+    - Graphical assessment.
+    - Selection models.
+    - Sensitivity analyses.
+    - Prospective registration and search of unpublished evidence.
+    invalid_shortcuts:
+    - nonsignificant_Egger_proves_no_publication_bias
+    - trim_and_fill_as_correction_truth
+    decision_questions:
+    - How many studies are available?
+    - Could heterogeneity or design quality cause asymmetry?
+    source_ids: []
+  cluster_robust_few_clusters:
+    title: Cluster-robust inference with few clusters
+    status: consensus_requirement
+    domain: variance_estimation
+    question: Are ordinary cluster-robust standard errors valid with few clusters?
+    consensus_floor: Conventional asymptotics can be unreliable with few clusters.
+      Small-sample corrections, randomization inference, or wild cluster bootstrap
+      may be needed.
+    legitimate_positions:
+    - Bias-reduced sandwich corrections.
+    - Wild cluster bootstrap.
+    - Randomization-based inference.
+    - Model-based hierarchical inference.
+    invalid_shortcuts:
+    - naive_cluster_robust_SE_with_very_few_clusters
+    decision_questions:
+    - How many independent clusters exist?
+    - Is treatment assigned at cluster level?
+    - Are clusters unbalanced?
+    source_ids: []
+  robust_SE_misspecification:
+    title: Robust standard errors and model misspecification
+    status: resolved_error
+    domain: variance_estimation
+    question: Do robust standard errors fix a misspecified mean model?
+    consensus_floor: Sandwich standard errors can protect variance estimation under
+      some misspecification. They do not repair a wrong estimand, functional form,
+      dependent structure, confounding, or extrapolation.
+    legitimate_positions:
+    - Use robust uncertainty for a clearly defined estimating equation.
+    - Improve the mean or causal model and assess diagnostics.
+    invalid_shortcuts:
+    - robust_SE_makes_model_robust_in_all_respects
+    decision_questions:
+    - What parameter does the estimating equation target under misspecification?
+    - Is dependence clustered correctly?
+    source_ids: []
+  causal_forest_individual_effects:
+    title: Causal forests and individual treatment effects
+    status: consensus_with_context
+    domain: causal_machine_learning
+    question: Can estimated individual treatment effects be treated as observed personal
+      truths?
+    consensus_floor: Causal forests estimate conditional average effects under assumptions.
+      Unit-specific effects are generally not identified and rankings can be noisy.
+    legitimate_positions:
+    - Report calibrated CATE patterns.
+    - Use honest policy evaluation.
+    - Validate heterogeneity with prespecified subgroups or best linear projections.
+    invalid_shortcuts:
+    - ITE_rankings_as_clinical_truth
+    - variable_importance_as_effect_modifier_proof
+    decision_questions:
+    - Is heterogeneity stronger than noise?
+    - Does a treatment rule improve out-of-sample value?
+    - Is overlap adequate?
+    source_ids:
+    - CAUSAL_FORESTS_2018
+  cross_fitting:
+    title: Cross-fitting and orthogonal estimation
+    status: consensus_with_context
+    domain: causal_machine_learning
+    question: When is cross-fitting needed?
+    consensus_floor: Cross-fitting reduces overfitting bias and relaxes empirical
+      process restrictions for orthogonal estimators. It does not solve confounding,
+      positivity, or poor target definition.
+    legitimate_positions:
+    - K-fold cross-fitting.
+    - Repeated cross-fitting.
+    - Donsker-class estimation without splitting in simple settings.
+    invalid_shortcuts:
+    - same_data_nuisance_fit_and_effect_claim_without_conditions
+    - cross_fitting_as_identification
+    decision_questions:
+    - Are nuisance learners sufficiently flexible?
+    - Is inference influence-function based?
+    - Are folds grouped by cluster or person?
+    source_ids:
+    - DML_2018
+    - TMLE_BOOK
+  transportability:
+    title: Generalizability and transportability
+    status: consensus_with_context
+    domain: transportability
+    question: When can an effect be moved from a study sample to another population?
+    consensus_floor: Transport requires a target population, effect-modifier sufficiency,
+      overlap, compatible treatment and outcome definitions, and a model for selection
+      or sampling.
+    legitimate_positions:
+    - Sampling-score weighting.
+    - Outcome modeling and standardization.
+    - Doubly robust transport estimators.
+    - Partial identification when overlap fails.
+    invalid_shortcuts:
+    - external_validity_asserted_from_demographic_similarity
+    - transport_weighting_without_target_data
+    decision_questions:
+    - Which effect modifiers differ?
+    - Is treatment version stable?
+    - Is there target-population support?
+    source_ids:
+    - GENERALIZING_TRIALS_2017
+  interference_SUTVA:
+    title: Interference and SUTVA
+    status: active_debate
+    domain: causal_inference
+    question: How should spillovers be represented?
+    consensus_floor: No-interference is an assumption, not a default fact. When interference
+      is plausible, the treatment allocation, exposure mapping, and relevant network
+      or cluster must be specified.
+    legitimate_positions:
+    - Partial interference within clusters.
+    - Network exposure mappings.
+    - Policy-level allocation effects.
+    - Bounds under uncertain networks.
+    invalid_shortcuts:
+    - ignoring_spillovers_in_vaccine_or_peer_or_market_setting
+    - undefined_treatment_versions
+    decision_questions:
+    - Whose treatment can affect whose outcome?
+    - Is the network measured?
+    - Which allocation policy is the target?
+    source_ids:
+    - HUDGENS_HALLORAN_2008
+  causal_discovery:
+    title: Causal discovery from observational data
+    status: active_debate
+    domain: causal_discovery
+    question: Can an algorithm recover the true causal graph?
+    consensus_floor: Causal discovery can narrow graph equivalence classes under assumptions
+      such as acyclicity, causal sufficiency or specified latent confounding, faithfulness,
+      and adequate measurement. Output is not self-validating.
+    legitimate_positions:
+    - Constraint-based discovery.
+    - Score-based discovery.
+    - Invariant or multi-environment discovery.
+    - Discovery as hypothesis generation checked by domain knowledge.
+    invalid_shortcuts:
+    - algorithm_output_as_proven_causal_graph
+    - direction_inferred_without_orientation_information
+    decision_questions:
+    - Which assumptions orient edges?
+    - Are latent common causes plausible?
+    - Are results stable across methods and environments?
+    source_ids: []
+  noncollapsibility:
+    title: Noncollapsibility of odds and hazard ratios
+    status: consensus_requirement
+    domain: effect_measures
+    question: Can conditional and marginal odds or hazard ratios differ without confounding?
+    consensus_floor: Yes. Noncollapsible ratio measures can change after covariate
+      adjustment even when covariates are not confounders. The target scale must be
+      stated.
+    legitimate_positions:
+    - Report conditional model coefficient when scientifically intended.
+    - Standardize to marginal risks or risk differences for population interpretation.
+    invalid_shortcuts:
+    - change_after_adjustment_proves_confounding_for_odds_ratio
+    - compare_conditional_OR_across_models_as_if_same_parameter
+    decision_questions:
+    - Is the target subject-specific or population-average?
+    - Would absolute risks be clearer?
+    source_ids: []
+  dichotomizing_continuous_predictors:
+    title: Dichotomizing continuous variables
+    status: consensus_with_context
+    domain: regression_modeling
+    question: Should a continuous variable be split at a cutpoint?
+    consensus_floor: Data-driven dichotomization loses information, creates residual
+      confounding, and can induce instability. Clinically established thresholds may
+      be useful for decisions but should not erase continuous analyses.
+    legitimate_positions:
+    - Flexible continuous modeling with splines.
+    - Prespecified clinical categories plus continuous sensitivity.
+    invalid_shortcuts:
+    - optimal_cutpoint_from_same_data_without_validation
+    - median_split_as_default
+    decision_questions:
+    - Is the threshold a real intervention or decision boundary?
+    - Is nonlinearity modeled?
+    source_ids: []
+  causal_vs_descriptive_survey:
+    title: Causal inference in population health surveys
+    status: active_debate
+    domain: complex_surveys
+    question: How should design-based survey inference combine with causal models?
+    consensus_floor: Sampling and treatment assignment are distinct processes. A valid
+      analysis defines the target population, causal estimand, identification assumptions,
+      and how survey design enters estimation and variance.
+    legitimate_positions:
+    - Design-based finite-population causal inference.
+    - Model-based superpopulation inference.
+    - Doubly robust combined sampling and treatment models.
+    invalid_shortcuts:
+    - survey_representativeness_as_causal_exchangeability
+    - treatment_weights_only_for_national_effect
+    decision_questions:
+    - Is selection informative for potential outcomes?
+    - What randomness drives the standard error?
+    - Are design and causal weights separately diagnosed?
+    source_ids:
+    - COMPLEX_SURVEY_CAUSAL_2025
+  age_period_cohort:
+    title: Age-period-cohort identification
+    status: identification_limit
+    domain: demography
+    question: Can age, period, and cohort effects be uniquely separated from observational
+      data?
+    consensus_floor: Because cohort equals period minus age, unrestricted linear components
+      are not jointly identified. Any decomposition requires constraints, priors,
+      or alternative estimands.
+    legitimate_positions:
+    - Descriptive Lexis surfaces.
+    - Curvature or second-difference estimands.
+    - Constraint-based models with sensitivity.
+    - Bayesian priors with transparent dependence.
+    invalid_shortcuts:
+    - unique_age_period_cohort_effects_without_constraints
+    decision_questions:
+    - Which constraints identify the model?
+    - Are conclusions invariant to plausible constraints?
+    source_ids: []
+  ecological_fallacy:
+    title: Ecological and individual-level inference
+    status: resolved_error
+    domain: ecological_epidemiology
+    question: Can area-level associations be interpreted as individual effects?
+    consensus_floor: Area-level associations do not generally identify individual-level
+      associations or causal effects. Cross-level conclusions require multilevel information
+      and assumptions.
+    legitimate_positions:
+    - Keep interpretation at area level.
+    - Use multilevel data.
+    - Use ecological inference methods with explicit limitations.
+    invalid_shortcuts:
+    - area_association_as_individual_risk_relation
+    decision_questions:
+    - What is the unit of intervention and outcome?
+    - Could within-area composition explain the pattern?
+    source_ids: []
+  GPS_displacement_precision:
+    title: Spatial precision under displaced survey coordinates
+    status: consensus_requirement
+    domain: spatial_surveys
+    question: How precise can location-linked claims be with displaced coordinates?
+    consensus_floor: Spatial claims should not exceed the effective support created
+      by displacement, exposure resolution, cluster aggregation, and positional uncertainty.
+    legitimate_positions:
+    - Buffer summaries.
+    - Multiple imputation of plausible locations.
+    - Coarser administrative aggregation.
+    invalid_shortcuts:
+    - meter_level_or_exact_boundary_claims_from_displaced_points
+    decision_questions:
+    - What distance or gradient matters scientifically?
+    - Does sensitivity include plausible displacement?
+    source_ids: []
+  causal_language_RCT:
+    title: Causal claims from randomized assignment
+    status: consensus_with_context
+    domain: clinical_trials
+    question: Does randomization justify every causal claim in a trial?
+    consensus_floor: Randomization identifies effects of assignment under correct
+      implementation and analysis. Effects of adherence, treatment received, mediators,
+      or post-randomization subgroups require additional assumptions.
+    legitimate_positions:
+    - Intention-to-treat assignment effect.
+    - Per-protocol effect with adherence methods.
+    - Principal-stratum or mediation estimands with explicit assumptions.
+    invalid_shortcuts:
+    - as_treated_causal_claim_from_randomization_alone
+    - post_randomization_subgroup_effect_as_randomized
+    decision_questions:
+    - What was randomized?
+    - Which estimand handles intercurrent events?
+    - Was loss to follow-up informative?
+    source_ids:
+    - ICH_E9_R1
+  noninferiority_failure:
+    title: Noninferiority, equivalence, and failed superiority
+    status: resolved_error
+    domain: clinical_trials
+    question: Can a failed superiority test establish noninferiority or equivalence?
+    consensus_floor: No. Noninferiority and equivalence require prespecified margins,
+      appropriate analysis populations, and assay sensitivity.
+    legitimate_positions:
+    - Prespecified noninferiority design.
+    - Two one-sided tests for equivalence.
+    invalid_shortcuts:
+    - failed_superiority_equals_equivalence
+    - post_hoc_noninferiority_margin
+    decision_questions:
+    - Was the margin clinically justified?
+    - Are both ITT and per-protocol results coherent?
+    source_ids: []
+  heterogeneity_subgroups:
+    title: Subgroup and heterogeneity claims
+    status: consensus_requirement
+    domain: effect_modification
+    question: Does significance in one subgroup and not another prove different effects?
+    consensus_floor: No. Heterogeneity requires a direct interaction or contrast with
+      uncertainty, preferably prespecified and supported by adequate information.
+    legitimate_positions:
+    - Interaction test.
+    - Shrinkage or hierarchical subgroup model.
+    - CATE estimation with honest validation.
+    invalid_shortcuts:
+    - significant_here_not_significant_there_equals_difference
+    - many_unadjusted_subgroups
+    decision_questions:
+    - Was the subgroup prespecified?
+    - What scale defines heterogeneity?
+    - How much information is available in each subgroup?
+    source_ids: []
+  bootstrap_validity:
+    title: Bootstrap validity under complex dependence
+    status: context_dependent
+    domain: variance_estimation
+    question: Can observations always be resampled independently?
+    consensus_floor: The resampling unit and scheme must reproduce the relevant data-generating
+      or sampling dependence.
+    legitimate_positions:
+    - Cluster bootstrap.
+    - Stratified survey bootstrap.
+    - Block bootstrap for time series.
+    - Parametric bootstrap.
+    invalid_shortcuts:
+    - row_bootstrap_for_clustered_or_longitudinal_data
+    decision_questions:
+    - What is the independent sampling unit?
+    - Are strata, clusters, or serial dependence preserved?
+    source_ids: []
+  sensitivity_analysis_role:
+    title: Sensitivity analysis and robustness
+    status: consensus_requirement
+    domain: statistical_practice
+    question: Does repeating analyses with many specifications establish truth?
+    consensus_floor: Sensitivity analysis should target specific assumptions or analytic
+      choices and report how conclusions change. A specification multiverse does not
+      compensate for an unidentified target.
+    legitimate_positions:
+    - Quantitative bias analysis.
+    - Tipping points.
+    - Specification curves.
+    - Negative controls.
+    - Alternative estimands clearly labeled.
+    invalid_shortcuts:
+    - many_models_called_robust_without_predefined_threat
+    - selective_reporting_of_supportive_specifications
+    decision_questions:
+    - Which assumption is being perturbed?
+    - What range is scientifically plausible?
+    - Does the estimand change across analyses?
+    source_ids: []

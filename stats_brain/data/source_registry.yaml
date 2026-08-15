@@ -1,0 +1,361 @@
+version: 1.0.0
+sources:
+  ICH_E9_R1:
+    title: ICH E9(R1) Addendum on Estimands and Sensitivity Analysis in Clinical Trials
+    organization: International Council for Harmonisation
+    year: 2019
+    url: https://www.ema.europa.eu/en/documents/scientific-guideline/ich-e9-r1-addendum-estimands-and-sensitivity-analysis-clinical-trials-guideline-statistical-principles-clinical-trials-step-5_en.pdf
+    authority: guideline
+    domains:
+    - estimands
+    - clinical_trials
+    - sensitivity_analysis
+    last_verified: '2026-08-13'
+  TARGET_2025:
+    title: 'Transparent Reporting of Observational Studies Emulating a Target Trial:
+      The TARGET Statement'
+    organization: TARGET Working Group
+    year: 2025
+    url: https://jamanetwork.com/journals/jama/fullarticle/2837724
+    authority: reporting_guideline
+    domains:
+    - target_trial_emulation
+    - causal_inference
+    - reporting
+    last_verified: '2026-08-13'
+  DHS_GUIDE_8:
+    title: Guide to DHS Statistics, DHS-8
+    organization: The DHS Program
+    year: 2023
+    url: https://dhsprogram.com/publications/publication-dhsg1-dhs-questionnaires-and-manuals.cfm
+    authority: official_manual
+    domains:
+    - dhs
+    - complex_surveys
+    - reproductive_health
+    - nutrition
+    last_verified: '2026-08-13'
+  TRIPOD_AI_2024:
+    title: 'TRIPOD+AI statement: updated guidance for reporting clinical prediction
+      models that use regression or machine learning methods'
+    organization: TRIPOD+AI Group
+    year: 2024
+    url: https://www.bmj.com/content/385/bmj-2023-078378
+    authority: reporting_guideline
+    domains:
+    - prediction
+    - machine_learning
+    - reporting
+    last_verified: '2026-08-13'
+  PROBAST_AI_2025:
+    title: 'PROBAST+AI: an updated quality, risk of bias, and applicability assessment
+      tool'
+    organization: PROBAST+AI Group
+    year: 2025
+    url: https://www.bmj.com/content/388/bmj-2024-082505
+    authority: risk_of_bias_tool
+    domains:
+    - prediction
+    - machine_learning
+    - risk_of_bias
+    last_verified: '2026-08-13'
+  STRATOS:
+    title: STRengthening Analytical Thinking for Observational Studies initiative
+    organization: STRATOS Initiative
+    year: 2013
+    url: https://www.stratos-initiative.org/
+    authority: methods_initiative
+    domains:
+    - observational_studies
+    - statistical_practice
+  TARMOS:
+    title: Treatment and Reporting of Missing Data in Observational Studies
+    organization: TARMOS Framework Authors
+    year: 2021
+    url: https://www.jclinepi.com/article/S0895-4356(21)00046-X/fulltext
+    authority: framework
+    domains:
+    - missing_data
+    - observational_studies
+  ASA_PVALUES_2016:
+    title: ASA Statement on Statistical Significance and P-Values
+    organization: American Statistical Association
+    year: 2016
+    url: https://www.tandfonline.com/doi/full/10.1080/00031305.2016.1154108
+    authority: professional_statement
+    domains:
+    - inference
+    - p_values
+    - reporting
+  ASA_PVALUES_2019:
+    title: Moving to a World Beyond p less than 0.05
+    organization: The American Statistician
+    year: 2019
+    url: https://www.tandfonline.com/toc/utas20/73/sup1
+    authority: special_issue
+    domains:
+    - inference
+    - p_values
+    - decision_making
+  COMPLEX_SURVEY_CAUSAL_2025:
+    title: Causal Inference with Complex Surveys
+    organization: The American Statistician
+    year: 2025
+    url: https://www.tandfonline.com/doi/full/10.1080/00031305.2025.2514502
+    authority: methods_review
+    domains:
+    - complex_surveys
+    - causal_inference
+  DUGOFF_2014:
+    title: 'Generalizing Observational Study Results: Applying Propensity Score Methods
+      to Complex Surveys'
+    organization: Health Services Research
+    year: 2014
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC3894255/
+    authority: methods_paper
+    domains:
+    - complex_surveys
+    - propensity_scores
+    - generalizability
+  RUBIN_CAUSAL_MODEL:
+    title: Estimating Causal Effects of Treatments in Randomized and Nonrandomized
+      Studies
+    organization: Journal of Educational Psychology
+    year: 1974
+    url: https://doi.org/10.1037/h0037350
+    authority: foundational_paper
+    domains:
+    - potential_outcomes
+    - causal_inference
+  HERNAN_ROBINS_BOOK:
+    title: 'Causal Inference: What If'
+    organization: Miguel A Hernan and James M Robins
+    year: 2020
+    url: https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/
+    authority: open_textbook
+    domains:
+    - causal_inference
+    - target_trials
+    - longitudinal_methods
+  PEARL_CAUSALITY:
+    title: 'Causality: Models, Reasoning, and Inference'
+    organization: Judea Pearl
+    year: 2009
+    url: https://bayes.cs.ucla.edu/BOOK-2K/
+    authority: foundational_book
+    domains:
+    - structural_causal_models
+    - causal_inference
+  VANDERWEELE_EXPLANATION:
+    title: Explanation in Causal Inference
+    organization: Tyler VanderWeele
+    year: 2015
+    url: https://global.oup.com/academic/product/explanation-in-causal-inference-9780199325870
+    authority: foundational_book
+    domains:
+    - mediation
+    - interaction
+    - causal_inference
+  IMAI_VANDYK_CONTINUOUS:
+    title: Causal Inference With General Treatment Regimes
+    organization: Journal of the American Statistical Association
+    year: 2004
+    url: https://imai.fas.harvard.edu/research/files/gpscore.pdf
+    authority: methods_paper
+    domains:
+    - continuous_treatment
+    - generalized_propensity_score
+  HIRANO_IMBENS_GPS:
+    title: The Propensity Score with Continuous Treatments
+    organization: Applied Bayesian Modeling and Causal Inference
+    year: 2004
+    url: https://doi.org/10.1002/0470090456.ch7
+    authority: methods_chapter
+    domains:
+    - continuous_treatment
+    - generalized_propensity_score
+  HUDGENS_HALLORAN_2008:
+    title: Toward Causal Inference With Interference
+    organization: Journal of the American Statistical Association
+    year: 2008
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC2600548/
+    authority: methods_paper
+    domains:
+    - interference
+    - spillovers
+    - causal_inference
+  CAUSAL_FORESTS_2018:
+    title: Estimation and Inference of Heterogeneous Treatment Effects using Random
+      Forests
+    organization: Journal of the American Statistical Association
+    year: 2018
+    url: https://www.tandfonline.com/doi/full/10.1080/01621459.2017.1319839
+    authority: methods_paper
+    domains:
+    - heterogeneous_treatment_effects
+    - causal_machine_learning
+  GENERALIZING_TRIALS_2017:
+    title: Generalizing Evidence from Randomized Clinical Trials to Target Populations
+    organization: American Journal of Epidemiology
+    year: 2017
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC5559221/
+    authority: methods_paper
+    domains:
+    - transportability
+    - generalizability
+    - causal_inference
+  MAIHDA_TUTORIAL_2024:
+    title: 'Multilevel Analysis of Individual Heterogeneity and Discriminatory Accuracy:
+      A Tutorial'
+    organization: Social Science and Medicine
+    year: 2024
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC11057426/
+    authority: tutorial
+    domains:
+    - intersectionality
+    - multilevel_models
+    - health_inequalities
+  INTERSECTIONAL_OUTCOMES:
+    title: Describing Intersectional Health Outcomes
+    organization: Epidemiology
+    year: 2022
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC9057636/
+    authority: methods_paper
+    domains:
+    - intersectionality
+    - descriptive_epidemiology
+  CONSORT_2025:
+    title: 'CONSORT 2025 statement: updated guideline for reporting randomised trials'
+    organization: CONSORT Group
+    year: 2025
+    url: https://www.bmj.com/content/389/bmj-2024-081123
+    authority: reporting_guideline
+    domains:
+    - randomized_trials
+    - reporting
+    last_verified: '2026-08-13'
+  STROBE:
+    title: STROBE Statement
+    organization: STROBE Initiative
+    year: 2007
+    url: https://www.strobe-statement.org/
+    authority: reporting_guideline
+    domains:
+    - observational_studies
+    - reporting
+  PRISMA_2020:
+    title: PRISMA 2020 Statement
+    organization: PRISMA Group
+    year: 2021
+    url: https://www.prisma-statement.org/prisma-2020
+    authority: reporting_guideline
+    domains:
+    - systematic_reviews
+    - reporting
+  RECORD:
+    title: RECORD Statement
+    organization: RECORD Working Committee
+    year: 2015
+    url: https://www.record-statement.org/
+    authority: reporting_guideline
+    domains:
+    - routinely_collected_data
+    - reporting
+  STARD_2015:
+    title: STARD 2015
+    organization: STARD Group
+    year: 2015
+    url: https://www.equator-network.org/reporting-guidelines/stard/
+    authority: reporting_guideline
+    domains:
+    - diagnostic_accuracy
+    - reporting
+  CHEERS_2022:
+    title: CHEERS 2022 Statement
+    organization: ISPOR
+    year: 2022
+    url: https://www.ispor.org/heor-resources/good-practices/cheers
+    authority: reporting_guideline
+    domains:
+    - health_economics
+    - reporting
+  ROBINS_GMETHODS:
+    title: Marginal Structural Models and Causal Inference in Epidemiology
+    organization: Epidemiology
+    year: 2000
+    url: https://pubmed.ncbi.nlm.nih.gov/10955408/
+    authority: foundational_paper
+    domains:
+    - marginal_structural_models
+    - time_varying_treatment
+  TMLE_BOOK:
+    title: Targeted Learning
+    organization: Mark van der Laan and Sherri Rose
+    year: 2011
+    url: https://link.springer.com/book/10.1007/978-1-4419-9782-1
+    authority: foundational_book
+    domains:
+    - tmle
+    - semiparametric_inference
+  DML_2018:
+    title: Double/Debiased Machine Learning for Treatment and Structural Parameters
+    organization: The Econometrics Journal
+    year: 2018
+    url: https://academic.oup.com/ectj/article/21/1/C1/5056401
+    authority: methods_paper
+    domains:
+    - double_machine_learning
+    - causal_machine_learning
+  MI_RUBIN_1987:
+    title: Multiple Imputation for Nonresponse in Surveys
+    organization: Donald B Rubin
+    year: 1987
+    url: https://onlinelibrary.wiley.com/doi/book/10.1002/9780470316696
+    authority: foundational_book
+    domains:
+    - multiple_imputation
+    - missing_data
+    - surveys
+  GREENLAND_ROBINS_1986:
+    title: Identifiability, Exchangeability, and Epidemiological Confounding
+    organization: International Journal of Epidemiology
+    year: 1986
+    url: https://academic.oup.com/ije/article/15/3/413/645943
+    authority: foundational_paper
+    domains:
+    - confounding
+    - identification
+    - epidemiology
+  SPIRIT_2025:
+    title: 'SPIRIT 2025 statement: updated guideline for protocols of randomised trials'
+    organization: SPIRIT Group
+    year: 2025
+    url: https://www.consort-spirit.org/published-statements
+    authority: reporting_guideline
+    domains:
+    - randomized_trials
+    - protocols
+    - reporting
+    last_verified: '2026-08-13'
+  ROBINS_I_V2_2025:
+    title: ROBINS-I V2 tool for risk of bias in non-randomized studies of interventions
+    organization: Risk of Bias Methods Group
+    year: 2025
+    url: https://www.riskofbias.info/welcome/robins-i-v2
+    authority: risk_of_bias_tool
+    domains:
+    - nonrandomized_interventions
+    - risk_of_bias
+    status: revised_draft_with_expected_refinements
+    last_verified: '2026-08-13'
+  ROBINS_E_2024:
+    title: 'ROBINS-E: risk of bias in non-randomized follow-up studies of exposure
+      effects'
+    organization: ROBINS-E Development Group
+    year: 2024
+    url: https://www.riskofbias.info/welcome/robins-e-tool
+    authority: risk_of_bias_tool
+    domains:
+    - exposure_epidemiology
+    - risk_of_bias
+    last_verified: '2026-08-13'

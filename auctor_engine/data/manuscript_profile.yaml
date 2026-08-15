@@ -1,0 +1,44 @@
+schema_version: 1.0.0
+name: Auctor default scientific manuscript
+format:
+  page_size: A4
+  margins_cm: 2.54
+  body:
+    font: Times New Roman
+    size_pt: 11
+    line_spacing: 1.5
+    colour: '000000'
+  tables:
+    font: Times New Roman
+    size_pt: 8
+    line_spacing: 1.0
+    colour: '000000'
+  headings:
+    font: Times New Roman
+    size_pt: 11
+    bold: true
+  references:
+    font: Times New Roman
+    size_pt: 11
+punctuation:
+  allow_em_dash: false
+  allowed_replacements:
+    - colon
+    - semicolon
+    - comma
+    - parentheses
+review:
+  preserve_existing_comments: true
+  preserve_existing_revisions: true
+  use_track_changes: true
+  comment_channel: commentary
+  qc_channel: companion_json_and_custom_xml
+  body_channel: substantive_only
+references:
+  preserve_fields: true
+  preserve_bookmarks: true
+  preserve_hyperlinks: true
+  semantic_tag_prefix: AUCTOR
+  citation_tag: AUCTOR:CITATION:{key}
+  bibliography_tag: AUCTOR:REFERENCE:{key}
+  cross_reference_field: REF

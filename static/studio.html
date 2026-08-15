@@ -36,19 +36,41 @@
 
     <section class="workspace hidden" id="workspace" aria-label="WriteRoute editor workspace">
       <aside class="rail">
-        <button class="rail-button active" data-panel="audit"><span class="rail-icon">⌁</span><span>Audit</span></button>
-        <button class="rail-button" data-panel="suggestions"><span class="rail-icon">✦</span><span>Rewrite</span></button>
-        <button class="rail-button" data-panel="format"><span class="rail-icon">Aa</span><span>Format</span></button>
+        <button class="rail-button active" data-panel="super"><span class="rail-icon">★</span><span>Super</span></button>
+        <button class="rail-button" data-panel="audit"><span class="rail-icon">⌁</span><span>Prose</span></button>
+        <button class="rail-button" data-panel="stats"><span class="rail-icon">∿</span><span>Stats</span></button>
+        <button class="rail-button" data-panel="pattern"><span class="rail-icon">⬡</span><span>Style</span></button>
+        <button class="rail-button" data-panel="lucid"><span class="rail-icon">✦</span><span>Lucid</span></button>
+        <button class="rail-button" data-panel="docx"><span class="rail-icon">📄</span><span>DOCX</span></button>
+        <button class="rail-button" data-panel="doctrine"><span class="rail-icon">🛡</span><span>Doctrine</span></button>
+        <button class="rail-button" data-panel="comments"><span class="rail-icon">💬</span><span>Review</span></button>
+        <button class="rail-button" data-panel="latex"><span class="rail-icon">𝛀</span><span>LaTeX</span></button>
+        <button class="rail-button" data-panel="pdfstudio"><span class="rail-icon">📑</span><span>PDF</span></button>
+        <button class="rail-button" data-panel="outline"><span class="rail-icon">☷</span><span>Outline</span></button>
+        <button class="rail-button" data-panel="citations"><span class="rail-icon">❝</span><span>Cites</span></button>
+        <button class="rail-button" data-panel="pagesetup"><span class="rail-icon">📐</span><span>Layout</span></button>
+        <button class="rail-button" data-panel="analytics"><span class="rail-icon">📊</span><span>Stats</span></button>
+        <button class="rail-button" data-panel="history"><span class="rail-icon">⏱</span><span>History</span></button>
+        <button class="rail-button" data-panel="suggestions"><span class="rail-icon">⚡</span><span>Rewrite</span></button>
         <button class="rail-button" data-panel="provider"><span class="rail-icon">⌘</span><span>BYOK</span></button>
         <div class="rail-spacer"></div>
         <button class="rail-button" id="exportOpen"><span class="rail-icon">⇩</span><span>Export</span></button>
       </aside>
 
+
+
       <section class="document-shell has-menubar">
         <div class="document-header">
           <div>
             <input id="docTitle" class="doc-title" value="Untitled document" aria-label="Document title" />
-            <div class="doc-meta"><span id="wordCount">0 words</span><span>·</span><span id="saveState">Ready</span><span>·</span><span id="engineStatus" class="engine-status" title="Engine status">Engine idle</span></div>
+            <div class="doc-meta">
+              <span id="wordCount">0 words</span>
+              <span>·</span>
+              <span id="saveState">Ready</span>
+              <span>·</span>
+              <span id="engineStatus" class="engine-status" title="Engine status">Engine idle</span>
+              <span class="goal-chip" id="goalChip">Goal: <span id="goalCount">3,000</span>w (<span id="goalPct">0%</span>)</span>
+            </div>
           </div>
           <div class="document-actions">
             <select id="genreSelect" aria-label="Document genre">
@@ -65,27 +87,43 @@
               <option value="general">General professional</option>
               <option value="auto">Let the engine guess (unreliable)</option>
             </select>
+            <button class="button secondary compact" id="trackChangesBtn" title="Toggle Track Changes">Track: OFF</button>
             <button class="button secondary compact" id="auditButton">Run audit</button>
           </div>
         </div>
+
 
         <div class="menubar" role="menubar" aria-label="Main menu">
           <div class="menu">
             <button class="menu-title" id="menuFileBtn" aria-haspopup="true" aria-expanded="false">File</button>
             <div class="menu-list" id="menuFile" role="menu">
-              <button role="menuitem" id="menuOpen">Open…<kbd>&#8984;O</kbd></button>
-              <button role="menuitem" id="menuNew">New document<kbd>&#8984;N</kbd></button>
+              <button role="menuitem" id="menuOpen">Open…<kbd>⌘O</kbd></button>
+              <button role="menuitem" id="menuNew">New document<kbd>⌘N</kbd></button>
+              <button role="menuitem" id="menuSaveSnapshot">Save snapshot<kbd>⌘S</kbd></button>
               <div class="menu-sep"></div>
               <button role="menuitem" data-export="docx">Export as Word (.docx)</button>
+              <button role="menuitem" data-export="tex">Export as LaTeX (.tex)</button>
               <button role="menuitem" data-export="md">Export as Markdown</button>
               <button role="menuitem" data-export="txt">Export as plain text</button>
               <button role="menuitem" data-export="html">Export as HTML</button>
             </div>
           </div>
           <div class="menu">
+            <button class="menu-title" id="menuEditBtn" aria-haspopup="true" aria-expanded="false">Edit</button>
+            <div class="menu-list" id="menuEdit" role="menu">
+              <button role="menuitem" id="menuFind">Find & Replace<kbd>⌘F</kbd></button>
+              <div class="menu-sep"></div>
+              <button role="menuitem" id="menuInsertTable">Insert Table…</button>
+              <button role="menuitem" id="menuInsertEq">Insert Equation…</button>
+              <button role="menuitem" id="menuInsertCite">Insert Citation…</button>
+              <button role="menuitem" id="menuInsertCallout">Insert Callout Box…</button>
+              <button role="menuitem" id="menuInsertFig">Insert Figure…</button>
+            </div>
+          </div>
+          <div class="menu">
             <button class="menu-title" id="menuReviewBtn" aria-haspopup="true" aria-expanded="false">Review</button>
             <div class="menu-list" id="menuReview" role="menu">
-              <button role="menuitem" id="menuAudit">Run audit<kbd>&#8984;&#8629;</kbd></button>
+              <button role="menuitem" id="menuAudit">Run audit<kbd>⌘↵</kbd></button>
               <button role="menuitem" id="menuSuggest">Rule-based suggestions</button>
               <button role="menuitem" id="menuRepair">Apply safe repairs</button>
               <div class="menu-sep"></div>
@@ -104,36 +142,399 @@
           <label class="menu-open-inline" title="Open a document">
             Open a file
             <input id="fileInputWorkspace" type="file" hidden
-                   accept=".txt,.md,.markdown,.rst,.log,.docx,.pdf,.rtf,.csv" />
+                   accept=".txt,.md,.markdown,.rst,.log,.docx,.pdf,.rtf,.csv,.tex,.bib" />
           </label>
         </div>
+
         <div class="toolbar" role="toolbar" aria-label="Text formatting toolbar">
           <select id="blockFormat" title="Text style" aria-label="Text style">
-            <option value="p">Body</option><option value="h1">Title</option><option value="h2">Heading</option><option value="h3">Subheading</option><option value="blockquote">Quote</option>
+            <option value="p">Body</option><option value="h1">Title (H1)</option><option value="h2">Section (H2)</option><option value="h3">Subsection (H3)</option><option value="blockquote">Quote</option><option value="pre">Code Block</option>
           </select>
           <span class="toolbar-divider"></span>
-          <button data-command="bold" title="Bold"><b>B</b></button>
-          <button data-command="italic" title="Italic"><i>I</i></button>
-          <button data-command="underline" title="Underline"><u>U</u></button>
+          <button data-command="bold" title="Bold (⌘B)"><b>B</b></button>
+          <button data-command="italic" title="Italic (⌘I)"><i>I</i></button>
+          <button data-command="underline" title="Underline (⌘U)"><u>U</u></button>
+          <button data-command="strikeThrough" title="Strikethrough"><s>S</s></button>
+          <button data-command="subscript" title="Subscript">x₂</button>
+          <button data-command="superscript" title="Superscript">x²</button>
+          <button id="inlineCodeBtn" title="Inline Code">`c`</button>
           <span class="toolbar-divider"></span>
           <button data-command="insertUnorderedList" title="Bulleted list">•≡</button>
           <button data-command="insertOrderedList" title="Numbered list">1≡</button>
           <button id="linkButton" title="Insert link">↗</button>
+          <button id="toolbarFootnoteBtn" title="Insert Footnote">¹ Note</button>
+          <button id="addCommentBtn" title="Add Review Comment (⌘M)">💬 Comment</button>
           <span class="toolbar-divider"></span>
+          <button id="toolbarTableBtn" title="Insert Table">▦ Table</button>
+          <button id="toolbarEqBtn" title="Insert LaTeX Equation">∑ Eq</button>
+          <button id="toolbarCiteBtn" title="Insert Citation">❝ Cite</button>
+          <button id="toolbarCalloutBtn" title="Insert Callout Box">ℹ Callout</button>
+          <button id="toolbarFigBtn" title="Insert Figure">🖼 Fig</button>
+          <button id="toolbarHrBtn" title="Horizontal Divider">―</button>
+          <span class="toolbar-divider"></span>
+          <button id="latexSplitBtn" title="Overleaf Split-Screen LaTeX Source View">𝛀 Split TeX</button>
+          <button id="findToggleBtn" title="Find & Replace (⌘F)">🔍 Find</button>
+          <span class="toolbar-spacer"></span>
           <button data-command="undo" title="Undo">↶</button>
           <button data-command="redo" title="Redo">↷</button>
-          <span class="toolbar-spacer"></span>
           <button id="focusMode" title="Focus mode">Focus</button>
         </div>
 
-        <div class="editor-wrap">
-          <article id="editor" class="editor" contenteditable="true" spellcheck="true" data-placeholder="Start writing, or upload a document…"></article>
+        <!-- Slide-down Find & Replace Bar -->
+        <div id="findReplaceBar" class="find-replace-bar hidden" role="search">
+          <div class="find-row">
+            <div class="find-input-wrap">
+              <input id="findInput" type="text" placeholder="Find in document…" />
+              <span id="matchCount" class="match-count">0 of 0</span>
+            </div>
+            <button id="findPrevBtn" class="button secondary compact" title="Previous match">↑</button>
+            <button id="findNextBtn" class="button secondary compact" title="Next match">↓</button>
+            <label class="toggle-chip"><input type="checkbox" id="caseSensitiveCheck" /> Match case</label>
+            <label class="toggle-chip"><input type="checkbox" id="regexCheck" /> Regex</label>
+            <button id="closeFindBtn" class="icon-button compact" title="Close search">×</button>
+          </div>
+          <div class="find-row">
+            <div class="find-input-wrap">
+              <input id="replaceInput" type="text" placeholder="Replace with…" />
+            </div>
+            <button id="replaceBtn" class="button secondary compact">Replace</button>
+            <button id="replaceAllBtn" class="button primary compact">Replace All</button>
+          </div>
+        </div>
+
+        <div class="editor-wrap" id="editorWrap">
+          <div class="split-editor-container" id="splitEditorContainer">
+            <!-- Overleaf LaTeX Code Editor Pane (Hidden by default) -->
+            <div class="latex-split-pane hidden" id="latexSplitPane">
+              <div class="latex-pane-header">
+                <span>LaTeX Source Code (Overleaf Mode)</span>
+                <div style="display:flex;gap:6px">
+                  <button class="button secondary compact" id="syncLatexToEditorBtn">Compile to Preview</button>
+                  <button class="button primary compact" id="exportTexBtn">Download .tex</button>
+                </div>
+              </div>
+              <div class="latex-editor-wrapper">
+                <textarea id="latexSourceCode" spellcheck="false" placeholder="% LaTeX source code will compile here..."></textarea>
+              </div>
+            </div>
+
+            <!-- WYSIWYG Manuscript Editor -->
+            <div class="manuscript-editor-wrapper" id="manuscriptEditorWrapper">
+              <article id="editor" class="editor" contenteditable="true" spellcheck="true" data-placeholder="Start writing, or upload a document…"></article>
+              <!-- Bottom Footnotes Section -->
+              <div id="footnotesArea" class="footnotes-area hidden">
+                <div class="footnotes-title">Footnotes</div>
+                <ol id="footnotesList" class="footnotes-list"></ol>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
+
+
       <aside class="inspector">
-        <section class="panel active" id="panel-audit">
-          <div class="panel-head"><div><h2>Editorial audit</h2></div><button class="panel-close" title="Close inspector">×</button></div>
+        <section class="panel active" id="panel-super">
+          <div class="panel-head"><div><h2>Super Engine</h2></div><button class="panel-close" title="Close inspector">×</button></div>
+          <p class="panel-copy">Unified multi-engine scientific document intelligence (Stats-Brain + Style Engine + Prose + Lucid + Guidelines).</p>
+          <div class="route-actions" style="margin-bottom:14px">
+            <button class="button primary full" id="superAuditButton">Run Super-Audit</button>
+          </div>
+          <div class="score-card">
+            <div><strong id="superScoreLabel">Not analysed</strong><p id="superScoreSummary">Click 'Run Super-Audit' to evaluate across all 5 engines.</p></div>
+          </div>
+          <div class="severity-grid" style="grid-template-columns:repeat(3,1fr);margin-top:12px">
+            <div><span class="dot hard"></span><strong id="superFatalCount">0</strong><small>Fatal</small></div>
+            <div><span class="dot review"></span><strong id="superCritCount">0</strong><small>Critical</small></div>
+            <div><span class="dot soft"></span><strong id="superTotalCount">0</strong><small>Total Findings</small></div>
+          </div>
+          <div class="section-title"><span>Engine Scorecards</span></div>
+          <div class="format-metrics" id="superScoresGrid">
+            <div><strong id="superScoreStats">-</strong><span>Statistical</span></div>
+            <div><strong id="superScoreStyle">-</strong><span>AI Style</span></div>
+            <div><strong id="superScoreProse">-</strong><span>Prose</span></div>
+            <div><strong id="superScoreLucid">-</strong><span>Lucid</span></div>
+            <div><strong id="superScoreGuide">-</strong><span>Guideline</span></div>
+            <div><strong id="superScoreOverall">-</strong><span>Overall</span></div>
+          </div>
+          <div class="section-title"><span>Top Actionable Findings</span></div>
+          <div class="finding-list empty-state" id="superFindingList"><p>No super-audit run yet.</p></div>
+        </section>
+
+        <section class="panel" id="panel-stats">
+          <div class="panel-head"><div><h2>STATS-BRAIN</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy">Estimand-first statistical & causal review, target trial emulation, complex survey checks.</p>
+          <div class="route-actions" style="margin-bottom:14px">
+            <label>Study Design
+              <select id="statsDesignSelect">
+                <option value="observational_cohort">Observational Cohort</option>
+                <option value="target_trial">Target Trial Emulation</option>
+                <option value="dhs_survey">DHS / Complex Survey</option>
+                <option value="randomized_trial">Randomized Trial</option>
+                <option value="case_control">Case-Control</option>
+                <option value="prediction">Clinical Prediction Model</option>
+              </select>
+            </label>
+            <button class="button secondary full" id="runStatsButton">Run Statistical Review</button>
+            <button class="button secondary full" id="downloadAuctorPacket" style="display:none">Export Auctor Packet JSON</button>
+          </div>
+          <div class="score-card">
+            <div><strong id="statsScoreLabel">Not analysed</strong><p id="statsScoreSummary">Reconstruct estimands, test causal assertions & survey weights.</p></div>
+          </div>
+          <div class="section-title"><span>Statistical Critique</span></div>
+          <div class="finding-list empty-state" id="statsFindingList"><p>No review run yet.</p></div>
+        </section>
+
+        <section class="panel" id="panel-pattern">
+          <div class="panel-head"><div><h2>AI Style & Defect Scanner</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy">Scientific Pattern Engine v2 detects LLM-associated style burden, missing effect estimates, stacked hedging, and uncalibrated claims.</p>
+          <div class="route-actions" style="margin-bottom:14px">
+            <button class="button secondary full" id="runPatternButton">Scan Style & Defects</button>
+          </div>
+          <div class="score-card">
+            <div><strong id="patternScoreLabel">Not analysed</strong><p id="patternScoreSummary">Deterministic scan for rhetorical burden and scientific defects.</p></div>
+          </div>
+          <div class="section-title"><span>Pattern Audit Findings</span></div>
+          <div class="finding-list empty-state" id="patternFindingList"><p>No pattern scan run yet.</p></div>
+        </section>
+
+        <section class="panel" id="panel-lucid">
+          <div class="panel-head"><div><h2>LUCID-SCI</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy">Cross-disciplinary clarity, anti-slop phrasebook linting, and sentence complexity analysis.</p>
+          <div class="route-actions" style="margin-bottom:14px">
+            <button class="button secondary full" id="runLucidButton">Evaluate Lucid Clarity</button>
+          </div>
+          <div class="score-card">
+            <div><strong id="lucidScoreLabel">Not analysed</strong><p id="lucidScoreSummary">Evaluates inflated adjectives, causal watchlist & sentence readability.</p></div>
+          </div>
+          <div class="section-title"><span>Clarity Triggers</span></div>
+          <div class="finding-list empty-state" id="lucidFindingList"><p>No clarity scan run yet.</p></div>
+        </section>
+
+        <section class="panel" id="panel-docx">
+          <div class="panel-head"><div><h2>Word Tracked Changes (.docx)</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy">Auctor OOXML engine processes Word DOCX manuscripts: injects verified tracked changes and comments without corrupting document structure.</p>
+          <div class="route-actions" style="margin-bottom:14px">
+            <label class="button primary file-button full">Upload Word .docx<input id="docxInput" type="file" accept=".docx" /></label>
+            <button class="button secondary full" id="downloadTrackedDocx" style="display:none">Download Processed .docx</button>
+          </div>
+          <div class="score-card" id="docxStatusCard">
+            <div><strong id="docxStatusLabel">No DOCX Loaded</strong><p id="docxStatusSummary">Upload a .docx file to review tracked changes and comment injection.</p></div>
+          </div>
+        </section>
+
+        <!-- Auctor Writing Doctrine Panel -->
+        <section class="panel" id="panel-doctrine">
+          <div class="panel-head"><div><h2>Auctor Writing Doctrine</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy">Three non-leaking channels, four revision authorities, and an immutable fact ledger freezing numbers, CIs, directions & negations.</p>
+          <div class="route-actions" style="margin-bottom:14px">
+            <button class="button primary full" id="runDoctrineAuditBtn">Verify Fact Ledger & Channels</button>
+          </div>
+          <div class="score-card" id="doctrineStatusCard">
+            <div><strong id="doctrineStatusLabel">Doctrine Ready</strong><p id="doctrineStatusSummary">Click verify to freeze numbers, CIs, and check for channel leakage.</p></div>
+          </div>
+          <div class="section-title"><span>Revision Authority</span></div>
+          <label>Declared Authority
+            <select id="doctrineAuthoritySelect">
+              <option value="substantive" selected>Substantive (Structural with Fact Ledger Invariants)</option>
+              <option value="copyedit">Copyedit (Meaning-Preserving Local Replacements)</option>
+              <option value="mechanical">Mechanical (Punctuation & Formatting Only)</option>
+              <option value="developmental">Developmental (Critique Only — Never Changes Prose)</option>
+            </select>
+          </label>
+          <div class="section-title"><span>Immutable Fact Ledger</span></div>
+          <div class="analytics-grid" style="margin-bottom:12px">
+            <div class="analytics-card"><strong id="ledgerNumbersCount">0</strong><span>Numbers Frozen</span></div>
+            <div class="analytics-card"><strong id="ledgerCiCount">0</strong><span>Confidence Intervals</span></div>
+            <div class="analytics-card"><strong id="ledgerDirectionsCount">0</strong><span>Directions</span></div>
+            <div class="analytics-card"><strong id="ledgerNegationsCount">0</strong><span>Negations</span></div>
+          </div>
+          <div class="section-title"><span>Lead Artifact Router</span></div>
+          <div style="font-size:11.5px;color:var(--muted);line-height:1.6;background:var(--surface-solid);padding:10px;border-radius:var(--radius-cards);border:1px solid var(--line)" id="artifactRouteInfo">
+            Lead Skill: <strong>docxml-orchestration</strong> (lxml + zipfile)<br>
+            Citations: <strong>mendeley-citations</strong> (SDT-wrapped)<br>
+            Doctrine: <strong>auctor-writing-engine</strong> (3-channel)
+          </div>
+        </section>
+
+
+        <!-- Word Review Comments Panel -->
+        <section class="panel" id="panel-comments">
+          <div class="panel-head"><div><h2>Review & Comments</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy">Manage margin annotations, author review threads, and track change revisions.</p>
+          <div class="route-actions" style="margin-bottom:14px">
+            <button class="button primary full" id="openAddCommentModalBtn">+ Add Review Comment (⌘M)</button>
+            <div class="inline-fields" style="margin-top:6px">
+              <button class="button secondary compact" id="acceptAllChangesBtn">Accept All</button>
+              <button class="button secondary compact" id="rejectAllChangesBtn">Reject All</button>
+            </div>
+          </div>
+          <div class="section-title"><span>Active Comment Threads</span><span id="commentCountBadge" class="badge">0</span></div>
+          <div class="comment-list" id="commentList">
+            <div class="empty-state"><p>No comments yet. Select text in the editor and click "💬 Comment" to leave an editorial note.</p></div>
+          </div>
+        </section>
+
+        <!-- Page Setup & Layout Panel -->
+        <section class="panel" id="panel-pagesetup">
+          <div class="panel-head"><div><h2>Page Setup & Layout</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy">Configure publishing geometry, margins, orientation, and manuscript word goals.</p>
+          <label>Paper Size
+            <select id="pageSizeSelect">
+              <option value="a4" selected>A4 (210 × 297 mm)</option>
+              <option value="letter">US Letter (8.5 × 11 in)</option>
+              <option value="legal">US Legal (8.5 × 14 in)</option>
+            </select>
+          </label>
+          <label>Page Orientation
+            <select id="pageOrientationSelect">
+              <option value="portrait" selected>Portrait (Standard)</option>
+              <option value="landscape">Landscape</option>
+            </select>
+          </label>
+          <label>Margins
+            <select id="pageMarginSelect">
+              <option value="normal" selected>Normal (1 in / 25.4 mm)</option>
+              <option value="narrow">Narrow (0.5 in / 12.7 mm)</option>
+              <option value="wide">Wide (1.5 in / 38.1 mm)</option>
+            </select>
+          </label>
+          <div class="section-title"><span>Submission Word Goal</span></div>
+          <div class="inline-fields">
+            <label>Target Words<input type="number" id="targetGoalInput" value="3000" min="100" max="50000" step="100" /></label>
+            <button class="button secondary compact" id="setGoalBtn" style="align-self:flex-end;margin-bottom:14px">Set Goal</button>
+          </div>
+        </section>
+
+        <!-- Overleaf LaTeX IDE Panel -->
+        <section class="panel" id="panel-latex">
+          <div class="panel-head"><div><h2>Overleaf LaTeX IDE</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy">LaTeX publishing configuration, preambles, and compile options.</p>
+          <label>Document Class
+            <select id="latexDocClassSelect">
+              <option value="article" selected>Standard Article (\documentclass{article})</option>
+              <option value="IEEEtran">IEEE Transactions (\documentclass{IEEEtran})</option>
+              <option value="acmart">ACM Conference / Sigconf (\documentclass{acmart})</option>
+              <option value="nature">Nature Journal (\documentclass{nature})</option>
+              <option value="revtex4-2">APS Physical Review (\documentclass{revtex4-2})</option>
+              <option value="report">Academic Report / Thesis (\documentclass{report})</option>
+            </select>
+          </label>
+          <div class="route-actions" style="margin:14px 0">
+            <button class="button primary full" id="toggleSplitLatexBtn">Toggle Overleaf Split View</button>
+            <button class="button secondary full" id="compileLatexBtn">Compile & Sync TeX</button>
+          </div>
+          <div class="section-title"><span>Preamble Packages</span></div>
+          <div style="font-size:11.5px;color:var(--muted);line-height:1.6;background:var(--surface-solid);padding:10px;border-radius:var(--radius-cards);border:1px solid var(--line)">
+            ✔ amsmath, amssymb, amsfonts<br>
+            ✔ booktabs (three-line tables)<br>
+            ✔ graphicx, hyperref, microtype<br>
+            ✔ geometry (1-inch margins)
+          </div>
+        </section>
+
+        <!-- Adobe PDF Studio Panel -->
+        <section class="panel" id="panel-pdfstudio">
+          <div class="panel-head"><div><h2>Adobe PDF Studio</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy">Comprehensive PDF manipulation suite: merge, split, rotate, watermark, redact, and extract.</p>
+          <div class="route-actions" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+            <button class="button secondary compact" id="openPdfMergeModalBtn">⚡ Merge PDFs</button>
+            <button class="button secondary compact" id="openPdfSplitModalBtn">✂ Split Pages</button>
+            <button class="button secondary compact" id="openPdfRotateModalBtn">↻ Rotate Pages</button>
+            <button class="button secondary compact" id="openPdfWatermarkModalBtn">💧 Watermark</button>
+            <button class="button secondary compact" id="openPdfRedactModalBtn">⬛ Redact Text</button>
+            <button class="button secondary compact" id="openPdfExtractModalBtn">🔍 OCR Extract</button>
+          </div>
+          <div class="score-card" id="pdfStudioStatusCard">
+            <div><strong id="pdfStudioStatusLabel">PDF Studio Ready</strong><p id="pdfStudioStatusSummary">Select a PDF operation above to process document pages.</p></div>
+          </div>
+          <div id="pdfExtractResultBox" class="candidate-preview hidden" style="margin-top:14px;max-height:220px"></div>
+        </section>
+
+        <!-- Document Outline Panel -->
+        <section class="panel" id="panel-outline">
+          <div class="panel-head"><div><h2>Document Outline</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy">Live structural hierarchy extracted from your headings (H1–H4).</p>
+          <div class="route-actions" style="margin-bottom:12px">
+            <button class="button secondary full" id="refreshOutlineBtn">Refresh Outline</button>
+          </div>
+          <div class="outline-tree" id="outlineTree">
+            <div class="empty-state"><p>No headings found. Add titles or sections to see the document outline.</p></div>
+          </div>
+        </section>
+
+        <!-- Citations & References Panel -->
+        <section class="panel" id="panel-citations">
+          <div class="panel-head"><div><h2>Native Citation Manager</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy">Comprehensive BibTeX, RIS & CSL reference manager with SDT-wrapped in-text citation fields and automated multi-style bibliographies.</p>
+          <div class="route-actions" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+            <button class="button primary compact" id="openAddCiteModalBtn">+ Add Reference</button>
+            <button class="button secondary compact" id="syncDocCitationsBtn">⚡ Sync with Doc</button>
+          </div>
+          <div class="inline-fields" style="margin-bottom:10px">
+            <select id="citationStyleSelect" aria-label="Citation Style">
+              <option value="apa" selected>APA 7th Edition</option>
+              <option value="vancouver">Vancouver (NLM Medical)</option>
+              <option value="nature">Nature Journal</option>
+              <option value="ieee">IEEE Transactions</option>
+              <option value="chicago">Chicago Author-Date</option>
+            </select>
+            <button class="button secondary compact" id="insertBibliographyBtn">Append Bib</button>
+          </div>
+          <div class="inline-fields" style="margin-bottom:12px">
+            <button class="button secondary compact" id="exportBibtexBtn" style="flex:1">Export .bib</button>
+            <button class="button secondary compact" id="exportRisBtn" style="flex:1">Export .ris</button>
+          </div>
+          <input type="text" id="citationSearchInput" placeholder="🔍 Search library by author, title, year..." style="width:100%;margin-bottom:10px;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:var(--radius-inputs);padding:6px 10px;font-size:12px" />
+          <div class="section-title"><span>Library References</span><span id="citeCountBadge" class="badge">0</span></div>
+          <div class="citation-list" id="citationList">
+            <div class="empty-state"><p>No citations in library. Click "+ Add Reference" to import BibTeX or RIS entries.</p></div>
+          </div>
+        </section>
+
+
+        <!-- Document Analytics & Readability Panel -->
+        <section class="panel" id="panel-analytics">
+          <div class="panel-head"><div><h2>Document Analytics</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy">Comprehensive quantitative metrics and cognitive readability statistics.</p>
+          <div class="analytics-grid">
+            <div class="analytics-card"><strong id="statWords">0</strong><span>Words</span></div>
+            <div class="analytics-card"><strong id="statChars">0</strong><span>Characters</span></div>
+            <div class="analytics-card"><strong id="statSentences">0</strong><span>Sentences</span></div>
+            <div class="analytics-card"><strong id="statParagraphs">0</strong><span>Paragraphs</span></div>
+            <div class="analytics-card"><strong id="statReadTime">0 min</strong><span>Reading Time</span></div>
+            <div class="analytics-card"><strong id="statSpeakTime">0 min</strong><span>Speaking Time</span></div>
+          </div>
+          <div class="section-title"><span>Cognitive Readability</span></div>
+          <div class="score-card" style="margin-bottom:12px">
+            <div>
+              <strong id="readabilityGrade">Grade Level: --</strong>
+              <p id="readabilitySummary">Flesch Reading Ease: -- / 100</p>
+            </div>
+          </div>
+          <div class="format-metrics" id="analyticsVocabMetrics">
+            <div><strong id="statAvgSentenceLen">0</strong><span>Avg Words / Sent</span></div>
+            <div><strong id="statLexicalDiv">0%</strong><span>Lexical Diversity</span></div>
+            <div><strong id="statLongWords">0</strong><span>Complex Words</span></div>
+          </div>
+        </section>
+
+        <!-- Version Snapshots & History Panel -->
+        <section class="panel" id="panel-history">
+          <div class="panel-head"><div><h2>Version History</h2></div><button class="panel-close">×</button></div>
+          <p class="panel-copy">Save local document milestones and compare changes across revisions.</p>
+          <div class="route-actions" style="margin-bottom:14px">
+            <button class="button primary full" id="takeSnapshotBtn">Save Revision Snapshot</button>
+          </div>
+          <div class="section-title"><span>Saved Snapshots</span><span id="snapshotCountBadge" class="badge">0</span></div>
+          <div class="history-list" id="historyList">
+            <div class="empty-state"><p>No revisions saved yet. Click "Save Revision Snapshot" to bookmark your progress.</p></div>
+          </div>
+        </section>
+
+
+        <section class="panel" id="panel-audit">
+          <div class="panel-head"><div><h2>Prose & Editorial audit</h2></div><button class="panel-close" title="Close inspector">×</button></div>
           <div class="score-card">
             <div><strong id="scoreLabel">Not analysed</strong><p id="scoreSummary">Run an audit to see what is in the current document.</p></div>
           </div>
@@ -145,6 +546,7 @@
           <div class="section-title"><span>Findings</span><button class="text-button" id="repairSafe">Apply safe repairs</button></div>
           <div class="finding-list empty-state" id="findingList"><p>No findings yet.</p></div>
         </section>
+
 
         <section class="panel" id="panel-suggestions">
           <div class="panel-head"><div><h2>Suggestions</h2></div><button class="panel-close">×</button></div>
@@ -176,22 +578,289 @@
           <label>Model<select id="modelSelect"><option value="">Load the model list first</option></select><button class="button secondary compact" id="loadModels" type="button" style="margin-top:8px">Load available models</button><input id="modelName" type="text" class="hidden" placeholder="Model ID" /><span class="microcopy" id="modelHint"></span></label>
           <label id="baseUrlLabel" class="hidden">Base URL<input id="baseUrl" type="url" placeholder="http://127.0.0.1:11434/v1" /></label>
           <div class="inline-fields"><label>Candidates<select id="candidateCount"><option>1</option><option selected>3</option><option>5</option></select></label><label>Temperature<input id="temperature" type="number" min="0" max="1.2" step="0.05" value="0.25" /></label></div>
-                    <p class="microcopy" id="providerStatus">Audits, suggestions and repairs work without a model.</p>
+          <p class="microcopy" id="providerStatus">Audits, suggestions and repairs work without a model.</p>
         </section>
       </aside>
     </section>
   </main>
 
+  <!-- Export Dialog -->
   <dialog id="exportDialog" class="modal">
     <form method="dialog">
       <button class="modal-close" value="cancel" aria-label="Close">×</button>
-      <h2>Export</h2>
-      <p>Export the current editor text. Rich formatting is preserved in HTML; DOCX export preserves paragraph text.</p>
+      <h2>Export Document</h2>
+      <p>Export your formatted scientific manuscript in your choice of standard publishing format.</p>
       <div class="export-grid">
         <button value="cancel" data-export="docx"><strong>DOCX</strong><span>Word document</span></button>
-        <button value="cancel" data-export="html"><strong>HTML</strong><span>Rich text</span></button>
-        <button value="cancel" data-export="md"><strong>MD</strong><span>Markdown text</span></button>
-        <button value="cancel" data-export="txt"><strong>TXT</strong><span>Plain text</span></button>
+        <button value="cancel" data-export="tex"><strong>LaTeX</strong><span>Compilable .tex file</span></button>
+        <button value="cancel" data-export="md"><strong>Markdown</strong><span>Standard .md text</span></button>
+        <button value="cancel" data-export="html"><strong>HTML</strong><span>Self-contained rich page</span></button>
+        <button value="cancel" data-export="txt"><strong>Plain text</strong><span>Clean unformatted text</span></button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- LaTeX / Equation Builder Modal -->
+  <dialog id="modalEquation" class="modal">
+    <form method="dialog">
+      <button class="modal-close" value="cancel" aria-label="Close">×</button>
+      <h2>Insert LaTeX Equation</h2>
+      <p>Enter LaTeX mathematical expression. Choose display mode (centered block) or inline.</p>
+      <div style="margin:14px 0">
+        <div class="inline-fields" style="margin-bottom:8px">
+          <label><input type="radio" name="eqMode" value="block" checked /> Block Equation ($$)</label>
+          <label><input type="radio" name="eqMode" value="inline" /> Inline Equation (\( \))</label>
+        </div>
+        <textarea id="equationInput" style="width:100%;height:90px;font-family:monospace;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:var(--radius-inputs);padding:10px;font-size:13px" placeholder="E = mc^2\n\int_{0}^{\infty} e^{-x^2} dx = \frac{\sqrt{\pi}}{2}"></textarea>
+        <div class="quick-symbols" style="display:flex;flex-wrap:wrap;gap:5px;margin-top:8px">
+          <button type="button" class="button secondary compact" data-symbol="\frac{a}{b}">½ frac</button>
+          <button type="button" class="button secondary compact" data-symbol="\sqrt{x}">√ sqrt</button>
+          <button type="button" class="button secondary compact" data-symbol="\sum_{i=1}^{n}">∑ sum</button>
+          <button type="button" class="button secondary compact" data-symbol="\int_{a}^{b}">∫ int</button>
+          <button type="button" class="button secondary compact" data-symbol="\alpha, \beta, \gamma">αβγ Greek</button>
+          <button type="button" class="button secondary compact" data-symbol="\pm \infty \approx">±∞≈ Sym</button>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+        <button value="cancel" class="button secondary">Cancel</button>
+        <button type="button" id="insertEquationConfirm" class="button primary">Insert Equation</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Table Builder Modal -->
+  <dialog id="modalTable" class="modal">
+    <form method="dialog">
+      <button class="modal-close" value="cancel" aria-label="Close">×</button>
+      <h2>Insert Scientific Table</h2>
+      <p>Configure table dimensions and headers for empirical results or data grids.</p>
+      <div class="inline-fields" style="margin:16px 0">
+        <label>Rows (including header)<input type="number" id="tableRows" min="2" max="30" value="4" /></label>
+        <label>Columns<input type="number" id="tableCols" min="1" max="12" value="3" /></label>
+      </div>
+      <label>Table Caption / Title<input type="text" id="tableCaption" placeholder="Table 1: Baseline cohort characteristics" /></label>
+      <label class="toggle-chip" style="margin-top:10px"><input type="checkbox" id="tableHeaderCheck" checked /> Format first row as table header (th)</label>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:20px">
+        <button value="cancel" class="button secondary">Cancel</button>
+        <button type="button" id="insertTableConfirm" class="button primary">Insert Table</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Citation / BibTeX Modal -->
+  <dialog id="modalCitation" class="modal">
+    <form method="dialog">
+      <button class="modal-close" value="cancel" aria-label="Close">×</button>
+      <h2>Add BibTeX Citation</h2>
+      <p>Paste a BibTeX entry from Google Scholar, PubMed, Crossref, or your reference manager.</p>
+      <textarea id="bibtexInput" style="width:100%;height:140px;font-family:monospace;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:var(--radius-inputs);padding:10px;font-size:12px" placeholder="@article{smith2024neonatal,&#10;  author = {Smith, Jane and Doe, John},&#10;  title = {Neonatal health interventions in Sub-Saharan Africa},&#10;  journal = {The Lancet},&#10;  year = {2024},&#10;  volume = {403},&#10;  pages = {112-124}&#10;}"></textarea>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+        <button value="cancel" class="button secondary">Cancel</button>
+        <button type="button" id="saveBibtexConfirm" class="button primary">Add to Library</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Callout Builder Modal -->
+  <dialog id="modalCallout" class="modal">
+    <form method="dialog">
+      <button class="modal-close" value="cancel" aria-label="Close">×</button>
+      <h2>Insert Callout Box</h2>
+      <p>Highlight methodological notes, warnings, protocol steps, or caveats.</p>
+      <label>Callout Type
+        <select id="calloutTypeSelect">
+          <option value="note">Note / Information</option>
+          <option value="method">Method / Protocol Step</option>
+          <option value="warning">Warning / Critical Caveat</option>
+          <option value="tip">Tip / Recommendation</option>
+        </select>
+      </label>
+      <label>Callout Title<input type="text" id="calloutTitleInput" placeholder="Protocol Note" /></label>
+      <label>Callout Content<textarea id="calloutContentInput" style="width:100%;height:80px;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:var(--radius-inputs);padding:8px;font-size:13px" placeholder="Detailed note or instructions..."></textarea></label>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+        <button value="cancel" class="button secondary">Cancel</button>
+        <button type="button" id="insertCalloutConfirm" class="button primary">Insert Callout</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Figure Modal -->
+  <dialog id="modalFigure" class="modal">
+    <form method="dialog">
+      <button class="modal-close" value="cancel" aria-label="Close">×</button>
+      <h2>Insert Scientific Figure</h2>
+      <p>Embed an illustration, chart, or diagram with a standardized academic caption.</p>
+      <label>Image URL or Path<input type="text" id="figureUrlInput" placeholder="https://... or /assets/chart.png" /></label>
+      <label>Figure Caption<input type="text" id="figureCaptionInput" placeholder="Figure 1: Kaplan-Meier survival curves comparing study arms." /></label>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+        <button value="cancel" class="button secondary">Cancel</button>
+        <button type="button" id="insertFigureConfirm" class="button primary">Insert Figure</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Snapshot Diff Modal -->
+  <dialog id="modalDiff" class="modal" style="max-width:720px">
+    <form method="dialog">
+      <button class="modal-close" value="cancel" aria-label="Close">×</button>
+      <h2 id="diffModalTitle">Revision Comparison</h2>
+      <p>Comparing snapshot against current editor text.</p>
+      <div id="diffContent" style="max-height:360px;overflow:auto;padding:12px;background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius-cards);font-family:Georgia,serif;font-size:13px;line-height:1.6;white-space:pre-wrap"></div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+        <button value="cancel" class="button secondary">Close</button>
+        <button type="button" id="restoreDiffConfirm" class="button primary">Restore This Revision</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Add Comment Modal -->
+  <dialog id="modalComment" class="modal">
+    <form method="dialog">
+      <button class="modal-close" value="cancel" aria-label="Close">×</button>
+      <h2>Add Review Comment</h2>
+      <p>Attach an editorial feedback comment to the selected text snippet.</p>
+      <div id="commentSelectionPreview" style="padding:8px 12px;background:var(--surface-solid);border-left:3px solid var(--accent);border-radius:4px;font-style:italic;font-size:12.5px;color:var(--text);margin-bottom:12px;max-height:80px;overflow:auto"></div>
+      <label>Author / Reviewer Name<input type="text" id="commentAuthorInput" value="Reviewer 1" /></label>
+      <label>Comment / Critique<textarea id="commentTextInput" style="width:100%;height:90px;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:var(--radius-inputs);padding:8px;font-size:13px" placeholder="Suggest clarifying the cohort inclusion criteria here..."></textarea></label>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+        <button value="cancel" class="button secondary">Cancel</button>
+        <button type="button" id="saveCommentConfirm" class="button primary">Post Comment</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- PDF Merge Modal -->
+  <dialog id="modalPdfMerge" class="modal">
+    <form method="dialog">
+      <button class="modal-close" value="cancel" aria-label="Close">×</button>
+      <h2>Merge PDF Documents</h2>
+      <p>Select two or more PDF files to combine sequentially into a unified document.</p>
+      <label class="button primary file-button full" style="margin:16px 0">
+        Choose PDF Files to Merge
+        <input type="file" id="pdfMergeInput" accept=".pdf" multiple />
+      </label>
+      <div id="pdfMergeFileList" style="font-size:12px;color:var(--muted);margin-bottom:14px"></div>
+      <div style="display:flex;justify-content:flex-end;gap:8px">
+        <button value="cancel" class="button secondary">Cancel</button>
+        <button type="button" id="pdfMergeConfirm" class="button primary" disabled>Merge & Download</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- PDF Split / Extract Modal -->
+  <dialog id="modalPdfSplit" class="modal">
+    <form method="dialog">
+      <button class="modal-close" value="cancel" aria-label="Close">×</button>
+      <h2>Split / Extract PDF Pages</h2>
+      <p>Extract specific page numbers or ranges into a separate PDF publication.</p>
+      <label class="button primary file-button full" style="margin:12px 0">
+        Select Source PDF
+        <input type="file" id="pdfSplitInput" accept=".pdf" />
+      </label>
+      <div id="pdfSplitFileName" style="font-size:12px;color:var(--accent);margin-bottom:8px"></div>
+      <label>Page Range to Extract<input type="text" id="pdfSplitRangeInput" placeholder="e.g. 1-3, 5, 8-12" /></label>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+        <button value="cancel" class="button secondary">Cancel</button>
+        <button type="button" id="pdfSplitConfirm" class="button primary" disabled>Extract Pages</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- PDF Rotate Modal -->
+  <dialog id="modalPdfRotate" class="modal">
+    <form method="dialog">
+      <button class="modal-close" value="cancel" aria-label="Close">×</button>
+      <h2>Rotate PDF Pages</h2>
+      <p>Rotate individual pages or entire manuscript orientations.</p>
+      <label class="button primary file-button full" style="margin:12px 0">
+        Select PDF to Rotate
+        <input type="file" id="pdfRotateInput" accept=".pdf" />
+      </label>
+      <div id="pdfRotateFileName" style="font-size:12px;color:var(--accent);margin-bottom:8px"></div>
+      <label>Rotation Angle
+        <select id="pdfRotateAngleSelect">
+          <option value="90">90° Clockwise</option>
+          <option value="180">180° Upside Down</option>
+          <option value="270">90° Counter-Clockwise (270°)</option>
+        </select>
+      </label>
+      <label>Target Pages (Optional)<input type="text" id="pdfRotatePagesInput" placeholder="All pages (or e.g. 2, 4-6)" /></label>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+        <button value="cancel" class="button secondary">Cancel</button>
+        <button type="button" id="pdfRotateConfirm" class="button primary" disabled>Rotate & Download</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- PDF Watermark Modal -->
+  <dialog id="modalPdfWatermark" class="modal">
+    <form method="dialog">
+      <button class="modal-close" value="cancel" aria-label="Close">×</button>
+      <h2>Stamp Watermark on PDF</h2>
+      <p>Overlay a custom semi-transparent diagonal watermark across all pages.</p>
+      <label class="button primary file-button full" style="margin:12px 0">
+        Select PDF Document
+        <input type="file" id="pdfWatermarkInput" accept=".pdf" />
+      </label>
+      <div id="pdfWatermarkFileName" style="font-size:12px;color:var(--accent);margin-bottom:8px"></div>
+      <label>Watermark Text<input type="text" id="pdfWatermarkTextInput" value="CONFIDENTIAL PREPRINT" /></label>
+      <div class="inline-fields">
+        <label>Opacity (0.1 - 0.9)<input type="number" id="pdfWatermarkOpacityInput" min="0.05" max="0.9" step="0.05" value="0.25" /></label>
+        <label>Angle (°)<input type="number" id="pdfWatermarkAngleInput" min="-90" max="90" step="5" value="45" /></label>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+        <button value="cancel" class="button secondary">Cancel</button>
+        <button type="button" id="pdfWatermarkConfirm" class="button primary" disabled>Apply Watermark</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- PDF Redaction Modal -->
+  <dialog id="modalPdfRedact" class="modal">
+    <form method="dialog">
+      <button class="modal-close" value="cancel" aria-label="Close">×</button>
+      <h2>Redact & Blackout Sensitive Text</h2>
+      <p>Permanently black out HIPAA patient identifiers, emails, or confidential values.</p>
+      <label class="button primary file-button full" style="margin:12px 0">
+        Select PDF Document
+        <input type="file" id="pdfRedactInput" accept=".pdf" />
+      </label>
+      <div id="pdfRedactFileName" style="font-size:12px;color:var(--accent);margin-bottom:8px"></div>
+      <label>Terms to Redact (Comma-Separated)<textarea id="pdfRedactTermsInput" style="width:100%;height:80px;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:var(--radius-inputs);padding:8px;font-size:13px" placeholder="John Doe, Patient #4812, test@hospital.org"></textarea></label>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+        <button value="cancel" class="button secondary">Cancel</button>
+        <button type="button" id="pdfRedactConfirm" class="button primary" disabled>Redact & Blackout</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Add Citation Modal -->
+  <dialog id="modalAddCite" class="modal">
+
+    <form method="dialog">
+      <button class="modal-close" value="cancel" aria-label="Close">×</button>
+      <h2>Add Scientific Reference</h2>
+      <p>Import reference entries via BibTeX or RIS format, or manually enter publication metadata.</p>
+      <div class="inline-fields" style="margin-bottom:12px">
+        <label>Import Format
+          <select id="citeImportFormatSelect">
+            <option value="bibtex" selected>BibTeX (@article, @book, etc.)</option>
+            <option value="ris">RIS Format (TY, AU, TI, PY)</option>
+          </select>
+        </label>
+      </div>
+      <label>Raw BibTeX / RIS Payload<textarea id="citeRawTextInput" style="width:100%;height:140px;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:var(--radius-inputs);padding:8px;font-family:ui-monospace,monospace;font-size:12px" placeholder="@article{smith2024neonatal,
+  title = {Neonatal Survival in Low-Resource Clinical Settings},
+  author = {Smith, John and Jones, Alice},
+  journal = {The Lancet},
+  year = {2024},
+  volume = {403},
+  pages = {120-128},
+  doi = {10.1016/S0140-6736(24)00123-4}
+}"></textarea></label>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+        <button value="cancel" class="button secondary">Cancel</button>
+        <button type="button" id="parseAndSaveCiteBtn" class="button primary">Import to Library</button>
       </div>
     </form>
   </dialog>
@@ -200,3 +869,4 @@
   <script type="module" src="app.js"></script>
 </body>
 </html>
+

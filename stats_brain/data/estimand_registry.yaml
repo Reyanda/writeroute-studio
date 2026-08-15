@@ -1,0 +1,2680 @@
+version: 1.0.0
+definition_principle: An estimator is acceptable only after the target quantity is
+  defined independently of the estimator.
+estimands:
+  population_mean:
+    name: population mean
+    category: descriptive_population_parameters
+    definition: Mean outcome in a stated target population at a stated time.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  population_median:
+    name: population median
+    category: descriptive_population_parameters
+    definition: Median outcome in a stated target population at a stated time.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  population_quantile:
+    name: population quantile
+    category: descriptive_population_parameters
+    definition: Specified quantile of the outcome distribution.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  population_variance:
+    name: population variance
+    category: descriptive_population_parameters
+    definition: Variance of the outcome distribution in the target population.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  prevalence:
+    name: prevalence
+    category: descriptive_population_parameters
+    definition: Proportion of the target population meeting the case definition at
+      a specified time or period.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  incidence_proportion:
+    name: incidence proportion
+    category: descriptive_population_parameters
+    definition: Risk of first event over a specified interval among persons at risk
+      at baseline.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  incidence_rate:
+    name: incidence rate
+    category: descriptive_population_parameters
+    definition: Expected event count per unit person-time under the stated observation
+      process.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  mortality_rate:
+    name: mortality rate
+    category: descriptive_population_parameters
+    definition: Deaths per unit person-time in the target population.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  cause_specific_mortality_fraction:
+    name: cause specific mortality fraction
+    category: descriptive_population_parameters
+    definition: Proportion of all deaths attributed to a specified cause.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  standardized_mean:
+    name: standardized mean
+    category: descriptive_population_parameters
+    definition: Mean under a specified standard population distribution.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  standardized_prevalence:
+    name: standardized prevalence
+    category: descriptive_population_parameters
+    definition: Prevalence standardized to a named population and covariate distribution.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  standardized_mortality_ratio:
+    name: standardized mortality ratio
+    category: descriptive_population_parameters
+    definition: Observed deaths divided by expected deaths under named external rates.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  population_total:
+    name: population total
+    category: descriptive_population_parameters
+    definition: Finite population total of a defined variable.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  ratio_of_totals:
+    name: ratio of totals
+    category: descriptive_population_parameters
+    definition: Ratio between two finite population totals.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  gini_coefficient:
+    name: gini coefficient
+    category: descriptive_population_parameters
+    definition: Relative mean absolute difference scaled by the population mean.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  concentration_index:
+    name: concentration index
+    category: descriptive_population_parameters
+    definition: Socioeconomic-related inequality in a health variable on a named scale.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  slope_index_of_inequality:
+    name: slope index of inequality
+    category: descriptive_population_parameters
+    definition: Absolute difference across the modeled socioeconomic rank distribution.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  relative_index_of_inequality:
+    name: relative index of inequality
+    category: descriptive_population_parameters
+    definition: Relative difference across the modeled socioeconomic rank distribution.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  life_expectancy:
+    name: life expectancy
+    category: descriptive_population_parameters
+    definition: Expected remaining lifetime under a specified life table and period
+      or cohort interpretation.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  restricted_mean_survival:
+    name: restricted mean survival
+    category: descriptive_population_parameters
+    definition: Expected event-free time through a prespecified horizon.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  cumulative_incidence:
+    name: cumulative incidence
+    category: descriptive_population_parameters
+    definition: Probability of the event by a stated horizon in the presence of competing
+      events.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  mean_cumulative_function:
+    name: mean cumulative function
+    category: descriptive_population_parameters
+    definition: Expected cumulative number of recurrent events by a stated horizon.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  annual_percent_change:
+    name: annual percent change
+    category: descriptive_population_parameters
+    definition: Multiplicative average change per year over a defined period.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  small_area_mean:
+    name: small area mean
+    category: descriptive_population_parameters
+    definition: Area-specific population mean under stated direct or model-based borrowing
+      assumptions.
+    required_definition:
+    - target_population
+    - variable_or_case_definition
+    - time_or_period
+    - summary_measure
+    - sampling_target
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  marginal_risk_difference:
+    name: marginal risk difference
+    category: association_parameters
+    definition: Difference in observed risks between exposure groups in the target
+      population.
+    required_definition:
+    - target_population
+    - exposure
+    - reference
+    - outcome
+    - covariate_conditioning
+    - effect_scale
+    - time_or_period
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  marginal_risk_ratio:
+    name: marginal risk ratio
+    category: association_parameters
+    definition: Ratio of observed risks between exposure groups in the target population.
+    required_definition:
+    - target_population
+    - exposure
+    - reference
+    - outcome
+    - covariate_conditioning
+    - effect_scale
+    - time_or_period
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  marginal_odds_ratio:
+    name: marginal odds ratio
+    category: association_parameters
+    definition: Ratio of marginal odds between exposure groups.
+    required_definition:
+    - target_population
+    - exposure
+    - reference
+    - outcome
+    - covariate_conditioning
+    - effect_scale
+    - time_or_period
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  conditional_odds_ratio:
+    name: conditional odds ratio
+    category: association_parameters
+    definition: Conditional odds ratio from a defined regression model at fixed covariates.
+    required_definition:
+    - target_population
+    - exposure
+    - reference
+    - outcome
+    - covariate_conditioning
+    - effect_scale
+    - time_or_period
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  conditional_rate_ratio:
+    name: conditional rate ratio
+    category: association_parameters
+    definition: Conditional incidence rate ratio from a defined count or survival
+      model.
+    required_definition:
+    - target_population
+    - exposure
+    - reference
+    - outcome
+    - covariate_conditioning
+    - effect_scale
+    - time_or_period
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  conditional_hazard_ratio:
+    name: conditional hazard ratio
+    category: association_parameters
+    definition: Ratio of instantaneous hazards conditional on modeled covariates and
+      risk-set membership.
+    required_definition:
+    - target_population
+    - exposure
+    - reference
+    - outcome
+    - covariate_conditioning
+    - effect_scale
+    - time_or_period
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  regression_slope:
+    name: regression slope
+    category: association_parameters
+    definition: Expected outcome change per unit predictor change under a stated regression
+      model.
+    required_definition:
+    - target_population
+    - exposure
+    - reference
+    - outcome
+    - covariate_conditioning
+    - effect_scale
+    - time_or_period
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  partial_correlation:
+    name: partial correlation
+    category: association_parameters
+    definition: Correlation after linear residualization on a stated covariate set.
+    required_definition:
+    - target_population
+    - exposure
+    - reference
+    - outcome
+    - covariate_conditioning
+    - effect_scale
+    - time_or_period
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  prevalence_ratio:
+    name: prevalence ratio
+    category: association_parameters
+    definition: Ratio of observed prevalences between exposure groups.
+    required_definition:
+    - target_population
+    - exposure
+    - reference
+    - outcome
+    - covariate_conditioning
+    - effect_scale
+    - time_or_period
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  prevalence_odds_ratio:
+    name: prevalence odds ratio
+    category: association_parameters
+    definition: Ratio of observed prevalence odds between exposure groups.
+    required_definition:
+    - target_population
+    - exposure
+    - reference
+    - outcome
+    - covariate_conditioning
+    - effect_scale
+    - time_or_period
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  cross_sectional_mean_difference:
+    name: cross sectional mean difference
+    category: association_parameters
+    definition: Observed mean difference at a specified cross-sectional time.
+    required_definition:
+    - target_population
+    - exposure
+    - reference
+    - outcome
+    - covariate_conditioning
+    - effect_scale
+    - time_or_period
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  ecological_association:
+    name: ecological association
+    category: association_parameters
+    definition: Association between area-level summaries, not an individual-level
+      effect.
+    required_definition:
+    - target_population
+    - exposure
+    - reference
+    - outcome
+    - covariate_conditioning
+    - effect_scale
+    - time_or_period
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  average_treatment_effect:
+    name: average treatment effect
+    category: causal_point_treatment
+    definition: Mean contrast between potential outcomes under two specified interventions
+      in the target population.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  average_treatment_effect_treated:
+    name: average treatment effect treated
+    category: causal_point_treatment
+    definition: Mean intervention contrast among units who received the reference
+      treatment under the observed regime.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  average_treatment_effect_controls:
+    name: average treatment effect controls
+    category: causal_point_treatment
+    definition: Mean intervention contrast among units who did not receive treatment
+      under the observed regime.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  sample_average_treatment_effect:
+    name: sample average treatment effect
+    category: causal_point_treatment
+    definition: Mean causal contrast over the sampled units.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  finite_population_average_treatment_effect:
+    name: finite population average treatment effect
+    category: causal_point_treatment
+    definition: Mean causal contrast over a defined finite population.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  superpopulation_average_treatment_effect:
+    name: superpopulation average treatment effect
+    category: causal_point_treatment
+    definition: Mean causal contrast under a stated superpopulation distribution.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  conditional_average_treatment_effect:
+    name: conditional average treatment effect
+    category: causal_point_treatment
+    definition: Mean intervention contrast conditional on a prespecified covariate
+      profile.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  individual_treatment_effect:
+    name: individual treatment effect
+    category: causal_point_treatment
+    definition: Unit-specific causal contrast, generally not point identified from
+      ordinary parallel data.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  local_average_treatment_effect:
+    name: local average treatment effect
+    category: causal_point_treatment
+    definition: Average treatment effect among compliers defined by a valid instrument
+      and monotonicity.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  marginal_treatment_effect:
+    name: marginal treatment effect
+    category: causal_point_treatment
+    definition: Average effect among units at a specified value of latent resistance
+      to treatment.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  policy_relevant_treatment_effect:
+    name: policy relevant treatment effect
+    category: causal_point_treatment
+    definition: Effect of a specified policy-induced treatment shift on its affected
+      margin.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  complier_average_causal_effect:
+    name: complier average causal effect
+    category: causal_point_treatment
+    definition: Average causal effect among units whose treatment follows assignment
+      under stated compliance assumptions.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  population_attributable_fraction_causal:
+    name: population attributable fraction causal
+    category: causal_point_treatment
+    definition: Proportion of outcome burden preventable under a specified intervention
+      and causal model.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  population_intervention_effect:
+    name: population intervention effect
+    category: causal_point_treatment
+    definition: Difference between observed outcome risk and risk under a feasible
+      population intervention.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  number_needed_to_treat_causal:
+    name: number needed to treat causal
+    category: causal_point_treatment
+    definition: Reciprocal of an identified absolute causal risk difference over a
+      stated horizon.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  quantile_treatment_effect:
+    name: quantile treatment effect
+    category: causal_point_treatment
+    definition: Difference between marginal potential-outcome quantiles under specified
+      interventions.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  distributional_treatment_effect:
+    name: distributional treatment effect
+    category: causal_point_treatment
+    definition: Contrast between complete marginal potential-outcome distributions.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  average_dose_response:
+    name: average dose response
+    category: continuous_and_joint_treatment
+    definition: Mean potential outcome as a function of a well-defined continuous
+      exposure level.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  dose_contrast:
+    name: dose contrast
+    category: continuous_and_joint_treatment
+    definition: Mean contrast between two specified continuous exposure levels.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  derivative_effect:
+    name: derivative effect
+    category: continuous_and_joint_treatment
+    definition: Derivative of the dose-response curve under differentiability and
+      support conditions.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  stochastic_intervention_effect:
+    name: stochastic intervention effect
+    category: continuous_and_joint_treatment
+    definition: Mean outcome contrast under specified stochastic treatment distributions.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  modified_treatment_policy_effect:
+    name: modified treatment policy effect
+    category: continuous_and_joint_treatment
+    definition: Mean outcome contrast after applying a deterministic modification
+      to each observed treatment value.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  incremental_propensity_score_effect:
+    name: incremental propensity score effect
+    category: continuous_and_joint_treatment
+    definition: Mean outcome under an intervention that multiplies treatment odds
+      by a prespecified factor.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  shift_intervention_effect:
+    name: shift intervention effect
+    category: continuous_and_joint_treatment
+    definition: Mean outcome under a feasible additive or multiplicative exposure
+      shift.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  joint_treatment_effect:
+    name: joint treatment effect
+    category: continuous_and_joint_treatment
+    definition: Mean contrast between two explicitly defined joint treatment vectors.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  mixture_policy_effect:
+    name: mixture policy effect
+    category: continuous_and_joint_treatment
+    definition: Mean outcome contrast under a defined intervention on an exposure
+      mixture.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  componentwise_mixture_effect:
+    name: componentwise mixture effect
+    category: continuous_and_joint_treatment
+    definition: Effect of intervening on one mixture component while specifying the
+      rest.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  overall_mixture_index_association:
+    name: overall mixture index association
+    category: continuous_and_joint_treatment
+    definition: Association with a constructed mixture index; not automatically a
+      causal intervention effect.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  sustained_strategy_effect:
+    name: sustained strategy effect
+    category: longitudinal_dynamic_and_survival_causal
+    definition: Mean outcome contrast between sustained longitudinal treatment strategies.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  dynamic_regime_value:
+    name: dynamic regime value
+    category: longitudinal_dynamic_and_survival_causal
+    definition: Expected outcome under a covariate-dependent treatment rule.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  optimal_regime_value:
+    name: optimal regime value
+    category: longitudinal_dynamic_and_survival_causal
+    definition: Highest expected utility over a specified class of treatment rules.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  intention_to_treat_analogue:
+    name: intention to treat analogue
+    category: longitudinal_dynamic_and_survival_causal
+    definition: Effect of assignment to baseline strategies in a target trial emulation.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  per_protocol_effect:
+    name: per protocol effect
+    category: longitudinal_dynamic_and_survival_causal
+    definition: Effect of adhering to prespecified treatment strategies through follow-up.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  risk_difference_at_horizon:
+    name: risk difference at horizon
+    category: longitudinal_dynamic_and_survival_causal
+    definition: Causal difference in cumulative event risk by a prespecified horizon.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  risk_ratio_at_horizon:
+    name: risk ratio at horizon
+    category: longitudinal_dynamic_and_survival_causal
+    definition: Causal ratio of cumulative event risks by a prespecified horizon.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  causal_restricted_mean_survival_difference:
+    name: causal restricted mean survival difference
+    category: longitudinal_dynamic_and_survival_causal
+    definition: Difference in restricted mean survival under two interventions.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  cause_specific_risk_effect:
+    name: cause specific risk effect
+    category: longitudinal_dynamic_and_survival_causal
+    definition: Effect on cumulative risk of one event type while retaining natural
+      competing-event processes.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  controlled_direct_effect_competing_event:
+    name: controlled direct effect competing event
+    category: longitudinal_dynamic_and_survival_causal
+    definition: Effect on the event of interest under treatment interventions and
+      a fixed competing-event intervention.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  separable_direct_effect:
+    name: separable direct effect
+    category: longitudinal_dynamic_and_survival_causal
+    definition: Component effect under treatment decomposition and dismissible component
+      conditions.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  separable_indirect_effect:
+    name: separable indirect effect
+    category: longitudinal_dynamic_and_survival_causal
+    definition: Complementary component effect through the competing-event pathway.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  recurrent_event_mean_effect:
+    name: recurrent event mean effect
+    category: longitudinal_dynamic_and_survival_causal
+    definition: Difference in expected cumulative recurrent event count under specified
+      strategies.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  multistate_transition_effect:
+    name: multistate transition effect
+    category: longitudinal_dynamic_and_survival_causal
+    definition: Effect on transition probability or occupancy under specified interventions.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  controlled_direct_effect:
+    name: controlled direct effect
+    category: mediation_interaction_and_disparity
+    definition: Effect of exposure while fixing the mediator to a specified level.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  natural_direct_effect:
+    name: natural direct effect
+    category: mediation_interaction_and_disparity
+    definition: Effect changing exposure while setting mediator to its natural value
+      under the reference exposure, under cross-world assumptions.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  natural_indirect_effect:
+    name: natural indirect effect
+    category: mediation_interaction_and_disparity
+    definition: Effect changing the mediator distribution from reference to exposed
+      while holding exposure fixed, under cross-world assumptions.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  interventional_direct_effect:
+    name: interventional direct effect
+    category: mediation_interaction_and_disparity
+    definition: Direct effect defined using draws from an identified mediator distribution
+      rather than unit-level cross-world values.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  interventional_indirect_effect:
+    name: interventional indirect effect
+    category: mediation_interaction_and_disparity
+    definition: Indirect effect through a specified mediator distribution intervention.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  path_specific_effect:
+    name: path specific effect
+    category: mediation_interaction_and_disparity
+    definition: Effect transmitted along specified causal paths under identification
+      conditions.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  randomized_interventional_analogue:
+    name: randomized interventional analogue
+    category: mediation_interaction_and_disparity
+    definition: Mediation contrast based on randomized mediator distributions.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  joint_mediator_effect:
+    name: joint mediator effect
+    category: mediation_interaction_and_disparity
+    definition: Combined indirect effect through a defined multivariate mediator intervention.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  mediated_interaction:
+    name: mediated interaction
+    category: mediation_interaction_and_disparity
+    definition: Component due jointly to mediation and exposure-mediator interaction.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  RERI:
+    name: RERI
+    category: mediation_interaction_and_disparity
+    definition: Additive interaction measured as relative excess risk due to interaction.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  attributable_proportion_interaction:
+    name: attributable proportion interaction
+    category: mediation_interaction_and_disparity
+    definition: Proportion of risk among doubly exposed attributable to additive interaction.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  synergy_index:
+    name: synergy index
+    category: mediation_interaction_and_disparity
+    definition: Ratio comparing combined excess risk with the sum of separate excess
+      risks.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  multiplicative_interaction:
+    name: multiplicative interaction
+    category: mediation_interaction_and_disparity
+    definition: Departure from multiplicativity on a stated ratio scale.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  interventional_disparity_direct_effect:
+    name: interventional disparity direct effect
+    category: mediation_interaction_and_disparity
+    definition: Residual disparity after equalizing a modifiable mediator distribution
+      across social groups.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  interventional_disparity_indirect_effect:
+    name: interventional disparity indirect effect
+    category: mediation_interaction_and_disparity
+    definition: Disparity reduction under a specified mediator equalization intervention.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  causal_decomposition_effect:
+    name: causal decomposition effect
+    category: mediation_interaction_and_disparity
+    definition: Decomposition of a disparity under explicit interventions and population
+      definitions.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  intersectional_stratum_disparity:
+    name: intersectional stratum disparity
+    category: mediation_interaction_and_disparity
+    definition: Difference or ratio between named intersectional strata on a prespecified
+      scale.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  intersectional_policy_effect:
+    name: intersectional policy effect
+    category: mediation_interaction_and_disparity
+    definition: Effect of a modifiable policy within or across specified intersectional
+      strata.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  direct_effect_under_interference:
+    name: direct effect under interference
+    category: interference_transport_and_fusion
+    definition: Effect of own treatment at a fixed exposure mapping of others treatments.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  spillover_effect:
+    name: spillover effect
+    category: interference_transport_and_fusion
+    definition: Effect of others treatment or coverage at a fixed own treatment.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  overall_effect_under_interference:
+    name: overall effect under interference
+    category: interference_transport_and_fusion
+    definition: Effect of changing a treatment-allocation policy on average outcomes.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  total_effect_under_interference:
+    name: total effect under interference
+    category: interference_transport_and_fusion
+    definition: Combined own-treatment and spillover contrast under specified allocations.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  transported_average_treatment_effect:
+    name: transported average treatment effect
+    category: interference_transport_and_fusion
+    definition: Average causal effect in a target population transported from one
+      or more source samples.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  generalized_trial_effect:
+    name: generalized trial effect
+    category: interference_transport_and_fusion
+    definition: Average trial treatment effect generalized to an explicitly sampled
+      target population.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  site_specific_treatment_effect:
+    name: site specific treatment effect
+    category: interference_transport_and_fusion
+    definition: Average treatment effect in a named site or setting.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  data_fusion_estimand:
+    name: data fusion estimand
+    category: interference_transport_and_fusion
+    definition: Target parameter identified by combining complementary data sources
+      under stated linking assumptions.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  meta_analytic_causal_effect:
+    name: meta analytic causal effect
+    category: interference_transport_and_fusion
+    definition: Average or distribution of study-specific causal effects over a defined
+      study population.
+    required_definition:
+    - target_population
+    - intervention_or_index_condition
+    - comparator_or_reference
+    - outcome
+    - time_horizon
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  individual_risk_at_horizon:
+    name: individual risk at horizon
+    category: prediction_and_decision_targets
+    definition: Conditional probability of the outcome by a prespecified horizon using
+      predictors available at index time.
+    required_definition:
+    - target_population
+    - index_time
+    - predictors_available_at_index
+    - outcome
+    - prediction_horizon
+    - performance_or_utility_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  diagnostic_probability:
+    name: diagnostic probability
+    category: prediction_and_decision_targets
+    definition: Conditional probability of current target condition given index-test
+      information.
+    required_definition:
+    - target_population
+    - index_time
+    - predictors_available_at_index
+    - outcome
+    - prediction_horizon
+    - performance_or_utility_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  forecast_distribution:
+    name: forecast distribution
+    category: prediction_and_decision_targets
+    definition: Predictive distribution for future observations at a stated horizon.
+    required_definition:
+    - target_population
+    - index_time
+    - predictors_available_at_index
+    - outcome
+    - prediction_horizon
+    - performance_or_utility_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  calibration_in_the_large:
+    name: calibration in the large
+    category: prediction_and_decision_targets
+    definition: Mean predicted risk relative to mean observed risk on an appropriate
+      scale.
+    required_definition:
+    - target_population
+    - index_time
+    - predictors_available_at_index
+    - outcome
+    - prediction_horizon
+    - performance_or_utility_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  calibration_slope:
+    name: calibration slope
+    category: prediction_and_decision_targets
+    definition: Slope relating predicted log odds or linear predictor to observed
+      outcomes.
+    required_definition:
+    - target_population
+    - index_time
+    - predictors_available_at_index
+    - outcome
+    - prediction_horizon
+    - performance_or_utility_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  calibration_function:
+    name: calibration function
+    category: prediction_and_decision_targets
+    definition: Relationship between predicted and observed probabilities across the
+      prediction range.
+    required_definition:
+    - target_population
+    - index_time
+    - predictors_available_at_index
+    - outcome
+    - prediction_horizon
+    - performance_or_utility_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  discrimination_AUROC:
+    name: discrimination AUROC
+    category: prediction_and_decision_targets
+    definition: Probability that a randomly chosen case receives a higher score than
+      a randomly chosen noncase.
+    required_definition:
+    - target_population
+    - index_time
+    - predictors_available_at_index
+    - outcome
+    - prediction_horizon
+    - performance_or_utility_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  time_dependent_AUC:
+    name: time dependent AUC
+    category: prediction_and_decision_targets
+    definition: Discrimination at a specified time under a defined censoring convention.
+    required_definition:
+    - target_population
+    - index_time
+    - predictors_available_at_index
+    - outcome
+    - prediction_horizon
+    - performance_or_utility_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  Brier_score:
+    name: Brier score
+    category: prediction_and_decision_targets
+    definition: Mean squared error of probabilistic predictions at a specified horizon.
+    required_definition:
+    - target_population
+    - index_time
+    - predictors_available_at_index
+    - outcome
+    - prediction_horizon
+    - performance_or_utility_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  logarithmic_score:
+    name: logarithmic score
+    category: prediction_and_decision_targets
+    definition: Mean negative log probability assigned to observed outcomes.
+    required_definition:
+    - target_population
+    - index_time
+    - predictors_available_at_index
+    - outcome
+    - prediction_horizon
+    - performance_or_utility_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  net_benefit:
+    name: net benefit
+    category: prediction_and_decision_targets
+    definition: Decision utility of using a model at a stated threshold and harm-benefit
+      exchange rate.
+    required_definition:
+    - target_population
+    - index_time
+    - predictors_available_at_index
+    - outcome
+    - prediction_horizon
+    - performance_or_utility_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  policy_value_prediction:
+    name: policy value prediction
+    category: prediction_and_decision_targets
+    definition: Expected utility under a decision rule constructed from predictions.
+    required_definition:
+    - target_population
+    - index_time
+    - predictors_available_at_index
+    - outcome
+    - prediction_horizon
+    - performance_or_utility_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  fairness_demographic_parity_difference:
+    name: fairness demographic parity difference
+    category: prediction_and_decision_targets
+    definition: Difference in positive decision rates between groups.
+    required_definition:
+    - target_population
+    - index_time
+    - predictors_available_at_index
+    - outcome
+    - prediction_horizon
+    - performance_or_utility_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  fairness_equalized_odds_gap:
+    name: fairness equalized odds gap
+    category: prediction_and_decision_targets
+    definition: Difference in error rates conditional on outcome status between groups.
+    required_definition:
+    - target_population
+    - index_time
+    - predictors_available_at_index
+    - outcome
+    - prediction_horizon
+    - performance_or_utility_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  group_calibration_gap:
+    name: group calibration gap
+    category: prediction_and_decision_targets
+    definition: Difference between predicted and observed risk within specified groups.
+    required_definition:
+    - target_population
+    - index_time
+    - predictors_available_at_index
+    - outcome
+    - prediction_horizon
+    - performance_or_utility_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  coverage_probability_conformal:
+    name: coverage probability conformal
+    category: prediction_and_decision_targets
+    definition: Probability that a prediction set contains the target under the stated
+      exchangeability conditions.
+    required_definition:
+    - target_population
+    - index_time
+    - predictors_available_at_index
+    - outcome
+    - prediction_horizon
+    - performance_or_utility_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  treatment_policy_estimand:
+    name: treatment policy estimand
+    category: trial_estimand_strategies
+    definition: Treatment effect regardless of occurrence of specified intercurrent
+      events.
+    required_definition:
+    - population
+    - treatment_conditions
+    - outcome
+    - intercurrent_event
+    - strategy_for_intercurrent_event
+    - population_summary
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  hypothetical_estimand:
+    name: hypothetical estimand
+    category: trial_estimand_strategies
+    definition: Treatment effect in a hypothetical scenario in which specified intercurrent
+      events would not occur.
+    required_definition:
+    - population
+    - treatment_conditions
+    - outcome
+    - intercurrent_event
+    - strategy_for_intercurrent_event
+    - population_summary
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  composite_strategy_estimand:
+    name: composite strategy estimand
+    category: trial_estimand_strategies
+    definition: Treatment effect after incorporating an intercurrent event into the
+      outcome definition.
+    required_definition:
+    - population
+    - treatment_conditions
+    - outcome
+    - intercurrent_event
+    - strategy_for_intercurrent_event
+    - population_summary
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  while_on_treatment_estimand:
+    name: while on treatment estimand
+    category: trial_estimand_strategies
+    definition: Treatment effect before occurrence of a specified intercurrent event.
+    required_definition:
+    - population
+    - treatment_conditions
+    - outcome
+    - intercurrent_event
+    - strategy_for_intercurrent_event
+    - population_summary
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  principal_stratum_estimand:
+    name: principal stratum estimand
+    category: trial_estimand_strategies
+    definition: Treatment effect within the latent subgroup defined by potential intercurrent-event
+      statuses.
+    required_definition:
+    - population
+    - treatment_conditions
+    - outcome
+    - intercurrent_event
+    - strategy_for_intercurrent_event
+    - population_summary
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  sensitivity:
+    name: sensitivity
+    category: measurement_reliability_and_latent_targets
+    definition: Probability of positive test among units with the target condition
+      under the reference standard.
+    required_definition:
+    - target_population
+    - index_measure
+    - reference_or_repeat_measure
+    - unit
+    - time_relation
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  specificity:
+    name: specificity
+    category: measurement_reliability_and_latent_targets
+    definition: Probability of negative test among units without the target condition.
+    required_definition:
+    - target_population
+    - index_measure
+    - reference_or_repeat_measure
+    - unit
+    - time_relation
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  positive_predictive_value:
+    name: positive predictive value
+    category: measurement_reliability_and_latent_targets
+    definition: Probability of target condition among test-positive units in a stated
+      population.
+    required_definition:
+    - target_population
+    - index_measure
+    - reference_or_repeat_measure
+    - unit
+    - time_relation
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  negative_predictive_value:
+    name: negative predictive value
+    category: measurement_reliability_and_latent_targets
+    definition: Probability of no target condition among test-negative units in a
+      stated population.
+    required_definition:
+    - target_population
+    - index_measure
+    - reference_or_repeat_measure
+    - unit
+    - time_relation
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  likelihood_ratio_positive:
+    name: likelihood ratio positive
+    category: measurement_reliability_and_latent_targets
+    definition: Sensitivity divided by one minus specificity.
+    required_definition:
+    - target_population
+    - index_measure
+    - reference_or_repeat_measure
+    - unit
+    - time_relation
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  likelihood_ratio_negative:
+    name: likelihood ratio negative
+    category: measurement_reliability_and_latent_targets
+    definition: One minus sensitivity divided by specificity.
+    required_definition:
+    - target_population
+    - index_measure
+    - reference_or_repeat_measure
+    - unit
+    - time_relation
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  intraclass_correlation:
+    name: intraclass correlation
+    category: measurement_reliability_and_latent_targets
+    definition: Proportion of variance attributed to between-cluster or between-subject
+      variation under a stated model.
+    required_definition:
+    - target_population
+    - index_measure
+    - reference_or_repeat_measure
+    - unit
+    - time_relation
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  Cronbach_alpha:
+    name: Cronbach alpha
+    category: measurement_reliability_and_latent_targets
+    definition: Reliability coefficient under tau-equivalence assumptions.
+    required_definition:
+    - target_population
+    - index_measure
+    - reference_or_repeat_measure
+    - unit
+    - time_relation
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  omega_reliability:
+    name: omega reliability
+    category: measurement_reliability_and_latent_targets
+    definition: Model-based proportion of score variance attributable to common factors.
+    required_definition:
+    - target_population
+    - index_measure
+    - reference_or_repeat_measure
+    - unit
+    - time_relation
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  latent_factor_mean:
+    name: latent factor mean
+    category: measurement_reliability_and_latent_targets
+    definition: Mean of an identified latent construct under stated scale constraints.
+    required_definition:
+    - target_population
+    - index_measure
+    - reference_or_repeat_measure
+    - unit
+    - time_relation
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  minimal_detectable_change:
+    name: minimal detectable change
+    category: measurement_reliability_and_latent_targets
+    definition: Threshold exceeding expected measurement error under a stated confidence
+      level.
+    required_definition:
+    - target_population
+    - index_measure
+    - reference_or_repeat_measure
+    - unit
+    - time_relation
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered
+  limits_of_agreement:
+    name: limits of agreement
+    category: measurement_reliability_and_latent_targets
+    definition: Expected range of paired measurement differences under specified assumptions.
+    required_definition:
+    - target_population
+    - index_measure
+    - reference_or_repeat_measure
+    - unit
+    - time_relation
+    - summary_measure
+    reporting_contract:
+    - state_target_population
+    - state_scale
+    - state_time_horizon
+    - report_estimate
+    - report_uncertainty
+    - state_identification_or_model_assumptions
+    status: registered

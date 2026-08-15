@@ -1,0 +1,1095 @@
+version: 1.0.0
+contract: Rules identify statistical defects, missing identification information,
+  active debates, or items that cannot be assessed. They do not certify truth or misconduct.
+rules:
+- rule_id: SB-BAYES-001
+  title: Likelihood is not specified
+  domain: bayesian_inference
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-BAYES-002
+  title: Prior distributions are not specified
+  domain: bayesian_inference
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-BAYES-003
+  title: Posterior target is not specified
+  domain: bayesian_inference
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-BAYES-004
+  title: Convergence diagnostics are not reported
+  domain: bayesian_inference
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-BAYES-005
+  title: Posterior predictive assessment is missing
+  domain: bayesian_inference
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-BAYES-006
+  title: Prior sensitivity is missing
+  domain: bayesian_inference
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-BAYES-007
+  title: Potential scale reduction indicates incomplete convergence
+  domain: bayesian_inference
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-BAYES-008
+  title: Hamiltonian Monte Carlo divergences remain
+  domain: bayesian_inference
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-BAYES-009
+  title: Bayesian credible interval is described as a frequentist confidence interval
+  domain: bayesian_inference
+  default_severity: major
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CAUSAL-001
+  title: Intervention or exposure strategy is not well defined
+  domain: causal_identification
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CAUSAL-002
+  title: Comparator strategy is undefined
+  domain: causal_identification
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CAUSAL-003
+  title: Causal time zero is undefined
+  domain: causal_identification
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CAUSAL-004
+  title: Causal outcome horizon is undefined
+  domain: causal_identification
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CAUSAL-005
+  title: Causal model is not supplied
+  domain: causal_identification
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CAUSAL-006
+  title: Conditional exchangeability is not defended
+  domain: causal_identification
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CAUSAL-007
+  title: Positivity is not assessed
+  domain: causal_identification
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CAUSAL-008
+  title: Consistency and treatment versions are not addressed
+  domain: causal_identification
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CAUSAL-009
+  title: Interference assumption is not addressed
+  domain: causal_identification
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CAUSAL-010
+  title: Informative censoring is not addressed
+  domain: causal_identification
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CAUSAL-011
+  title: Post-treatment variables are included in the adjustment set
+  domain: causal_identification
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CAUSAL-012
+  title: Collider variables are adjusted for
+  domain: causal_identification
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CAUSAL-013
+  title: Time-varying confounding affected by prior treatment is handled by an ordinary
+    adjustment model
+  domain: causal_identification
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CAUSAL-014
+  title: No causal sensitivity analysis is specified
+  domain: sensitivity_analysis
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CAUSAL-015
+  title: Study sample and causal target population differ without a transport strategy
+  domain: transportability
+  default_severity: critical
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CLAIM-001
+  title: Causal language exceeds the declared task
+  domain: interpretation
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CLAIM-002
+  title: A nonsignificant result is interpreted as evidence of no effect
+  domain: interpretation
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CLAIM-003
+  title: Statistical significance is treated as proof
+  domain: interpretation
+  default_severity: major
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CLAIM-004
+  title: Frequentist confidence interval is given a posterior-probability interpretation
+  domain: interpretation
+  default_severity: major
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CONT-001
+  title: Continuous intervention is not defined
+  domain: continuous_causal_inference
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CONT-002
+  title: Dose contrast or dose-response target is undefined
+  domain: continuous_causal_inference
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CONT-003
+  title: Observed support and continuous positivity are not assessed
+  domain: continuous_causal_inference
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CONT-004
+  title: Exposure-response functional form is not assessed
+  domain: continuous_causal_inference
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CONT-005
+  title: Continuous exposure is categorized without a scientific intervention rationale
+  domain: continuous_causal_inference
+  default_severity: major
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CONT-006
+  title: Dose-response estimates extrapolate beyond observed support
+  domain: continuous_causal_inference
+  default_severity: fatal
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CORE-001
+  title: Statistical task is undefined
+  domain: problem_definition
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CORE-002
+  title: Study design is undefined
+  domain: problem_definition
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CORE-003
+  title: Target population is undefined
+  domain: problem_definition
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CORE-004
+  title: Outcome is undefined
+  domain: problem_definition
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CORE-005
+  title: Unit of analysis is undefined
+  domain: problem_definition
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CORE-006
+  title: Analysis method is not identified
+  domain: problem_definition
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CORE-007
+  title: Analysis denominator is not reported
+  domain: reporting
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CORE-008
+  title: Uncertainty procedure is unspecified
+  domain: statistical_inference
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CORE-009
+  title: Primary inferential claim is unavailable
+  domain: interpretation
+  default_severity: query
+  epistemic_status: not_assessable
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CORE-010
+  title: Executable analysis code is missing
+  domain: reproducibility
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-CORE-011
+  title: Protocol or analysis plan is not identified
+  domain: reproducibility
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-DESIGN-001
+  title: Study design is not registered
+  domain: study_design
+  default_severity: major
+  epistemic_status: not_assessable
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-DESIGN-002
+  title: Declared task is not supported by the design without additional assumptions
+  domain: study_design
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-DESIGN-003
+  title: Design contract is incomplete
+  domain: study_design
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-DESIGN-004
+  title: Design-specific bias pathways are not adjudicated
+  domain: bias
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-DHS-001
+  title: DHS integer weight scaling is not documented
+  domain: dhs
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-DHS-002
+  title: DHS recode file is not identified
+  domain: dhs
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-DHS-003
+  title: DHS indicator denominator is not reproduced from its definition
+  domain: dhs
+  default_severity: critical
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-DHS-004
+  title: DHS cluster-coordinate displacement is ignored
+  domain: dhs_spatial
+  default_severity: critical
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-DHS-005
+  title: Multilevel DHS analysis lacks a level-specific weighting strategy
+  domain: dhs
+  default_severity: major
+  epistemic_status: active_debate
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-EST-001
+  title: Target quantity is not named independently of the estimator
+  domain: estimand
+  default_severity: critical
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-EST-002
+  title: Estimand is not registered
+  domain: estimand
+  default_severity: major
+  epistemic_status: not_assessable
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-EST-003
+  title: Estimand attributes are incomplete
+  domain: estimand
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-INT-001
+  title: Time-zero defects jointly create a high-risk causal design failure
+  domain: interaction
+  default_severity: fatal
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-INT-002
+  title: Ambiguous weight construction and low effective sample size threaten both
+    target and precision
+  domain: interaction
+  default_severity: critical
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-INT-003
+  title: Multiple information leaks invalidate the reported prediction performance
+  domain: interaction
+  default_severity: fatal
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-INT-004
+  title: Sparse intersectional strata create a practical positivity threat
+  domain: interaction
+  default_severity: critical
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-INTX-001
+  title: Intersectional categories lack a substantive theory
+  domain: intersectionality
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-INTX-002
+  title: Descriptive, predictive, and causal intersectional aims are conflated
+  domain: intersectionality
+  default_severity: critical
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-INTX-003
+  title: Support within intersectional strata is not reported
+  domain: intersectionality
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-INTX-004
+  title: Many separate stratum models are fit without shrinkage or multiplicity control
+  domain: intersectionality
+  default_severity: major
+  epistemic_status: context_dependent
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-INTX-005
+  title: Interaction scale is unspecified
+  domain: intersectionality
+  default_severity: critical
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-INTX-006
+  title: Intersectional causal contrast lacks an intervention mapping
+  domain: intersectional_causal_inference
+  default_severity: critical
+  epistemic_status: active_debate
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-INTX-007
+  title: Structural disparity is interpreted as an individual group deficit
+  domain: intersectionality
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-JOINT-001
+  title: Joint intervention is not specified
+  domain: joint_causal_inference
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-JOINT-002
+  title: Joint exposure support is not evaluated
+  domain: joint_causal_inference
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-JOINT-003
+  title: Component, joint, and interaction estimands are not separated
+  domain: joint_causal_inference
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-JOINT-004
+  title: Co-exposure dependence is not represented
+  domain: joint_causal_inference
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-JOINT-005
+  title: Mixture variable importance is interpreted as a component causal effect
+  domain: joint_causal_inference
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-META-001
+  title: Synthesis estimand and effect scale are undefined
+  domain: meta_analysis
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-META-002
+  title: Dependence among effects is not addressed
+  domain: meta_analysis
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-META-003
+  title: Clinical and methodological heterogeneity are not characterized
+  domain: meta_analysis
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-META-004
+  title: Risk of bias is not integrated into synthesis
+  domain: meta_analysis
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-META-005
+  title: Random-effects synthesis omits a prediction interval
+  domain: meta_analysis
+  default_severity: major
+  epistemic_status: context_dependent
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-META-006
+  title: A funnel-plot or regression test is treated as proof that publication bias
+    is absent
+  domain: meta_analysis
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-META-007
+  title: Study-level meta-regression is interpreted as an individual-level effect
+    modifier
+  domain: meta_analysis
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-METHOD-001
+  title: Analysis method is not registered
+  domain: method_selection
+  default_severity: major
+  epistemic_status: not_assessable
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-METHOD-002
+  title: Method is misaligned with the scientific task
+  domain: method_selection
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-METHOD-003
+  title: Estimator and estimand require explicit reconciliation
+  domain: method_selection
+  default_severity: major
+  epistemic_status: context_dependent
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-METHOD-004
+  title: Method-specific diagnostics are incompletely documented
+  domain: diagnostics
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-MISS-001
+  title: Missing-data process is not described
+  domain: missing_data
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-MISS-002
+  title: Variable-level missingness is not quantified
+  domain: missing_data
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-MISS-003
+  title: Missingness assumptions are unstated
+  domain: missing_data
+  default_severity: critical
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-MISS-004
+  title: Complete-case analysis lacks a target-specific justification
+  domain: missing_data
+  default_severity: critical
+  epistemic_status: context_dependent
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-MISS-005
+  title: Number of imputations is not reported
+  domain: missing_data
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-MISS-006
+  title: Imputation model variables are not reported
+  domain: missing_data
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-MISS-007
+  title: Imputation and analysis models are not shown to be compatible
+  domain: missing_data
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-MISS-008
+  title: Pooling procedure is not reported
+  domain: missing_data
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-MISS-009
+  title: No sensitivity analysis addresses departures from the primary missingness
+    assumption
+  domain: missing_data
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-NET-001
+  title: Interference exposure mapping is undefined
+  domain: network_causal_inference
+  default_severity: critical
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-NUM-001
+  title: Confidence interval bounds are reversed
+  domain: numeric_consistency
+  default_severity: fatal
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-NUM-002
+  title: Point estimate lies outside its reported interval
+  domain: numeric_consistency
+  default_severity: fatal
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-NUM-003
+  title: P value is outside the valid range
+  domain: numeric_consistency
+  default_severity: fatal
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-NUM-004
+  title: Reported interval and P value are internally inconsistent
+  domain: numeric_consistency
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-NUM-005
+  title: Reported percentage does not match its numerator and denominator
+  domain: numeric_consistency
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-NUM-006
+  title: Highly variable weights sharply reduce effective sample size
+  domain: complex_survey
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-NUM-007
+  title: Survey weights contain invalid values
+  domain: complex_survey
+  default_severity: fatal
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-PRED-001
+  title: Prediction index time is undefined
+  domain: prediction
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-PRED-002
+  title: Prediction horizon is undefined
+  domain: prediction
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-PRED-003
+  title: Intended use and decision context are undefined
+  domain: prediction
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-PRED-004
+  title: Validation strategy is unspecified
+  domain: prediction
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-PRED-005
+  title: Calibration assessment is missing
+  domain: prediction
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-PRED-006
+  title: Discrimination assessment is missing
+  domain: prediction
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-PRED-007
+  title: Feature availability at prediction time is not verified
+  domain: prediction
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-PRED-008
+  title: Train-test splitting occurs below the independent unit
+  domain: prediction
+  default_severity: fatal
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-PRED-009
+  title: Preprocessing uses information from validation or test data
+  domain: prediction
+  default_severity: fatal
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-PRED-010
+  title: The test set was reused for model selection or threshold choice
+  domain: prediction
+  default_severity: fatal
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-PRED-011
+  title: Reported performance is limited to rank or classification metrics
+  domain: prediction
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-PRED-012
+  title: Performance heterogeneity and fairness are not assessed
+  domain: prediction_fairness
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-PRED-013
+  title: Predictive feature importance is interpreted as a causal effect or mechanism
+  domain: prediction
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-PRED-014
+  title: Causal machine-learning nuisance fitting lacks a cross-fitting decision
+  domain: causal_machine_learning
+  default_severity: major
+  epistemic_status: context_dependent
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-REG-001
+  title: Odds ratio is interpreted as a risk ratio
+  domain: regression
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-REG-002
+  title: Logistic separation is not assessed
+  domain: regression
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-REG-003
+  title: Continuous covariate functional forms are not evaluated
+  domain: regression
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-REG-004
+  title: Robust standard errors are treated as a remedy for model bias
+  domain: regression
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-REG-005
+  title: Stepwise variable selection is used for inferential claims
+  domain: regression
+  default_severity: major
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-REG-006
+  title: Confounders are selected by a change-in-estimate threshold
+  domain: causal_identification
+  default_severity: major
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-SPAT-001
+  title: Spatial support is undefined
+  domain: spatial_statistics
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-SPAT-002
+  title: Spatial dependence is not assessed
+  domain: spatial_statistics
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-SPAT-003
+  title: Scale and boundary sensitivity are not assessed
+  domain: spatial_statistics
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-SPAT-004
+  title: Location uncertainty is not propagated
+  domain: spatial_statistics
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-SPAT-005
+  title: Area-level association is interpreted as an individual-level effect
+  domain: spatial_statistics
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-SURVEY-001
+  title: Sampling weight is missing
+  domain: complex_survey
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-SURVEY-002
+  title: Primary sampling unit is missing
+  domain: complex_survey
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-SURVEY-003
+  title: Stratification variable is missing
+  domain: complex_survey
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-SURVEY-004
+  title: Survey variance estimator is unspecified
+  domain: complex_survey
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-SURVEY-005
+  title: Survey target population is undefined
+  domain: complex_survey
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-SURVEY-006
+  title: Complex survey analysis is unweighted
+  domain: complex_survey
+  default_severity: critical
+  epistemic_status: context_dependent
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-SURVEY-007
+  title: Subpopulation analysis deletes out-of-domain observations before variance
+    estimation
+  domain: complex_survey
+  default_severity: major
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-SURVEY-008
+  title: Pooled-survey weighting target is ambiguous
+  domain: complex_survey
+  default_severity: critical
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-SURVEY-009
+  title: Sampling weights and causal treatment weights are not distinguished
+  domain: survey_causal_inference
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-SURVEY-010
+  title: Combined survey and causal weights lack diagnostics
+  domain: survey_causal_inference
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TIME-001
+  title: Time origin is undefined
+  domain: time_to_event
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TIME-002
+  title: Event definition is incomplete
+  domain: time_to_event
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TIME-003
+  title: Censoring process is unspecified
+  domain: time_to_event
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TIME-004
+  title: Competing events are not addressed
+  domain: time_to_event
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TIME-005
+  title: Proportional hazards are not assessed
+  domain: time_to_event
+  default_severity: major
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TIME-006
+  title: Hazard ratio is interpreted as a risk ratio
+  domain: time_to_event
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TIME-007
+  title: Immortal time is not controlled
+  domain: time_to_event
+  default_severity: fatal
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TIME-008
+  title: Recurrent events are analysed without accounting for terminal events
+  domain: recurrent_events
+  default_severity: major
+  epistemic_status: context_dependent
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TRIAL-001
+  title: Randomization unit and method are not reported
+  domain: randomized_trials
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TRIAL-002
+  title: Allocation concealment is not reported
+  domain: randomized_trials
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TRIAL-003
+  title: Trial estimand and intercurrent-event strategies are incomplete
+  domain: randomized_trials
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TRIAL-004
+  title: Sample-size assumptions are not reported
+  domain: randomized_trials
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TRIAL-005
+  title: Multiplicity strategy is not reported
+  domain: randomized_trials
+  default_severity: contextual
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TRIAL-006
+  title: Post-randomization exclusions threaten the randomized comparison
+  domain: randomized_trials
+  default_severity: critical
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TRIAL-007
+  title: Noninferiority margin lacks clinical and historical justification
+  domain: randomized_trials
+  default_severity: critical
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TTE-001
+  title: Target trial protocol is incomplete
+  domain: target_trial_emulation
+  default_severity: critical
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TTE-002
+  title: Eligibility, assignment, and follow-up are not aligned at time zero
+  domain: target_trial_emulation
+  default_severity: fatal
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TTE-003
+  title: Treatment grace period lacks an assignment and censoring strategy
+  domain: target_trial_emulation
+  default_severity: critical
+  epistemic_status: consensus_requirement
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical
+- rule_id: SB-TTE-004
+  title: Baseline covariates use information recorded after causal time zero
+  domain: target_trial_emulation
+  default_severity: fatal
+  epistemic_status: known_error
+  implementation: deterministic_or_manifest_driven
+  release_role: blocking_when_fatal_or_critical

@@ -1,0 +1,167 @@
+name: lucid-sci-lint
+version: 1.0
+purpose: >
+  Review triggers for precision-preserving scientific clarity. Flags require human
+  or model judgement and should not be treated as automatic errors.
+
+defaults:
+  language: en-GB
+  allow_em_dash: false
+  target_register: cross-disciplinary-scholarly
+
+hard_failures:
+  - id: claim_class_changed
+    description: Descriptive, associational, predictive, causal, mechanistic or normative claim class changed.
+  - id: estimand_changed
+    description: Population, intervention/exposure, comparator, outcome, time or effect measure changed.
+  - id: number_changed
+    description: Estimate, interval, unit, sign, denominator or time altered without an explicit correction.
+  - id: uncertainty_removed
+    description: Material uncertainty, limitation or assumption removed.
+  - id: evidence_invented
+    description: Missing number, source, method or interpretation fabricated.
+  - id: causal_overreach
+    description: Causal language exceeds the study design and identification assumptions.
+  - id: policy_overreach
+    description: Recommendation exceeds evidence on effectiveness, feasibility or implementation.
+
+sentence_triggers:
+  review_word_count: 35
+  critical_word_count: 50
+  max_distinct_claims: 3
+  max_semicolons: 1
+  max_nested_parentheses_depth: 1
+  subject_verb_distance_review: 12
+  noun_stack_review: 4
+  new_technical_concepts_review: 2
+  undefined_acronyms_review: 1
+
+paragraph_triggers:
+  max_new_acronyms: 2
+  preferred_primary_jobs: 1
+  result_paragraph_order:
+    - claim
+    - evidence
+    - interpretation
+    - boundary
+  methods_paragraph_order:
+    - purpose
+    - procedure
+    - assumption
+    - output
+
+acronyms:
+  minimum_uses_to_justify: 3
+  prohibit_in_title_unless_standard: true
+  define_on_first_use: true
+
+flag_terms:
+  inflated:
+    - groundbreaking
+    - pivotal
+    - transformative
+    - unprecedented
+    - multifaceted
+    - holistic
+    - cutting-edge
+    - paradigm-shifting
+    - game-changing
+    - critically important
+  vague_evaluative:
+    - robust
+    - significant
+    - substantial
+    - considerable
+    - remarkable
+    - dramatic
+    - meaningful
+  ai_slop_phrases:
+    - it is important to note
+    - in today's rapidly evolving landscape
+    - underscores the urgent need
+    - holds considerable promise
+    - delve into
+    - shed light on
+    - not only but also
+    - complex and multifaceted
+    - a testament to
+    - pave the way
+  indirect:
+    - in order to
+    - due to the fact that
+    - with regard to
+    - with respect to
+    - in the context of
+    - a total of
+    - was found to be
+    - has the ability to
+    - conduct an analysis of
+  causal_watchlist:
+    - causes
+    - caused
+    - leads to
+    - led to
+    - results in
+    - resulted in
+    - drives
+    - prevents
+    - protects against
+    - determines
+    - explains
+  vague_referents:
+    - this
+    - these
+    - it
+    - they
+    - former
+    - latter
+
+quantitative_checks:
+  require_measure_name: true
+  require_comparator: true
+  require_time_when_relevant: true
+  require_denominator_for_percentage_when_available: true
+  distinguish_percentage_points: true
+  flag_p_value_without_effect: true
+  flag_non_significant_as_no_effect: true
+  flag_odds_as_risk: true
+  flag_increase_decrease_in_cross_sectional_text: true
+  prefer_absolute_and_relative_effects_when_valid: true
+
+claim_calibration:
+  descriptive_verbs:
+    - observed
+    - measured
+    - recorded
+    - estimated
+    - occurred
+  associational_verbs:
+    - associated with
+    - correlated with
+    - differed by
+    - co-occurred with
+  predictive_verbs:
+    - predicted
+    - classified
+    - discriminated
+    - calibrated
+  causal_verbs:
+    - increased
+    - reduced
+    - prevented
+    - caused
+  mechanistic_ladder:
+    - compatible with
+    - consistent with
+    - supports a contributory role
+    - mediated
+    - necessary
+    - sufficient
+
+output_requirements:
+  - revised_text
+  - fidelity_ledger
+  - terminology_decisions
+  - claim_calibration_notes
+  - missing_information
+  - quality_score

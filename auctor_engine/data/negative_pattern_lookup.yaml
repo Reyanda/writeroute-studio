@@ -1,0 +1,1673 @@
+schema_version: 2.0.0
+name: Scientific Authorship & Evidence Quality Pattern Lookup
+short_name: SAEQ-PL v2
+purpose: Detect revision-worthy clusters of LLM-associated style and scientific-writing defects. The system does not infer
+  whether a person used AI and does not return an AI-authorship probability.
+non_goals:
+- Authorship attribution or academic-misconduct adjudication
+- Punishing isolated words, non-native English, or discipline-standard phrasing
+- Replacing methodological, statistical, or subject-matter review
+- Claiming that fluent or formal prose is inherently artificial
+output_contract:
+  scores:
+  - name: style_pattern_burden
+    meaning: Density and interaction of LLM-associated or templated style signals; not AI probability.
+  - name: scientific_quality_risk
+    meaning: Revision priority arising from specificity, epistemic, inferential, or reporting defects.
+  - name: integrity_risk
+    meaning: Prompt leakage, placeholders, or cross-document inconsistencies requiring verification.
+  authorship: not_inferred
+  finding_fields:
+  - rule_id
+  - span
+  - section
+  - why
+  - evidence_tier
+  - severity
+  - confidence
+  - guards_applied
+  - revision
+evidence_tiers:
+  A: Empirical association reported in peer-reviewed or primary corpus research; still not individual-level authorship evidence.
+  B: Established scientific-writing or reporting defect, not specific to AI.
+  C: Heuristic pattern requiring local corpus calibration and conservative interpretation.
+scoring:
+  principle: Score revision priority, not probability of AI use.
+  severity_points:
+    info: 1.0
+    low: 2.0
+    medium: 4.0
+    high: 7.0
+    critical: 10.0
+  evidence_weights:
+    A: 1.0
+    B: 0.9
+    C: 0.55
+  dimension_scales:
+    style_pattern_burden: 20.0
+    scientific_quality_risk: 24.0
+    integrity_risk: 12.0
+  rule_repetition: 'Within each rule, use diminishing returns: first finding full weight; subsequent findings weighted by
+    1/sqrt(rank).'
+  score_transform: 100 * (1 - exp(-weighted_points / dimension_scale))
+  short_text_confidence:
+    under_80_words: 0.45
+    80_to_149_words: 0.6
+    150_to_299_words: 0.8
+    300_or_more_words: 1.0
+  bands:
+    0-19: low
+    20-39: guarded
+    40-59: moderate
+    60-79: high
+    80-100: very_high
+section_model:
+  canonical_sections:
+  - title
+  - abstract
+  - introduction
+  - methods
+  - results
+  - discussion
+  - limitations
+  - conclusion
+  - references
+  - other
+  excluded_by_default:
+  - references
+  - bibliography
+  - acknowledgements
+  - supplementary_references
+  principle: Thresholds and harms differ by section. Passive voice, nominalization, and hedging can be appropriate in Methods
+    but harmful when stacked in Conclusions.
+global_false_positive_controls:
+- Never classify authorship from a single lexical item.
+- Mask quotations, code, reference lists, and editorial examples where possible.
+- Treat short texts as low-confidence.
+- Apply literal-sense and technical-term suppressors, including robust standard errors, robustness analysis, ecological landscape,
+  and pivotal trial.
+- Distinguish statistical significance from importance and from the ordinary meaning of significant.
+- Permit calibrated hedging; flag redundancy, stacking, or mismatch with evidence.
+- Calibrate syntax and rhythm metrics within discipline, journal genre, section, year, and language background before institutional
+  use.
+- Never use the output as sole evidence in misconduct, grading, hiring, or peer-review decisions.
+lexicons:
+  high_style:
+    delve:
+    - delve
+    - delves
+    - delved
+    - delving
+    meticulous:
+    - meticulous
+    - meticulously
+    intricate:
+    - intricate
+    - intricately
+    - intricacies
+    commendable:
+    - commendable
+    - commendably
+    pivotal:
+    - pivotal
+    underscore:
+    - underscore
+    - underscores
+    - underscored
+    - underscoring
+    showcase:
+    - showcase
+    - showcases
+    - showcased
+    - showcasing
+    tapestry:
+    - tapestry
+    - tapestries
+    realm:
+    - realm
+    - realms
+    elucidate:
+    - elucidate
+    - elucidates
+    - elucidated
+    - elucidating
+    - elucidation
+    accentuate:
+    - accentuate
+    - accentuates
+    - accentuated
+    - accentuating
+    palpable:
+    - palpable
+    - palpably
+    amidst:
+    - amidst
+    multifaceted:
+    - multifaceted
+    holistic:
+    - holistic
+    - holistically
+    paramount:
+    - paramount
+    burgeoning:
+    - burgeoning
+    seamless:
+    - seamless
+    - seamlessly
+    transformative:
+    - transformative
+    - transformational
+    nuanced:
+    - nuanced
+    - nuance
+    - nuances
+    compelling:
+    - compelling
+    - compellingly
+  broad_style:
+    robust:
+    - robust
+    - robustly
+    - robustness
+    novel:
+    - novel
+    - novelty
+    comprehensive:
+    - comprehensive
+    - comprehensively
+    crucial:
+    - crucial
+    - crucially
+    insight:
+    - insight
+    - insights
+    - insightful
+    finding:
+    - finding
+    - findings
+    potential:
+    - potential
+    - potentially
+    particularly:
+    - particularly
+    notably:
+    - notably
+    within:
+    - within
+    across:
+    - across
+    exhibit:
+    - exhibit
+    - exhibits
+    - exhibited
+    - exhibiting
+    enhance:
+    - enhance
+    - enhances
+    - enhanced
+    - enhancing
+    landscape:
+    - landscape
+    - landscapes
+    paradigm:
+    - paradigm
+    - paradigms
+    leverage:
+    - leverage
+    - leverages
+    - leveraged
+    - leveraging
+    foster:
+    - foster
+    - fosters
+    - fostered
+    - fostering
+    navigate:
+    - navigate
+    - navigates
+    - navigated
+    - navigating
+    facilitate:
+    - facilitate
+    - facilitates
+    - facilitated
+    - facilitating
+    optimize:
+    - optimize
+    - optimizes
+    - optimized
+    - optimizing
+    - optimise
+    - optimises
+    - optimised
+    - optimising
+    key:
+    - key
+    significant:
+    - significant
+    - significantly
+  evaluative:
+    important:
+    - important
+    - importantly
+    critical:
+    - critical
+    - critically
+    crucial:
+    - crucial
+    - crucially
+    pivotal:
+    - pivotal
+    paramount:
+    - paramount
+    remarkable:
+    - remarkable
+    - remarkably
+    compelling:
+    - compelling
+    - compellingly
+    commendable:
+    - commendable
+    - commendably
+    groundbreaking:
+    - groundbreaking
+    transformative:
+    - transformative
+    - transformational
+    promising:
+    - promising
+    valuable:
+    - valuable
+  metaphor:
+    landscape:
+    - landscape
+    - landscapes
+    tapestry:
+    - tapestry
+    - tapestries
+    realm:
+    - realm
+    - realms
+    journey:
+    - journey
+    - journeys
+    pathway_metaphor:
+    - pave the way
+    - path forward
+    lens:
+    - lens
+    - lenses
+    ecosystem_metaphor:
+    - ecosystem
+    - ecosystems
+    frontier:
+    - frontier
+    - frontiers
+    cornerstone:
+    - cornerstone
+    - cornerstones
+    beacon:
+    - beacon
+    - beacons
+  hedges:
+    may:
+    - may
+    might:
+    - might
+    could:
+    - could
+    possible:
+    - possibly
+    - possible
+    potential:
+    - potentially
+    - potential
+    perhaps:
+    - perhaps
+    seem:
+    - seem
+    - seems
+    - seemed
+    appear:
+    - appear
+    - appears
+    - appeared
+    suggest:
+    - suggest
+    - suggests
+    - suggested
+    likely:
+    - likely
+    arguable:
+    - arguably
+    extent:
+    - to some extent
+    cases:
+    - in some cases
+    conceivable:
+    - conceivably
+rules:
+- id: SCI-LEX-001
+  name: High-salience LLM-associated vocabulary cluster
+  family: lexical
+  dimension: style_pattern_burden
+  evidence_tier: A
+  association: llm_associated
+  severity: medium
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: lexical_cluster
+    lexicon: high_style
+    window_tokens: 80
+    min_distinct: 3
+    max_findings: 4
+    standalone_trigger: false
+  rationale: Several empirically overrepresented style markers in a short span are more informative than any one word.
+  false_positive_guards:
+  - Never flag a single word as evidence of authorship.
+  - Ignore quotations, references, and literal technical senses where configured.
+  revision: Replace the cluster with concrete verbs, measured claims, or domain terms. Keep any term that is technically exact.
+  examples:
+    flag: Our meticulous analysis delves into this multifaceted landscape and underscores a pivotal role.
+    pass: We used robust standard errors.
+- id: SCI-LEX-002
+  name: Broad corpus-marker saturation
+  family: lexical
+  dimension: style_pattern_burden
+  evidence_tier: A
+  association: llm_associated
+  severity: low
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: lexical_cluster
+    lexicon: broad_style
+    window_tokens: 120
+    min_distinct: 7
+    max_findings: 3
+    standalone_trigger: false
+  rationale: Common scientific words become informative only when many different corpus markers accumulate unusually densely.
+  false_positive_guards:
+  - Terms such as robust, novel, significant, within, and across are legitimate and must not trigger alone.
+  revision: Retain necessary technical terms; revise only redundant or evaluative wording that displaces substance.
+- id: SCI-LEX-003
+  name: Evaluative adjective pile
+  family: lexical
+  dimension: style_pattern_burden
+  evidence_tier: B
+  association: mixed
+  severity: medium
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: lexical_cluster
+    lexicon: evaluative
+    scope: sentence
+    window_tokens: 60
+    min_distinct: 3
+    max_findings: 6
+    standalone_trigger: false
+  rationale: Multiple praise or importance adjectives substitute evaluation for evidence.
+  false_positive_guards:
+  - A journal-defined term such as pivotal trial may be legitimate.
+  revision: Delete self-evaluation and state the result, comparison, or criterion that earns the adjective.
+- id: SCI-LEX-004
+  name: Metaphorical abstraction cluster
+  family: lexical
+  dimension: style_pattern_burden
+  evidence_tier: B
+  association: mixed
+  severity: low
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: lexical_cluster
+    lexicon: metaphor
+    window_tokens: 100
+    min_distinct: 3
+    max_findings: 4
+    standalone_trigger: false
+  rationale: Metaphors such as landscape, tapestry, realm, and journey can accumulate into faux conceptual depth.
+  false_positive_guards:
+  - Suppress literal uses in ecology, geography, spatial science, optics, and ecosystem science when context is technical.
+  revision: Name the actual system, population, process, or decision instead of stacking metaphors.
+- id: SCI-META-001
+  name: Importance-announcing meta-language
+  family: meta_template
+  dimension: style_pattern_burden
+  evidence_tier: B
+  association: mixed
+  severity: medium
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: phrase
+    patterns:
+    - it is important to note that
+    - it is worth noting that
+    - it should be noted that
+    - it is essential to recognize that
+    - it is crucial to acknowledge that
+    - in this context, it is worth noting that
+    case_insensitive: true
+    max_findings: 8
+  rationale: The sentence announces importance rather than establishing it.
+  false_positive_guards: []
+  revision: Delete the signpost and begin with the claim. Add evidence or a consequence where needed.
+  examples:
+    flag: It is important to note that mortality remained high.
+    revision: Mortality remained high at 12.4% (95% CI 9.8–15.3).
+- id: SCI-META-002
+  name: Section self-narration
+  family: meta_template
+  dimension: style_pattern_burden
+  evidence_tier: B
+  association: mixed
+  severity: low
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \b(?:in this (?:paper|article|section|study),?\s+)?we (?:will|now) (?:explore|examine|discuss|delve into|consider|outline)\b
+    - \bthe remainder of (?:this|the) (?:paper|article) is (?:organized|organised|structured) as follows\b
+    - \bthis (?:paper|article) is (?:organized|organised|structured) as follows\b
+    case_insensitive: true
+    max_findings: 6
+  rationale: Narrating document movement is often unnecessary in short scientific prose.
+  false_positive_guards:
+  - Roadmaps may be appropriate in long methodological or theoretical papers.
+  revision: Replace navigation with the substantive claim, except where a long technical paper genuinely needs a roadmap.
+- id: SCI-META-003
+  name: Generic era-framing opener
+  family: meta_template
+  dimension: style_pattern_burden
+  evidence_tier: B
+  association: mixed
+  severity: medium
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - (?im)^(?:in (?:today[’']s|the current) (?:rapidly |ever[- ]?)?(?:evolving|changing|fast[- ]paced) (?:[a-z-]+\s+){0,2}(?:world|landscape|environment|era)[,
+      ]+)
+    - (?im)^(?:in recent years[, ]+)(?=.{0,120}\b(?:increasingly|growing|rapidly|significant)\b)
+    - (?im)^(?:as the world continues to (?:evolve|change)[, ]+)
+    case_insensitive: true
+    max_findings: 4
+  rationale: The opener supplies generic contemporaneity rather than a study-specific problem.
+  false_positive_guards: []
+  revision: Open with the population, unresolved estimate, mechanism, or decision that motivates the study.
+- id: SCI-META-004
+  name: Contribution boilerplate
+  family: meta_template
+  dimension: style_pattern_burden
+  evidence_tier: B
+  association: mixed
+  severity: medium
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \bthis study (?:makes|provides|offers|represents) (?:an? )?(?:important|significant|valuable|novel|substantial) contribution\b
+    - \bthe contributions? of this (?:paper|study) (?:can be|are) summarized as\b
+    - \bthis work contributes to (?:the )?(?:growing )?(?:body of )?(?:literature|knowledge)\b
+    case_insensitive: true
+    max_findings: 6
+  rationale: A contribution claim is empty unless it states what changed relative to prior work.
+  false_positive_guards: []
+  revision: Specify the new estimand, dataset, comparison, mechanism, method, or contradiction.
+- id: SCI-META-005
+  name: Generic implications boilerplate
+  family: meta_template
+  dimension: style_pattern_burden
+  evidence_tier: B
+  association: mixed
+  severity: medium
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \b(?:these|the) findings have (?:important|significant|far[- ]reaching|profound) implications for (?:policy(?:makers)?|practice|stakeholders|future
+      research)\b
+    - \b(?:these|the) results underscore the importance of\b
+    - \bwith significant implications for (?:policymakers|stakeholders|practice|policy)\b
+    case_insensitive: true
+    max_findings: 8
+  rationale: Generic impact language names no actor, decision, threshold, or action.
+  false_positive_guards: []
+  revision: State who should do what, for whom, under which conditions, and on the basis of which result.
+- id: SCI-META-006
+  name: Future-research boilerplate
+  family: meta_template
+  dimension: style_pattern_burden
+  evidence_tier: B
+  association: mixed
+  severity: low
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \bfuture research (?:is needed|required|should|could|must) (?:to )?(?:explore|investigate|examine|address|validate|confirm)\b
+    - \bfurther (?:research|studies|investigation) (?:is|are) (?:needed|required|warranted)\b
+    - \badditional studies are needed to better understand\b
+    case_insensitive: true
+    max_findings: 8
+  rationale: A generic request for more research avoids specifying the unresolved identification or measurement problem.
+  false_positive_guards: []
+  revision: Name the missing population, comparison, mediator, time horizon, design, or source of uncertainty.
+- id: SCI-META-007
+  name: Generic conclusion formula
+  family: meta_template
+  dimension: style_pattern_burden
+  evidence_tier: B
+  association: mixed
+  severity: medium
+  status: implemented
+  sections:
+  - abstract
+  - discussion
+  - conclusion
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \boverall,? (?:these|the) (?:findings|results) (?:highlights?|underscores?|demonstrates?|suggests?) the (?:(?:critical|crucial|important|pivotal)
+      )?(?:importance|role|need)\b
+    - \btaken together,? (?:these|the) (?:findings|results) (?:highlight|underscore|suggest|demonstrate)\b
+    - \bin conclusion,? (?:this|the) study (?:highlights|underscores|demonstrates)\b
+    case_insensitive: true
+    max_findings: 6
+  rationale: The conclusion repeats a significance template instead of carrying forward the study’s actual result.
+  false_positive_guards: []
+  revision: Conclude with the estimate, boundary condition, mechanism, or decision consequence.
+- id: SCI-RHET-001
+  name: Mechanical paragraph-transition repetition
+  family: rhetoric_rhythm
+  dimension: style_pattern_burden
+  evidence_tier: B
+  association: mixed
+  severity: medium
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: transition_repetition
+    openers:
+    - moreover
+    - furthermore
+    - additionally
+    - however
+    - nevertheless
+    - consequently
+    - therefore
+    - in addition
+    - on the other hand
+    - in contrast
+    lookback_paragraphs: 5
+    min_occurrences: 3
+    max_findings: 6
+  rationale: Repeated stock transitions create a templated cadence and may conceal weak logical relations.
+  false_positive_guards: []
+  revision: 'Remove the transition where sentence order is sufficient; otherwise name the actual relation: contrast, mechanism,
+    exception, or consequence.'
+- id: SCI-RHET-002
+  name: Enumerative scaffolding
+  family: rhetoric_rhythm
+  dimension: style_pattern_burden
+  evidence_tier: C
+  association: heuristic
+  severity: low
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \bfirst(?:ly)?[, ].{0,220}\bsecond(?:ly)?[, ].{0,220}\b(?:third(?:ly)?|finally)\b
+    - \bthere are (?:three|four|five) (?:key|main|primary|important) (?:reasons|implications|considerations|components|themes|findings)\b
+    case_insensitive: true
+    dotall: true
+    max_findings: 5
+  rationale: Enumeration is useful when the argument genuinely has ordered parts, but compulsive numbered scaffolds can substitute
+    form for judgement.
+  false_positive_guards: []
+  revision: Keep the list only when each item is distinct, necessary, and ordered.
+- id: SCI-RHET-003
+  name: Triadic synonym list
+  family: rhetoric_rhythm
+  dimension: style_pattern_burden
+  evidence_tier: C
+  association: heuristic
+  severity: low
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \b(?:improved|enhanced|increased) [a-z-]+, (?:improved|enhanced|increased) [a-z-]+, and (?:improved|enhanced|increased)
+      [a-z-]+\b
+    - \b(?:efficiency|effectiveness|productivity), (?:efficiency|effectiveness|productivity), and (?:efficiency|effectiveness|productivity)\b
+    case_insensitive: true
+    max_findings: 5
+  rationale: Three near-synonyms often create the appearance of coverage without adding distinctions.
+  false_positive_guards: []
+  revision: Collapse synonyms or define how the three outcomes differ.
+- id: SCI-RHET-004
+  name: Unusually regular sentence length
+  family: rhetoric_rhythm
+  dimension: style_pattern_burden
+  evidence_tier: C
+  association: heuristic
+  severity: low
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: sentence_length_regularity
+    min_sentences: 12
+    max_cv: 0.22
+    min_mean_words: 9
+    max_findings: 1
+  rationale: Very low variation in sentence length can produce mechanical rhythm, but it is weak evidence by itself.
+  false_positive_guards:
+  - Do not score short texts.
+  - Treat as low-confidence revision evidence, never authorship evidence.
+  revision: Vary sentence structure only where argument structure benefits; do not manufacture variation.
+- id: SCI-RHET-005
+  name: Unusually regular paragraph length
+  family: rhetoric_rhythm
+  dimension: style_pattern_burden
+  evidence_tier: C
+  association: heuristic
+  severity: low
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: paragraph_length_regularity
+    min_paragraphs: 5
+    max_cv: 0.25
+    min_mean_words: 35
+    max_findings: 1
+  rationale: Paragraphs of nearly identical length can signal template filling rather than idea-led development.
+  false_positive_guards:
+  - Do not score structured abstracts with journal-imposed length symmetry.
+  revision: Let paragraph length follow the claim and evidence rather than a visual template.
+- id: SCI-SYN-001
+  name: Nominalization density
+  family: syntax
+  dimension: style_pattern_burden
+  evidence_tier: A
+  association: llm_associated
+  severity: low
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: nominalization_density
+    suffixes:
+    - tion
+    - sion
+    - ment
+    - ance
+    - ence
+    - ity
+    - ization
+    - isation
+    min_words: 180
+    threshold_per_100: 7.5
+    max_findings: 1
+  rationale: Instruction-tuned models have shown higher nominalization rates, but nominalizations are also normal in scientific
+    registers.
+  false_positive_guards:
+  - Calibrate by discipline and section before production use.
+  revision: Convert only unnecessary abstract nouns into verbs, especially where agency or causal sequence is obscured.
+- id: SCI-SYN-002
+  name: Sentence-initial participial-clause density
+  family: syntax
+  dimension: style_pattern_burden
+  evidence_tier: A
+  association: llm_associated
+  severity: low
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: participial_clause_density
+    min_sentences: 10
+    threshold_fraction: 0.18
+    max_findings: 1
+  rationale: LLM prose can overuse sentence-initial present-participial clauses such as “Building on…” or “Highlighting…”.
+  false_positive_guards: []
+  revision: Check whether the participial clause has an explicit, unambiguous subject; rewrite when it creates a dangling
+    modifier or repetitive cadence.
+- id: SCI-SYN-003
+  name: “That”-clause as sentence subject
+  family: syntax
+  dimension: style_pattern_burden
+  evidence_tier: A
+  association: llm_associated
+  severity: low
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: that_subject_density
+    min_sentences: 10
+    threshold_fraction: 0.12
+    max_findings: 1
+  rationale: Instruction-tuned LLMs have been reported to favor clauses beginning “That X …” as subjects.
+  false_positive_guards: []
+  revision: Revise only when the construction becomes repetitive or obscures the actor.
+- id: SCI-SYN-004
+  name: Noun-stack overload proxy
+  family: syntax
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: medium
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \b(?:[A-Za-z][A-Za-z-]{2,}\s+){5,}[A-Za-z][A-Za-z-]{2,}\b
+    case_insensitive: false
+    max_findings: 8
+    post_filter: noun_stack_proxy
+  rationale: Long noun strings force readers to infer relationships among modifiers.
+  false_positive_guards:
+  - The regex is a proxy; suppress established names, affiliations, and instrument titles.
+  revision: Insert prepositions, verbs, or a short definition that states how the concepts relate.
+- id: SCI-EPI-001
+  name: Redundant hedge pair
+  family: epistemic_calibration
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: medium
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \bmay potentially\b
+    - \bmight potentially\b
+    - \bcould possibly\b
+    - \bmay possibly\b
+    - \bseems to suggest\b
+    - \bappears to suggest\b
+    - \bmay perhaps\b
+    - \bcould perhaps\b
+    case_insensitive: true
+    max_findings: 10
+  rationale: Two uncertainty markers express one epistemic operation and dilute the claim.
+  false_positive_guards: []
+  revision: Retain the single hedge that best matches the design and uncertainty.
+- id: SCI-EPI-002
+  name: Hedge stack
+  family: epistemic_calibration
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: medium
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: hedge_stack
+    lexicon: hedges
+    window_tokens: 16
+    min_distinct: 3
+    max_findings: 8
+  rationale: Several distinct hedges in one short span make the degree and source of uncertainty unclear.
+  false_positive_guards:
+  - Appropriate cautious language is not a defect; stacked or redundant hedging is.
+  revision: State the claim once, then locate uncertainty in the estimate, design limitation, or explicit assumption.
+- id: SCI-EPI-003
+  name: Certainty inflation
+  family: epistemic_calibration
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: high
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \b(?:clearly|undoubtedly|unequivocally|indisputably|definitively|conclusively) (?:shows?|demonstrates?|prov(?:e|es|ed|ing)|establish(?:es|ed|ing)?|caus(?:e|es|ed|ing))\b
+    - \bproves? that\b
+    - \bwithout (?:a )?doubt\b
+    case_insensitive: true
+    max_findings: 8
+  rationale: Certainty is asserted rhetorically rather than tied to design, estimate, or sensitivity analysis.
+  false_positive_guards: []
+  revision: Replace the intensifier with the precise evidential claim and its boundary conditions.
+- id: SCI-EPI-004
+  name: Deontic or importance inflation
+  family: epistemic_calibration
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: medium
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \bit is (?:absolutely )?(?:critical|crucial|essential|imperative|paramount) (?:that|to)\b
+    - \bthe importance of .{0,80} cannot be overstated\b
+    - \ban urgent need to\b
+    case_insensitive: true
+    max_findings: 8
+  rationale: Normative force is asserted without specifying the decision consequence or opportunity cost.
+  false_positive_guards: []
+  revision: Name the decision, actor, expected benefit, trade-off, and evidential basis.
+- id: SCI-EPI-005
+  name: Unspecified consensus attribution
+  family: epistemic_calibration
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: medium
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \bit is (?:widely|generally) (?:acknowledged|recognized|recognised|accepted|believed|understood) that\b
+    - \bit is well known that\b
+    - \bthe literature (?:clearly )?(?:shows|demonstrates|suggests) that\b
+    case_insensitive: true
+    max_findings: 8
+    require_no_citation_nearby: true
+  rationale: An unnamed consensus is not a source.
+  false_positive_guards: []
+  revision: Cite the relevant evidence or state the proposition directly with appropriate qualification.
+- id: SCI-EPI-006
+  name: False-balance scaffold
+  family: epistemic_calibration
+  dimension: scientific_quality_risk
+  evidence_tier: C
+  association: heuristic
+  severity: low
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \bon the one hand\b.{0,350}\bon the other hand\b
+    - \bwhile there are arguments (?:on|for) both sides\b
+    case_insensitive: true
+    dotall: true
+    max_findings: 5
+  rationale: A symmetrical scaffold can imply evidential parity where none has been established.
+  false_positive_guards: []
+  revision: 'Compare the claims using explicit criteria: design strength, directness, precision, consistency, and relevance.'
+- id: SCI-SPEC-001
+  name: Result claim without numeric anchor
+  family: specificity
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: high
+  status: implemented
+  sections:
+  - results
+  detector:
+    kind: results_claim_without_number
+    claim_terms:
+    - increased
+    - decreased
+    - reduced
+    - improved
+    - worsened
+    - higher
+    - lower
+    - associated
+    - association
+    - difference
+    - effect
+    - risk
+    - odds
+    - rate
+    - prevalence
+    - mortality
+    - incidence
+    - significant
+    max_findings: 12
+  rationale: A Results sentence reports direction or significance but omits magnitude.
+  false_positive_guards: []
+  revision: Add the estimate, comparator, denominator where relevant, and uncertainty interval.
+- id: SCI-SPEC-002
+  name: Effect estimate without uncertainty
+  family: specificity
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: medium
+  status: implemented
+  sections:
+  - results
+  - abstract
+  detector:
+    kind: results_number_without_uncertainty
+    effect_terms:
+    - risk ratio
+    - relative risk
+    - odds ratio
+    - hazard ratio
+    - mean difference
+    - risk difference
+    - prevalence ratio
+    - rate ratio
+    - effect
+    - difference
+    - higher
+    - lower
+    - increase
+    - decrease
+    - reduction
+    max_findings: 10
+  rationale: A numerical effect without uncertainty can overstate precision.
+  false_positive_guards: []
+  revision: Report the confidence or credible interval, standard error, or another design-appropriate uncertainty measure.
+- id: SCI-SPEC-003
+  name: Vague carrier noun
+  family: specificity
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: medium
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \b(?:these|the|our) (?:findings|results|outcomes|insights|evidence) (?:(?:may|might|could|possibly|potentially|seem(?:s)?
+      to|appear(?:s)? to)\s+){0,4}(?:highlight|underscore|show|demonstrate|suggest|indicate|reveal)\b
+    - \bthis (?:issue|challenge|phenomenon|aspect|dynamic)\b
+    case_insensitive: true
+    max_findings: 12
+    flag_if_no_anchor_in_sentence: true
+  rationale: A carrier noun points backward without naming the result, making the claim portable across studies.
+  false_positive_guards: []
+  revision: Replace the vague noun with the specific exposure, outcome, estimate, subgroup, or mechanism.
+- id: SCI-SPEC-004
+  name: Generic recommendation without actor and action
+  family: specificity
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: high
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \b(?:a|the) (?:holistic|comprehensive|multifaceted|robust|integrated) approach (?:is needed|is required|should be adopted|must
+      be adopted)\b
+    - \bstakeholders should (?:work together|collaborate|take action|prioritize|prioritise)\b
+    - \bpolicymakers should consider these findings\b
+    case_insensitive: true
+    max_findings: 8
+  rationale: The recommendation provides no accountable actor, operational action, threshold, or setting.
+  false_positive_guards: []
+  revision: Specify the responsible actor, action, target population, timing, condition, and trade-off.
+- id: SCI-SPEC-005
+  name: Interpretive claim without empirical or mechanistic anchor
+  family: specificity
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: medium
+  status: implemented
+  sections:
+  - discussion
+  - conclusion
+  - abstract
+  detector:
+    kind: generic_claim_without_anchor
+    claim_patterns:
+    - \b(?:these|the) (?:findings|results) (?:highlight|underscore|demonstrate|suggest|indicate)\b
+    - \bthis (?:suggests|indicates|demonstrates) that\b
+    - \bplays? (?:an? )?(?:important|critical|crucial|pivotal) role\b
+    anchor_types:
+    - number
+    - citation
+    - mechanism
+    - named_entity_proxy
+    max_findings: 10
+  rationale: The sentence interprets evidence but contains no estimate, source, mechanism, or named object that makes the
+    interpretation testable.
+  false_positive_guards: []
+  revision: Attach the interpretation to the exact result or mechanism and state its limit.
+- id: SCI-SPEC-006
+  name: Conclusion without empirical anchor
+  family: specificity
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: high
+  status: implemented
+  sections:
+  - conclusion
+  detector:
+    kind: section_anchor_deficit
+    section: conclusion
+    min_words: 15
+    required_any:
+    - number
+    - effect_measure
+    - population
+    - action
+    max_findings: 1
+  rationale: A conclusion that contains only significance language is detached from the study’s evidence.
+  false_positive_guards: []
+  revision: Carry forward at least one concrete result and one bounded implication.
+- id: SCI-CAUS-001
+  name: Causal language–design mismatch
+  family: causal_alignment
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: high
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: causal_design_mismatch
+    observational_terms:
+    - cross-sectional
+    - cross sectional
+    - retrospective
+    - prospective cohort
+    - cohort study
+    - case-control
+    - case control
+    - ecological study
+    - observational study
+    - secondary analysis
+    - survey data
+    causal_terms:
+    - caused
+    - causes
+    - led to
+    - leads to
+    - resulted in
+    - results in
+    - drove
+    - drives
+    - produced
+    - produces
+    - prevented
+    - prevents
+    - the impact of
+    - the effect of
+    causal_design_terms:
+    - target trial
+    - instrumental variable
+    - regression discontinuity
+    - difference-in-differences
+    - difference in differences
+    - randomized
+    - randomised
+    - g-computation
+    - g computation
+    - inverse probability
+    - doubly robust
+    - causal inference
+    - propensity score
+    max_findings: 10
+  rationale: Causal verbs require an identification strategy, not only statistical adjustment.
+  false_positive_guards:
+  - Do not flag causal language when an explicit causal design is detected or metadata declares one.
+  revision: Use associational language or state the causal estimand, assumptions, design, and sensitivity analyses.
+- id: SCI-CAUS-002
+  name: Unbounded generalization
+  family: causal_alignment
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: medium
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \b(?:these|the) findings (?:are|can be) generalizable to all\b
+    - \bthis intervention (?:will|would) benefit (?:all|every) (?:population|patient|child|setting)\b
+    - \buniversally (?:effective|applicable|beneficial)\b
+    case_insensitive: true
+    max_findings: 6
+  rationale: Transport beyond the sampled population is asserted without a target population or effect-modifier assessment.
+  false_positive_guards: []
+  revision: Name the target population and justify transport using measured effect modifiers, sampling, or external evidence.
+- id: SCI-CAUS-003
+  name: Statistical-to-clinical significance leap
+  family: causal_alignment
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: high
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \bstatistically significant(?:ly)?\b.{0,120}\bclinically (?:meaningful|important|significant)\b
+    - \bp\s*[<=>]\s*0?\.\d+.{0,120}\b(?:clinically meaningful|substantial benefit)\b
+    case_insensitive: true
+    dotall: true
+    max_findings: 6
+    suppress_if_near:
+    - minimal clinically important difference
+    - MCID
+    - clinical threshold
+  rationale: A p-value does not establish clinical importance.
+  false_positive_guards: []
+  revision: Report absolute magnitude and compare it with a prespecified clinical threshold or decision model.
+- id: SCI-CAUS-004
+  name: Mechanism claim without mediator evidence
+  family: causal_alignment
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: high
+  status: semantic
+  sections:
+  - '*'
+  detector:
+    kind: semantic_check
+    requires:
+    - claim_graph
+    - mediator_measurement
+    - temporality
+  rationale: A proposed mechanism should distinguish plausibility from measured mediation or intervention evidence.
+  false_positive_guards: []
+  revision: Label the mechanism as hypothesized unless mediator timing, confounding control, and pathway evidence support
+    it.
+- id: SCI-CAUS-005
+  name: Policy claim beyond the estimand
+  family: causal_alignment
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: high
+  status: semantic
+  sections:
+  - '*'
+  detector:
+    kind: semantic_check
+    requires:
+    - estimand
+    - policy_action
+    - target_population
+    - harms_costs
+  rationale: A study effect does not automatically identify the optimal policy.
+  false_positive_guards: []
+  revision: Separate the estimated contrast from implementation, costs, harms, feasibility, and distributional consequences.
+- id: SCI-METH-001
+  name: Vague “standard methods” claim
+  family: methods_quality
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: high
+  status: implemented
+  sections:
+  - methods
+  detector:
+    kind: regex
+    patterns:
+    - \busing (?:standard|conventional|established|appropriate) methods\b
+    - \bdata were analyzed using (?:standard|appropriate) statistical (?:methods|techniques)\b
+    - \bstandard procedures were followed\b
+    case_insensitive: true
+    max_findings: 8
+  rationale: A reproducibility claim replaces the details needed to reproduce the analysis.
+  false_positive_guards: []
+  revision: Name the model, estimand, variables, software/version, tuning or thresholds, missing-data handling, and uncertainty
+    procedure.
+- id: SCI-METH-002
+  name: Self-congratulatory method description
+  family: methods_quality
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: medium
+  status: implemented
+  sections:
+  - methods
+  - abstract
+  detector:
+    kind: regex
+    patterns:
+    - \b(?:rigorous|meticulous|comprehensive|robust|state-of-the-art) (?:methodology|methods|analysis|approach|framework|review)\b
+    - \bwe conducted a (?:rigorous|meticulous|comprehensive) analysis\b
+    case_insensitive: true
+    max_findings: 10
+    suppress_if_near:
+    - robust standard error
+    - robust standard errors
+    - robustness analysis
+    - robustness check
+  rationale: Method quality should be demonstrated by design and reporting, not asserted by praise adjectives.
+  false_positive_guards: []
+  revision: Delete the adjective and state the design feature that improves validity or reproducibility.
+- id: SCI-METH-003
+  name: Method name-dropping without operational detail
+  family: methods_quality
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: high
+  status: semantic
+  sections:
+  - '*'
+  detector:
+    kind: semantic_check
+    requires:
+    - method_entity
+    - required_parameters
+    - software_or_algorithm
+  rationale: Listing sophisticated methods without specifications creates an appearance of rigor without reproducibility.
+  false_positive_guards: []
+  revision: For each method, report the target quantity, inputs, assumptions, implementation choices, diagnostics, and uncertainty.
+- id: SCI-RES-001
+  name: “Significant” without statistical support
+  family: results_quality
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: high
+  status: implemented
+  sections:
+  - results
+  - abstract
+  detector:
+    kind: significant_without_support
+    max_findings: 10
+  rationale: The word significant is ambiguous unless statistical or practical significance is explicitly established.
+  false_positive_guards: []
+  revision: Report the estimate and interval; use “statistically significant” only with the criterion and “clinically important”
+    only with a threshold.
+- id: SCI-RES-002
+  name: “Trend” without magnitude or uncertainty
+  family: results_quality
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: medium
+  status: implemented
+  sections:
+  - results
+  - abstract
+  detector:
+    kind: regex
+    patterns:
+    - \b(?:an? )?(?:increasing|decreasing|positive|negative|clear|strong) trend (?:was )?(?:observed|seen|found)\b
+    - \bthere was a trend (?:toward|towards)\b
+    case_insensitive: true
+    max_findings: 8
+    flag_if_no_anchor_in_sentence: true
+  rationale: “Trend” can conceal a small, unstable, or non-monotonic estimate.
+  false_positive_guards: []
+  revision: Report the slope, contrast, time points, interval, and model used to test trend.
+- id: SCI-RES-003
+  name: Interpretive language in Results
+  family: results_quality
+  dimension: scientific_quality_risk
+  evidence_tier: C
+  association: heuristic
+  severity: low
+  status: implemented
+  sections:
+  - results
+  detector:
+    kind: regex
+    patterns:
+    - \b(?:this|these findings) (?:may|might|could) (?:be explained by|reflect|suggest|indicate)\b
+    - \bpossibly due to\b
+    - \blikely because\b
+    case_insensitive: true
+    max_findings: 8
+  rationale: Explanations in Results can blur observation and interpretation, depending on journal style.
+  false_positive_guards: []
+  revision: Move causal or contextual interpretation to the Discussion unless the reporting format explicitly integrates them.
+- id: SCI-RES-004
+  name: Percentage without denominator
+  family: results_quality
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: medium
+  status: implemented
+  sections:
+  - results
+  - abstract
+  detector:
+    kind: percentage_without_denominator
+    max_findings: 10
+  rationale: A percentage without a denominator can hide sparse data or exclusions.
+  false_positive_guards: []
+  revision: Report n/N alongside the percentage at first mention and after subgroup changes.
+- id: SCI-DISC-001
+  name: Generic limitation theatre
+  family: discussion_quality
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: medium
+  status: implemented
+  sections:
+  - discussion
+  - limitations
+  detector:
+    kind: regex
+    patterns:
+    - \bthis study is not without limitations\b
+    - \bthese findings should be interpreted with caution\b
+    - \bdespite (?:these|the aforementioned) limitations,?\b
+    case_insensitive: true
+    max_findings: 8
+    flag_if_no_specific_limitation_nearby: true
+  rationale: Ritual caution is not a limitation analysis.
+  false_positive_guards: []
+  revision: Name the bias mechanism, likely direction, plausible magnitude, affected estimand, and whether any analysis addresses
+    it.
+- id: SCI-DISC-002
+  name: Unsupported novelty claim
+  family: discussion_quality
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: high
+  status: implemented
+  sections:
+  - abstract
+  - introduction
+  - discussion
+  - conclusion
+  detector:
+    kind: regex
+    patterns:
+    - \bthis is the first study to\b
+    - \bfor the first time,? (?:we|this study)\b
+    - \b(?:a|an) (?:novel|unique|unprecedented|groundbreaking) (?:study|approach|framework|finding|insight)\b
+    case_insensitive: true
+    max_findings: 8
+    require_no_citation_nearby: true
+  rationale: Priority and novelty claims require a defined comparison set and search boundary.
+  false_positive_guards: []
+  revision: Specify the dimension of novelty and the literature search or benchmark supporting it.
+- id: SCI-DISC-003
+  name: Importance claim without consequence
+  family: discussion_quality
+  dimension: scientific_quality_risk
+  evidence_tier: B
+  association: quality
+  severity: medium
+  status: implemented
+  sections:
+  - discussion
+  - conclusion
+  - abstract
+  detector:
+    kind: regex
+    patterns:
+    - \b(?:this|these) (?:finding|findings|result|results) (?:is|are) (?:important|critical|crucial|noteworthy)\b
+    - \bthis has important implications\b
+    case_insensitive: true
+    max_findings: 8
+    flag_if_no_anchor_in_sentence: true
+  rationale: Importance is a relation to a decision, mechanism, or prior estimate, not an intrinsic adjective.
+  false_positive_guards: []
+  revision: State what decision changes, which prior belief is revised, or which mechanism becomes more plausible.
+- id: SCI-DISC-004
+  name: Citation laundry without synthesis
+  family: discussion_quality
+  dimension: scientific_quality_risk
+  evidence_tier: C
+  association: heuristic
+  severity: medium
+  status: semantic
+  sections:
+  - '*'
+  detector:
+    kind: semantic_check
+    requires:
+    - citation_spans
+    - claim_relations
+    - comparison_dimensions
+  rationale: A sequence of study summaries can replace synthesis of agreement, heterogeneity, and bias.
+  false_positive_guards: []
+  revision: Compare studies on population, exposure, comparator, outcome, design, effect size, and likely bias.
+- id: SCI-INT-001
+  name: Assistant-persona or prompt leakage
+  family: integrity
+  dimension: integrity_risk
+  evidence_tier: B
+  association: integrity
+  severity: critical
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \bas an AI (?:language )?model\b
+    - \bi (?:cannot|can[’\']t) provide (?:personal|medical|legal)\b
+    - \bhere(?:’s| is) (?:a|the) revised version\b
+    - \blet me know if you (?:need|would like)\b
+    - \bi hope this helps\b
+    - \bcertainly!\b
+    case_insensitive: true
+    max_findings: 12
+  rationale: Interface language or model self-reference has leaked into the manuscript.
+  false_positive_guards: []
+  revision: Remove the leaked text and inspect adjacent passages for unreviewed generated content.
+- id: SCI-INT-002
+  name: Citation placeholder
+  family: integrity
+  dimension: integrity_risk
+  evidence_tier: B
+  association: integrity
+  severity: critical
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \[(?:citation|cite|reference|ref) needed\]
+    - \[(?:insert|add) citation\]
+    - \((?:citation|reference|ref)\)
+    - \bCITATION NEEDED\b
+    - \bREF\?\b
+    case_insensitive: true
+    max_findings: 20
+  rationale: A placeholder may survive into submission and can conceal an unsupported claim.
+  false_positive_guards: []
+  revision: Insert and verify the source, or remove/qualify the claim.
+- id: SCI-INT-003
+  name: Editorial placeholder or generation residue
+  family: integrity
+  dimension: integrity_risk
+  evidence_tier: B
+  association: integrity
+  severity: high
+  status: implemented
+  sections:
+  - '*'
+  detector:
+    kind: regex
+    patterns:
+    - \b(?:TODO|TBD|XXX|FIXME)\b
+    - \[(?:insert|add|describe|expand|verify)[^\]]{0,100}\]
+    - \bplaceholder text\b
+    - \baccording to the provided context\b
+    case_insensitive: true
+    max_findings: 20
+  rationale: Unresolved drafting residue indicates incomplete editorial control.
+  false_positive_guards: []
+  revision: Resolve the instruction, verify the surrounding content, and rerun the audit.
+- id: SCI-INT-004
+  name: Numerical drift across sections
+  family: integrity
+  dimension: integrity_risk
+  evidence_tier: B
+  association: integrity
+  severity: critical
+  status: semantic
+  sections:
+  - '*'
+  detector:
+    kind: semantic_check
+    requires:
+    - entity_linking
+    - estimate_normalization
+    - cross_section_comparison
+  rationale: The same outcome or sample count can change between abstract, results, tables, and discussion.
+  false_positive_guards: []
+  revision: Link every headline number to a canonical result object and fail validation on unexplained divergence.
+- id: SCI-INT-005
+  name: Terminology or estimand drift
+  family: integrity
+  dimension: integrity_risk
+  evidence_tier: B
+  association: integrity
+  severity: high
+  status: semantic
+  sections:
+  - '*'
+  detector:
+    kind: semantic_check
+    requires:
+    - term_ontology
+    - coreference
+    - estimand_schema
+  rationale: Generated or heavily edited manuscripts may silently switch population, exposure, outcome, or effect measure
+    labels.
+  false_positive_guards: []
+  revision: Define canonical terms and require section-level consistency or explicit distinction.
+- id: SCI-INT-006
+  name: Cross-section claim contradiction
+  family: integrity
+  dimension: integrity_risk
+  evidence_tier: B
+  association: integrity
+  severity: critical
+  status: semantic
+  sections:
+  - '*'
+  detector:
+    kind: semantic_check
+    requires:
+    - claim_extraction
+    - negation_scope
+    - cross_section_entailment
+  rationale: The abstract, results, and conclusion may make incompatible claims about direction or significance.
+  false_positive_guards: []
+  revision: Map claims to the same outcome and contrast, then resolve contradictory direction, magnitude, or certainty.
+interactions:
+- id: SCI-X-001
+  name: Style cluster with absent empirical anchor
+  requires_any:
+  - - SCI-LEX-001
+    - SCI-LEX-002
+    - SCI-LEX-003
+  - - SCI-SPEC-005
+    - SCI-SPEC-006
+  same_sentence_or_paragraph: true
+  bonus_points: 5.0
+  dimension: scientific_quality_risk
+  severity: high
+  message: LLM-associated style markers coincide with a claim that lacks an estimate, citation, mechanism, or named object.
+  revision: Remove the style padding and rebuild the sentence around the exact empirical claim.
+- id: SCI-X-002
+  name: Hedge stack around a vague referent
+  requires_any:
+  - - SCI-EPI-001
+    - SCI-EPI-002
+  - - SCI-SPEC-003
+  same_sentence_or_paragraph: true
+  bonus_points: 4.0
+  dimension: scientific_quality_risk
+  severity: high
+  message: Layered uncertainty is attached to an unspecified finding or outcome.
+  revision: Name the exact result and retain one calibrated hedge or report uncertainty numerically.
+- id: SCI-X-003
+  name: Generic impact conclusion
+  requires_any:
+  - - SCI-META-005
+    - SCI-META-007
+  - - SCI-SPEC-006
+    - SCI-DISC-003
+  same_sentence_or_paragraph: false
+  bonus_points: 5.0
+  dimension: scientific_quality_risk
+  severity: high
+  message: The manuscript ends in generic significance language without carrying forward a concrete result or decision.
+  revision: Conclude with the main estimate, target population, uncertainty, and bounded action.
+- id: SCI-X-004
+  name: Causal overclaim with certainty inflation
+  requires_any:
+  - - SCI-CAUS-001
+  - - SCI-EPI-003
+  same_sentence_or_paragraph: true
+  bonus_points: 6.0
+  dimension: scientific_quality_risk
+  severity: critical
+  message: An observational design is paired with causal language and rhetorical certainty.
+  revision: Use associational language or present the causal estimand, identification assumptions, and robustness evidence.
+sources:
+- id: kobak_2025
+  citation: Kobak D, González-Márquez R, Horvát E-Á, Lause J. Delving into LLM-assisted writing in biomedical publications
+    through excess vocabulary. Science Advances. 2025;11:eadt3813.
+  doi: 10.1126/sciadv.adt3813
+  use: Corpus-level excess vocabulary and explicit warning that marker words cannot identify individual abstracts.
+- id: reinhart_2025
+  citation: Reinhart A, et al. Do LLMs write like humans? Variation in grammatical and rhetorical styles. Proceedings of the
+    National Academy of Sciences. 2025;122:e2422455122.
+  doi: 10.1073/pnas.2422455122
+  use: Lexical, grammatical, and rhetorical differences; genre dependence; poor cross-register generalization.
+- id: miletic_falk_2026
+  citation: Miletić A, Falk N. What Are LLMs Doing to Scientific Communication? Measuring Changes in Writing Practices and
+    Reading Experience. LREC 2026.
+  use: Scientific multiword phrase, lexical-complexity, lexical-diversity, and reader-experience evidence.
+- id: liang_2023
+  citation: Liang W, et al. GPT detectors are biased against non-native English writers. Patterns. 2023;4(7):100779.
+  doi: 10.1016/j.patter.2023.100779
+  use: Fairness controls and prohibition on punitive authorship attribution.
+- id: tufts_2025
+  citation: Tufts B, et al. A Practical Examination of AI-Generated Text Detectors for Large Language Models. NAACL 2025.
+  use: Detector fragility under domain/model shift and moderate prompting.

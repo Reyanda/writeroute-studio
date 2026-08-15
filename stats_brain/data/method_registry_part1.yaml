@@ -1,0 +1,2322 @@
+version: 1.0.0
+coverage_note: Registry entries route reviews and define minimum checks. Registration
+  does not imply that one method is preferred over alternatives.
+families:
+  descriptive_and_design_based:
+    task_classes: &id001
+    - description
+    minimum_review: &id002
+    - target_population
+    - denominator
+    - sampling_design
+    - weighting
+    - missingness
+    - uncertainty
+    common_hazards: &id003
+    - wrong_denominator
+    - unweighted_complex_sample
+    - noncomparable_standard_population
+    - ecological_interpretation
+  classical_inference_and_regression:
+    task_classes: &id004
+    - description
+    - association
+    - prediction
+    minimum_review: &id005
+    - estimand_or_parameter
+    - sampling_model
+    - assumptions
+    - effect_scale
+    - uncertainty
+    - diagnostics
+    common_hazards: &id006
+    - model_misspecification
+    - nonindependence
+    - dichotomania
+    - multiplicity
+    - noncollapsibility
+    - overadjustment
+  bayesian_methods:
+    task_classes: &id007
+    - description
+    - association
+    - prediction
+    - causal_effect
+    - decision
+    minimum_review: &id008
+    - likelihood
+    - prior
+    - posterior_target
+    - computation
+    - convergence
+    - posterior_predictive_check
+    - sensitivity
+    common_hazards: &id009
+    - prior_dominance
+    - nonconvergence
+    - divergences
+    - label_switching
+    - posterior_summary_mismatch
+    - implicit_model_selection
+  causal_inference:
+    task_classes: &id010
+    - causal_effect
+    - decision
+    minimum_review: &id011
+    - target_trial_or_intervention
+    - estimand
+    - causal_model
+    - identification
+    - estimator
+    - positivity
+    - diagnostics
+    - sensitivity
+    common_hazards: &id012
+    - undefined_intervention
+    - conditioning_on_collider
+    - time_zero_misalignment
+    - positivity_failure
+    - post_treatment_adjustment
+    - causal_language_without_identification
+methods:
+  arithmetic_mean:
+    name: arithmetic mean
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  geometric_mean:
+    name: geometric mean
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  harmonic_mean:
+    name: harmonic mean
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  median:
+    name: median
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  trimmed_mean:
+    name: trimmed mean
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  winsorized_mean:
+    name: winsorized mean
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  mode:
+    name: mode
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  quantiles:
+    name: quantiles
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  interquartile_range:
+    name: interquartile range
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  variance:
+    name: variance
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  standard_deviation:
+    name: standard deviation
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  median_absolute_deviation:
+    name: median absolute deviation
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  coefficient_of_variation:
+    name: coefficient of variation
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  skewness:
+    name: skewness
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  kurtosis:
+    name: kurtosis
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  empirical_distribution_function:
+    name: empirical distribution function
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  kernel_density_estimation:
+    name: kernel density estimation
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  histogram:
+    name: histogram
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  boxplot:
+    name: boxplot
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  violin_plot:
+    name: violin plot
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  lorenz_curve:
+    name: Lorenz curve
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  gini_coefficient:
+    name: Gini coefficient
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  concentration_index:
+    name: concentration index
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  age_standardization_direct:
+    name: age standardization direct
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  age_standardization_indirect:
+    name: age standardization indirect
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  standardized_mortality_ratio:
+    name: standardized mortality ratio
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  life_table:
+    name: life table
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  kaplan_meier_descriptive:
+    name: Kaplan Meier descriptive
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  survey_weighted_mean:
+    name: survey weighted mean
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  survey_weighted_proportion:
+    name: survey weighted proportion
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  survey_weighted_total:
+    name: survey weighted total
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  ratio_estimator:
+    name: ratio estimator
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  horvitz_thompson_estimator:
+    name: Horvitz Thompson estimator
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  hajek_estimator:
+    name: Hajek estimator
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  poststratification:
+    name: poststratification
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  raking:
+    name: raking
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  calibration_weighting:
+    name: calibration weighting
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  generalized_regression_estimator:
+    name: generalized regression estimator
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  small_area_direct_estimator:
+    name: small area direct estimator
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  fay_herriot_model:
+    name: Fay Herriot model
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  joinpoint_regression:
+    name: joinpoint regression
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  annual_percent_change:
+    name: annual percent change
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  decomposition_analysis:
+    name: decomposition analysis
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  kitagawa_decomposition:
+    name: Kitagawa decomposition
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  oaxaca_blinder_decomposition:
+    name: Oaxaca Blinder decomposition
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  das_gupta_decomposition:
+    name: Das Gupta decomposition
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  slope_index_of_inequality:
+    name: slope index of inequality
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  relative_index_of_inequality:
+    name: relative index of inequality
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  population_attributable_fraction_descriptive:
+    name: population attributable fraction descriptive
+    family: descriptive_and_design_based
+    task_classes: *id001
+    minimum_review: *id002
+    common_hazards: *id003
+    review_status: registered
+  one_sample_t_test:
+    name: one sample t test
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  two_sample_t_test:
+    name: two sample t test
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  paired_t_test:
+    name: paired t test
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  welch_t_test:
+    name: Welch t test
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  one_way_anova:
+    name: one way ANOVA
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  two_way_anova:
+    name: two way ANOVA
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  repeated_measures_anova:
+    name: repeated measures ANOVA
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  manova:
+    name: MANOVA
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  ancova:
+    name: ANCOVA
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  permutation_test:
+    name: permutation test
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  randomization_test:
+    name: randomization test
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  mann_whitney_u:
+    name: Mann Whitney U
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  wilcoxon_signed_rank:
+    name: Wilcoxon signed rank
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  kruskal_wallis:
+    name: Kruskal Wallis
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  friedman_test:
+    name: Friedman test
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  chi_square_test:
+    name: chi square test
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  fisher_exact_test:
+    name: Fisher exact test
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  mcnemar_test:
+    name: McNemar test
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  cochran_q_test:
+    name: Cochran Q test
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  pearson_correlation:
+    name: Pearson correlation
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  spearman_correlation:
+    name: Spearman correlation
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  kendall_tau:
+    name: Kendall tau
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  partial_correlation:
+    name: partial correlation
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  linear_regression:
+    name: linear regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  multiple_linear_regression:
+    name: multiple linear regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  polynomial_regression:
+    name: polynomial regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  restricted_cubic_splines:
+    name: restricted cubic splines
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  fractional_polynomials:
+    name: fractional polynomials
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  generalized_linear_model:
+    name: generalized linear model
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  logistic_regression:
+    name: logistic regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+    estimands:
+    - conditional_odds_ratio
+    - risk_difference_after_standardization
+    - risk_ratio_after_standardization
+    - predicted_probability
+    key_checks:
+    - outcome_prevalence
+    - linearity_on_logit_for_continuous_covariates
+    - separation
+    - noncollapsibility
+    - calibration_if_prediction
+    misuse:
+    - calling_odds_ratio_a_risk_ratio
+    - interpreting_adjusted_odds_ratio_as_marginal_effect_without_standardization
+  probit_regression:
+    name: probit regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  complementary_log_log_model:
+    name: complementary log log model
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  multinomial_logistic_regression:
+    name: multinomial logistic regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  ordinal_logistic_regression:
+    name: ordinal logistic regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  continuation_ratio_model:
+    name: continuation ratio model
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  adjacent_category_logit:
+    name: adjacent category logit
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  poisson_regression:
+    name: Poisson regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  negative_binomial_regression:
+    name: negative binomial regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  quasi_poisson:
+    name: quasi Poisson
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  zero_inflated_poisson:
+    name: zero inflated Poisson
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  zero_inflated_negative_binomial:
+    name: zero inflated negative binomial
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  hurdle_model:
+    name: hurdle model
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  beta_regression:
+    name: beta regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  fractional_logit:
+    name: fractional logit
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  gamma_regression:
+    name: gamma regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  inverse_gaussian_regression:
+    name: inverse Gaussian regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  tobit_model:
+    name: Tobit model
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  quantile_regression:
+    name: quantile regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  expectile_regression:
+    name: expectile regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  robust_regression:
+    name: robust regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  median_regression:
+    name: median regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  generalized_additive_model:
+    name: generalized additive model
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  generalized_estimating_equations:
+    name: generalized estimating equations
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  mixed_effects_linear_model:
+    name: mixed effects linear model
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  generalized_linear_mixed_model:
+    name: generalized linear mixed model
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  multilevel_model:
+    name: multilevel model
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  cross_classified_multilevel_model:
+    name: cross classified multilevel model
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  multiple_membership_model:
+    name: multiple membership model
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  latent_growth_model:
+    name: latent growth model
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  seemingly_unrelated_regression:
+    name: seemingly unrelated regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  multivariate_regression:
+    name: multivariate regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  partial_least_squares_regression:
+    name: partial least squares regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  ridge_regression:
+    name: ridge regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  lasso_regression:
+    name: lasso regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+    estimands:
+    - prediction_function
+    - penalized_coefficients
+    key_checks:
+    - preprocessing_inside_resampling
+    - penalty_tuning
+    - nested_validation
+    - stability
+    - post_selection_inference_if_claimed
+    misuse:
+    - interpreting_selected_variables_as_discovered_causes
+    - reporting_naive_p_values_after_selection
+  elastic_net:
+    name: elastic net
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  group_lasso:
+    name: group lasso
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  fused_lasso:
+    name: fused lasso
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  principal_component_regression:
+    name: principal component regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  errors_in_variables_regression:
+    name: errors in variables regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  deming_regression:
+    name: Deming regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  bland_altman_analysis:
+    name: Bland Altman analysis
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  passing_bablok_regression:
+    name: Passing Bablok regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  segmented_regression:
+    name: segmented regression
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  change_point_model:
+    name: change point model
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  finite_mixture_model:
+    name: finite mixture model
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  latent_class_analysis:
+    name: latent class analysis
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  latent_profile_analysis:
+    name: latent profile analysis
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  factor_analysis:
+    name: factor analysis
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  confirmatory_factor_analysis:
+    name: confirmatory factor analysis
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  structural_equation_model:
+    name: structural equation model
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  item_response_theory:
+    name: item response theory
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  rasch_model:
+    name: Rasch model
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  mokken_scaling:
+    name: Mokken scaling
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  canonical_correlation:
+    name: canonical correlation
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  correspondence_analysis:
+    name: correspondence analysis
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  multiple_correspondence_analysis:
+    name: multiple correspondence analysis
+    family: classical_inference_and_regression
+    task_classes: *id004
+    minimum_review: *id005
+    common_hazards: *id006
+    review_status: registered
+  bayesian_linear_regression:
+    name: Bayesian linear regression
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_logistic_regression:
+    name: Bayesian logistic regression
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_glmm:
+    name: Bayesian GLMM
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_hierarchical_model:
+    name: Bayesian hierarchical model
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_survival_model:
+    name: Bayesian survival model
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_nonparametrics:
+    name: Bayesian nonparametrics
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  dirichlet_process_mixture:
+    name: Dirichlet process mixture
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  gaussian_process:
+    name: Gaussian process
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_additive_regression_trees:
+    name: Bayesian additive regression trees
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_model_averaging:
+    name: Bayesian model averaging
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_variable_selection:
+    name: Bayesian variable selection
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  spike_and_slab:
+    name: spike and slab
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  horseshoe_prior:
+    name: horseshoe prior
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_network:
+    name: Bayesian network
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  dynamic_bayesian_network:
+    name: dynamic Bayesian network
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_structural_equation_model:
+    name: Bayesian structural equation model
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_latent_class_model:
+    name: Bayesian latent class model
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_meta_analysis:
+    name: Bayesian meta analysis
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_network_meta_analysis:
+    name: Bayesian network meta analysis
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_evidence_synthesis:
+    name: Bayesian evidence synthesis
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_decision_analysis:
+    name: Bayesian decision analysis
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_adaptive_trial:
+    name: Bayesian adaptive trial
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_sample_size_assurance:
+    name: Bayesian sample size assurance
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_missing_data_model:
+    name: Bayesian missing data model
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_measurement_error_model:
+    name: Bayesian measurement error model
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_spatial_model:
+    name: Bayesian spatial model
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  conditional_autoregressive_model:
+    name: conditional autoregressive model
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  besag_york_mollie_model:
+    name: Besag York Mollie model
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  integrated_nested_laplace_approximation:
+    name: integrated nested Laplace approximation
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  markov_chain_monte_carlo:
+    name: Markov chain Monte Carlo
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  hamiltonian_monte_carlo:
+    name: Hamiltonian Monte Carlo
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  no_u_turn_sampler:
+    name: No U Turn Sampler
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  variational_inference:
+    name: variational inference
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  sequential_monte_carlo:
+    name: sequential Monte Carlo
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  approximate_bayesian_computation:
+    name: approximate Bayesian computation
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  prior_predictive_simulation:
+    name: prior predictive simulation
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  posterior_predictive_check:
+    name: posterior predictive check
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayes_factor:
+    name: Bayes factor
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  rope_decision:
+    name: ROPE decision
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  probability_of_direction:
+    name: probability of direction
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  posterior_expected_loss:
+    name: posterior expected loss
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_calibration:
+    name: Bayesian calibration
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  bayesian_transportability:
+    name: Bayesian transportability
+    family: bayesian_methods
+    task_classes: *id007
+    minimum_review: *id008
+    common_hazards: *id009
+    review_status: registered
+  randomized_experiment:
+    name: randomized experiment
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  cluster_randomized_experiment:
+    name: cluster randomized experiment
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  factorial_trial:
+    name: factorial trial
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  crossover_trial:
+    name: crossover trial
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  stepped_wedge_trial:
+    name: stepped wedge trial
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  encouragement_design:
+    name: encouragement design
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  potential_outcomes_framework:
+    name: potential outcomes framework
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  structural_causal_model:
+    name: structural causal model
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  directed_acyclic_graph:
+    name: directed acyclic graph
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  swig:
+    name: SWIG
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  do_calculus:
+    name: do calculus
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  backdoor_adjustment:
+    name: backdoor adjustment
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  frontdoor_adjustment:
+    name: frontdoor adjustment
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  g_formula:
+    name: g formula
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  parametric_g_computation:
+    name: parametric g computation
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  standardization:
+    name: standardization
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  inverse_probability_treatment_weighting:
+    name: inverse probability treatment weighting
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  stabilized_iptw:
+    name: stabilized IPTW
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  overlap_weighting:
+    name: overlap weighting
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  matching_weighting:
+    name: matching weighting
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  entropy_balancing:
+    name: entropy balancing
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  covariate_balancing_propensity_score:
+    name: covariate balancing propensity score
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  propensity_score_matching:
+    name: propensity score matching
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  full_matching:
+    name: full matching
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  optimal_matching:
+    name: optimal matching
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  coarsened_exact_matching:
+    name: coarsened exact matching
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  genetic_matching:
+    name: genetic matching
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  mahalanobis_matching:
+    name: Mahalanobis matching
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  subclassification:
+    name: subclassification
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  doubly_robust_estimation:
+    name: doubly robust estimation
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  augmented_ipw:
+    name: augmented IPW
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  tmle:
+    name: TMLE
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+    estimands:
+    - ATE
+    - ATT
+    - risk_difference
+    - risk_ratio
+    - survival_probability
+    - policy_value
+    key_checks:
+    - explicit_target_parameter
+    - initial_outcome_model
+    - treatment_or_censoring_mechanism
+    - clever_covariate
+    - targeting_step
+    - influence_curve
+    - positivity
+    misuse:
+    - calling_any_ensemble_plus_weighting_TMLE
+    - omitting_targeting_step
+    - claiming_double_robustness_without_conditions
+  collaborative_tmle:
+    name: collaborative TMLE
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  longitudinal_tmle:
+    name: longitudinal TMLE
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  sequential_g_formula:
+    name: sequential g formula
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  marginal_structural_model:
+    name: marginal structural model
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  structural_nested_mean_model:
+    name: structural nested mean model
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  g_estimation:
+    name: g estimation
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  cloning_censoring_weighting:
+    name: cloning censoring weighting
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  target_trial_emulation:
+    name: target trial emulation
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+    estimands:
+    - intention_to_treat_analogue
+    - per_protocol_effect
+    key_checks:
+    - protocol_components
+    - eligibility_at_time_zero
+    - strategy_assignment_alignment
+    - grace_period_handling
+    - censoring_weights
+    - outcome_ascertainment
+    - TARGET_reporting
+    misuse:
+    - immortal_time_bias
+    - prevalent_user_bias
+    - post_baseline_eligibility
+    - calling_a_cohort_comparison_an_emulation_without_protocol
+  instrumental_variable_2sls:
+    name: instrumental variable 2SLS
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  two_stage_residual_inclusion:
+    name: two stage residual inclusion
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  control_function:
+    name: control function
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  mendelian_randomization:
+    name: Mendelian randomization
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  regression_discontinuity:
+    name: regression discontinuity
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  difference_in_differences:
+    name: difference in differences
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+    estimands:
+    - ATT_for_treated_groups_and_times
+    - event_time_effect
+    key_checks:
+    - parallel_trends
+    - anticipation
+    - staggered_adoption
+    - treatment_effect_heterogeneity
+    - comparison_group
+    - clustered_uncertainty
+    misuse:
+    - two_way_fixed_effects_with_heterogeneous_staggered_effects_unexamined
+    - using_pretrend_nonsignificance_as_proof
+  event_study:
+    name: event study
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  synthetic_control:
+    name: synthetic control
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  matrix_completion_synthetic_control:
+    name: matrix completion synthetic control
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  interrupted_time_series_causal:
+    name: interrupted time series causal
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  negative_control_exposure:
+    name: negative control exposure
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  negative_control_outcome:
+    name: negative control outcome
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  proximal_causal_learning:
+    name: proximal causal learning
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  proximal_g_computation:
+    name: proximal g computation
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  proximal_ipw:
+    name: proximal IPW
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  e_value:
+    name: E value
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  rosenbaum_sensitivity_analysis:
+    name: Rosenbaum sensitivity analysis
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  bias_functions:
+    name: bias functions
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  quantitative_bias_analysis:
+    name: quantitative bias analysis
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  probabilistic_bias_analysis:
+    name: probabilistic bias analysis
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  bounding_analysis:
+    name: bounding analysis
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  partial_identification:
+    name: partial identification
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  instrumental_variable_bounds:
+    name: instrumental variable bounds
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  mediation_analysis:
+    name: mediation analysis
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  natural_direct_effect:
+    name: natural direct effect
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  natural_indirect_effect:
+    name: natural indirect effect
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  controlled_direct_effect:
+    name: controlled direct effect
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  interventional_direct_effect:
+    name: interventional direct effect
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  interventional_indirect_effect:
+    name: interventional indirect effect
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  randomized_interventional_analogue:
+    name: randomized interventional analogue
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  principal_stratification:
+    name: principal stratification
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  separable_effects:
+    name: separable effects
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  path_specific_effects:
+    name: path specific effects
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  causal_interaction:
+    name: causal interaction
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  reri:
+    name: RERI
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  attributable_proportion_interaction:
+    name: attributable proportion interaction
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  synergy_index:
+    name: synergy index
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  causal_forest:
+    name: causal forest
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+    estimands:
+    - CATE
+    - ATE
+    - best_linear_projection
+    - policy_value
+    key_checks:
+    - honesty_or_sample_splitting
+    - overlap
+    - nuisance_estimation
+    - calibration
+    - heterogeneity_test
+    - uncertainty
+    - policy_evaluation
+    misuse:
+    - interpreting_variable_importance_as_causal_mechanism
+    - ranking_noisy_individual_treatment_effects
+    - post_hoc_subgroup_storytelling
+  generalized_random_forest:
+    name: generalized random forest
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  bayesian_causal_forest:
+    name: Bayesian causal forest
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  x_learner:
+    name: X learner
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  t_learner:
+    name: T learner
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  s_learner:
+    name: S learner
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  r_learner:
+    name: R learner
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  dr_learner:
+    name: DR learner
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  double_machine_learning:
+    name: double machine learning
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  orthogonal_random_forest:
+    name: orthogonal random forest
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  policy_learning:
+    name: policy learning
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  optimal_dynamic_treatment_regime:
+    name: optimal dynamic treatment regime
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  q_learning:
+    name: Q learning
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  a_learning:
+    name: A learning
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  g_estimation_dynamic_regime:
+    name: g estimation dynamic regime
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  reinforcement_learning_causal:
+    name: reinforcement learning causal
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  transportability_weighting:
+    name: transportability weighting
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  inverse_odds_sampling_weights:
+    name: inverse odds sampling weights
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  trial_generalizability:
+    name: trial generalizability
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  data_fusion:
+    name: data fusion
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  causal_meta_analysis:
+    name: causal meta analysis
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  interference_analysis:
+    name: interference analysis
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  partial_interference:
+    name: partial interference
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  exposure_mapping:
+    name: exposure mapping
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  spillover_effects:
+    name: spillover effects
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  network_causal_inference:
+    name: network causal inference
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  stochastic_interventions:
+    name: stochastic interventions
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  modified_treatment_policy:
+    name: modified treatment policy
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  incremental_propensity_score_intervention:
+    name: incremental propensity score intervention
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  population_intervention_effect:
+    name: population intervention effect
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  generalized_propensity_score:
+    name: generalized propensity score
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+    estimands:
+    - dose_response_curve
+    - average_dose_response
+    - contrast_between_doses
+    key_checks:
+    - treatment_density_model
+    - continuous_positivity
+    - balance_across_dose
+    - functional_form
+    - support_restriction
+    misuse:
+    - binary_propensity_score_logic_applied_to_continuous_exposure
+    - extrapolation_beyond_observed_doses
+  dose_response_function:
+    name: dose response function
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  continuous_treatment_tmle:
+    name: continuous treatment TMLE
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  longitudinal_continuous_treatment:
+    name: longitudinal continuous treatment
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  joint_treatment_effect:
+    name: joint treatment effect
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  mixture_intervention:
+    name: mixture intervention
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  bayesian_kernel_machine_regression_causal:
+    name: Bayesian kernel machine regression causal
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  weighted_quantile_sum_regression_causal:
+    name: weighted quantile sum regression causal
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  g_computation_mixture:
+    name: g computation mixture
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  quantile_g_computation:
+    name: quantile g computation
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  causal_decomposition:
+    name: causal decomposition
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  interventional_disparity_measure:
+    name: interventional disparity measure
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  causal_fairness:
+    name: causal fairness
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  intersectional_causal_effect:
+    name: intersectional causal effect
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  maihda_descriptive:
+    name: MAIHDA descriptive
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+    estimands:
+    - intersectional_stratum_mean
+    - variance_partition
+    - discriminatory_accuracy
+    - stratum_residual
+    key_checks:
+    - descriptive_target
+    - intersection_definition
+    - sparse_strata
+    - partial_pooling
+    - additive_reference_model
+    - scale_choice
+    misuse:
+    - calling_MAIHDA_effects_causal_without_intervention_definition
+    - reifying_social_categories
+    - ignoring_scale_dependence
+  targeted_minimum_loss_estimation_survival:
+    name: targeted minimum loss estimation survival
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  competing_event_causal_effect:
+    name: competing event causal effect
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered
+  controlled_direct_effect_with_competing_events:
+    name: controlled direct effect with competing events
+    family: causal_inference
+    task_classes: *id010
+    minimum_review: *id011
+    common_hazards: *id012
+    review_status: registered

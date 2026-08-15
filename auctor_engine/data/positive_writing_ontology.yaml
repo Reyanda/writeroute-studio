@@ -1,0 +1,467 @@
+schema_version: 1.0.0
+name: Auctor Positive Academic Writing Ontology
+purpose: Generate, revise, and verify scientific manuscripts as evidence-bearing arguments rather than decorated prose.
+non_goals:
+  - Guess missing results, methods, citations, mechanisms, or limitations.
+  - Mimic human writing by adding errors, randomness, slang, or artificial sentence burstiness.
+  - Convert every sentence into short plain prose when technical precision requires complexity.
+  - Replace subject-matter, statistical, methodological, or ethical review.
+  - Infer whether a passage was written by a person or a model.
+channel_contract:
+  substantive:
+    destination: Manuscript body and tracked insertions.
+    allowed: Claims, evidence, methods, results, interpretation, limitations, and bounded implications intended for publication.
+    prohibited: QC labels, editor instructions, apologies, confidence scores, author queries, prompt language, and drafting notes.
+  qc:
+    destination: JSON report and hidden custom XML part.
+    allowed: Verifiable defects, invariant failures, rule identifiers, severity, evidence spans, and release decisions.
+    prohibited: Replacement prose that could be mistaken for an approved scientific claim.
+  commentary:
+    destination: Word comments or a separate editorial report.
+    allowed: Editorial reasoning, alternatives, author queries, and explanations of tradeoffs.
+    prohibited: Silent changes to facts, methods, results, citations, or inferential scope.
+core_definitions:
+  manuscript: A structured, citable evidence argument whose sections perform distinct scientific functions.
+  claim: A proposition that can be true or false and has an identifiable scope, subject, predicate, and epistemic status.
+  fact_atom: A protected data item such as a number, unit, direction, effect measure, date, citation, named entity, or prespecified term.
+  evidence_anchor: The observation, estimate, citation, mechanism, method, table, figure, or source that supports a claim.
+  claim_boundary: The population, setting, time, comparator, outcome, assumptions, and uncertainty within which a claim remains valid.
+  section_contract: The scientific work a section must perform and the information it must not displace.
+  paragraph_contract: One controlling function, one main claim, sufficient support, a warranted interpretation, and a clear boundary when needed.
+  revision_unit: The smallest change that improves accuracy or clarity without obscuring provenance.
+  reference_tag: A machine-readable OOXML tag that links visible citation or cross-reference text to a stable key.
+  formatting_tag: A semantic Word style or explicit run property that records the intended role and presentation of content.
+  qc_language: Objective language that names a defect, its evidence, severity, and release consequence.
+  commentary_language: Editorial language that explains reasoning, alternatives, or an author decision.
+  substantive_language: Prose that belongs in the published manuscript and can stand without reference to the editing process.
+  authorial_voice: The consistent pattern of judgement produced by specific claims, selective emphasis, causal discipline, and engagement with evidence, not by ornamental vocabulary.
+quality_model:
+  principle: Substance and inferential validity dominate surface fluency.
+  dimensions:
+    scientific_substance: 0.30
+    evidence_and_reporting: 0.20
+    reasoning_and_inference: 0.18
+    structure_and_coherence: 0.12
+    precision_and_clarity: 0.10
+    references_and_integrity: 0.07
+    style_and_voice: 0.03
+  release_rule: No critical invariant failure may be offset by a high style score.
+revision_modes:
+  mechanical:
+    may_change: Spelling, punctuation, spacing, typography, capitalization, and exact duplicate text.
+    may_not_change: Meaning, evidence, facts, citations, or scope.
+  copyedit:
+    may_change: Syntax, word choice, sentence division, local order, and redundancy where meaning is preserved.
+    may_not_change: Claims, facts, methods, results, citations, certainty, or causal force.
+  substantive:
+    may_change: Paragraph architecture, claim order, emphasis, and explicit logical links.
+    requires: Fact ledger preservation and section-contract validation.
+  developmental:
+    may_change: Section architecture and argument sequence.
+    requires: Explicit author authorization, source access, provenance, and a separate decision log.
+release_gates:
+  - id: GATE-001
+    name: Zero factual drift
+    requirement: Every protected fact atom in the source remains present and unchanged unless an authorized revision records the reason.
+  - id: GATE-002
+    name: Zero citation drift
+    requirement: Citation keys, fields, hyperlinks, bookmarks, and bibliography tags remain linked and no reference is invented.
+  - id: GATE-003
+    name: Zero channel leakage
+    requirement: Manuscript prose contains no QC language, commentary, prompt residue, or assistant persona language.
+  - id: GATE-004
+    name: Zero em dash
+    requirement: No U+2014 or U+2015 character occurs in visible manuscript text, comments, tracked revisions, or generated reports.
+  - id: GATE-005
+    name: Inferential alignment
+    requirement: Causal, predictive, diagnostic, mechanistic, and policy claims do not exceed the design, estimand, assumptions, or evidence.
+  - id: GATE-006
+    name: Numerical completeness
+    requirement: Result claims report magnitude, comparator, denominator where relevant, uncertainty, units, and direction.
+  - id: GATE-007
+    name: Review preservation
+    requirement: Existing comments and tracked revisions are preserved unless an explicit operation accepts, rejects, resolves, or removes them.
+  - id: GATE-008
+    name: OOXML validity
+    requirement: The package opens, all XML parts parse, relationships resolve, comments are anchored, and tracked deletions use w:delText.
+  - id: GATE-009
+    name: Typography
+    requirement: Manuscript text is Times New Roman 11 point and table text is Times New Roman 8 point.
+  - id: GATE-010
+    name: Honest incompleteness
+    requirement: Missing information is reported as QC or commentary and is never silently fabricated in substantive prose.
+section_contracts:
+  title:
+    purpose: Identify the scientific object and main relation without advertising the result.
+    required_moves:
+      - Name the population or system when needed for interpretation.
+      - Name the exposure, intervention, phenomenon, or method.
+      - Name the principal outcome or scientific target.
+      - State the design when it materially changes interpretation.
+    prohibited_moves:
+      - Unsupported superlatives or novelty claims.
+      - Conclusions stated as settled facts when the design cannot support them.
+  abstract:
+    purpose: Provide a compact, self-contained account of question, design, evidence, result, and bounded conclusion.
+    required_moves:
+      - One precise problem or gap.
+      - Exact objective or estimand.
+      - Design, setting, population, exposure or intervention, and primary outcome.
+      - Primary numerical result with uncertainty.
+      - Conclusion no broader than the observed evidence.
+    checks:
+      - No generic era framing.
+      - No methods that are absent from the manuscript.
+      - No claim that appears only in the abstract.
+      - No unreferenced abbreviation unless standard for the target journal.
+  introduction:
+    purpose: Move from established knowledge to the unresolved problem and exact study question.
+    required_moves:
+      - Establish what is known with selective evidence.
+      - Define the unresolved empirical, causal, mechanistic, or policy gap.
+      - Explain why the gap changes a decision or scientific understanding.
+      - State the exact objective, hypothesis, or estimand.
+    prohibited_moves:
+      - Textbook background unrelated to the study decision.
+      - Citation laundry without synthesis.
+      - Generic burden statements that do not narrow to the study gap.
+      - Claims of novelty without a search basis.
+  methods:
+    purpose: Make the study reproducible and its identifying assumptions inspectable.
+    required_moves:
+      - Design, setting, dates, and governance.
+      - Eligibility, recruitment or sampling, and analytic population.
+      - Time zero and follow-up when relevant.
+      - Exposure, intervention, comparator, outcome, and measurement.
+      - Estimand and analysis population.
+      - Confounding, missing data, censoring, competing events, and sensitivity analyses where relevant.
+      - Software and version when required for reproducibility.
+      - Ethics and consent.
+    prohibited_moves:
+      - Method name-dropping without operational detail.
+      - Results or evaluative claims.
+      - Post hoc choices presented as prespecified.
+  results:
+    purpose: Report observations in the order needed to answer the study question without interpretation masquerading as data.
+    required_moves:
+      - Participant or record flow and analysis denominator.
+      - Baseline or descriptive information relevant to interpretation.
+      - Primary estimate, comparator, units, and uncertainty.
+      - Secondary, subgroup, heterogeneity, sensitivity, and harm results where prespecified.
+      - Missingness, censoring, exclusions, and deviations that affect interpretation.
+    prohibited_moves:
+      - Directional claims without magnitude.
+      - Effect estimates without uncertainty when uncertainty is estimable.
+      - Causal explanations not tested in the analysis.
+      - Repetition of every table cell in prose.
+  discussion:
+    purpose: Answer the question, locate the result in prior evidence, test explanations, bound the claim, and identify the decision consequence.
+    required_moves:
+      - Open with the principal answer and its magnitude, not a generic significance statement.
+      - Compare with the most relevant prior evidence and explain concordance or divergence.
+      - Separate observed findings from proposed mechanisms.
+      - State strengths that directly protect validity.
+      - State limitations as named bias pathways and likely directions where possible.
+      - Bound generalizability and transportability.
+      - Name the specific research, clinical, or policy decision affected.
+    prohibited_moves:
+      - Repetition of the Results section.
+      - Limitations boilerplate with no consequence for interpretation.
+      - Stakeholder language without a named actor or decision.
+      - Policy recommendations beyond the estimand or setting.
+  limitations:
+    purpose: Explain how specific defects could alter magnitude, direction, precision, interpretation, or transportability.
+    required_moves:
+      - Name the bias mechanism.
+      - State the affected variable or contrast.
+      - Give the expected direction when defensible.
+      - State what was done to assess or reduce the problem.
+      - State the residual consequence for the conclusion.
+    prohibited_moves:
+      - Generic admissions that every study has limitations.
+      - Claims that limitations do not affect conclusions without analysis.
+  conclusion:
+    purpose: Carry forward the main result and the narrowest defensible implication.
+    required_moves:
+      - Name the population, contrast, outcome, and result.
+      - State the practical or scientific implication at the correct level.
+      - Preserve uncertainty and setting boundaries.
+    prohibited_moves:
+      - New evidence or citations.
+      - Generic calls for more research.
+      - Empty importance claims.
+      - Universal recommendations from local or associational evidence.
+  tables:
+    purpose: Present values compactly and independently of the prose.
+    required_moves:
+      - Self-contained title.
+      - Defined population and time point.
+      - Units, denominators, and effect measures.
+      - Abbreviation and statistical-method footnotes.
+      - Consistent decimal precision that reflects measurement, not decoration.
+    prohibited_moves:
+      - Colour as the sole carrier of meaning.
+      - Undefined symbols or abbreviations.
+      - Mixed denominators without explicit labels.
+  references:
+    purpose: Provide traceable support for claims and preserve reference-manager interoperability.
+    required_moves:
+      - Every in-text citation resolves to a reference key or field.
+      - Every bibliography entry is cited unless the journal permits a reading list.
+      - Metadata required by the selected style is present.
+    prohibited_moves:
+      - Invented or unverifiable references.
+      - Citation placeholders in release output.
+  other:
+    purpose: Perform one declared manuscript function with the same evidence, provenance, and channel rules.
+paragraph_contract:
+  default_sequence:
+    - function
+    - claim
+    - evidence
+    - interpretation
+    - boundary_or_link
+  rules:
+    - One dominant claim per paragraph unless two claims are inseparable.
+    - The first sentence should establish the paragraph function or claim, not announce that a topic will be discussed.
+    - Evidence should sit next to the claim it supports.
+    - Interpretation must not be phrased as observation.
+    - The final sentence should advance the argument, bound the claim, or create a necessary link.
+    - Paragraph length should follow reasoning load, not a uniform template.
+sentence_contract:
+  preferred:
+    - Concrete grammatical subject.
+    - Verb that states the scientific relation directly.
+    - Modifier placed next to the term it modifies.
+    - One uncertainty operator fitted to the evidence.
+    - Scope conditions stated where a reader could otherwise overgeneralize.
+  avoid:
+    - Meta-language that announces importance.
+    - Noun chains that conceal actors and actions.
+    - Stacked hedges.
+    - Empty transition words.
+    - Generic impact language.
+    - More than one inferential leap in a sentence.
+    - Em dash punctuation.
+right_pattern_library:
+  - id: RIGHT-CLAIM-001
+    name: Scoped empirical claim
+    pattern: "In [population and setting], [exposure or intervention] was associated with [estimate and uncertainty] for [outcome] over [time]."
+    use_when: Reporting an adjusted association without causal identification.
+  - id: RIGHT-CLAIM-002
+    name: Bounded causal claim
+    pattern: "Under [identified assumptions], [intervention contrast] changed [outcome] by [estimate and uncertainty] over [time] in [target population]."
+    use_when: A design and analysis identify the stated causal estimand.
+  - id: RIGHT-CLAIM-003
+    name: Null-compatible result
+    pattern: "The estimate was compatible with [bounded benefit], no effect, and [bounded harm] ([estimate and uncertainty])."
+    use_when: The interval spans substantively different conclusions.
+  - id: RIGHT-MECH-001
+    name: Observed mechanism boundary
+    pattern: "[Mediator or biological measure] changed in the expected direction, but the study did not test whether it mediated the effect on [outcome]."
+    use_when: Mechanistic evidence is suggestive but mediation is untested.
+  - id: RIGHT-LIMIT-001
+    name: Directional limitation
+    pattern: "Because [bias mechanism] was more likely among [group], the estimate may be biased [toward or away from] [reference], although [analysis] reduced but did not eliminate this concern."
+    use_when: The likely bias pathway can be stated.
+  - id: RIGHT-IMPL-001
+    name: Decision-linked implication
+    pattern: "For [named actor], the result supports [specific decision] when [conditions], but does not establish [unsupported extension]."
+    use_when: Translating evidence to a bounded action.
+  - id: RIGHT-COMP-001
+    name: Evidence comparison
+    pattern: "Our estimate was [similar to or different from] [prior study], which may reflect differences in [population, exposure, outcome, timing, or method]."
+    use_when: Comparing findings without false conflict or agreement.
+  - id: RIGHT-GAP-001
+    name: Exact study gap
+    pattern: "Existing studies estimate [known quantity], but do not identify [missing contrast or mechanism] in [target population or setting]."
+    use_when: Ending an Introduction.
+  - id: RIGHT-AIM-001
+    name: Exact objective
+    pattern: "We estimated [estimand] for [contrast] on [outcome] over [time] in [population]."
+    use_when: The study question can be expressed as an estimand.
+  - id: RIGHT-RES-001
+    name: Complete primary result
+    pattern: "Among [denominator], [outcome] occurred in [group values]; the adjusted [effect measure] was [estimate] ([uncertainty])."
+    use_when: Reporting a primary binary or time-to-event result.
+quality_contracts:
+  - id: AWE-Q-001
+    family: facts
+    requirement: Preserve every number, sign, decimal place, unit, date, and denominator unless the revision is explicitly authorized to alter content.
+  - id: AWE-Q-002
+    family: facts
+    requirement: Preserve directionality words such as increase, decrease, higher, lower, benefit, and harm.
+  - id: AWE-Q-003
+    family: facts
+    requirement: Preserve effect-measure labels and do not exchange odds, risk, rate, hazard, prevalence, or mean effects.
+  - id: AWE-Q-004
+    family: facts
+    requirement: Preserve population, setting, time, comparator, and outcome boundaries.
+  - id: AWE-Q-005
+    family: facts
+    requirement: Never add a mechanism merely because it is biologically plausible.
+  - id: AWE-Q-006
+    family: references
+    requirement: Preserve citation fields, semantic tags, hyperlinks, bookmarks, footnotes, and endnotes.
+  - id: AWE-Q-007
+    family: references
+    requirement: Never create a citation from memory or convert a placeholder into a plausible-looking reference.
+  - id: AWE-Q-008
+    family: reasoning
+    requirement: Distinguish observation, association, prediction, explanation, mediation, and causation.
+  - id: AWE-Q-009
+    family: reasoning
+    requirement: Attach uncertainty to the claim it qualifies.
+  - id: AWE-Q-010
+    family: reasoning
+    requirement: State identifying assumptions when they are necessary for the causal interpretation.
+  - id: AWE-Q-011
+    family: reasoning
+    requirement: Separate the target population from the analytic sample.
+  - id: AWE-Q-012
+    family: reasoning
+    requirement: Separate statistical significance, magnitude, precision, and practical importance.
+  - id: AWE-Q-013
+    family: reasoning
+    requirement: Do not describe absence of evidence as evidence of absence.
+  - id: AWE-Q-014
+    family: reasoning
+    requirement: Do not use robustness language as a substitute for naming sensitivity analyses and their results.
+  - id: AWE-Q-015
+    family: methods
+    requirement: Methods prose must permit a competent reader to reconstruct the analysis sequence.
+  - id: AWE-Q-016
+    family: methods
+    requirement: Define time zero, eligibility, exposure assignment, follow-up, outcome, and analysis population where relevant.
+  - id: AWE-Q-017
+    family: methods
+    requirement: Name how missing data, censoring, clustering, repeated measures, and competing events were handled.
+  - id: AWE-Q-018
+    family: methods
+    requirement: Distinguish prespecified, exploratory, and post hoc analyses.
+  - id: AWE-Q-019
+    family: results
+    requirement: Report the denominator before or with percentages when it is not already unambiguous.
+  - id: AWE-Q-020
+    family: results
+    requirement: Report magnitude and uncertainty for primary contrasts.
+  - id: AWE-Q-021
+    family: results
+    requirement: Avoid interpreting mechanisms, policy, or importance in the Results section.
+  - id: AWE-Q-022
+    family: results
+    requirement: Keep prose selective and let tables carry dense detail.
+  - id: AWE-Q-023
+    family: discussion
+    requirement: Begin with the answer to the study question and its magnitude.
+  - id: AWE-Q-024
+    family: discussion
+    requirement: Compare studies through design, population, measurement, timing, and estimand rather than vague agreement.
+  - id: AWE-Q-025
+    family: discussion
+    requirement: Translate each major limitation into a consequence for interpretation.
+  - id: AWE-Q-026
+    family: discussion
+    requirement: Name the actor and decision in policy or practice implications.
+  - id: AWE-Q-027
+    family: structure
+    requirement: Each paragraph performs one dominant rhetorical function.
+  - id: AWE-Q-028
+    family: structure
+    requirement: Paragraph order follows the scientific dependency of claims, not a generic template.
+  - id: AWE-Q-029
+    family: structure
+    requirement: Transitions arise from the relation between claims and are omitted when the relation is already clear.
+  - id: AWE-Q-030
+    family: structure
+    requirement: Headings describe manuscript functions and preserve journal hierarchy.
+  - id: AWE-Q-031
+    family: clarity
+    requirement: Prefer concrete actors and verbs when agency matters.
+  - id: AWE-Q-032
+    family: clarity
+    requirement: Retain technical terms when they carry distinctions that plain substitutes would erase.
+  - id: AWE-Q-033
+    family: clarity
+    requirement: Split a sentence when it contains more than one evidence-to-claim inference.
+  - id: AWE-Q-034
+    family: clarity
+    requirement: Place exceptions and scope conditions next to the claim they limit.
+  - id: AWE-Q-035
+    family: voice
+    requirement: Produce authority through specificity and judgement, not prestige vocabulary.
+  - id: AWE-Q-036
+    family: voice
+    requirement: Preserve legitimate author preference where more than one clear formulation is valid.
+  - id: AWE-Q-037
+    family: voice
+    requirement: Do not force sentence-length variation merely to appear human.
+  - id: AWE-Q-038
+    family: voice
+    requirement: Do not insert rhetorical flourishes, personal anecdotes, or first-person claims absent from the source.
+  - id: AWE-Q-039
+    family: integrity
+    requirement: QC language must identify evidence and an action rather than express taste alone.
+  - id: AWE-Q-040
+    family: integrity
+    requirement: Commentary must be visibly attributable to the editor and separate from manuscript prose.
+  - id: AWE-Q-041
+    family: integrity
+    requirement: Every applied change has an exact source anchor, replacement, reason, class, and author.
+  - id: AWE-Q-042
+    family: integrity
+    requirement: Existing review artifacts are never discarded by a routine formatting pass.
+  - id: AWE-Q-043
+    family: typography
+    requirement: All visible manuscript text uses Times New Roman 11 point unless the paragraph is inside a table.
+  - id: AWE-Q-044
+    family: typography
+    requirement: All visible table text uses Times New Roman 8 point.
+  - id: AWE-Q-045
+    family: typography
+    requirement: Run-level formatting preserves bold, italic, superscript, subscript, language, and semantic emphasis while normalizing font and size.
+  - id: AWE-Q-046
+    family: typography
+    requirement: No em dash or horizontal bar character is allowed in any generated channel.
+  - id: AWE-Q-047
+    family: ooxml
+    requirement: Tracked deletions use w:delText and tracked insertions use w:t.
+  - id: AWE-Q-048
+    family: ooxml
+    requirement: Revision and comment identifiers do not collide with existing identifiers.
+  - id: AWE-Q-049
+    family: ooxml
+    requirement: Comment anchors, relationships, and content-type declarations are complete.
+  - id: AWE-Q-050
+    family: ooxml
+    requirement: Citation and bibliography text can be wrapped in semantic content controls without flattening visible text.
+  - id: AWE-Q-051
+    family: ooxml
+    requirement: Cross-references use bookmarks and REF fields rather than hard-coded labels where feasible.
+  - id: AWE-Q-052
+    family: ooxml
+    requirement: The document requests field updates on open while retaining cached display text.
+  - id: AWE-Q-053
+    family: tables
+    requirement: Table titles, headers, units, denominators, symbols, and footnotes remain self-contained.
+  - id: AWE-Q-054
+    family: tables
+    requirement: Numeric precision is consistent within a comparison and justified by the measurement.
+  - id: AWE-Q-055
+    family: reporting
+    requirement: The selected reporting guideline augments, but does not replace, the section contract.
+  - id: AWE-Q-056
+    family: reporting
+    requirement: Guideline checklist completion is stored as QC and does not create unsupported prose.
+  - id: AWE-Q-057
+    family: accessibility
+    requirement: Headings, table headers, alternative text, and reading order are preserved or audited.
+  - id: AWE-Q-058
+    family: reproducibility
+    requirement: The engine emits a machine-readable report, revision ledger, profile, and validation result.
+  - id: AWE-Q-059
+    family: reproducibility
+    requirement: Deterministic edits produce identical output for identical input and configuration.
+  - id: AWE-Q-060
+    family: safety
+    requirement: A failed semantic or invariant check blocks the revision rather than weakening the check.

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stats-brain.org/schemas/auctor_packet.schema.json",
+  "title": "STATS-BRAIN to Auctor review packet",
+  "type": "object",
+  "required": ["channel_contract", "substantive", "qc", "commentary", "author_queries"],
+  "properties": {
+    "substantive": {"type": "array", "maxItems": 0},
+    "qc": {"type": "array"},
+    "commentary": {"type": "array"},
+    "author_queries": {"type": "array"},
+    "gates": {"type": "array"},
+    "release_status": {"type": "string"},
+    "channel_contract": {"type": "object"}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,972 @@
+version: 1.0.0
+profiles:
+  cross_sectional:
+    name: Cross-sectional study
+    compatible_tasks:
+    - description
+    - association
+    - prediction
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - index_time
+    - exposure
+    - outcome
+    - covariates
+    - sampling
+    - missing_data
+    - analysis
+    hard_hazards:
+    - prevalence_incidence_confusion
+    - reverse_temporality
+    - survivor_selection
+    - causal_overclaim
+    reporting_guideline: STROBE
+    notes: []
+  repeated_cross_sectional:
+    name: Repeated cross-sectional study
+    compatible_tasks:
+    - description
+    - association
+    - trend
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - index_time
+    - exposure
+    - outcome
+    - covariates
+    - sampling
+    - missing_data
+    - analysis
+    - survey_wave
+    - harmonization
+    hard_hazards:
+    - changing_population_composition
+    - instrument_drift
+    - pooled_weight_target_ambiguity
+    reporting_guideline: STROBE
+    notes: []
+  prospective_cohort:
+    name: Prospective cohort
+    compatible_tasks:
+    - description
+    - association
+    - prediction
+    - causal_effect
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - index_time
+    - exposure
+    - outcome
+    - covariates
+    - sampling
+    - missing_data
+    - analysis
+    - follow_up
+    - censoring
+    hard_hazards:
+    - loss_to_follow_up
+    - time_varying_confounding
+    - immortal_time
+    - measurement_change
+    reporting_guideline: STROBE
+    notes: []
+  retrospective_cohort:
+    name: Retrospective cohort
+    compatible_tasks:
+    - description
+    - association
+    - prediction
+    - causal_effect
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - index_time
+    - exposure
+    - outcome
+    - covariates
+    - sampling
+    - missing_data
+    - analysis
+    - data_provenance
+    - lookback_window
+    - follow_up
+    hard_hazards:
+    - left_truncation
+    - data_availability_bias
+    - immortal_time
+    - coding_drift
+    reporting_guideline: RECORD
+    notes: []
+  case_control:
+    name: Case-control study
+    compatible_tasks:
+    - association
+    - causal_effect
+    - diagnosis
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - index_time
+    - exposure
+    - outcome
+    - covariates
+    - sampling
+    - missing_data
+    - analysis
+    - case_definition
+    - control_sampling
+    hard_hazards:
+    - control_sampling_mismatch
+    - odds_ratio_interpretation
+    - incidence_density_requirement
+    - recall_bias
+    reporting_guideline: STROBE
+    notes: []
+  nested_case_control:
+    name: Nested case-control study
+    compatible_tasks:
+    - association
+    - causal_effect
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - index_time
+    - exposure
+    - outcome
+    - covariates
+    - sampling
+    - missing_data
+    - analysis
+    - risk_set_sampling
+    hard_hazards:
+    - risk_set_violation
+    - matching_ignored
+    - sampling_fraction_misuse
+    reporting_guideline: STROBE
+    notes: []
+  case_cohort:
+    name: Case-cohort study
+    compatible_tasks:
+    - association
+    - causal_effect
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - index_time
+    - exposure
+    - outcome
+    - covariates
+    - sampling
+    - missing_data
+    - analysis
+    - subcohort_sampling
+    hard_hazards:
+    - weights_omitted
+    - variance_misspecified
+    - risk_set_membership
+    reporting_guideline: STROBE
+    notes: []
+  randomized_parallel_trial:
+    name: Parallel randomized trial
+    compatible_tasks:
+    - causal_effect
+    - prediction
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - interventions
+    - assignment
+    - follow_up
+    - outcomes
+    - estimand
+    - analysis_population
+    - intercurrent_events
+    - analysis
+    hard_hazards:
+    - allocation_or_analysis_population_mismatch
+    - post_randomization_exclusion
+    - intercurrent_event_ambiguity
+    - multiplicity
+    reporting_guideline: CONSORT_2025
+    notes: []
+  cluster_randomized_trial:
+    name: Cluster randomized trial
+    compatible_tasks:
+    - causal_effect
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - interventions
+    - assignment
+    - follow_up
+    - outcomes
+    - estimand
+    - analysis_population
+    - intercurrent_events
+    - analysis
+    - cluster_unit
+    - intracluster_correlation
+    hard_hazards:
+    - unit_of_analysis_error
+    - few_clusters
+    - recruitment_after_randomization
+    - contamination
+    reporting_guideline: CONSORT_2025
+    notes: []
+  stepped_wedge_trial:
+    name: Stepped-wedge cluster randomized trial
+    compatible_tasks:
+    - causal_effect
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - interventions
+    - assignment
+    - follow_up
+    - outcomes
+    - estimand
+    - analysis_population
+    - intercurrent_events
+    - analysis
+    - sequence
+    - period_effect
+    hard_hazards:
+    - time_confounding
+    - treatment_time_interaction
+    - few_sequences
+    - carryover
+    reporting_guideline: CONSORT_2025
+    notes: []
+  crossover_trial:
+    name: Crossover trial
+    compatible_tasks:
+    - causal_effect
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - interventions
+    - assignment
+    - follow_up
+    - outcomes
+    - estimand
+    - analysis_population
+    - intercurrent_events
+    - analysis
+    - period
+    - sequence
+    - washout
+    hard_hazards:
+    - carryover
+    - period_effect
+    - inappropriate_for_nonreversible_outcome
+    reporting_guideline: CONSORT_2025
+    notes: []
+  factorial_trial:
+    name: Factorial trial
+    compatible_tasks:
+    - causal_effect
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - interventions
+    - assignment
+    - follow_up
+    - outcomes
+    - estimand
+    - analysis_population
+    - intercurrent_events
+    - analysis
+    - factors
+    - interaction_estimand
+    hard_hazards:
+    - main_effect_interaction_mismatch
+    - multiplicity
+    - nonadherence_across_factors
+    reporting_guideline: CONSORT_2025
+    notes: []
+  target_trial_emulation:
+    name: Target trial emulation
+    compatible_tasks:
+    - causal_effect
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - treatment_strategies
+    - assignment_procedure
+    - time_zero
+    - follow_up
+    - outcome
+    - causal_contrast
+    - analysis_plan
+    - data_emulation_map
+    hard_hazards:
+    - time_zero_misalignment
+    - immortal_time
+    - prevalent_user_bias
+    - grace_period_bias
+    - informative_censoring
+    reporting_guideline: TARGET_2025
+    notes: []
+  complex_survey_cross_sectional:
+    name: Complex probability survey
+    compatible_tasks:
+    - description
+    - association
+    - prediction
+    - causal_effect
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - index_time
+    - exposure
+    - outcome
+    - covariates
+    - sampling
+    - missing_data
+    - analysis
+    - survey_design
+    - weight_variable
+    - PSU
+    - strata
+    - finite_population_target
+    hard_hazards:
+    - ignored_weights
+    - ignored_cluster
+    - ignored_strata
+    - domain_deletion
+    - finite_vs_superpopulation_ambiguity
+    reporting_guideline: STROBE
+    notes: []
+  DHS_single_survey:
+    name: Single DHS survey
+    compatible_tasks:
+    - description
+    - association
+    - prediction
+    - causal_effect
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - index_time
+    - exposure
+    - outcome
+    - covariates
+    - sampling
+    - missing_data
+    - analysis
+    - DHS_recode_file
+    - DHS_phase
+    - weight_variable
+    - PSU
+    - strata
+    - domain_definition
+    hard_hazards:
+    - wrong_recode_file
+    - v005_not_scaled
+    - wrong_denominator
+    - ignored_design
+    - anthropometric_flags_mishandled
+    - GPS_displacement_ignored
+    reporting_guideline: STROBE
+    notes: []
+  DHS_repeated_surveys:
+    name: Repeated DHS surveys
+    compatible_tasks:
+    - description
+    - trend
+    - association
+    - causal_effect
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - index_time
+    - exposure
+    - outcome
+    - covariates
+    - sampling
+    - missing_data
+    - analysis
+    - survey_list
+    - harmonization
+    - pooled_weight_target
+    - PSU_namespace
+    - strata_namespace
+    hard_hazards:
+    - pooled_weight_target_ambiguity
+    - duplicate_PSU_ids_across_waves
+    - variable_definition_drift
+    - period_composition_confounding
+    reporting_guideline: STROBE
+    notes: []
+  panel_survey:
+    name: Longitudinal panel survey
+    compatible_tasks:
+    - description
+    - association
+    - prediction
+    - causal_effect
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - index_time
+    - exposure
+    - outcome
+    - covariates
+    - sampling
+    - missing_data
+    - analysis
+    - panel_weight
+    - attrition
+    - refreshment_samples
+    - time_index
+    hard_hazards:
+    - attrition
+    - time_varying_weight
+    - within_between_confusion
+    - informative_visit_process
+    reporting_guideline: STROBE
+    notes: []
+  interrupted_time_series:
+    name: Interrupted time series
+    compatible_tasks:
+    - causal_effect
+    - forecasting
+    required_manifest_fields:
+    - population
+    - intervention_time
+    - outcome_series
+    - time_points
+    - comparison_series
+    - functional_form
+    - seasonality
+    - autocorrelation
+    hard_hazards:
+    - cointervention
+    - misspecified_trend
+    - autocorrelation
+    - too_few_preperiods
+    - intervention_time_cherry_picking
+    reporting_guideline: STROBE
+    notes: []
+  difference_in_differences:
+    name: Difference-in-differences
+    compatible_tasks:
+    - causal_effect
+    required_manifest_fields:
+    - groups
+    - treatment_timing
+    - outcome
+    - preperiod
+    - postperiod
+    - estimand
+    - comparison_group
+    - clustering
+    hard_hazards:
+    - parallel_trends_unsupported
+    - anticipation
+    - staggered_effect_heterogeneity
+    - forbidden_comparisons
+    reporting_guideline: STROBE
+    notes: []
+  regression_discontinuity:
+    name: Regression discontinuity
+    compatible_tasks:
+    - causal_effect
+    required_manifest_fields:
+    - running_variable
+    - cutoff
+    - assignment_rule
+    - outcome
+    - bandwidth
+    - functional_form
+    - estimand
+    hard_hazards:
+    - manipulation_at_cutoff
+    - functional_form_extrapolation
+    - bandwidth_cherry_picking
+    - local_estimand_overgeneralization
+    reporting_guideline: STROBE
+    notes: []
+  instrumental_variable:
+    name: Instrumental variable study
+    compatible_tasks:
+    - causal_effect
+    required_manifest_fields:
+    - instrument
+    - treatment
+    - outcome
+    - target_population
+    - estimand
+    - identification_assumptions
+    - first_stage
+    hard_hazards:
+    - weak_instrument
+    - exclusion_restriction_unargued
+    - monotonicity_unargued
+    - LATE_overgeneralization
+    reporting_guideline: STROBE
+    notes: []
+  Mendelian_randomization:
+    name: Mendelian randomization
+    compatible_tasks:
+    - causal_effect
+    required_manifest_fields:
+    - genetic_instruments
+    - exposure
+    - outcome
+    - populations
+    - estimand
+    - instrument_selection
+    - pleiotropy_analysis
+    hard_hazards:
+    - weak_instrument
+    - horizontal_pleiotropy
+    - population_structure
+    - sample_overlap
+    - selection_bias
+    reporting_guideline: STROBE
+    notes: []
+  diagnostic_accuracy:
+    name: Diagnostic accuracy study
+    compatible_tasks:
+    - measurement
+    - diagnosis
+    - prediction
+    required_manifest_fields:
+    - target_population
+    - index_test
+    - reference_standard
+    - case_definition
+    - sampling
+    - blinding
+    - indeterminate_results
+    hard_hazards:
+    - partial_verification
+    - differential_verification
+    - spectrum_bias
+    - threshold_optimization
+    reporting_guideline: STARD_2015
+    notes: []
+  prediction_model_development:
+    name: Prediction model development
+    compatible_tasks:
+    - prediction
+    required_manifest_fields:
+    - target_population
+    - index_time
+    - outcome
+    - predictors
+    - sample_size
+    - missing_data
+    - modeling
+    - validation
+    - performance
+    hard_hazards:
+    - leakage
+    - overfitting
+    - inadequate_sample_size
+    - test_set_reuse
+    - calibration_omitted
+    reporting_guideline: TRIPOD_AI_2024
+    notes: []
+  prediction_model_validation:
+    name: Prediction model validation
+    compatible_tasks:
+    - prediction
+    required_manifest_fields:
+    - target_population
+    - index_time
+    - outcome
+    - model_specification
+    - calibration
+    - discrimination
+    - clinical_utility
+    hard_hazards:
+    - model_redevelopment_hidden
+    - calibration_intercept_omitted
+    - nonrepresentative_validation
+    - threshold_cherry_picking
+    reporting_guideline: TRIPOD_AI_2024
+    notes: []
+  prognostic_factor_study:
+    name: Prognostic factor study
+    compatible_tasks:
+    - association
+    - prediction
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - index_time
+    - exposure
+    - outcome
+    - covariates
+    - sampling
+    - missing_data
+    - analysis
+    - index_time
+    - candidate_factor
+    hard_hazards:
+    - prognostic_vs_predictive_confusion
+    - overadjustment
+    - data_driven_cutpoints
+    - selective_reporting
+    reporting_guideline: STROBE
+    notes: []
+  survival_cohort:
+    name: Time-to-event cohort
+    compatible_tasks:
+    - description
+    - association
+    - prediction
+    - causal_effect
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - index_time
+    - exposure
+    - outcome
+    - covariates
+    - sampling
+    - missing_data
+    - analysis
+    - time_origin
+    - event_definition
+    - censoring
+    - competing_events
+    hard_hazards:
+    - time_origin_error
+    - informative_censoring
+    - hazard_ratio_misinterpretation
+    - competing_risk_error
+    reporting_guideline: STROBE
+    notes: []
+  recurrent_event_cohort:
+    name: Recurrent-event cohort
+    compatible_tasks:
+    - description
+    - association
+    - prediction
+    - causal_effect
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - index_time
+    - exposure
+    - outcome
+    - covariates
+    - sampling
+    - missing_data
+    - analysis
+    - event_process
+    - terminal_event
+    - within_person_dependence
+    hard_hazards:
+    - event_dependence_ignored
+    - terminal_event_ignored
+    - first_event_only_target_shift
+    reporting_guideline: STROBE
+    notes: []
+  multistate_study:
+    name: Multistate study
+    compatible_tasks:
+    - description
+    - prediction
+    - causal_effect
+    required_manifest_fields:
+    - target_population
+    - eligibility
+    - index_time
+    - exposure
+    - outcome
+    - covariates
+    - sampling
+    - missing_data
+    - analysis
+    - states
+    - transitions
+    - time_scale
+    hard_hazards:
+    - state_definition_overlap
+    - non-Markov_assumption_hidden
+    - competing_transition_misinterpretation
+    reporting_guideline: STROBE
+    notes: []
+  spatial_ecological:
+    name: Spatial ecological study
+    compatible_tasks:
+    - description
+    - association
+    - prediction
+    required_manifest_fields:
+    - spatial_units
+    - support
+    - exposure_surface
+    - outcome_surface
+    - time_alignment
+    - spatial_dependence
+    hard_hazards:
+    - ecological_fallacy
+    - MAUP
+    - spatial_confounding
+    - support_misalignment
+    reporting_guideline: STROBE
+    notes: []
+  geostatistical_survey:
+    name: Geostatistical survey
+    compatible_tasks:
+    - description
+    - prediction
+    required_manifest_fields:
+    - sampling_locations
+    - survey_design
+    - outcome
+    - covariates
+    - spatial_model
+    - target_grid
+    hard_hazards:
+    - preferential_sampling
+    - coordinate_displacement
+    - uncertainty_understatement
+    - extrapolation
+    reporting_guideline: STROBE
+    notes: []
+  network_interference_study:
+    name: Network or interference study
+    compatible_tasks:
+    - causal_effect
+    required_manifest_fields:
+    - network_definition
+    - treatment
+    - exposure_mapping
+    - outcome
+    - allocation
+    - interference_assumptions
+    - estimand
+    hard_hazards:
+    - SUTVA_implicit
+    - network_measurement_error
+    - exposure_mapping_misspecified
+    - positivity_of_allocations
+    reporting_guideline: STROBE
+    notes: []
+  mediation_study:
+    name: Causal mediation study
+    compatible_tasks:
+    - causal_effect
+    required_manifest_fields:
+    - exposure
+    - mediator
+    - outcome
+    - time_order
+    - estimand
+    - confounders_each_leg
+    - interaction
+    - sensitivity
+    hard_hazards:
+    - cross_world_assumptions_hidden
+    - mediator_outcome_confounding
+    - post_exposure_confounder
+    - temporal_overlap
+    reporting_guideline: STROBE
+    notes: []
+  intersectional_descriptive:
+    name: Intersectional descriptive analysis
+    compatible_tasks:
+    - description
+    - inequality
+    required_manifest_fields:
+    - social_dimensions
+    - intersectional_strata
+    - outcome
+    - target_population
+    - scale
+    - sparse_strata_strategy
+    hard_hazards:
+    - causal_language
+    - reification
+    - sparse_cell_instability
+    - reference_group_dependence
+    reporting_guideline: STROBE
+    notes: []
+  intersectional_causal:
+    name: Intersectional causal analysis
+    compatible_tasks:
+    - causal_effect
+    - policy
+    required_manifest_fields:
+    - social_position
+    - modifiable_intervention
+    - outcome
+    - target_population
+    - estimand
+    - causal_model
+    - scale
+    - positivity
+    hard_hazards:
+    - identity_as_simple_treatment
+    - undefined_intervention
+    - structural_confounding
+    - joint_positivity
+    - scale_dependence
+    reporting_guideline: STROBE
+    notes: []
+  continuous_exposure_causal:
+    name: Continuous exposure causal analysis
+    compatible_tasks:
+    - causal_effect
+    required_manifest_fields:
+    - continuous_exposure
+    - intervention_or_dose_policy
+    - outcome
+    - target_population
+    - estimand
+    - support
+    - confounders
+    hard_hazards:
+    - undefined_dose_intervention
+    - continuous_positivity
+    - extrapolation
+    - measurement_error
+    reporting_guideline: STROBE
+    notes: []
+  mixture_exposure_causal:
+    name: Exposure mixture causal analysis
+    compatible_tasks:
+    - causal_effect
+    required_manifest_fields:
+    - mixture_components
+    - joint_intervention
+    - outcome
+    - target_population
+    - estimand
+    - joint_support
+    - confounders
+    hard_hazards:
+    - mixture_index_not_intervention
+    - joint_positivity
+    - high_correlation
+    - nonlinear_interaction_unexamined
+    reporting_guideline: STROBE
+    notes: []
+  systematic_review:
+    name: Systematic review
+    compatible_tasks:
+    - evidence_synthesis
+    required_manifest_fields:
+    - review_question
+    - eligibility
+    - search
+    - screening
+    - extraction
+    - risk_of_bias
+    - synthesis
+    hard_hazards:
+    - incomplete_search
+    - double_counting
+    - incompatible_effects
+    - publication_bias_overclaim
+    reporting_guideline: PRISMA_2020
+    notes: []
+  meta_analysis:
+    name: Meta-analysis
+    compatible_tasks:
+    - evidence_synthesis
+    required_manifest_fields:
+    - effect_measure
+    - study_unit
+    - variance
+    - heterogeneity
+    - dependency
+    - bias
+    - certainty
+    hard_hazards:
+    - wrong_unit
+    - shared_control_ignored
+    - heterogeneity_estimator_unexamined
+    - prediction_interval_omitted
+    reporting_guideline: PRISMA_2020
+    notes: []
+  network_meta_analysis:
+    name: Network meta-analysis
+    compatible_tasks:
+    - evidence_synthesis
+    - decision
+    required_manifest_fields:
+    - network
+    - effect_measure
+    - transitivity
+    - consistency
+    - multiarm_structure
+    - heterogeneity
+    hard_hazards:
+    - transitivity_unargued
+    - ranking_overconfidence
+    - multiarm_correlation_ignored
+    - inconsistency_test_as_proof
+    reporting_guideline: PRISMA_2020
+    notes: []
+  health_economic_evaluation:
+    name: Health economic evaluation
+    compatible_tasks:
+    - decision
+    required_manifest_fields:
+    - perspective
+    - population
+    - comparators
+    - time_horizon
+    - outcomes
+    - costs
+    - discounting
+    - uncertainty
+    hard_hazards:
+    - perspective_ambiguity
+    - structural_uncertainty_ignored
+    - double_counting
+    - equity_omitted
+    reporting_guideline: CHEERS_2022
+    notes: []
+  omics_discovery:
+    name: High-dimensional omics discovery
+    compatible_tasks:
+    - discovery
+    - prediction
+    required_manifest_fields:
+    - biospecimen
+    - preprocessing
+    - batch
+    - features
+    - outcome
+    - multiplicity
+    - validation
+    hard_hazards:
+    - batch_confounding
+    - double_dipping
+    - winner_curse
+    - pathway_overinterpretation
+    reporting_guideline: null
+    notes: []
+  causal_machine_learning:
+    name: Causal machine learning
+    compatible_tasks:
+    - causal_effect
+    - policy
+    required_manifest_fields:
+    - target_population
+    - intervention
+    - outcome
+    - estimand
+    - causal_model
+    - nuisance_models
+    - sample_splitting
+    - overlap
+    - validation
+    hard_hazards:
+    - prediction_causality_confusion
+    - overlap_failure
+    - heterogeneity_overfitting
+    - policy_value_not_evaluated
+    reporting_guideline: null
+    notes: []

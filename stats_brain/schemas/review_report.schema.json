@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stats-brain.org/schemas/review_report.schema.json",
+  "title": "STATS-BRAIN review report",
+  "type": "object",
+  "required": ["engine", "version", "release_status", "reconstructed_problem", "gates", "findings"],
+  "properties": {
+    "engine": {"const": "STATS-BRAIN"},
+    "version": {"type": "string"},
+    "release_status": {"enum": ["blocked", "author_review_required", "minor_revision", "ready"]},
+    "reconstructed_problem": {"type": "object"},
+    "dimension_scores": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0, "maximum": 100}},
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["gate_id", "name", "passed", "rationale", "blocking_rule_ids"],
+        "properties": {
+          "gate_id": {"type": "string"},
+          "name": {"type": "string"},
+          "passed": {"type": "boolean"},
+          "rationale": {"type": "string"},
+          "blocking_rule_ids": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rule_id", "title", "domain", "severity", "epistemic_status", "rationale", "repair"],
+        "properties": {
+          "rule_id": {"type": "string"},
+          "title": {"type": "string"},
+          "domain": {"type": "string"},
+          "severity": {"enum": ["fatal", "critical", "major", "minor", "query", "info"]},
+          "epistemic_status": {"enum": ["known_error", "consensus_requirement", "context_dependent", "active_debate", "not_identifiable", "not_assessable", "informational"]},
+          "rationale": {"type": "string"},
+          "repair": {"type": "string"},
+          "source_ids": {"type": "array", "items": {"type": "string"}}
+        },
+        "additionalProperties": true
+      }
+    },
+    "debate_notes": {"type": "array"},
+    "not_assessable": {"type": "array"},
+    "metadata": {"type": "object"}
+  },
+  "additionalProperties": true
+}

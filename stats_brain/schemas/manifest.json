@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stats-brain.org/schemas/manifest.schema.json",
+  "title": "STATS-BRAIN review manifest",
+  "type": "object",
+  "properties": {
+    "study": {
+      "type": "object",
+      "properties": {
+        "title": {"type": "string"},
+        "task": {"enum": ["description", "association", "prediction", "causal_effect", "measurement", "discovery", "decision"]},
+        "design": {"type": "string"},
+        "target_population": {},
+        "sampling_target": {},
+        "unit_of_analysis": {},
+        "data_structure": {},
+        "data_source": {},
+        "sample_size": {}
+      },
+      "additionalProperties": true
+    },
+    "question": {"type": "object", "additionalProperties": true},
+    "estimand": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string"},
+        "target_population": {},
+        "treatment_strategies": {},
+        "comparator": {},
+        "outcome": {},
+        "time_zero": {},
+        "time_horizon": {},
+        "summary_measure": {},
+        "effect_scale": {},
+        "intercurrent_event_strategy": {}
+      },
+      "additionalProperties": true
+    },
+    "causal": {"type": "object", "additionalProperties": true},
+    "target_trial": {"type": "object", "additionalProperties": true},
+    "sampling": {"type": "object", "additionalProperties": true},
+    "prediction": {"type": "object", "additionalProperties": true},
+    "continuous_exposure": {"type": "object", "additionalProperties": true},
+    "joint_intervention": {"type": "object", "additionalProperties": true},
+    "intersectionality": {"type": "object", "additionalProperties": true},
+    "time": {"type": "object", "additionalProperties": true},
+    "analysis": {
+      "type": "object",
+      "properties": {
+        "methods": {"type": "array", "items": {"type": ["string", "object"]}},
+        "covariates": {"type": "array"},
+        "uncertainty": {},
+        "diagnostics": {},
+        "sensitivity": {},
+        "missing_data": {},
+        "software": {}
+      },
+      "additionalProperties": true
+    },
+    "reporting": {"type": "object", "additionalProperties": true},
+    "reproducibility": {"type": "object", "additionalProperties": true}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://auctor.local/schemas/docx_validation.schema.json",
+  "title": "Auctor DOCX Validation Report",
+  "type": "object",
+  "required": ["valid", "checks", "inventory"],
+  "properties": {
+    "valid": {"type": "boolean"},
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "passed"],
+        "properties": {
+          "name": {"type": "string"},
+          "passed": {"type": "boolean"},
+          "severity": {
+            "type": "string",
+            "enum": ["info", "warning", "error", "critical"]
+          },
+          "details": {}
+        },
+        "additionalProperties": true
+      }
+    },
+    "inventory": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "semantic_references": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

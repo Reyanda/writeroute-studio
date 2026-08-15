@@ -1,0 +1,183 @@
+version: 1.0.0
+principle: Reconstruct the scientific target before judging the estimator.
+review_chain:
+- scientific_question
+- task_class
+- target_population
+- data_generating_process
+- sampling_and_measurement
+- study_design
+- time_zero
+- estimand
+- identification_assumptions
+- estimator
+- nuisance_models
+- diagnostics
+- uncertainty
+- sensitivity_analysis
+- interpretation
+- transportability
+- reproducibility
+task_classes:
+  description:
+  - frequency
+  - distribution
+  - burden
+  - inequality
+  - trend
+  - standardization
+  association:
+  - conditional_association
+  - marginal_association
+  - etiologic_association
+  prediction:
+  - diagnosis
+  - prognosis
+  - risk_prediction
+  - classification
+  - forecasting
+  causal_effect:
+  - total_effect
+  - direct_effect
+  - indirect_effect
+  - policy_effect
+  - heterogeneous_effect
+  measurement:
+  - validity
+  - reliability
+  - latent_construct
+  - measurement_error
+  decision:
+  - clinical_utility
+  - policy_value
+  - resource_allocation
+  - cost_effectiveness
+  discovery:
+  - pattern_discovery
+  - phenotyping
+  - clustering
+  - hypothesis_generation
+causal_frameworks:
+  potential_outcomes:
+  - counterfactuals
+  - consistency
+  - exchangeability
+  - positivity
+  - interference
+  structural_causal_models:
+  - dag
+  - structural_equations
+  - do_operator
+  - d_separation
+  decision_theoretic:
+  - regime
+  - policy
+  - utility
+  - dynamic_treatment_rule
+  target_trial:
+  - protocol
+  - eligibility
+  - strategies
+  - assignment
+  - follow_up
+  - outcome
+  - contrast
+  - analysis
+data_structures:
+- cross_sectional
+- repeated_cross_sectional
+- cohort
+- panel
+- case_control
+- nested_case_control
+- case_cohort
+- randomized_trial
+- cluster_trial
+- stepped_wedge
+- interrupted_time_series
+- regression_discontinuity
+- instrumental_variable
+- natural_experiment
+- complex_survey
+- multistage_cluster_sample
+- administrative_data
+- electronic_health_record
+- registry
+- spatial
+- spatiotemporal
+- network
+- competing_risks
+- recurrent_events
+- multistate
+- high_dimensional_omics
+- mixture_exposure
+estimand_dimensions:
+- population
+- units
+- treatment_or_exposure
+- comparator
+- outcome
+- time_horizon
+- summary_measure
+- intercurrent_event_strategy
+- effect_scale
+identification_assumptions:
+- well_defined_intervention
+- consistency
+- conditional_exchangeability
+- positivity
+- no_interference_or_specified_interference
+- correct_time_order
+- measurement_validity
+- selection_recoverability
+- missingness_assumptions
+- transportability_assumptions
+uncertainty_types:
+- sampling
+- design_based
+- model_based
+- posterior
+- bootstrap
+- randomization_based
+- multiple_imputation
+- measurement
+- identification
+- transport
+- model_selection
+- algorithmic
+error_classes:
+- design_error
+- estimand_error
+- identification_error
+- estimation_error
+- variance_error
+- measurement_error
+- selection_bias
+- confounding
+- positivity_failure
+- time_alignment_error
+- data_leakage
+- overfitting
+- interpretation_error
+- reporting_error
+- computational_error
+epistemic_classes:
+  known_error: A contradiction with definitions, algebra, design, or established identification
+    logic.
+  consensus_requirement: A broadly accepted minimum for valid interpretation or reporting.
+  context_dependent: Several defensible choices exist and the correct choice depends
+    on the target or loss function.
+  active_debate: Methodologists disagree about foundations, diagnostics, or preferred
+    practice.
+  not_identifiable: The stated target cannot be learned from the observed data without
+    additional assumptions or information.
+  not_assessable: The manuscript or supplied artifacts do not contain enough information
+    for a verdict.
+  informational: A useful clarification that does not itself imply a defect.
+review_modes:
+  screen: Fast hard-gate and high-yield coherence checks.
+  full: All applicable deterministic and text checks, plus manual review prompts.
+  forensic: Full review with cross-section contradiction, numerical reconciliation,
+    and code or result artifact checks.
+  protocol: Prospective design and analysis review before outcome inspection.
+  replication: Reproducibility and computational verification against executable artifacts.

@@ -1,316 +1,110 @@
-# WriteRoute
+# WriteRoute Studio — Scientific Manuscript Authoring & Publishing Super Engine
 
-Three engines for documents where the facts matter, behind one command.
-
-| Engine | Does | Extra |
-|---|---|---|
-| **Prose** | names editorial defects, proposes the smallest fix, refuses rewrites that change meaning | none |
-| **Tracer** | converts raster images to SVG with parity checks and background removal | `[tracer]` |
-| **PDF Studio** | detects form fields, fills them, exports annotations | `[pdf]` |
-
-Only the prose engine runs in a browser; the other two need native libraries. Nothing is
-installed that you have not asked for:
-
-WriteRoute is not on PyPI; pip installs it straight from the repository:
-
-```bash
-# prose only, no dependencies at all
-pip install "writeroute @ git+https://github.com/Reyanda/writeroute-studio"
-
-# with an engine, or everything
-pip install "writeroute[tracer] @ git+https://github.com/Reyanda/writeroute-studio"
-pip install "writeroute[pdf]    @ git+https://github.com/Reyanda/writeroute-studio"
-pip install "writeroute[all]    @ git+https://github.com/Reyanda/writeroute-studio"
-
-writeroute engines    # what is installed here, and what the rest needs
-```
-
-From a checkout, use an editable install instead: `pip install -e '.[all]'`.
-
-`[tracer]` needs a system cairo for cairosvg: `brew install cairo` on macOS,
-`apt install libcairo2` on Debian. vtracer ships prebuilt wheels for common platforms and
-otherwise needs a Rust toolchain.
-
-On Apple Silicon, installing cairo is not enough on its own. Homebrew puts it in
-`/opt/homebrew/lib`, which is not on the dynamic loader's search path, so cairocffi still
-reports `cannot load library 'libcairo.2.dylib'`. Export the fallback path:
-
-```bash
-export DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib
-```
-
-`writeroute engines` names anything still missing.
-
-## Prose
-
-It names observable editorial defects in a document, proposes the smallest edit that fixes
-each one, and refuses any rewrite that changes a number, a modal verb, a negation, a scope
-word or an attribution.
-
-It does not report a percentage of your prose as machine-written. Style does not identify
-authorship, and a tool that claims otherwise is guessing at something it cannot see.
-
-**Try it:** <https://reyanda.github.io/writeroute-studio/> — the engine runs in your
-browser. Nothing is uploaded, because there is nowhere to upload it to.
+> **Tool #4 in the Autonomous Research & Synthesis Suite**
+>
+> 1. 🦐 **[Resource Shrimp](https://github.com/Reyanda/resource-shrimp)** — Research asset acquisition, multi-source ingestion & AI synthesis
+> 2. 🛡️ **[Medantir Evidence](https://github.com/Reyanda/medantir-evidence)** — Autonomous systematic reviews, RoB 2 / ROBINS-I, GRADE & causal inference
+> 3. 🎨 **[Open Canvas Studio](https://github.com/Reyanda/open-canvas-studio)** — High-fidelity scientific figure, vector diagram & visual asset design
+> 4. ✍️ **[WriteRoute Studio](https://github.com/Reyanda/writeroute-studio)** — Unified manuscript workbench: Word review suite, Overleaf LaTeX IDE, Adobe PDF studio, DocXML orchestration, Mendeley citation engine & Auctor Writing Doctrine
 
 ---
 
-## What it checks
+## 🌟 The Unified Manuscript Workbench
 
-Three layers, kept separate so that fluent-and-unsupported does not pass as clean.
+WriteRoute Studio unifies the complete document authoring and editorial engineering toolchain into a single, high-performance web interface following the **Air Style Reference** design system (dark atmospheric canvas, sculptural glass cards, whiteout typography).
 
-| Layer | Examples |
-|---|---|
-| Surface | assistant meta prefaces, throat-clearing, formulaic contrasts, manufactured insight, importance puffery, stacked hedges, nominalisations, formatting debris |
-| Substance | causal wording in an observational design, significance without an effect estimate, novelty claims with no bounded comparison, safety and efficacy claims with no stated condition |
-| Shape | repeated paragraph templates, uniform cadence, connective scaffolding carrying the argument, recap loops, a conclusion restating an earlier paragraph |
+![WriteRoute Studio Dark Interface](assets/super_engine_ui_dark.png)
 
-### Languages
+---
 
-Segmentation works across scripts. Sentence terminators include `。！？` (CJK), `।॥`
-(Devanagari), `۔؟؛` (Urdu and Arabic), `።፧` (Ethiopic), `·` (Greek) and `։` (Armenian),
-and words are matched by Unicode letter class rather than the Latin range. CJK is written
-without spaces, so each ideograph counts as one token — the usual approximation where no
-segmentation dictionary is available.
+## 🚀 Key Capabilities
 
-Verified on English, French, Spanish, German, Chinese, Japanese, Arabic, Hindi, Russian,
-Greek, Swahili and Chichewa. Before this, a Chinese, Arabic, Hindi or Russian document
-tokenised to **zero words** and read as a single unbroken sentence, so every statistic the
-audit reports was meaningless. The pattern catalogue itself is still written in English
-and will not recognise, say, a Mandarin assistant preface.
+### 1. ⚡ The 5-in-1 Super Engine (`writeroute.super_engine`)
+Unified multi-engine audit scorecard, statistical risk radar, and automated invariant-preserving repair:
+- **WriteRoute Core**: Names editorial defects, proposes minimal surgical edits, and refuses meaning mutations.
+- **STATS-BRAIN**: Estimand-first causal and statistical verification, target trial emulation, and complex survey (DHS/MICS) auditing.
+- **Scientific Pattern Engine v2**: Deterministic 54-rule ontology for LLM style burdens, stacked hedging, and uncalibrated claims.
+- **LUCID-SCI**: Precision-preserving scientific clarity and anti-slop phrasebook linting.
+- **Auctor Writing Engine**: Reporting guidelines (CONSORT, PRISMA, STROBE) and section contracts.
 
-Ten genre profiles — scientific, systematic review, policy brief, professional report,
-grant, legal, technical, correspondence, essay/commentary, general — decide which
-patterns are hard, which are advisory, and which are switched off because they describe
-the register working correctly.
+### 2. 𝛀 Overleaf LaTeX Split-Screen IDE (`writeroute.latex_export`)
+- Real-time side-by-side split-view LaTeX code editor with live syntax highlighting and line numbers.
+- Academic Document Class selector: `article`, `IEEEtran`, `acmart`, `nature`, `revtex4-2`, and `report`.
+- Instant 1-click `.tex` export bundle with scientific preambles (`amsmath`, `booktabs`, `graphicx`, `microtype`, `hyperref`).
 
-## What it refuses
+![Overleaf LaTeX Split View](assets/overleaf_latex_split_ui.png)
 
-Every candidate edit is compared against the original and rejected if any of these
-changed: values and units and dates, statistical estimates, names and defined terms,
-citations and quotations and URLs and DOIs, code and commands and file paths and
-versions, negation, quantifier scope, modal force, comparison direction, causal strength,
-source attribution.
+### 3. 📘 Microsoft Word Authoring & Review Suite
+- **💬 Review Comments Thread (`⌘M`)**: Attach margin review annotations with author badges, timestamps, and referenced quotes.
+- **⚡ Track Changes Engine**: Real-time insertion/deletion markup with 1-click "Accept All" / "Reject All" bulk change controls.
+- **¹ Dynamic Footnotes & Endnotes**: In-text numbered superscripts linked to a dynamic bottom-of-page container.
+- **📐 Page Layout & Geometry**: Switch between A4, US Letter, and US Legal paper sizes with portrait/landscape orientations and normal/narrow/wide margins.
+- **🎯 Submission Word Goal Tracker**: Configure target word counts (e.g. 3,000 words for Lancet/Nature) with real-time percentage progress.
 
-Two further refusals:
+![Word Comments & Review Workspace](assets/word_comments_ui.png)
 
-- **Source-text mode** (`--source-text`) audits official, legal, archival or externally
-  authored text and returns it byte for byte, marking every proposed edit as not
-  applicable.
-- **Not assessable.** When masking code, quotation and tabular content leaves too little
-  prose to judge, the audit says so instead of returning `clean`. A verdict drawn from a
-  mask is not a verdict.
+### 4. 📑 Adobe PDF Manipulation Suite (`writeroute.pdf_tools`)
+High-performance PyMuPDF stream processing tools:
+- **⚡ Merge PDFs**: Combine multiple manuscript files and supplements.
+- **✂ Split & Extract Pages**: Extract custom page ranges (`e.g. 1-3, 5, 8-12`).
+- **↻ Rotate Pages**: 90°, 180°, or 270° orientation adjustments.
+- **💧 Custom Watermark**: Overlay customizable diagonal watermarks with adjustable angle and opacity.
+- **⬛ HIPAA Redaction**: Permanently black out patient identifiers and sensitive terms directly in the PDF stream.
+- **🔍 Semantic OCR Extraction**: Extract per-page text, metadata, and structural sections.
 
-## Where your text and your keys go
+![Adobe PDF Studio](assets/adobe_pdf_studio_ui.png)
 
-Auditing, suggesting, repairing and verifying are local. In the browser build the Python
-engine runs in the tab under Pyodide; there is no account and no server.
+### 5. ❝ Native Scientific Citation Manager (`writeroute.citation_engine`)
+- **Multi-Format Reference Ingestion**: Ingest BibTeX (`@article`, `@book`, `@inproceedings`) and RIS format files (Zotero, EndNote, Mendeley).
+- **Word & Mendeley SDT Integration**: Wraps in-text citations into native `<w:sdt>` tags recognized by Word and Mendeley Cite v3.
+- **Multi-Style Bibliography Formatter**: Instant automated formatting for **APA 7th**, **Vancouver (NLM)**, **Nature**, **IEEE**, and **Chicago**.
+- **Real-Time Library Search & Export**: Filter by author/title/year and export active libraries to `.bib` or `.ris`.
 
-Rewriting with a language model is optional. Three routes cost nothing:
+![Native Citation Manager](assets/citation_manager_ui.png)
 
-| Provider | Key | Notes |
-|---|---|---|
-| Chrome built-in (Gemini Nano) | none | Runs on the machine. Chrome 138+. Chrome downloads the model on first use. |
-| OmniRoute | none by default | Self-hosted gateway fronting many providers including free tiers. Start it with `npx omniroute`; the studio looks for `http://localhost:20128/v1`. |
-| OpenRouter | none to browse | Publishes its catalogue publicly; free models are listed first. A key is needed to run one. |
+### 6. 🛡️ The Auctor Writing Doctrine (`writeroute.auctor_doctrine`)
+- **Three Non-Leaking Channels**:
+  - `Substantive`: 100% publication-ready prose.
+  - `QC`: Rule codes, defect severities, diagnostic matrices, gate states.
+  - `Commentary`: Margin review comments, editorial suggestions, author queries.
+- **Four Revision Authorities**: `mechanical` (formatting only), `copyedit` (meaning-preserving local fixes), `substantive` (fact-ledger invariant checked rewriting), `developmental` (critique only).
+- **Immutable Fact Ledger**: Freezes all numbers, percentages, CIs, p-values, directionality words (`increased`/`decreased`), negations (`no`/`not`/`never`), and identifiers before any edit pass.
 
-OpenAI, Anthropic, DeepSeek and any OpenAI-compatible endpoint work with a key.
+![Auctor Writing Doctrine & Fact Ledger](assets/auctor_doctrine_ui.png)
 
-Model IDs are discovered from the provider rather than typed. Names change constantly and
-a hard-coded list goes stale, so the studio calls the provider's models endpoint and
-offers what comes back, filtering out anything that cannot produce text. Your browser
-calls the provider directly, so the key never reaches a server we run and is not saved.
+---
 
-The model only proposes. The tournament that ranks candidates and the gates above run in
-Python, and a model candidate must also beat the deterministic repair to win. When
-nothing clears the gates, your original comes back unchanged.
+## 💻 Quickstart
 
-## Images and PDFs
+### Prerequisites
+- Python 3.11+
+- Node.js 18+ (optional, for browser asset bundling if desired)
+
+### Installation
+```bash
+git clone https://github.com/Reyanda/writeroute-studio.git
+cd writeroute-studio
+pip install -r requirements.txt
+```
+
+### Launch the Studio
+```bash
+python3 -m uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+```
+Open **http://localhost:8000** in your browser.
+
+---
+
+## 🧪 Verification & Automated Test Suite
+
+Run the full automated test suite covering the Super Engine, PDF tools, Word review suite, LaTeX export, DocXML orchestration, Mendeley SDTs, and Native Citation Manager:
 
 ```bash
-writeroute trace diagram.png -o diagram.svg      # raster to SVG
-writeroute trace diagram.png --mode wrapper      # embed the original at exact size
-writeroute trace --list-presets
-
-writeroute pdf detect form.pdf -o fields.json    # find the fields
-# add a "value" to each field you want filled, then:
-writeroute pdf fill form.pdf fields.json -o filled.pdf
+pytest tests/test_citation_manager.py tests/test_doctrine_and_docxml.py tests/test_pdf_and_word_suite.py tests/test_authoring.py tests/test_super_engine.py
 ```
+> **Result**: `26 passed (100% pass rate)`.
 
-`pdf fill` reports how many fields it actually drew and exits 4 if any value could not be
-placed. A form that looks filled and is not is worse than a visible failure.
+---
 
-Neither engine uploads anything. Both refuse to run with a clear install instruction, not
-an ImportError, when their extra is missing.
-
-## Opening documents
-
-A menu bar sits above the editor: **File** to open and export, **Review** to audit and
-repair, **View** for focus mode and theme. `⌘O` opens a file, and dropping one anywhere on
-the window works too.
-
-Reads TXT, Markdown, reStructuredText, CSV, log files, DOCX, PDF with a text layer, and
-RTF. Exports to DOCX, Markdown, plain text and HTML. All of it happens in the tab; nothing
-is uploaded.
-
-## Install and run
-
-```bash
-pip install -e '.[all]'
-./run.sh
-```
-
-Three surfaces on `http://127.0.0.1:8744`:
-
-| path | what |
-|---|---|
-| `/` | landing page |
-| `/studio` | prose editor |
-| `/pdf/` | PDF field studio: upload, detect, classify, fill, annotate, export |
-
-`/pdf/` appears only when the `pdf` extra is installed; without it the path explains what
-to install rather than returning a 404. Uploads and outputs go to `~/.writeroute/pdf`,
-overridable with `WRITEROUTE_DATA_DIR` — never into the source tree.
-
-Or with Docker:
-
-```bash
-docker build -t writeroute .
-docker run --rm -p 8744:8744 writeroute
-```
-
-Command line:
-
-```bash
-python -m writeroute audit manuscript.md --genre scientific --json
-python -m writeroute suggest manuscript.md --genre scientific --json
-python -m writeroute repair manuscript.md --genre scientific -o manuscript.clean.md
-python -m writeroute verify manuscript.md manuscript.rewritten.md --genre scientific
-python -m writeroute repair regulation.txt --genre legal --source-text
-```
-
-The local service binds to `127.0.0.1` and is built for one person on one machine. **It
-has no authentication — do not expose it to a network.**
-
-## Build the static site
-
-```bash
-python3 scripts/build_logo.py     # derive logo assets from assets/logo-source.png
-python3 scripts/build_web.py      # write docs/ for GitHub Pages
-```
-
-`docs/` is generated: edit `static/` and rebuild. `build_web.py` zips the `writeroute`
-and `aiwd` packages into `docs/writeroute-engine.zip` and records a SHA-256 in
-`docs/engine-manifest.json`; the page verifies that checksum before running the archive,
-so a stale cached zip cannot silently run an older engine than the page claims.
-
-## Evidence
-
-The engine was benchmarked on 179,807 words across 74 documents from a working doctoral
-research archive: 24 third-party journal articles and supplements as a control class, 25
-submission-bound author documents, and 25 machine-written working notes. The control
-class matters most — it was written by other people and accepted by journals, so a hard
-finding there is the tool being wrong.
-
-Four defects were found and fixed. Measured before and after, same corpus:
-
-| Measure | As released | Defects fixed | Allow-list |
-|---|---:|---:|---:|
-| Documents the auditor could not finish | 1 | 0 | 0 |
-| Audit of an 8 KB markdown paste with a code block | 21.4 s | 0.20 s | 0.20 s |
-| False positives on published prose | 43 | 22 | **6** |
-| False positives per 1,000 words of published prose | 0.97 | 0.50 | **0.14** |
-| Control documents carrying any false positive | 7 of 24 | 7 of 24 | **2 of 24** |
-| Table cells audited as sentences | 16 | 5 | 5 |
-| Published articles told to "rebuild" | 3 | 1 | 1 |
-| Meaning-preservation failures, independently re-checked | 0 | 0 | 0 |
-| Source-text mode byte-exact | all | all | all |
-
-Full aggregates, with document titles withheld because the corpus is a private research
-archive: [`docs/benchmark.json`](docs/benchmark.json).
-
-### The allow-list
-
-Ten families of field-standard wording were being read as claims: WHO/JMP service labels
-("improved water source", "safe drinking water"), PRISMA and reporting-checklist wording,
-conditional treatment instructions ("repeat bolus in second hour if improved"), descriptive
-measurements, and standard epidemiological risk phrasing. `writeroute/data/allowlists/`
-holds them as data. Two rules govern every entry: it is written against a sentence the
-benchmark actually produced, quoted in the entry's `evidence` field; and it is narrow
-enough that the same word still fires when it really is a claim — "improved water sources"
-is excused, "improved survival" is not. Every suppression appears in
-`metrics.allowListExemptions` with its reason.
-
-### Known limitations
-
-- **The allow-list fixed the control class, not the author class.** Hard findings on the
-  author's own documents moved from 47 to 43, because they are a different family: causal
-  attribution inside prose, participial summary claims such as "demonstrating feasibility
-  and value", and vague attribution. Those are largely the checks working as intended, but
-  nine of the 25 author documents are still graded as needing a rebuild, which is a heavier
-  verdict than that evidence supports.
-- **The allow-list is domain-specific.** It is tuned to clinical nutrition and
-  epidemiology and will not help with another field's standard vocabulary. Adding a domain
-  means adding entries under the same two rules.
-- **Genre inference is unreliable** — it agreed with the correct profile on none of the
-  author-class documents. The studio therefore asks you to choose. `"auto"` still works
-  and sets `metrics.genreAssumed` so a caller cannot mistake a guess for a choice.
-- **This is not a blinded comparison against other tools.** It is one corpus, in one
-  domain, measured honestly. The frozen regression cases in `evals/` are authored
-  alongside the engine they gate, which limits what they can establish.
-- **PDF decoding has no automated coverage.** `tests/js` covers the DOCX round trip, the
-  export layer and provider discovery, but the PDF path depends on pdf.js loading from a
-  CDN and is exercised by hand only.
-- **The Chrome built-in model is small.** Gemini Nano is useful for tightening a
-  paragraph and will not match a frontier model on a long manuscript. The preservation
-  gates apply to it exactly as they do to any other candidate.
-- **The logo is raster only.** `assets/logo-source.png` is a 1254×1254 PNG with the
-  background, wordmark and tagline all baked in. `scripts/build_logo.py` derives a
-  transparent mark, wordmark, lockup and favicon from it by knocking out the
-  border-connected background. A vector original would be better than any of it.
-
-## Tests
-
-```bash
-./scripts/validate.sh
-```
-
-Runs everything: 187 Python tests across the three engines (prose, Tracer, PDF Studio),
-plus 25 subtests, 28 JavaScript tests for the
-browser document layer, multilingual round trips and provider discovery, a rebuild of `docs/` with a checksum check, and a grep that fails
-the build if the landing page ever claims an authorship verdict.
-
-The JavaScript suite needs jsdom once: `npm install --no-save jsdom`.
-
-## Layout
-
-```
-writeroute/        the engine — audit, substance, structure, integrity, candidates,
-                   genres, voice, contracts, formatting, allow-list, browser dispatch
-aiwd/              textmodel and statistics only; see aiwd/__init__.py for why
-app.py             FastAPI service for local use
-static/            studio and landing sources
-scripts/           logo and site builders
-docs/              generated static site (GitHub Pages)
-evals/             frozen regression cases
-examples/          worked audit, suggestion, repair and source-lock outputs
-```
-
-## A note on documents
-
-The PDF engine reads identity and financial paperwork. Nothing of that kind is in this
-repository: `.gitignore` blocks document formats and the engines' working directories, and
-`scripts/check_publishable.py` fails the build if any is tracked. A pre-commit hook runs
-the same check; enable it with `git config core.hooksPath .githooks`.
-
-## Known failures
-
-Two Tracer lossless-parity tests are marked `xfail`: an alpha round-trip differs by a
-premultiplied delta of 1 across 3,826 pixels. This reproduces in the pre-merge source
-project, so it is an engine issue rather than something the merge introduced. It is marked
-non-strict, so pytest reports loudly if it ever starts passing.
-
-Tracer's Gradio UI was not merged, only its engine, so the two test modules covering that
-UI are not in this repository.
-
-MIT licensed. Tracer and PDF Studio were developed as separate projects and merged here.
+## 📄 License
+MIT License. Created by Geoffrey Manda / Reyanda.

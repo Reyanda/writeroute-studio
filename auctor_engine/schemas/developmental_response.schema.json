@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://auctor.local/schemas/developmental_response.schema.json",
+  "title": "Auctor Developmental Review Response",
+  "description": "Developmental review has no substantive channel and cannot rewrite manuscript prose.",
+  "type": "object",
+  "required": ["qc", "commentary"],
+  "properties": {
+    "qc": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "severity", "message", "action"],
+        "properties": {
+          "code": {"type": "string", "minLength": 1},
+          "severity": {
+            "type": "string",
+            "enum": ["info", "low", "medium", "high", "critical"]
+          },
+          "message": {"type": "string"},
+          "action": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "commentary": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  },
+  "additionalProperties": false
+}
