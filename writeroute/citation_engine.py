@@ -5,6 +5,15 @@ import uuid
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
+from writeroute.citation_verifier import (
+    CitationAuditReport,
+    CitationVerifier,
+    VerificationResult,
+    classify_citation,
+    looks_like_doi,
+    norm_doi,
+)
+
 
 @dataclass
 class Author:

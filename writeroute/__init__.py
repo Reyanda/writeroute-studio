@@ -13,6 +13,7 @@ from .route import (
     verify_text,
 )
 from .voice import build_voice_profile, voice_distance
+from .citation_verifier import CitationVerifier, CitationAuditReport, VerificationResult
 
 __version__ = "2.0.0"
 __all__ = [
@@ -31,5 +32,9 @@ __all__ = [
     "verify_integrity",
     "verify_text",
     "voice_distance",
+    "CitationVerifier",
+    "CitationAuditReport",
+    "VerificationResult",
     "__version__",
 ]
+

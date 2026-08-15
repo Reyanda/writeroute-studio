@@ -925,11 +925,53 @@ async function renderCitations(filterQuery = '') {
     if (res.ok) formattedData = await res.json();
   } catch (_) {}
 
+let verifiedCitationReport = null;
+
+async function renderCitations(filterQuery = '') {
+  const list = $('#citationList');
+  if (!list) return;
+  const countBadge = $('#citeCountBadge');
+  if (countBadge) countBadge.textContent = citationsLibrary.length;
+
+  if (!citationsLibrary.length) {
+    list.innerHTML = '<div class="empty-state"><p>No citations in library. Click "Add Reference" to import BibTeX or RIS entries.</p></div>';
+    return;
+  }
+
+  const q = filterQuery.toLowerCase();
+  const filtered = citationsLibrary.filter(c => {
+    const hay = `${c.title} ${c.cite_key} ${c.doi} ${c.journal} ${(c.authors || []).map(a => a.family).join(' ')}`.toLowerCase();
+    return hay.includes(q);
+  });
+
+  const style = $('#citationStyleSelect')?.value || 'apa';
+  let formattedData = null;
+  try {
+    const res = await fetch('/api/citations/format', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: filtered, style: style }),
+    });
+    if (res.ok) formattedData = await res.json();
+  } catch (_) {}
+
   list.innerHTML = '';
   filtered.forEach((c, idx) => {
     const entry = formattedData?.entries?.[idx];
     const inText = entry?.in_text || (c.authors?.length ? `(${c.authors[0].family} et al., ${c.year})` : `(${c.cite_key})`);
     const fullBib = entry?.bibliography_entry || `${(c.authors || []).map(a => a.family).join(', ')} (${c.year}). ${c.title}. <em>${c.journal || ''}</em>.`;
+
+    const vResult = verifiedCitationReport?.results?.find(r => r.key === c.cite_key || r.key === c.title || r.doi === c.doi);
+    let verifyBadge = '';
+    if (vResult) {
+      if (vResult.ok) {
+        verifyBadge = `<span style="font-size:9.5px;padding:2px 6px;border-radius:4px;background:color-mix(in srgb,var(--green) 18%,transparent);color:var(--green);font-weight:600">VERIFIED ${c.doi ? 'DOI' : 'URL'}</span>`;
+      } else {
+        verifyBadge = `<span style="font-size:9.5px;padding:2px 6px;border-radius:4px;background:color-mix(in srgb,var(--red) 18%,transparent);color:var(--red);font-weight:600" title="${escapeHTML(vResult.reason)}">GATE FAILED</span>`;
+      }
+    } else if (c.doi) {
+      verifyBadge = `<span style="font-size:9.5px;padding:2px 6px;border-radius:4px;background:var(--bg2);color:var(--muted)">DOI: ${escapeHTML(c.doi)}</span>`;
+    }
 
     const el = document.createElement('div');
     el.className = 'citation-item';
@@ -939,9 +981,12 @@ async function renderCitations(filterQuery = '') {
     el.style.marginBottom = '8px';
     el.style.background = 'var(--surface-solid)';
     el.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-        <strong style="color:var(--accent);font-size:12.5px">${escapeHTML(c.cite_key || `ref_${idx+1}`)}</strong>
-        <span style="font-size:10.5px;color:var(--muted);background:var(--bg2);padding:2px 6px;border-radius:4px">${escapeHTML(c.year || '2024')}</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;gap:6px">
+        <strong style="color:var(--twilight);font-size:12.5px">${escapeHTML(c.cite_key || `ref_${idx+1}`)}</strong>
+        <div style="display:flex;align-items:center;gap:6px">
+          ${verifyBadge}
+          <span style="font-size:10.5px;color:var(--muted);background:var(--bg2);padding:2px 6px;border-radius:4px">${escapeHTML(c.year || '2024')}</span>
+        </div>
       </div>
       <p style="font-size:12px;color:var(--text);margin:4px 0 8px 0;line-height:1.4">${fullBib}</p>
       <div style="display:flex;gap:6px">
@@ -988,6 +1033,117 @@ $('#menuInsertCite')?.addEventListener('click', () => {
   panel('citations');
   $('#modalAddCite')?.showModal();
 });
+
+// Citation Verification Hard Gate Trigger
+$('#verifyCitationsBtn')?.addEventListener('click', async () => {
+  if (!citationsLibrary.length) return showToast('No citations in library to verify');
+  showToast('Auditing citations against Crossref & live URL endpoints...');
+  try {
+    const res = await fetch('/api/citations/verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ citations: citationsLibrary, live_network: true }),
+    });
+    if (!res.ok) throw new Error(await res.text());
+    const report = await res.json();
+    verifiedCitationReport = report;
+
+    const banner = $('#citationVerifyBanner');
+    const title = $('#verifyGateTitle');
+    const badge = $('#verifyGateBadge');
+    const detail = $('#verifyGateDetail');
+
+    if (banner && title && badge && detail) {
+      banner.classList.remove('hidden');
+      if (report.all_passed) {
+        badge.textContent = 'PASSED (100%)';
+        badge.style.background = 'color-mix(in srgb,var(--green) 22%,transparent)';
+        badge.style.color = 'var(--green)';
+        title.textContent = 'Hard Gate Passed';
+        detail.textContent = `All ${report.total_count} reference(s) verified with resolvable DOIs/URLs. Verified citations ready for Mendeley & OOXML commit.`;
+        showToast('Citation Hard Gate Passed!');
+      } else {
+        badge.textContent = `BLOCKED (${report.failed_count} failed)`;
+        badge.style.background = 'color-mix(in srgb,var(--red) 22%,transparent)';
+        badge.style.color = 'var(--red)';
+        title.textContent = 'Hard Gate Blocked';
+        detail.textContent = `Pipeline halted: ${report.failed_count} reference(s) missing or failing DOI/URL resolution. Direct edits refused until corrected.`;
+        showToast('Citation Hard Gate Blocked!', 'error');
+      }
+    }
+
+    renderCitations($('#citationSearchInput')?.value || '');
+  } catch (err) {
+    alert('Verification error: ' + err.message);
+  }
+});
+
+// DOCX Extraction
+$('#extractDocxCitationsInput')?.addEventListener('change', async e => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+  showToast('Extracting citation candidates from DOCX package...');
+  const formData = new FormData();
+  formData.append('file', file);
+  try {
+    const res = await fetch('/api/citations/extract-docx', {
+      method: 'POST',
+      body: formData,
+    });
+    if (!res.ok) throw new Error(await res.text());
+    const data = await res.json();
+    if (!data.citations?.length) {
+      return showToast('No citation fields or DOIs found in DOCX');
+    }
+    data.citations.forEach(item => {
+      if (!citationsLibrary.some(c => c.doi && c.doi === item.doi)) {
+        citationsLibrary.push(item);
+      }
+    });
+    saveCitations();
+    showToast(`Extracted ${data.citations.length} citation candidates`);
+  } catch (err) {
+    alert('Extract error: ' + err.message);
+  }
+});
+
+// Direct OOXML Insertion
+$('#insertDocxOoxmlBtn')?.addEventListener('click', async () => {
+  if (!citationsLibrary.length) return showToast('No citations in library');
+  if (!verifiedCitationReport?.all_passed) {
+    return alert('Hard Gate Enforcement: All citations must be successfully verified before OOXML insertion. Click "Verify (Gate)" first.');
+  }
+
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.docx';
+  input.onchange = async () => {
+    const file = input.files?.[0];
+    if (!file) return;
+    showToast('Inserting verified citations into word/document.xml...');
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('verified_json', JSON.stringify(verifiedCitationReport));
+
+    try {
+      const res = await fetch('/api/citations/insert-ooxml', {
+        method: 'POST',
+        body: formData,
+      });
+      if (!res.ok) throw new Error(await res.text());
+      const blob = await res.blob();
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `${file.name.replace('.docx', '')}.cited.docx`;
+      a.click();
+      showToast('Downloaded .cited.docx with verified OOXML citation fields');
+    } catch (err) {
+      alert('OOXML Insert error: ' + err.message);
+    }
+  };
+  input.click();
+});
+
 
 $('#parseAndSaveCiteBtn')?.addEventListener('click', async () => {
   const raw = $('#citeRawTextInput')?.value.trim();

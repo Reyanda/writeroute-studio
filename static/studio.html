@@ -613,12 +613,22 @@ Odds Ratio, 0.36 (0.17-0.76), Reference, 0.007"></textarea>
         <!-- Citations & References Panel -->
         <section class="panel" id="panel-citations">
           <div class="panel-head"><div><h2>Native Citation Manager</h2></div><button class="panel-close">×</button></div>
-          <p class="panel-copy">Comprehensive BibTeX, RIS & CSL reference manager with SDT-wrapped in-text citation fields and automated multi-style bibliographies.</p>
-          <div class="route-actions" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+          <p class="panel-copy">BibTeX & RIS reference library with live DOI/URL verification hard gate, Crossref/DataCite resolution, Mendeley sync & direct OOXML insertion.</p>
+          <div class="route-actions" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
             <button class="button primary compact" id="openAddCiteModalBtn"><svg class="svg-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Reference</button>
-            <button class="button secondary compact" id="syncDocCitationsBtn"><svg class="svg-icon" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Sync with Doc</button>
+            <button class="button secondary compact" id="verifyCitationsBtn" style="border-color:var(--twilight);color:var(--text)"><svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg> Verify (Gate)</button>
           </div>
-          <div class="inline-fields" style="margin-bottom:10px">
+
+          <!-- Citation Verification Hard Gate Status Banner -->
+          <div id="citationVerifyBanner" class="hidden" style="margin-bottom:12px;padding:10px 12px;border-radius:var(--radius-cards);background:var(--surface-solid);border:1px solid var(--line)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+              <strong id="verifyGateTitle" style="font-size:12.5px;font-weight:700">Hard Gate Status</strong>
+              <span id="verifyGateBadge" class="badge">--</span>
+            </div>
+            <p id="verifyGateDetail" style="font-size:11.5px;color:var(--muted);margin:0;line-height:1.4"></p>
+          </div>
+
+          <div class="inline-fields" style="margin-bottom:8px">
             <select id="citationStyleSelect" aria-label="Citation Style">
               <option value="apa" selected>APA 7th Edition</option>
               <option value="vancouver">Vancouver (NLM Medical)</option>
@@ -628,16 +638,28 @@ Odds Ratio, 0.36 (0.17-0.76), Reference, 0.007"></textarea>
             </select>
             <button class="button secondary compact" id="insertBibliographyBtn">Append Bib</button>
           </div>
-          <div class="inline-fields" style="margin-bottom:12px">
+
+          <div class="inline-fields" style="margin-bottom:10px">
             <button class="button secondary compact" id="exportBibtexBtn" style="flex:1">Export .bib</button>
             <button class="button secondary compact" id="exportRisBtn" style="flex:1">Export .ris</button>
           </div>
-          <input type="text" id="citationSearchInput" placeholder="Search library by author, title, year..." style="width:100%;margin-bottom:10px;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:var(--radius-inputs);padding:6px 10px;font-size:12px" />
+
+          <div class="section-title"><span>DOCX OOXML Integration</span></div>
+          <div class="inline-fields" style="margin-bottom:12px;gap:6px">
+            <label class="button secondary compact" style="flex:1;cursor:pointer;margin:0">
+              Extract DOCX
+              <input type="file" id="extractDocxCitationsInput" accept=".docx" hidden />
+            </label>
+            <button class="button secondary compact" id="insertDocxOoxmlBtn" style="flex:1">Insert OOXML</button>
+          </div>
+
+          <input type="text" id="citationSearchInput" placeholder="Search library by author, title, year, DOI..." style="width:100%;margin-bottom:10px;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:var(--radius-inputs);padding:6px 10px;font-size:12px" />
           <div class="section-title"><span>Library References</span><span id="citeCountBadge" class="badge">0</span></div>
           <div class="citation-list" id="citationList">
             <div class="empty-state"><p>No citations in library. Click "Add Reference" to import BibTeX or RIS entries.</p></div>
           </div>
         </section>
+
 
 
 

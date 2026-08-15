@@ -812,6 +812,57 @@ def api_citations_export(body: CitationExportPayload) -> dict[str, Any]:
     return {"format": ext, "content": data, "count": len(ref_items)}
 
 
+# ------------------------------------------------------------------ Citation Verification & Hard-Gate Engine
+class CitationVerifyPayload(BaseModel):
+    citations: list[dict[str, Any]]
+    live_network: bool = True
+
+
+@app.post("/api/citations/verify")
+def api_citations_verify(body: CitationVerifyPayload) -> dict[str, Any]:
+    """Verifies citations against the hard rule (Scientific MUST have DOI, Non-Scientific MUST have live URL)."""
+    from writeroute.citation_verifier import CitationVerifier
+    report = CitationVerifier.audit_citations(body.citations, live_network=body.live_network)
+    return report.to_dict()
+
+
+@app.post("/api/citations/extract-docx")
+async def api_citations_extract_docx(file: UploadFile = File(...)) -> dict[str, Any]:
+    """Extracts candidate citation field codes and in-text DOIs/URLs from a DOCX document."""
+    from writeroute.citation_verifier import CitationVerifier
+    data = await file.read()
+    candidates = CitationVerifier.extract_from_docx(data)
+    return {"filename": file.filename, "count": len(candidates), "citations": candidates}
+
+
+@app.post("/api/citations/insert-ooxml")
+async def api_citations_insert_ooxml(
+    file: UploadFile = File(...),
+    verified_json: str = Form(...),
+) -> Response:
+    """Inserts verified citation fields directly into DOCX word/document.xml with round-trip integrity."""
+    from writeroute.citation_verifier import CitationVerifier
+    raw_docx = await file.read()
+    try:
+        verified = json.loads(verified_json)
+        if isinstance(verified, dict):
+            verified = verified.get("verified", verified.get("citations", []))
+    except Exception as exc:
+        raise HTTPException(400, f"Invalid verified_json payload: {exc}")
+
+    try:
+        rewritten_bytes = CitationVerifier.insert_verified_citations_ooxml(raw_docx, verified)
+        out_name = f"{Path(file.filename or 'document.docx').stem}.cited.docx"
+        return Response(
+            content=rewritten_bytes,
+            media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            headers={"Content-Disposition": f'attachment; filename="{out_name}"'},
+        )
+    except Exception as exc:
+        raise HTTPException(422, f"Could not insert OOXML citations: {exc}")
+
+
+
 
 
 

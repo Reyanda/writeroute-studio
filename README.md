@@ -54,15 +54,19 @@ High-performance PyMuPDF stream processing tools:
 
 ![Adobe PDF Studio](assets/adobe_pdf_studio_ui.png)
 
-### 5. ❝ Native Scientific Citation Manager (`writeroute.citation_engine`)
-- **Multi-Format Reference Ingestion**: Ingest BibTeX (`@article`, `@book`, `@inproceedings`) and RIS format files (Zotero, EndNote, Mendeley).
-- **Word & Mendeley SDT Integration**: Wraps in-text citations into native `<w:sdt>` tags recognized by Word and Mendeley Cite v3.
+### 5. Native Scientific Citation Manager & Verification Hard Gate (`writeroute.citation_engine`, `writeroute.citation_verifier`)
+- **Hard-Rule Verification Gate**:
+  - **Scientific References**: MUST have a resolvable DOI against Crossref and DataCite with title token overlap matching.
+  - **Non-Scientific References**: MUST have a live HTTP 2xx/3xx URL.
+  - **Zero Tolerance Policy**: If any citation fails the gate, downstream manuscript compilation and direct editing halts immediately.
+- **Multi-Format Reference Ingestion & Clean RIS Export**: Ingest BibTeX and standard RIS with trailing spaces on `ER  - ` and no BOM.
+- **DOCX Package Extraction & OOXML Field Insertion**: Scans Word field codes (`CITATION` / `ADDIN`) and writes verified OOXML citation runs directly into `word/document.xml` with round-trip zip integrity.
 - **Multi-Style Bibliography Formatter**: Instant automated formatting for **APA 7th**, **Vancouver (NLM)**, **Nature**, **IEEE**, and **Chicago**.
-- **Real-Time Library Search & Export**: Filter by author/title/year and export active libraries to `.bib` or `.ris`.
+- **Real-Time Library Search & Export**: Filter by author, title, year, or DOI.
 
-![Native Citation Manager](assets/citation_manager_ui.png)
+![Citation Verification Hard Gate](assets/citation_verification_ui.png)
 
-### 6. 📊 Scientific Tables & Formalized Toolkit (`writeroute.toolkit`)
+### 6. Scientific Tables & Formalized Toolkit (`writeroute.toolkit`)
 - **Three-Line Publication Tables**: Full support for Lancet, NEJM, Nature, and APA 7th standards with thick top/bottom rules (`1.5pt`), mid header rules (`0.75pt`), and zero vertical borders.
 - **Automated Decimal Alignment**: Right-aligns numeric data, p-values, odds ratios, and 95% confidence intervals.
 - **Multi-Format Table Exporter**: 1-click conversion to HTML, LaTeX `booktabs` (`\toprule`, `\midrule`, `\bottomrule`), and GitHub Flavored Markdown.
@@ -71,7 +75,7 @@ High-performance PyMuPDF stream processing tools:
 
 ![Scientific Tables Suite](assets/scientific_tables_ui.png)
 
-### 7. ⚔️ Writing Master — Ontology-Driven AI Detection & Anti-Slop Suite (`aiwd`)
+### 7. Writing Master — Ontology-Driven AI Detection & Anti-Slop Suite (`aiwd`)
 - **Machine-Readable Pattern Ontology**: 7 feature families (Lexical, Syntactic, Discourse, Epistemic Stance, Pragmatic Depth, Formatting, Probabilistic).
 - **Domain Allow-Lists**: Excuses field-standard vocabulary (e.g. *doubly robust*, *positivity*, *transportability*) from being flagged as slop.
 - **Reported Voice Isolation**: Automatically discounts quotations, citations, and attributed speech so authors are not penalised for citing sources.
@@ -79,14 +83,13 @@ High-performance PyMuPDF stream processing tools:
 
 ![Writing Master UI](assets/writing_master_ui.png)
 
-### 8. 🛡️ The Auctor Writing Doctrine (`writeroute.auctor_doctrine`)
+### 8. The Auctor Writing Doctrine (`writeroute.auctor_doctrine`)
 - **Three Non-Leaking Channels**:
   - `Substantive`: 100% publication-ready prose.
   - `QC`: Rule codes, defect severities, diagnostic matrices, gate states.
   - `Commentary`: Margin review comments, editorial suggestions, author queries.
 - **Four Revision Authorities**: `mechanical` (formatting only), `copyedit` (meaning-preserving local fixes), `substantive` (fact-ledger invariant checked rewriting), `developmental` (critique only).
 - **Immutable Fact Ledger**: Freezes all numbers, percentages, CIs, p-values, directionality words (`increased`/`decreased`), negations (`no`/`not`/`never`), and identifiers before any edit pass.
-
 
 ![Auctor Writing Doctrine & Fact Ledger](assets/auctor_doctrine_ui.png)
 
@@ -115,16 +118,15 @@ Open **http://localhost:8000** in your browser.
 
 ## 🧪 Verification & Automated Test Suite
 
-Run the full automated test suite covering the Super Engine, Scientific Tables & Toolkit, Writing Master (AIWD), PDF tools, Word review suite, LaTeX export, DocXML orchestration, Mendeley SDTs, and Native Citation Manager:
+Run the full automated test suite covering Citation Verification, the Super Engine, Scientific Tables & Toolkit, Writing Master (AIWD), PDF tools, Word review suite, LaTeX export, DocXML orchestration, Mendeley SDTs, and Native Citation Manager:
 
 ```bash
-pytest tests/test_scientific_toolkit.py tests/test_writing_master.py tests/test_citation_manager.py tests/test_doctrine_and_docxml.py tests/test_pdf_and_word_suite.py tests/test_authoring.py tests/test_super_engine.py
+pytest tests/test_citation_verification.py tests/test_scientific_toolkit.py tests/test_writing_master.py tests/test_citation_manager.py tests/test_doctrine_and_docxml.py tests/test_pdf_and_word_suite.py tests/test_authoring.py tests/test_super_engine.py
 ```
-> **Result**: `36 passed (100% pass rate)`.
-
-
+> **Result**: `40 passed (100% pass rate)`.
 
 ---
 
 ## 📄 License
 MIT License. Created by Geoffrey Manda / Reyanda.
+
